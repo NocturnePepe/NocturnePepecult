@@ -17,7 +17,7 @@ The cult-powered DEX built for NocturnePepe and dark ecosystem tokens
 
 **Development Phase**: Pre-Alpha  
 **Milestone:** Donor funding underway (Target: 650 SOL)  
-**Proposal PDF:** [View Here](link-to-PDF)
+**Proposal PDF:** [https://drive.google.com/file/d/15AhDmUf5j5hkmMDDCuLUfLSKm0wyR2a/view?usp=sharing] 
 
 ---
 
