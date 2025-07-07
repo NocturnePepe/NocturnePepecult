@@ -5,6 +5,7 @@ Creates optimized version without requiring npm
 """
 
 import os
+import sys
 import shutil
 import json
 from pathlib import Path
@@ -52,7 +53,8 @@ def create_production_html(build_dir):
 def extract_css_from_dev_html():
     """Extract CSS from dev.html"""
     try:
-        with open("frontend/dev.html", "r") as f:
+        dev_html_path = Path("frontend") / "dev.html"
+        with open(dev_html_path, "r") as f:
             content = f.read()
         
         # Extract CSS between <style> tags
@@ -68,7 +70,8 @@ def extract_css_from_dev_html():
 def extract_js_from_dev_html():
     """Extract JavaScript from dev.html"""
     try:
-        with open("frontend/dev.html", "r") as f:
+        dev_html_path = Path("frontend") / "dev.html"
+        with open(dev_html_path, "r") as f:
             content = f.read()
         
         # Extract JavaScript between <script type="text/babel"> tags
@@ -122,10 +125,18 @@ def create_manifest(build_dir):
         json.dump(manifest, f, indent=2)
 
 def main():
-    os.chdir("/workspaces/NocturnePepecult")
+    # Get the current working directory (should be project root)
+    project_root = Path.cwd()
+    
+    # Ensure we're in the right directory (look for key files)
+    if not (project_root / "frontend" / "dev.html").exists():
+        print("❌ Error: Please run this script from the project root directory")
+        print("   Expected to find: frontend/dev.html")
+        sys.exit(1)
     
     print("🌙 NocturneSwap Production Build")
     print("=" * 40)
+    print(f"📁 Building from: {project_root}")
     print("📦 Creating build directory...")
     
     build_dir = create_build_directory()

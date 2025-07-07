@@ -196,8 +196,11 @@ def main():
     print("=" * 50)
     print()
     
-    # Change to project directory
-    os.chdir("/workspaces/NocturnePepecult")
+    # Ensure we're in the right directory
+    if not Path("frontend/dev.html").exists():
+        print("❌ Error: Please run this script from the project root directory")
+        print("   Expected to find: frontend/dev.html")
+        sys.exit(1)
     
     print("Choose an option:")
     print("1. 🔍 Check Build Status")
@@ -220,10 +223,8 @@ def main():
         test_smart_contracts()
         print("\n✅ All tests completed!")
     elif choice == "3":
-        os.chdir("/workspaces/NocturnePepecult")
         run_development_server()
     elif choice == "4":
-        os.chdir("/workspaces/NocturnePepecult")
         run_production_server()
     elif choice == "5":
         print("🏗️  Creating production build...")
