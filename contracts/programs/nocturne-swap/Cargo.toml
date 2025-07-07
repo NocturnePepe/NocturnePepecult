@@ -1,0 +1,23 @@
+[package]
+name = "nocturne-swap"
+version = "0.1.0"
+description = "NocturneSwap - A cult-fueled DEX for Solana"
+edition = "2021"
+
+[lib]
+crate-type = ["cdylib", "lib"]
+name = "nocturne_swap"
+
+[features]
+no-entrypoint = []
+no-idl = []
+no-log-ix-name = []
+cpi = ["no-entrypoint"]
+default = []
+
+[dependencies]
+anchor-lang = "0.29.0"
+anchor-spl = "0.29.0"
+spl-token = "4.0.0"
+spl-associated-token-account = "2.2.0"
+solana-program = "1.17.0"

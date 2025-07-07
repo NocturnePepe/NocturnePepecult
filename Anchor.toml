@@ -1,0 +1,26 @@
+[features]
+seeds = false
+skip-lint = false
+
+[programs.localnet]
+nocturne_swap = "5X9KmqJtJbNrfvA3p8X4A3d4YQ9ZqXqQzJZQzJZQzJZQ"
+
+[programs.devnet]
+nocturne_swap = "5X9KmqJtJbNrfvA3p8X4A3d4YQ9ZqXqQzJZQzJZQzJZQ"
+
+[programs.mainnet]
+nocturne_swap = "5X9KmqJtJbNrfvA3p8X4A3d4YQ9ZqXqQzJZQzJZQzJZQ"
+
+[registry]
+url = "https://api.apr.dev"
+
+[provider]
+cluster = "localnet"
+wallet = "~/.config/solana/id.json"
+
+[scripts]
+test = "yarn run ts-mocha -p ./tsconfig.json -t 1000000 tests/**/*.ts"
+
+[[test.genesis]]
+address = "metaqbxxUerdq28cj1RbAWkYQm3ybzjb6a8bt518x1s"
+program = "metadata.so"

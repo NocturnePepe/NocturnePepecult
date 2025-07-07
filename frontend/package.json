@@ -1,0 +1,19 @@
+{
+  "name": "nocturne-swap-frontend",
+  "version": "1.0.0",
+  "description": "NocturneSwap Frontend - Standalone HTML Version",
+  "main": "dev.html",
+  "scripts": {
+    "start": "python3 -m http.server 3000",
+    "build": "python3 ../build.py",
+    "dev": "python3 -m http.server 3000"
+  },
+  "keywords": [
+    "solana",
+    "dex",
+    "frontend",
+    "react"
+  ],
+  "author": "NocturnePepe Community",
+  "license": "MIT"
+}
