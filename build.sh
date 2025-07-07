@@ -5,7 +5,10 @@ echo "🌙 NocturneSwap Build Script"
 echo "=========================="
 
 # Check if source file exists (try multiple versions)
-if [ -f "frontend/index.html" ]; then
+if [ -f "frontend/index-stable.html" ]; then
+    SOURCE_FILE="frontend/index-stable.html"
+    echo "✅ Using frontend/index-stable.html (stable version)"
+elif [ -f "frontend/index.html" ]; then
     SOURCE_FILE="frontend/index.html"
     echo "✅ Using frontend/index.html (production version)"
 elif [ -f "frontend/index-simple.html" ]; then
@@ -15,7 +18,7 @@ elif [ -f "frontend/dev.html" ]; then
     SOURCE_FILE="frontend/dev.html"
     echo "✅ Using frontend/dev.html (dev version)"
 else
-    echo "❌ No source file found (frontend/index.html, frontend/index-simple.html, or frontend/dev.html)"
+    echo "❌ No source file found"
     exit 1
 fi
 
