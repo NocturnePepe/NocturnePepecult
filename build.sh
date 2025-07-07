@@ -4,28 +4,20 @@
 echo "🌙 NocturneSwap Build Script"
 echo "=========================="
 
-# Check if Python is available
-if ! command -v python3 &> /dev/null; then
-    echo "❌ Python3 not found, trying python..."
-    if ! command -v python &> /dev/null; then
-        echo "❌ Python not available"
-        exit 1
-    else
-        PYTHON_CMD="python"
-    fi
+# Check if source file exists (try multiple versions)
+if [ -f "frontend/index.html" ]; then
+    SOURCE_FILE="frontend/index.html"
+    echo "✅ Using frontend/index.html (production version)"
+elif [ -f "frontend/index-simple.html" ]; then
+    SOURCE_FILE="frontend/index-simple.html"
+    echo "✅ Using frontend/index-simple.html (simple version)"
+elif [ -f "frontend/dev.html" ]; then
+    SOURCE_FILE="frontend/dev.html"
+    echo "✅ Using frontend/dev.html (dev version)"
 else
-    PYTHON_CMD="python3"
-fi
-
-echo "✅ Using $PYTHON_CMD"
-
-# Check if dev.html exists
-if [ ! -f "frontend/dev.html" ]; then
-    echo "❌ frontend/dev.html not found"
+    echo "❌ No source file found (frontend/index.html, frontend/index-simple.html, or frontend/dev.html)"
     exit 1
 fi
-
-echo "✅ Source file found"
 
 # Create build directory
 if [ -d "build" ]; then
@@ -33,9 +25,10 @@ if [ -d "build" ]; then
 fi
 mkdir -p build
 
-# Copy dev.html to build/index.html
-cp frontend/dev.html build/index.html
+# Copy source file to build/index.html
+cp "$SOURCE_FILE" build/index.html
 
 echo "✅ Build complete!"
 echo "📁 Output: build/index.html"
+echo "📊 File size: $(du -h build/index.html | cut -f1)"
 echo "🌐 Ready for deployment!"
