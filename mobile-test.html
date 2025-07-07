@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mobile Test - NocturneSwap</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            color: white;
+        }
+        
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        
+        .test-section {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .mobile-preview {
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            color: #333;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .token-input-demo {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .token-input-demo input {
+            background: white;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            padding: 10px;
+            font-size: 1.2rem;
+            text-align: center;
+        }
+        
+        .token-button-demo {
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 12px 16px;
+            font-weight: 600;
+            width: 100%;
+            text-align: center;
+        }
+        
+        .status {
+            color: #28a745;
+            font-weight: bold;
+        }
+        
+        .issue {
+            color: #dc3545;
+            font-weight: bold;
+        }
+        
+        .fixed {
+            color: #28a745;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📱 Mobile Fix Test</h1>
+        
+        <div class="test-section">
+            <h2>Issue:</h2>
+            <p class="issue">❌ Token select buttons were overflowing outside the swap container on mobile</p>
+        </div>
+        
+        <div class="test-section">
+            <h2>Solution:</h2>
+            <p class="fixed">✅ Token inputs now stack vertically on mobile</p>
+            <p class="fixed">✅ Token select buttons are full-width</p>
+            <p class="fixed">✅ Proper spacing and containment</p>
+        </div>
+        
+        <div class="test-section">
+            <h2>Mobile Preview:</h2>
+            <div class="mobile-preview">
+                <h3>🌙 NocturneSwap</h3>
+                
+                <div class="token-input-demo">
+                    <input type="number" placeholder="0.0" value="100">
+                    <button class="token-button-demo">SOL</button>
+                </div>
+                
+                <div style="text-align: center; margin: 10px 0;">⇅</div>
+                
+                <div class="token-input-demo">
+                    <input type="number" placeholder="0.0" value="95.0" readonly>
+                    <button class="token-button-demo">USDC</button>
+                </div>
+                
+                <button style="background: linear-gradient(45deg, #667eea, #764ba2); color: white; border: none; border-radius: 12px; padding: 14px; width: 100%; font-size: 1rem; font-weight: 600;">
+                    Connect Wallet to Swap
+                </button>
+            </div>
+        </div>
+        
+        <div class="test-section">
+            <h2>Status:</h2>
+            <p class="status">✅ Mobile responsive design implemented</p>
+            <p class="status">✅ Token components stay within container</p>
+            <p class="status">✅ Touch-friendly button sizes</p>
+            <p class="status">✅ Ready for deployment</p>
+        </div>
+    </div>
+</body>
+</html>

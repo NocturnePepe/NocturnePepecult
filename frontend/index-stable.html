@@ -163,6 +163,8 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
+        gap: 12px;
+        min-height: 70px;
       }
       
       .token-input input {
@@ -173,6 +175,7 @@
         font-weight: 600;
         color: #333;
         flex: 1;
+        min-width: 0;
       }
       
       .token-select {
@@ -184,6 +187,9 @@
         font-weight: 600;
         cursor: pointer;
         transition: background 0.2s;
+        white-space: nowrap;
+        flex-shrink: 0;
+        min-width: 60px;
       }
       
       .token-select:hover {
@@ -314,13 +320,113 @@
           padding: 20px;
         }
         
+        .token-input {
+          padding: 15px;
+          flex-direction: column;
+          align-items: stretch;
+          gap: 10px;
+          min-height: auto;
+        }
+        
+        .token-input input {
+          font-size: 1.2rem;
+          text-align: center;
+          padding: 10px;
+          background: white;
+          border: 1px solid #e9ecef;
+          border-radius: 8px;
+        }
+        
+        .token-select {
+          padding: 12px 16px;
+          font-size: 1rem;
+          width: 100%;
+          text-align: center;
+        }
+        
+        .swap-icon {
+          margin: 10px auto;
+        }
+        
         .navigation {
           flex-direction: column;
           align-items: center;
+          gap: 10px;
+        }
+        
+        .nav-button {
+          padding: 12px 24px;
+          width: 200px;
+          text-align: center;
         }
         
         .features {
           grid-template-columns: 1fr;
+        }
+        
+        .swap-button {
+          padding: 14px 24px;
+          font-size: 1rem;
+        }
+        
+        .status-message {
+          font-size: 0.9rem;
+          padding: 8px;
+        }
+      }
+      
+      @media (max-width: 480px) {
+        .app-container {
+          padding: 10px;
+        }
+        
+        .header h1 {
+          font-size: 1.8rem;
+        }
+        
+        .header p {
+          font-size: 1rem;
+        }
+        
+        .swap-container {
+          margin: 0 5px;
+          padding: 15px;
+        }
+        
+        .token-input {
+          padding: 12px;
+        }
+        
+        .token-input input {
+          font-size: 1.1rem;
+        }
+        
+        .token-select {
+          padding: 10px 12px;
+          font-size: 0.9rem;
+        }
+        
+        .swap-button {
+          padding: 12px 20px;
+          font-size: 0.95rem;
+        }
+        
+        .nav-button {
+          padding: 10px 20px;
+          width: 150px;
+          font-size: 0.9rem;
+        }
+        
+        .feature-card {
+          padding: 15px;
+        }
+        
+        .feature-title {
+          font-size: 1.1rem;
+        }
+        
+        .feature-description {
+          font-size: 0.9rem;
         }
       }
     </style>
