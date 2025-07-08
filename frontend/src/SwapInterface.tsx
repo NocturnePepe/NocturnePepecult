@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useMemo } from 'react';
+import React, { useState, useCallback, useMemo, useEffect } from 'react';
 import { useWallet } from '@solana/wallet-adapter-react';
 import { WalletMultiButton } from '@solana/wallet-adapter-react-ui';
 import { PublicKey } from '@solana/web3.js';
@@ -10,10 +10,106 @@ interface SwapInterfaceProps {
   program: any;
 }
 
+interface RitualModalProps {
+  inputAmount: string;
+  inputToken: any;
+  outputAmount: string;
+  outputToken: any;
+  rate: number;
+  priceImpact: number;
+  onClose: () => void;
+}
+
+const RitualModal = ({
+  inputAmount,
+  inputToken,
+  outputAmount,
+  outputToken,
+  rate,
+  priceImpact,
+  onClose
+}: RitualModalProps) => {
+  const [step, setStep] = useState(0);
+  const [typewriterText, setTypewriterText] = useState('');
+  const [fakeTxHash] = useState(`0x${Math.random().toString(16).substr(2, 8)}...${Math.random().toString(16).substr(2, 8)}`);
+  
+  const steps = [
+    "🔮 Initiating ancient swap ritual...",
+    "⚡ Connecting to the void networks...",
+    "🌙 Jupiter spirits are calculating optimal routes...", 
+    "💀 Summoning liquidity from shadow pools...",
+    "🕯️ Finalizing mystical transaction...",
+    "✨ Ritual complete! The exchange has been blessed."
+  ];
+
+  useEffect(() => {
+    const typeText = async () => {
+      const text = steps[step];
+      setTypewriterText('');
+      
+      for (let i = 0; i <= text.length; i++) {
+        setTypewriterText(text.slice(0, i));
+        await new Promise(resolve => setTimeout(resolve, 50));
+      }
+      
+      await new Promise(resolve => setTimeout(resolve, 1500));
+      
+      if (step < steps.length - 1) {
+        setStep(prev => prev + 1);
+      }
+    };
+
+    typeText();
+  }, [step]);
+
+  return (
+    <div className="ritual-modal-overlay">
+      <div className="ritual-modal">
+        <div className="ritual-header">
+          <h3>🌙 Nocturne Ritual</h3>
+          <button className="ritual-close" onClick={onClose}>×</button>
+        </div>
+        
+        <div className="ritual-content">
+          <div className="ritual-typewriter">
+            <p>{typewriterText}</p>
+            <span className="cursor">|</span>
+          </div>
+          
+          <div className="ritual-details">
+            <div className="ritual-trade">
+              <span>{inputAmount} {inputToken.symbol}</span>
+              <span className="ritual-arrow">→</span>
+              <span>{outputAmount} {outputToken.symbol}</span>
+            </div>
+            
+            <div className="ritual-stats">
+              <div>Rate: {rate.toFixed(4)} {outputToken.symbol}/{inputToken.symbol}</div>
+              <div>Impact: {priceImpact.toFixed(2)}%</div>
+              <div>TX: {fakeTxHash}</div>
+            </div>
+          </div>
+          
+          {step === steps.length - 1 && (
+            <button 
+              className="ritual-complete-btn"
+              onClick={onClose}
+            >
+              Close Ritual
+            </button>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};
+
 const SwapInterface = ({ connection, program }: SwapInterfaceProps) => {
   const { publicKey, connected, signTransaction } = useWallet();
   const [inputAmount, setInputAmount] = useState('');
   const [swapError, setSwapError] = useState('');
+  const [showModal, setShowModal] = useState(false);
+  const [modalStep, setModalStep] = useState(0);
   
   // Token selection (you can make this dynamic later)
   const [inputToken] = useState(POPULAR_TOKENS.SOL);
@@ -46,25 +142,17 @@ const SwapInterface = ({ connection, program }: SwapInterfaceProps) => {
     return formatTokenAmount(quote.outAmount, outputToken.decimals).toFixed(6);
   }, [quote, outputToken.decimals]);
 
-  // Handle swap execution (placeholder for now - just show quote details)
+  // Handle swap execution with modal
   const handleSwap = useCallback(() => {
     if (!connected || !publicKey || !quote) {
       setSwapError('Please connect wallet and enter amount');
       return;
     }
 
-    // For now, just log the quote details
-    console.log('🌙 Jupiter Quote Details:');
-    console.log('Input:', inputAmount, inputToken.symbol);
-    console.log('Output:', outputAmount, outputToken.symbol);
-    console.log('Rate:', rate.toFixed(6), `${outputToken.symbol} per ${inputToken.symbol}`);
-    console.log('Price Impact:', priceImpact.toFixed(2) + '%');
-    console.log('Routes:', routes);
-    console.log('Raw Quote:', quote);
-    
-    setSwapError(''); // Clear any previous errors
-    alert(`Quote Preview:\n${inputAmount} ${inputToken.symbol} → ${outputAmount} ${outputToken.symbol}\nRate: ${rate.toFixed(4)}\nPrice Impact: ${priceImpact.toFixed(2)}%`);
-  }, [connected, publicKey, quote, inputAmount, outputAmount, rate, priceImpact, routes, inputToken, outputToken]);
+    setSwapError('');
+    setModalStep(0);
+    setShowModal(true);
+  }, [connected, publicKey, quote]);
 
   return (
     <div className="swap-interface">
@@ -207,7 +295,7 @@ const SwapInterface = ({ connection, program }: SwapInterfaceProps) => {
             {!connected ? 'Connect Wallet' :
              loading ? 'Getting Quote...' :
              !quote ? 'Enter Amount' :
-             '🔍 Preview Quote Details'}
+             '� Begin Ritual'}
           </button>
         </div>
 
@@ -217,6 +305,17 @@ const SwapInterface = ({ connection, program }: SwapInterfaceProps) => {
           <p>💀 NocturnePepe referrer bonus</p>
         </div>
       </div>
+
+      {/* Custom Cult Ritual Modal */}
+      {showModal && <RitualModal 
+        inputAmount={inputAmount}
+        inputToken={inputToken}
+        outputAmount={outputAmount}
+        outputToken={outputToken}
+        rate={rate}
+        priceImpact={priceImpact}
+        onClose={() => setShowModal(false)}
+      />}
     </div>
   );
 };
