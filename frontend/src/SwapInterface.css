@@ -241,7 +241,7 @@
 .swap-button:disabled {
   opacity: 0.5;
   cursor: not-allowed;
-  transform: none;
+  transform: none !important;
 }
 
 .swap-info {
@@ -250,9 +250,10 @@
 }
 
 .swap-info p {
-  color: #a0a0a0;
-  font-size: 14px;
-  margin: 8px 0;
+  font-size: 12px;
+  color: #888;
+  margin: 4px 0;
+  text-align: center;
 }
 
 /* Additional styles for improved SwapInterface */
@@ -473,4 +474,108 @@
     rotate: 90deg;
     margin: 0;
   }
+}
+
+/* Jupiter Swap Interface Styles */
+.token-input-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.token-selector {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 8px;
+  background: rgba(124, 58, 237, 0.1);
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #7c3aed;
+}
+
+.token-selector img {
+  border-radius: 50%;
+}
+
+.amount-input {
+  width: 100%;
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(124, 58, 237, 0.3);
+  border-radius: 8px;
+  color: #fff;
+  font-size: 18px;
+  font-weight: 600;
+  outline: none;
+  transition: all 0.2s;
+}
+
+.amount-input:focus {
+  border-color: #7c3aed;
+  box-shadow: 0 0 0 2px rgba(124, 58, 237, 0.2);
+}
+
+.amount-input.readonly {
+  background: rgba(255, 255, 255, 0.02);
+  cursor: not-allowed;
+}
+
+.swap-tokens-btn {
+  background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
+  border: none;
+  color: #fff;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  font-size: 18px;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.swap-tokens-btn:hover {
+  transform: rotate(180deg) scale(1.1);
+  box-shadow: 0 4px 15px rgba(124, 58, 237, 0.4);
+}
+
+.quote-info {
+  background: rgba(124, 58, 237, 0.1);
+  border: 1px solid rgba(124, 58, 237, 0.3);
+  border-radius: 8px;
+  padding: 16px;
+  margin: 16px 0;
+}
+
+.quote-detail {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+.quote-detail:last-child {
+  margin-bottom: 0;
+}
+
+.quote-detail span:first-child {
+  color: #888;
+}
+
+.quote-detail span:last-child {
+  color: #fff;
+  font-weight: 600;
+}
+
+.low-impact {
+  color: #4ade80 !important;
+}
+
+.high-impact {
+  color: #f87171 !important;
 }

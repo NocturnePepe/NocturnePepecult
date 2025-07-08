@@ -2,7 +2,6 @@ import React, { useState, useCallback, useMemo } from 'react';
 import { useWallet } from '@solana/wallet-adapter-react';
 import { WalletMultiButton } from '@solana/wallet-adapter-react-ui';
 import { PublicKey } from '@solana/web3.js';
-import './SwapInterface.css';
 
 // Jupiter Hook (from CDN)
 declare global {
@@ -11,17 +10,33 @@ declare global {
   }
 }
 
-interface SwapInterfaceProps {
-  connection: any;
-  program: any;
-}
+// Token definitions
+const TOKENS = {
+  SOL: {
+    address: 'So11111111111111111111111111111111111111112',
+    symbol: 'SOL',
+    name: 'Solana',
+    decimals: 9,
+    logoURI: 'https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/So11111111111111111111111111111111111111112/logo.png'
+  },
+  USDC: {
+    address: 'EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v',
+    symbol: 'USDC',
+    name: 'USD Coin',
+    decimals: 6,
+    logoURI: 'https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v/logo.png'
+  }
+};
 
-const SwapInterface: React.FC<SwapInterfaceProps> = () => {
+const SwapInterface: React.FC = () => {
   const { publicKey, connected, signTransaction } = useWallet();
   const [inputAmount, setInputAmount] = useState('');
   const [outputAmount, setOutputAmount] = useState('');
   const [isSwapping, setIsSwapping] = useState(false);
-  const [swapError, setSwapError] = useState('');
+
+  // Default SOL -> USDC pair
+  const [inputToken, setInputToken] = useState(TOKENS.SOL);
+  const [outputToken, setOutputToken] = useState(TOKENS.USDC);
 
   // Jupiter integration (fallback if CDN not loaded)
   const useJupiter = window?.useJupiter || (() => ({
@@ -31,40 +46,47 @@ const SwapInterface: React.FC<SwapInterfaceProps> = () => {
     error: null
   }));
 
-  // Default SOL -> USDC configuration
+  // Jupiter configuration
   const jupiterConfig = useMemo(() => ({
-    inputMint: new PublicKey('So11111111111111111111111111111111111111112'), // SOL
-    outputMint: new PublicKey('EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v'), // USDC
-    amount: inputAmount ? Math.floor(parseFloat(inputAmount) * 1e9) : 0, // Convert to lamports
+    inputMint: new PublicKey(inputToken.address),
+    outputMint: new PublicKey(outputToken.address),
+    amount: inputAmount ? Math.floor(parseFloat(inputAmount) * Math.pow(10, inputToken.decimals)) : 0,
     slippageBps: 100, // 1% slippage
-  }), [inputAmount]);
+  }), [inputToken, outputToken, inputAmount]);
 
   const { quote, exchange, loading } = useJupiter(jupiterConfig);
 
   // Update output amount when quote changes
   React.useEffect(() => {
     if (quote?.outAmount) {
-      const output = quote.outAmount / 1e6; // USDC has 6 decimals
+      const output = quote.outAmount / Math.pow(10, outputToken.decimals);
       setOutputAmount(output.toFixed(6));
     } else {
       setOutputAmount('');
     }
-  }, [quote]);
+  }, [quote, outputToken.decimals]);
+
+  // Swap tokens
+  const handleSwapTokens = useCallback(() => {
+    setInputToken(outputToken);
+    setOutputToken(inputToken);
+    setInputAmount(outputAmount);
+    setOutputAmount('');
+  }, [inputToken, outputToken, outputAmount]);
 
   // Execute swap
   const handleSwap = useCallback(async () => {
     if (!connected || !publicKey || !quote) {
-      setSwapError('Please connect wallet and enter amount');
+      console.error('❌ Wallet not connected or no quote available');
       return;
     }
 
     setIsSwapping(true);
-    setSwapError('');
     
     try {
       console.log('🌙 Starting Jupiter swap...');
-      console.log('From:', inputAmount, 'SOL');
-      console.log('To:', outputAmount, 'USDC');
+      console.log('From:', inputAmount, inputToken.symbol);
+      console.log('To:', outputAmount, outputToken.symbol);
       
       const result = await exchange({
         wallet: { publicKey, signTransaction },
@@ -85,8 +107,8 @@ const SwapInterface: React.FC<SwapInterfaceProps> = () => {
         // Track with analytics
         if (window.nocturneAnalytics) {
           window.nocturneAnalytics.trackSwap({
-            tokenIn: 'SOL',
-            tokenOut: 'USDC',
+            tokenIn: inputToken.symbol,
+            tokenOut: outputToken.symbol,
             amountIn: inputAmount,
             amountOut: outputAmount,
             signature: result.txid
@@ -95,37 +117,32 @@ const SwapInterface: React.FC<SwapInterfaceProps> = () => {
       }
     } catch (error: any) {
       console.error('❌ Swap failed:', error);
-      setSwapError(`Swap failed: ${error.message || 'Unknown error'}`);
+      console.error('Error details:', error.message || error);
     } finally {
       setIsSwapping(false);
     }
-  }, [connected, publicKey, quote, exchange, inputAmount, outputAmount]);
+  }, [connected, publicKey, quote, exchange, inputAmount, outputAmount, inputToken, outputToken]);
 
   return (
     <div className="swap-interface">
       <div className="swap-container">
         <div className="swap-header">
           <h2>🌙 NocturneSwap</h2>
-          <p>Jupiter-powered SOL ⇄ USDC swapping</p>
+          <p>Jupiter-powered token swapping</p>
         </div>
 
         <div className="wallet-connection">
           <WalletMultiButton />
         </div>
 
-        {swapError && (
-          <div className="error-message">
-            ⚠️ {swapError}
-          </div>
-        )}
-
         <div className="swap-form">
-          {/* Input Token - SOL */}
+          {/* Input Token */}
           <div className="token-input">
             <div className="token-input-header">
               <label>From</label>
               <div className="token-selector">
-                <span>🔮 SOL</span>
+                <img src={inputToken.logoURI} alt={inputToken.symbol} width="20" height="20" />
+                <span>{inputToken.symbol}</span>
               </div>
             </div>
             <input
@@ -138,19 +155,24 @@ const SwapInterface: React.FC<SwapInterfaceProps> = () => {
             />
           </div>
 
-          {/* Swap Arrow */}
+          {/* Swap Button */}
           <div className="swap-arrow">
-            <button className="swap-tokens-btn" type="button">
+            <button 
+              onClick={handleSwapTokens}
+              className="swap-tokens-btn"
+              type="button"
+            >
               ⇅
             </button>
           </div>
 
-          {/* Output Token - USDC */}
+          {/* Output Token */}
           <div className="token-input">
             <div className="token-input-header">
               <label>To</label>
               <div className="token-selector">
-                <span>💵 USDC</span>
+                <img src={outputToken.logoURI} alt={outputToken.symbol} width="20" height="20" />
+                <span>{outputToken.symbol}</span>
               </div>
             </div>
             <input
@@ -163,12 +185,12 @@ const SwapInterface: React.FC<SwapInterfaceProps> = () => {
           </div>
 
           {/* Quote Info */}
-          {quote && inputAmount && (
+          {quote && (
             <div className="quote-info">
               <div className="quote-detail">
                 <span>Rate</span>
                 <span>
-                  1 SOL = {(parseFloat(outputAmount) / parseFloat(inputAmount) || 0).toFixed(4)} USDC
+                  1 {inputToken.symbol} = {(parseFloat(outputAmount) / parseFloat(inputAmount) || 0).toFixed(4)} {outputToken.symbol}
                 </span>
               </div>
               <div className="quote-detail">
@@ -183,10 +205,6 @@ const SwapInterface: React.FC<SwapInterfaceProps> = () => {
                   </span>
                 </div>
               )}
-              <div className="quote-detail">
-                <span>Route</span>
-                <span>Jupiter Aggregator</span>
-              </div>
             </div>
           )}
 
@@ -198,7 +216,6 @@ const SwapInterface: React.FC<SwapInterfaceProps> = () => {
           >
             {!connected ? 'Connect Wallet' :
              isSwapping ? 'Swapping...' :
-             loading ? 'Getting Quote...' :
              !quote ? 'Enter Amount' :
              'Swap Tokens'}
           </button>
@@ -207,7 +224,7 @@ const SwapInterface: React.FC<SwapInterfaceProps> = () => {
         <div className="swap-info">
           <p>⚡ Powered by Jupiter Aggregator</p>
           <p>🔒 Best rates across all Solana DEXs</p>
-          <p>💀 NocturnePepe referrer bonus</p>
+          <p>💀 NocturnePepe approved swaps</p>
         </div>
       </div>
     </div>

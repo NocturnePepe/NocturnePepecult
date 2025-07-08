@@ -15,5 +15,13 @@
     "react"
   ],
   "author": "NocturnePepe Community",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "@jup-ag/core": "^4.0.0-beta.21",
+    "@jup-ag/react-hook": "^6.2.0",
+    "@solana/wallet-adapter-react": "^0.15.39",
+    "@solana/wallet-adapter-react-ui": "^0.9.39",
+    "@solana/wallet-adapter-wallets": "^0.19.37",
+    "@solana/web3.js": "^1.98.2"
+  }
 }
