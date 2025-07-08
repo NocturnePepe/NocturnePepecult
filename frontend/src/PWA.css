@@ -1,0 +1,450 @@
+/* PWA.css - Progressive Web App styles */
+
+/* Install Banner */
+.pwa-install-banner {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  right: 20px;
+  background: linear-gradient(145deg, rgba(20, 20, 40, 0.95), rgba(40, 20, 60, 0.9));
+  border: 2px solid rgba(255, 100, 50, 0.3);
+  border-radius: 16px;
+  backdrop-filter: blur(20px);
+  box-shadow: 
+    0 10px 30px rgba(0, 0, 0, 0.5),
+    0 0 20px rgba(255, 100, 50, 0.2);
+  z-index: 10000;
+  animation: bannerSlideIn 0.5s ease-out;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+@keyframes bannerSlideIn {
+  from {
+    transform: translateY(100px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.install-content {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px;
+}
+
+.install-icon {
+  font-size: 32px;
+  filter: drop-shadow(0 0 10px rgba(255, 100, 50, 0.6));
+}
+
+.install-text h4 {
+  margin: 0;
+  color: #ff6432;
+  font-family: 'Cinzel', serif;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.install-text p {
+  margin: 4px 0 0 0;
+  color: #cccccc;
+  font-size: 12px;
+}
+
+.install-actions {
+  display: flex;
+  gap: 8px;
+  margin-left: auto;
+}
+
+.install-btn {
+  background: linear-gradient(45deg, #ff6432, #9632ff);
+  border: none;
+  border-radius: 8px;
+  color: #ffffff;
+  padding: 8px 16px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: 'Cinzel', serif;
+}
+
+.install-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(255, 100, 50, 0.4);
+}
+
+.dismiss-btn {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  color: #cccccc;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 14px;
+}
+
+.dismiss-btn:hover {
+  background: rgba(255, 100, 100, 0.2);
+  color: #ff6464;
+  transform: scale(1.1);
+}
+
+/* Network Status */
+.network-status {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(145deg, rgba(20, 20, 40, 0.95), rgba(40, 20, 60, 0.9));
+  border: 2px solid rgba(255, 100, 50, 0.3);
+  border-radius: 12px;
+  backdrop-filter: blur(20px);
+  box-shadow: 
+    0 10px 20px rgba(0, 0, 0, 0.3),
+    0 0 15px rgba(255, 100, 50, 0.2);
+  z-index: 10001;
+  animation: statusSlideIn 0.3s ease-out;
+  max-width: 90%;
+  min-width: 300px;
+}
+
+@keyframes statusSlideIn {
+  from {
+    transform: translateX(-50%) translateY(-50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+  }
+}
+
+.network-status.success {
+  border-color: rgba(100, 255, 100, 0.4);
+}
+
+.network-status.warning {
+  border-color: rgba(255, 200, 0, 0.4);
+}
+
+.network-status.error {
+  border-color: rgba(255, 100, 100, 0.4);
+}
+
+.network-status.info {
+  border-color: rgba(100, 150, 255, 0.4);
+}
+
+.status-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.status-content button {
+  background: none;
+  border: none;
+  color: #cccccc;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 4px;
+  margin-left: 12px;
+  transition: all 0.3s ease;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.status-content button:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  transform: scale(1.1);
+}
+
+/* Offline Indicator */
+.offline-indicator {
+  position: fixed;
+  top: 80px;
+  right: 20px;
+  background: rgba(255, 100, 0, 0.9);
+  color: #ffffff;
+  padding: 8px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 12px rgba(255, 100, 0, 0.3);
+  z-index: 9999;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+/* PWA Controls in Header */
+.pwa-controls {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.pwa-btn {
+  background: rgba(255, 100, 50, 0.1);
+  border: 1px solid rgba(255, 100, 50, 0.3);
+  border-radius: 8px;
+  color: #cccccc;
+  padding: 6px 10px;
+  font-size: 11px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: 'Cinzel', serif;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.pwa-btn:hover {
+  background: rgba(255, 100, 50, 0.2);
+  color: #ff6432;
+  transform: translateY(-1px);
+}
+
+.pwa-btn.active {
+  background: rgba(100, 255, 100, 0.2);
+  border-color: rgba(100, 255, 100, 0.4);
+  color: #64ff64;
+}
+
+.pwa-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.pwa-btn:disabled:hover {
+  transform: none;
+  background: rgba(255, 100, 50, 0.1);
+  color: #cccccc;
+}
+
+/* Connection Status Indicator */
+.connection-status {
+  position: fixed;
+  top: 50px;
+  right: 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(0, 0, 0, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 20px;
+  padding: 6px 12px;
+  font-size: 12px;
+  color: #cccccc;
+  z-index: 9998;
+  transition: all 0.3s ease;
+}
+
+.connection-status.online {
+  border-color: rgba(100, 255, 100, 0.4);
+  color: #64ff64;
+}
+
+.connection-status.offline {
+  border-color: rgba(255, 100, 100, 0.4);
+  color: #ff6464;
+  animation: pulse 1.5s infinite;
+}
+
+.connection-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: currentColor;
+  animation: pulse 2s infinite;
+}
+
+/* Share Button Styles */
+.share-btn {
+  background: rgba(100, 150, 255, 0.2);
+  border: 1px solid rgba(100, 150, 255, 0.3);
+  border-radius: 8px;
+  color: #cccccc;
+  padding: 6px 10px;
+  font-size: 11px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: 'Cinzel', serif;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.share-btn:hover {
+  background: rgba(100, 150, 255, 0.3);
+  color: #6496ff;
+  transform: translateY(-1px);
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .pwa-install-banner {
+    bottom: 10px;
+    left: 10px;
+    right: 10px;
+  }
+  
+  .install-content {
+    padding: 12px;
+    gap: 12px;
+  }
+  
+  .install-text h4 {
+    font-size: 14px;
+  }
+  
+  .install-text p {
+    font-size: 11px;
+  }
+  
+  .network-status {
+    top: 10px;
+    max-width: 95%;
+    min-width: auto;
+  }
+  
+  .status-content {
+    padding: 10px 12px;
+    font-size: 13px;
+  }
+  
+  .connection-status {
+    top: 40px;
+    right: 10px;
+    padding: 4px 8px;
+    font-size: 11px;
+  }
+  
+  .pwa-controls {
+    gap: 6px;
+  }
+  
+  .pwa-btn {
+    padding: 4px 8px;
+    font-size: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .install-content {
+    flex-direction: column;
+    text-align: center;
+    gap: 8px;
+  }
+  
+  .install-actions {
+    margin: 0;
+    justify-content: center;
+  }
+  
+  .network-status {
+    min-width: auto;
+    width: calc(100% - 20px);
+  }
+  
+  .status-content {
+    flex-direction: column;
+    gap: 8px;
+    text-align: center;
+  }
+  
+  .status-content button {
+    margin: 0;
+  }
+}
+
+/* Notification permission prompt styling */
+.notification-prompt {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: linear-gradient(145deg, rgba(20, 20, 40, 0.98), rgba(40, 20, 60, 0.95));
+  border: 2px solid rgba(255, 100, 50, 0.4);
+  border-radius: 20px;
+  padding: 24px;
+  max-width: 400px;
+  width: 90%;
+  text-align: center;
+  backdrop-filter: blur(20px);
+  box-shadow: 
+    0 20px 40px rgba(0, 0, 0, 0.5),
+    0 0 30px rgba(255, 100, 50, 0.3);
+  z-index: 10002;
+  animation: modalSlideIn 0.4s ease-out;
+}
+
+.notification-prompt h3 {
+  color: #ff6432;
+  font-family: 'Cinzel', serif;
+  font-size: 20px;
+  margin: 0 0 16px 0;
+}
+
+.notification-prompt p {
+  color: #cccccc;
+  font-size: 14px;
+  line-height: 1.5;
+  margin: 0 0 20px 0;
+}
+
+.notification-prompt .prompt-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+.notification-prompt button {
+  padding: 10px 20px;
+  border-radius: 10px;
+  font-family: 'Cinzel', serif;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.notification-prompt .allow-btn {
+  background: linear-gradient(45deg, #ff6432, #9632ff);
+  border: none;
+  color: #ffffff;
+}
+
+.notification-prompt .deny-btn {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: #cccccc;
+}
+
+.notification-prompt button:hover {
+  transform: translateY(-2px);
+}

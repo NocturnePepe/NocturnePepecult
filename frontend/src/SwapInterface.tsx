@@ -9,6 +9,8 @@ import { TokenSelector, EXTENDED_TOKEN_LIST } from './components/TokenSelector';
 import PriceChart from './components/PriceChart';
 import PriceAlert from './components/PriceAlert';
 import Portfolio from './components/Portfolio';
+import LiquidityPools from './components/LiquidityPools';
+import AdvancedTrading from './components/AdvancedTrading';
 import { cultSounds } from './SoundEffects.js';
 import './SwapInterface.css';
 
@@ -173,6 +175,8 @@ const SwapInterface = ({ connection, program }: SwapInterfaceProps) => {
   const [chartTimeframe, setChartTimeframe] = useState('24h');
   const [showChart, setShowChart] = useState(true);
   const [showPortfolio, setShowPortfolio] = useState(false);
+  const [showLiquidityPools, setShowLiquidityPools] = useState(false);
+  const [showAdvancedTrading, setShowAdvancedTrading] = useState(false);
   
   // Token selection - now dynamic!
   const [inputToken, setInputToken] = useState(EXTENDED_TOKEN_LIST[0]); // SOL
@@ -285,6 +289,20 @@ const SwapInterface = ({ connection, program }: SwapInterfaceProps) => {
               onMouseEnter={() => cultSounds.playHoverSound()}
             >
               🏦 Portfolio
+            </button>
+            <button 
+              className="liquidity-btn"
+              onClick={() => setShowLiquidityPools(true)}
+              onMouseEnter={() => cultSounds.playHoverSound()}
+            >
+              💧 Liquidity
+            </button>
+            <button 
+              className="advanced-trading-btn"
+              onClick={() => setShowAdvancedTrading(true)}
+              onMouseEnter={() => cultSounds.playHoverSound()}
+            >
+              ⚡ Advanced
             </button>
           </div>
         </div>
@@ -550,6 +568,22 @@ const SwapInterface = ({ connection, program }: SwapInterfaceProps) => {
         connection={connection}
         isVisible={showPortfolio}
         onClose={() => setShowPortfolio(false)}
+      />
+
+      {/* Liquidity Pools Modal */}
+      <LiquidityPools 
+        connection={connection}
+        isVisible={showLiquidityPools}
+        onClose={() => setShowLiquidityPools(false)}
+      />
+
+      {/* Advanced Trading Modal */}
+      <AdvancedTrading 
+        connection={connection}
+        isVisible={showAdvancedTrading}
+        onClose={() => setShowAdvancedTrading(false)}
+        inputToken={inputToken}
+        outputToken={outputToken}
       />
     </div>
   );
