@@ -3,6 +3,7 @@ import { useWallet } from '@solana/wallet-adapter-react';
 import { WalletMultiButton } from '@solana/wallet-adapter-react-ui';
 import { PublicKey } from '@solana/web3.js';
 import { useJupiterQuotes, POPULAR_TOKENS, formatTokenAmount, toRawAmount } from './hooks/useJupiterQuotes';
+import { cultSounds } from './SoundEffects.js';
 import './SwapInterface.css';
 
 interface SwapInterfaceProps {
@@ -47,6 +48,10 @@ const RitualModal = ({
       const text = steps[step];
       setTypewriterText('');
       
+      // Play mystical sound for each step
+      if (step === 0) await cultSounds.playSwapSound();
+      else await cultSounds.playHoverSound();
+      
       for (let i = 0; i <= text.length; i++) {
         setTypewriterText(text.slice(0, i));
         await new Promise(resolve => setTimeout(resolve, 50));
@@ -56,6 +61,9 @@ const RitualModal = ({
       
       if (step < steps.length - 1) {
         setStep(prev => prev + 1);
+      } else {
+        // Play completion sound on final step
+        await cultSounds.playRitualCompleteSound();
       }
     };
 
@@ -93,7 +101,11 @@ const RitualModal = ({
           {step === steps.length - 1 && (
             <button 
               className="ritual-complete-btn"
-              onClick={onClose}
+              onClick={async () => {
+                await cultSounds.playConnectSound();
+                onClose();
+              }}
+              onMouseEnter={() => cultSounds.playHoverSound()}
             >
               Close Ritual
             </button>
@@ -143,15 +155,17 @@ const SwapInterface = ({ connection, program }: SwapInterfaceProps) => {
   }, [quote, outputToken.decimals]);
 
   // Handle swap execution with modal
-  const handleSwap = useCallback(() => {
+  const handleSwap = useCallback(async () => {
     if (!connected || !publicKey || !quote) {
       setSwapError('Please connect wallet and enter amount');
+      await cultSounds.playErrorSound();
       return;
     }
 
     setSwapError('');
     setModalStep(0);
     setShowModal(true);
+    await cultSounds.playConnectSound();
   }, [connected, publicKey, quote]);
 
   return (
@@ -289,6 +303,7 @@ const SwapInterface = ({ connection, program }: SwapInterfaceProps) => {
           {/* Quote Preview Button */}
           <button
             onClick={handleSwap}
+            onMouseEnter={() => cultSounds.playHoverSound()}
             disabled={!connected || !quote || loading || !inputAmount}
             className="swap-button"
           >
