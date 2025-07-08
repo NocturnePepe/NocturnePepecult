@@ -3,6 +3,9 @@ import { useWallet } from '@solana/wallet-adapter-react';
 import { WalletMultiButton } from '@solana/wallet-adapter-react-ui';
 import { PublicKey } from '@solana/web3.js';
 import { useJupiterQuotes, POPULAR_TOKENS, formatTokenAmount, toRawAmount } from './hooks/useJupiterQuotes';
+import { useJupiterSwap } from './hooks/useJupiterSwap';
+import { usePriceData, formatPrice, formatChange, formatLargeNumber } from './hooks/usePriceData';
+import { TokenSelector, EXTENDED_TOKEN_LIST } from './components/TokenSelector';
 import { cultSounds } from './SoundEffects.js';
 import './SwapInterface.css';
 
@@ -18,7 +21,12 @@ interface RitualModalProps {
   outputToken: any;
   rate: number;
   priceImpact: number;
+  quote: any;
   onClose: () => void;
+  onExecuteSwap: (quote: any) => Promise<void>;
+  swapLoading: boolean;
+  txHash: string | null;
+  swapError: string | null;
 }
 
 const RitualModal = ({
@@ -28,20 +36,37 @@ const RitualModal = ({
   outputToken,
   rate,
   priceImpact,
-  onClose
+  quote,
+  onClose,
+  onExecuteSwap,
+  swapLoading,
+  txHash,
+  swapError
 }: RitualModalProps) => {
   const [step, setStep] = useState(0);
   const [typewriterText, setTypewriterText] = useState('');
-  const [fakeTxHash] = useState(`0x${Math.random().toString(16).substr(2, 8)}...${Math.random().toString(16).substr(2, 8)}`);
+  const [isExecuting, setIsExecuting] = useState(false);
   
   const steps = [
     "🔮 Initiating ancient swap ritual...",
     "⚡ Connecting to the void networks...",
     "🌙 Jupiter spirits are calculating optimal routes...", 
     "💀 Summoning liquidity from shadow pools...",
-    "🕯️ Finalizing mystical transaction...",
+    "🕯️ Executing mystical transaction...",
     "✨ Ritual complete! The exchange has been blessed."
   ];
+
+  const handleExecuteSwap = useCallback(async () => {
+    if (!quote || isExecuting) return;
+    
+    setIsExecuting(true);
+    setStep(4); // Move to execution step
+    await onExecuteSwap(quote);
+    setIsExecuting(false);
+    
+    // Move to completion step after execution
+    setTimeout(() => setStep(5), 1000);
+  }, [quote, onExecuteSwap, isExecuting]);
 
   useEffect(() => {
     const typeText = async () => {
@@ -59,16 +84,23 @@ const RitualModal = ({
       
       await new Promise(resolve => setTimeout(resolve, 1500));
       
-      if (step < steps.length - 1) {
+      if (step < 3) {
         setStep(prev => prev + 1);
-      } else {
-        // Play completion sound on final step
-        await cultSounds.playRitualCompleteSound();
+      } else if (step === 3) {
+        // Wait for user to click execute
+        // Step 4 (execution) and 5 (completion) are handled by button clicks
       }
     };
 
-    typeText();
+    if (step < 4) {
+      typeText();
+    }
   }, [step]);
+
+  // Handle actual swap execution
+  const executeRealSwap = useCallback(async () => {
+    await handleExecuteSwap();
+  }, [handleExecuteSwap]);
 
   return (
     <div className="ritual-modal-overlay">
@@ -94,11 +126,23 @@ const RitualModal = ({
             <div className="ritual-stats">
               <div>Rate: {rate.toFixed(4)} {outputToken.symbol}/{inputToken.symbol}</div>
               <div>Impact: {priceImpact.toFixed(2)}%</div>
-              <div>TX: {fakeTxHash}</div>
+              <div>TX: {txHash ? `${txHash.slice(0, 8)}...${txHash.slice(-8)}` : 'Pending...'}</div>
+              {swapError && <div style={{color: '#ff6b6b'}}>Error: {swapError}</div>}
             </div>
           </div>
           
-          {step === steps.length - 1 && (
+          {step === 3 && !isExecuting && (
+            <button 
+              className="ritual-execute-btn"
+              onClick={executeRealSwap}
+              disabled={swapLoading}
+              onMouseEnter={() => cultSounds.playHoverSound()}
+            >
+              {swapLoading ? '🕯️ Executing...' : '⚡ Execute Swap'}
+            </button>
+          )}
+          
+          {(step === 5 || txHash) && (
             <button 
               className="ritual-complete-btn"
               onClick={async () => {
@@ -122,10 +166,15 @@ const SwapInterface = ({ connection, program }: SwapInterfaceProps) => {
   const [swapError, setSwapError] = useState('');
   const [showModal, setShowModal] = useState(false);
   const [modalStep, setModalStep] = useState(0);
+  const [swapSuccess, setSwapSuccess] = useState(false);
   
-  // Token selection (you can make this dynamic later)
-  const [inputToken] = useState(POPULAR_TOKENS.SOL);
-  const [outputToken] = useState(POPULAR_TOKENS.USDC);
+  // Token selection - now dynamic!
+  const [inputToken, setInputToken] = useState(EXTENDED_TOKEN_LIST[0]); // SOL
+  const [outputToken, setOutputToken] = useState(EXTENDED_TOKEN_LIST[1]); // USDC
+
+  // Real-time price data for both tokens
+  const inputPriceData = usePriceData(inputToken.symbol);
+  const outputPriceData = usePriceData(outputToken.symbol);
 
   // Calculate raw amount for Jupiter API
   const rawInputAmount = useMemo(() => {
@@ -133,7 +182,7 @@ const SwapInterface = ({ connection, program }: SwapInterfaceProps) => {
     return toRawAmount(inputAmount, inputToken.decimals);
   }, [inputAmount, inputToken.decimals]);
 
-  // Use our mobile-friendly Jupiter hook
+  // Use our mobile-friendly Jupiter hooks
   const { 
     quote, 
     loading, 
@@ -147,6 +196,13 @@ const SwapInterface = ({ connection, program }: SwapInterfaceProps) => {
     amount: rawInputAmount,
     slippageBps: 100 // 1% slippage
   });
+
+  const { 
+    executeSwap, 
+    loading: swapLoading, 
+    error: swapExecutionError, 
+    txHash 
+  } = useJupiterSwap();
 
   // Calculate output amount from quote
   const outputAmount = useMemo(() => {
@@ -165,8 +221,43 @@ const SwapInterface = ({ connection, program }: SwapInterfaceProps) => {
     setSwapError('');
     setModalStep(0);
     setShowModal(true);
+    setSwapSuccess(false);
     await cultSounds.playConnectSound();
   }, [connected, publicKey, quote]);
+
+  // Handle token swapping
+  const handleTokenSwap = useCallback(async () => {
+    const tempToken = inputToken;
+    setInputToken(outputToken);
+    setOutputToken(tempToken);
+    setInputAmount(''); // Clear amount when swapping
+    await cultSounds.playSwapSound();
+  }, [inputToken, outputToken]);
+
+  // Handle token selection
+  const handleInputTokenSelect = useCallback(async (token: any) => {
+    setInputToken(token);
+    await cultSounds.playHoverSound();
+  }, []);
+
+  const handleOutputTokenSelect = useCallback(async (token: any) => {
+    setOutputToken(token);
+    await cultSounds.playHoverSound();
+  }, []);
+
+  // Handle actual swap execution
+  const handleExecuteSwap = useCallback(async (quoteToExecute: any) => {
+    try {
+      const result = await executeSwap(quoteToExecute);
+      if (result) {
+        setSwapSuccess(true);
+        await cultSounds.playRitualCompleteSound();
+      }
+    } catch (error) {
+      console.error('Swap execution failed:', error);
+      await cultSounds.playErrorSound();
+    }
+  }, [executeSwap]);
 
   return (
     <div className="swap-interface">
@@ -174,6 +265,61 @@ const SwapInterface = ({ connection, program }: SwapInterfaceProps) => {
         <div className="swap-header">
           <h2>🌙 NocturneSwap</h2>
           <p>Live Jupiter quotes • {inputToken.symbol} ⇄ {outputToken.symbol}</p>
+        </div>
+
+        {/* Real-time Price Data */}
+        <div className="price-data-section">
+          <div className="token-price-card">
+            <div className="price-card-header">
+              <span className="token-symbol">{inputToken.symbol}</span>
+              <span className="token-name">{inputToken.name}</span>
+            </div>
+            {inputPriceData.loading ? (
+              <div className="price-loading">Loading...</div>
+            ) : inputPriceData.priceData ? (
+              <div className="price-details">
+                <div className="current-price">
+                  {formatPrice(inputPriceData.priceData.price)}
+                </div>
+                <div className={`price-change ${inputPriceData.priceData.change24h >= 0 ? 'positive' : 'negative'}`}>
+                  {formatChange(inputPriceData.priceData.change24h)}
+                </div>
+                <div className="price-stats">
+                  <span>Vol: {formatLargeNumber(inputPriceData.priceData.volume24h)}</span>
+                  <span>MCap: {formatLargeNumber(inputPriceData.priceData.marketCap)}</span>
+                </div>
+              </div>
+            ) : (
+              <div className="price-unavailable">Price data unavailable</div>
+            )}
+          </div>
+
+          <div className="price-divider">⇄</div>
+
+          <div className="token-price-card">
+            <div className="price-card-header">
+              <span className="token-symbol">{outputToken.symbol}</span>
+              <span className="token-name">{outputToken.name}</span>
+            </div>
+            {outputPriceData.loading ? (
+              <div className="price-loading">Loading...</div>
+            ) : outputPriceData.priceData ? (
+              <div className="price-details">
+                <div className="current-price">
+                  {formatPrice(outputPriceData.priceData.price)}
+                </div>
+                <div className={`price-change ${outputPriceData.priceData.change24h >= 0 ? 'positive' : 'negative'}`}>
+                  {formatChange(outputPriceData.priceData.change24h)}
+                </div>
+                <div className="price-stats">
+                  <span>Vol: {formatLargeNumber(outputPriceData.priceData.volume24h)}</span>
+                  <span>MCap: {formatLargeNumber(outputPriceData.priceData.marketCap)}</span>
+                </div>
+              </div>
+            ) : (
+              <div className="price-unavailable">Price data unavailable</div>
+            )}
+          </div>
         </div>
 
         <div className="wallet-connection">
@@ -195,46 +341,63 @@ const SwapInterface = ({ connection, program }: SwapInterfaceProps) => {
         <div className="swap-form">
           {/* Input Token */}
           <div className="token-input">
-            <div className="token-input-header">
-              <label>From</label>
-              <div className="token-selector">
-                <img src={inputToken.logoURI} alt={inputToken.symbol} width="20" height="20" />
-                <span>{inputToken.symbol}</span>
-              </div>
-            </div>
-            <input
-              type="number"
-              value={inputAmount}
-              onChange={(e) => setInputAmount(e.target.value)}
-              placeholder="0.0"
-              step="0.000001"
-              className="amount-input"
+            <TokenSelector
+              selectedToken={inputToken}
+              onTokenSelect={handleInputTokenSelect}
+              otherToken={outputToken}
+              label="From"
             />
+            <div className="amount-input-container">
+              <input
+                type="number"
+                value={inputAmount}
+                onChange={(e) => setInputAmount(e.target.value)}
+                placeholder="0.0"
+                step="0.000001"
+                className="amount-input"
+              />
+              {inputAmount && inputPriceData.priceData && (
+                <div className="usd-value">
+                  ≈ {formatPrice(parseFloat(inputAmount) * inputPriceData.priceData.price)}
+                </div>
+              )}
+            </div>
           </div>
 
           {/* Swap Arrow */}
           <div className="swap-arrow">
-            <button className="swap-tokens-btn" type="button">
+            <button 
+              className="swap-tokens-btn" 
+              type="button"
+              onClick={handleTokenSwap}
+              onMouseEnter={() => cultSounds.playHoverSound()}
+            >
               ⇅
             </button>
           </div>
 
           {/* Output Token */}
           <div className="token-input">
-            <div className="token-input-header">
-              <label>To (Jupiter Quote)</label>
-              <div className="token-selector">
-                <img src={outputToken.logoURI} alt={outputToken.symbol} width="20" height="20" />
-                <span>{outputToken.symbol}</span>
-              </div>
-            </div>
-            <input
-              type="number"
-              value={outputAmount}
-              readOnly
-              placeholder={loading ? 'Getting quote...' : '0.0'}
-              className={`amount-input readonly ${loading ? 'loading' : ''}`}
+            <TokenSelector
+              selectedToken={outputToken}
+              onTokenSelect={handleOutputTokenSelect}
+              otherToken={inputToken}
+              label="To (Jupiter Quote)"
             />
+            <div className="amount-input-container">
+              <input
+                type="number"
+                value={outputAmount}
+                readOnly
+                placeholder={loading ? 'Getting quote...' : '0.0'}
+                className={`amount-input readonly ${loading ? 'loading' : ''}`}
+              />
+              {outputAmount && outputPriceData.priceData && (
+                <div className="usd-value">
+                  ≈ {formatPrice(parseFloat(outputAmount) * outputPriceData.priceData.price)}
+                </div>
+              )}
+            </div>
           </div>
 
           {/* Live Quote Details */}
@@ -329,7 +492,12 @@ const SwapInterface = ({ connection, program }: SwapInterfaceProps) => {
         outputToken={outputToken}
         rate={rate}
         priceImpact={priceImpact}
+        quote={quote}
         onClose={() => setShowModal(false)}
+        onExecuteSwap={handleExecuteSwap}
+        swapLoading={swapLoading}
+        txHash={txHash}
+        swapError={swapExecutionError}
       />}
     </div>
   );

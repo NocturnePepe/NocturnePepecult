@@ -777,155 +777,525 @@
     0 10px 30px rgba(0, 0, 0, 0.5);
 }
 
-/* ===== ENHANCED TOKEN DROPDOWN WITH RUNE STYLING ===== */
+/* ===== RITUAL EXECUTE BUTTON STYLING ===== */
 
-.token-input-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 16px;
-  position: relative;
-}
-
-.token-input-header label {
-  color: #a0a0a0;
-  font-size: 14px;
-  font-weight: 500;
-  font-family: 'Cinzel', serif;
-  letter-spacing: 0.5px;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
-}
-
-.token-selector {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 10px 14px;
-  background: 
-    linear-gradient(135deg, rgba(138, 43, 226, 0.15), rgba(75, 0, 130, 0.08)),
-    rgba(0, 0, 0, 0.4);
-  border: 2px solid rgba(138, 43, 226, 0.3);
+.ritual-execute-btn {
+  background: linear-gradient(45deg, #ff4500, #8a2be2, #4b0082);
+  border: 2px solid rgba(255, 69, 0, 0.6);
   border-radius: 16px;
-  transition: all 0.3s ease;
-  backdrop-filter: blur(10px);
+  padding: 16px 32px;
+  font-size: 18px;
+  font-weight: 600;
+  font-family: 'Cinzel', serif;
+  color: white;
   cursor: pointer;
-  position: relative;
-  overflow: hidden;
+  transition: all 0.3s ease;
+  box-shadow: 
+    0 0 30px rgba(255, 69, 0, 0.4),
+    0 4px 15px rgba(0, 0, 0, 0.3);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+  letter-spacing: 1px;
+  margin-bottom: 16px;
+  animation: executeButtonPulse 2s ease-in-out infinite;
 }
 
-.token-selector::before {
-  content: '';
+@keyframes executeButtonPulse {
+  0%, 100% { 
+    box-shadow: 0 0 30px rgba(255, 69, 0, 0.4), 0 4px 15px rgba(0, 0, 0, 0.3);
+    transform: scale(1);
+  }
+  50% { 
+    box-shadow: 0 0 50px rgba(255, 69, 0, 0.7), 0 6px 20px rgba(0, 0, 0, 0.4);
+    transform: scale(1.05);
+  }
+}
+
+.ritual-execute-btn:hover {
+  transform: translateY(-3px) scale(1.08);
+  background: linear-gradient(45deg, #ff6347, #9932cc, #5d1a8b);
+  box-shadow: 
+    0 0 60px rgba(255, 69, 0, 0.8),
+    0 10px 30px rgba(0, 0, 0, 0.5);
+  border-color: rgba(255, 69, 0, 0.8);
+}
+
+.ritual-execute-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none !important;
+  animation: none;
+}
+
+/* ===== TOKEN SELECTOR DROPDOWN STYLING ===== */
+
+.token-selector-container {
+  position: relative;
+}
+
+.token-selector.open {
+  border-color: rgba(138, 43, 226, 0.8) !important;
+  background: 
+    linear-gradient(135deg, rgba(138, 43, 226, 0.3), rgba(75, 0, 130, 0.2)),
+    rgba(0, 0, 0, 0.6) !important;
+}
+
+.token-dropdown {
   position: absolute;
-  top: 0;
+  top: 100%;
   left: 0;
   right: 0;
-  bottom: 0;
   background: 
-    url("data:image/svg+xml,%3Csvg width='16' height='16' viewBox='0 0 16 16' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M2,2 L8,8 M2,8 L8,2 M8,8 L14,14 M8,14 L14,8' stroke='%23ff4500' stroke-width='0.5' opacity='0.2'/%3E%3C/svg%3E"),
-    linear-gradient(45deg, transparent 48%, rgba(138, 43, 226, 0.05) 50%, transparent 52%);
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-.token-selector:hover {
-  border-color: rgba(138, 43, 226, 0.6);
-  background: 
-    linear-gradient(135deg, rgba(138, 43, 226, 0.25), rgba(75, 0, 130, 0.15)),
-    rgba(0, 0, 0, 0.5);
-  transform: translateY(-2px) scale(1.02);
+    linear-gradient(135deg, rgba(10, 10, 30, 0.95), rgba(20, 10, 40, 0.9)),
+    rgba(0, 0, 0, 0.9);
+  border: 2px solid rgba(138, 43, 226, 0.6);
+  border-radius: 16px;
+  margin-top: 8px;
   box-shadow: 
-    0 0 25px rgba(138, 43, 226, 0.4),
-    0 5px 20px rgba(0, 0, 0, 0.3);
+    0 0 40px rgba(138, 43, 226, 0.4),
+    0 10px 30px rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(20px);
+  z-index: 1000;
+  max-height: 320px;
+  overflow: hidden;
+  animation: dropdownSlideIn 0.3s ease;
 }
 
-.token-selector:hover::before {
-  opacity: 1;
+@keyframes dropdownSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
-.token-selector img {
-  border-radius: 50%;
-  box-shadow: 
-    0 0 10px rgba(138, 43, 226, 0.3),
-    0 2px 8px rgba(0, 0, 0, 0.4);
+.token-search {
+  padding: 16px;
+  border-bottom: 1px solid rgba(138, 43, 226, 0.3);
+}
+
+.token-search-input {
+  width: 100%;
+  padding: 12px 16px;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(138, 43, 226, 0.3);
+  border-radius: 12px;
+  color: #e0e0e0;
+  font-size: 14px;
+  font-family: 'Cinzel', serif;
+  outline: none;
   transition: all 0.3s ease;
 }
 
-.token-selector:hover img {
-  box-shadow: 
-    0 0 15px rgba(138, 43, 226, 0.5),
-    0 3px 12px rgba(0, 0, 0, 0.5);
+.token-search-input:focus {
+  border-color: rgba(138, 43, 226, 0.6);
+  box-shadow: 0 0 15px rgba(138, 43, 226, 0.3);
+}
+
+.token-search-input::placeholder {
+  color: #666;
+  font-family: 'Cinzel', serif;
+}
+
+.token-list {
+  max-height: 200px;
+  overflow-y: auto;
+  padding: 8px;
+}
+
+.token-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.token-list::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 3px;
+}
+
+.token-list::-webkit-scrollbar-thumb {
+  background: linear-gradient(45deg, #8a2be2, #4b0082);
+  border-radius: 3px;
+}
+
+.token-option {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: 1px solid transparent;
+}
+
+.token-option:hover {
+  background: 
+    linear-gradient(135deg, rgba(138, 43, 226, 0.2), rgba(75, 0, 130, 0.1)),
+    rgba(0, 0, 0, 0.3);
+  border-color: rgba(138, 43, 226, 0.3);
+  transform: translateX(4px);
+}
+
+.token-option img {
+  border-radius: 50%;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  transition: all 0.2s ease;
+}
+
+.token-option:hover img {
+  box-shadow: 0 0 12px rgba(138, 43, 226, 0.4);
   transform: scale(1.1);
 }
 
-.token-selector span {
+.token-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.token-symbol {
   color: #e0e0e0;
   font-weight: 600;
   font-size: 14px;
   font-family: 'Cinzel', serif;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
-  letter-spacing: 0.5px;
-  transition: all 0.3s ease;
 }
 
-.token-selector:hover span {
-  color: #ffffff;
-  text-shadow: 0 0 8px rgba(138, 43, 226, 0.6);
+.token-name {
+  color: #a0a0a0;
+  font-size: 12px;
+  font-family: 'Cinzel', serif;
 }
 
-/* Mystical Arrow Indicator */
+.no-tokens {
+  text-align: center;
+  padding: 24px;
+  color: #666;
+  font-style: italic;
+  font-family: 'Cinzel', serif;
+}
+
+.custom-token-section {
+  padding: 12px 16px;
+  border-top: 1px solid rgba(138, 43, 226, 0.2);
+}
+
+.custom-token-hint {
+  font-size: 11px;
+  color: #8a2be2;
+  text-align: center;
+  font-family: 'Cinzel', serif;
+  opacity: 0.8;
+}
+
+.token-dropdown-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 999;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+/* Enhanced token selector with runic animations */
 .token-selector::after {
   content: '⌄';
   color: rgba(138, 43, 226, 0.6);
-  font-size: 12px;
-  margin-left: 4px;
+  font-size: 14px;
+  margin-left: 8px;
   transition: all 0.3s ease;
   transform: rotate(0deg);
 }
 
-.token-selector:hover::after {
+.token-selector.open::after {
   color: rgba(138, 43, 226, 1);
   transform: rotate(180deg);
 }
 
-/* Enhanced Error States with Cult Styling */
-.error-message {
-  background: 
-    linear-gradient(135deg, rgba(248, 113, 113, 0.2), rgba(220, 38, 38, 0.15)),
-    rgba(139, 0, 0, 0.1);
-  border: 2px solid rgba(248, 113, 113, 0.4);
+/* ===== PRICE DATA SECTION ===== */
+.price-data-section {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 24px;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(138, 43, 226, 0.3);
   border-radius: 16px;
-  padding: 16px 20px;
-  margin: 16px 0;
-  color: #ff6b6b;
-  font-size: 14px;
-  font-weight: 500;
-  font-family: 'Cinzel', serif;
-  backdrop-filter: blur(15px);
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
-  animation: errorPulse 2s ease-in-out infinite;
+  backdrop-filter: blur(10px);
+  box-shadow: 
+    0 0 20px rgba(138, 43, 226, 0.2),
+    inset 0 0 10px rgba(255, 69, 0, 0.1);
+}
+
+.token-price-card {
+  flex: 1;
+  background: rgba(138, 43, 226, 0.1);
+  border: 1px solid rgba(138, 43, 226, 0.2);
+  border-radius: 12px;
+  padding: 16px;
+  transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
 }
 
-.error-message::before {
-  content: '⚠️';
-  margin-right: 8px;
-  font-size: 16px;
-  animation: warningFlicker 1s ease-in-out infinite alternate;
+.token-price-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(138, 43, 226, 0.2), transparent);
+  transition: left 0.5s ease;
 }
 
-@keyframes warningFlicker {
-  0% { opacity: 0.7; }
-  100% { opacity: 1; }
+.token-price-card:hover::before {
+  left: 100%;
 }
 
-@keyframes errorPulse {
-  0%, 100% { 
-    border-color: rgba(248, 113, 113, 0.4);
-    box-shadow: 0 0 20px rgba(248, 113, 113, 0.2);
+.token-price-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 
+    0 0 25px rgba(138, 43, 226, 0.4),
+    0 8px 20px rgba(0, 0, 0, 0.3);
+  border-color: rgba(138, 43, 226, 0.5);
+}
+
+.price-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.token-symbol {
+  font-size: 18px;
+  font-weight: 700;
+  color: #e0e0e0;
+  font-family: 'Cinzel', serif;
+  text-shadow: 0 0 5px rgba(138, 43, 226, 0.5);
+}
+
+.token-name {
+  font-size: 12px;
+  color: #a0a0a0;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.price-details {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.current-price {
+  font-size: 20px;
+  font-weight: 700;
+  color: #fff;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+  font-family: 'Cinzel', serif;
+}
+
+.price-change {
+  font-size: 14px;
+  font-weight: 600;
+  text-shadow: 0 0 5px currentColor;
+}
+
+.price-change.positive {
+  color: #00ff88;
+}
+
+.price-change.negative {
+  color: #ff6b6b;
+}
+
+.price-stats {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: #888;
+  margin-top: 4px;
+}
+
+.price-stats span {
+  background: rgba(0, 0, 0, 0.3);
+  padding: 4px 8px;
+  border-radius: 8px;
+  border: 1px solid rgba(138, 43, 226, 0.2);
+}
+
+.price-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #8a2be2;
+  font-size: 24px;
+  text-shadow: 0 0 10px rgba(138, 43, 226, 0.5);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.price-loading, .price-unavailable {
+  color: #666;
+  font-style: italic;
+  text-align: center;
+  padding: 20px 0;
+}
+
+.price-loading {
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+/* USD Value Display in Inputs */
+.amount-input-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.usd-value {
+  position: absolute;
+  right: 12px;
+  bottom: 8px;
+  font-size: 12px;
+  color: #888;
+  background: rgba(0, 0, 0, 0.6);
+  padding: 2px 6px;
+  border-radius: 6px;
+  border: 1px solid rgba(138, 43, 226, 0.2);
+  backdrop-filter: blur(5px);
+  pointer-events: none;
+}
+
+.amount-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: #e0e0e0;
+  font-size: 24px;
+  font-weight: 600;
+  outline: none;
+  padding: 12px 16px;
+  width: 100%;
+  font-family: 'Cinzel', serif;
+  text-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
+}
+
+.amount-input::placeholder {
+  color: #666;
+  font-style: italic;
+}
+
+.amount-input.readonly {
+  opacity: 0.8;
+  cursor: not-allowed;
+}
+
+.amount-input.loading {
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+/* ===== RESPONSIVE DESIGN ===== */
+@media (max-width: 768px) {
+  .swap-container {
+    padding: 16px;
+    margin: 10px;
+    max-width: calc(100vw - 20px);
   }
-  50% { 
-    border-color: rgba(248, 113, 113, 0.6);
-    box-shadow: 0 0 30px rgba(248, 113, 113, 0.4);
+
+  .swap-header h2 {
+    font-size: 24px;
+  }
+
+  .price-data-section {
+    flex-direction: column;
+    gap: 12px;
+    padding: 16px;
+  }
+
+  .token-price-card {
+    padding: 12px;
+  }
+
+  .current-price {
+    font-size: 18px;
+  }
+
+  .price-stats {
+    flex-direction: column;
+    gap: 4px;
+    align-items: center;
+  }
+
+  .price-divider {
+    transform: rotate(90deg);
+    font-size: 20px;
+  }
+
+  .amount-input {
+    font-size: 20px;
+  }
+
+  .usd-value {
+    position: static;
+    margin-top: 8px;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.8);
+    padding: 6px 12px;
+    border-radius: 8px;
+  }
+
+  .amount-input-container {
+    gap: 8px;
+  }
+
+  .token-input {
+    padding: 16px;
+  }
+
+  .ritual-modal {
+    width: 95%;
+    margin: 10px;
+    padding: 20px;
+  }
+
+  .quote-info {
+    padding: 12px;
+  }
+
+  .quote-detail {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+}
+
+@media (max-width: 480px) {
+  .swap-header h2 {
+    font-size: 20px;
+  }
+
+  .price-data-section {
+    padding: 12px;
+  }
+
+  .current-price {
+    font-size: 16px;
+  }
+
+  .token-symbol {
+    font-size: 16px;
+  }
+
+  .amount-input {
+    font-size: 18px;
+  }
+
+  .swap-button {
+    font-size: 16px;
+    padding: 16px 24px;
   }
 }
