@@ -1,0 +1,362 @@
+{
+  "timestamp": "2025-07-08T08:00:26.541853",
+  "version": "1.0.0",
+  "overall_score": 80,
+  "categories": {
+    "frontend": {
+      "score": 4,
+      "vulnerabilities": 26,
+      "compliant_items": 18
+    },
+    "smart_contracts": {
+      "score": 100,
+      "vulnerabilities": 0,
+      "compliant_items": 2
+    },
+    "infrastructure": {
+      "score": 100,
+      "vulnerabilities": 0,
+      "compliant_items": 2
+    },
+    "dependencies": {
+      "score": 96,
+      "vulnerabilities": 2,
+      "compliant_items": 0
+    },
+    "configuration": {
+      "score": 100,
+      "vulnerabilities": 0,
+      "compliant_items": 1
+    }
+  },
+  "vulnerabilities": [
+    {
+      "type": "XSS",
+      "severity": "HIGH",
+      "file": "optimized/index.html",
+      "line": 1,
+      "description": "Potential XSS vulnerability: innerHTML = mockTrades.map(trade => `<div class=\"trade-entry\"><div class=\"trade-pair\">${trade.pair}</div><div class=\"trade-amount\">${trade.amount}</div><div class=\"trade-time\">${trade.time}</div></div>` ).join(''); } // Update portfolio stats const portfolioValue = document.getElementById('portfolioValue'); const portfolioChange = document.getElementById('portfolioChange'); if (portfolioValue) portfolioValue.textContent = '$' + (Math.random() * 10000 + 1000).toFixed(2); if (portfolioChange) { const change = (Math.random() - 0.5) * 20; portfolioChange.textContent = (change > 0 ? '+' : '') + change.toFixed(2) +",
+      "recommendation": "Use proper input sanitization and avoid dangerous DOM manipulation"
+    },
+    {
+      "type": "XSS",
+      "severity": "HIGH",
+      "file": "optimized/index-broken-backup.html",
+      "line": 1,
+      "description": "Potential XSS vulnerability: innerHTML = mockTrades.map(trade => `<div class=\"trade-entry\"><div class=\"trade-pair\">${trade.pair}</div><div class=\"trade-amount\">${trade.amount}</div><div class=\"trade-time\">${trade.time}</div></div>` ).join(''); } // Update portfolio stats const portfolioValue = document.getElementById('portfolioValue'); const portfolioChange = document.getElementById('portfolioChange'); if (portfolioValue) portfolioValue.textContent = '$' + (Math.random() * 10000 + 1000).toFixed(2); if (portfolioChange) { const change = (Math.random() - 0.5) * 20; portfolioChange.textContent = (change > 0 ? '+' : '') + change.toFixed(2) +",
+      "recommendation": "Use proper input sanitization and avoid dangerous DOM manipulation"
+    },
+    {
+      "type": "XSS",
+      "severity": "HIGH",
+      "file": "optimized/index-professional.html",
+      "line": 1,
+      "description": "Potential XSS vulnerability: innerHTML = mockTrades.map(trade => `<div class=\"trade-entry\"><div class=\"trade-pair\">${trade.pair}</div><div class=\"trade-amount\">${trade.amount}</div><div class=\"trade-time\">${trade.time}</div></div>` ).join(''); } // Update portfolio stats const portfolioValue = document.getElementById('portfolioValue'); const portfolioChange = document.getElementById('portfolioChange'); if (portfolioValue) portfolioValue.textContent = '$' + (Math.random() * 10000 + 1000).toFixed(2); if (portfolioChange) { const change = (Math.random() - 0.5) * 20; portfolioChange.textContent = (change > 0 ? '+' : '') + change.toFixed(2) +",
+      "recommendation": "Use proper input sanitization and avoid dangerous DOM manipulation"
+    },
+    {
+      "type": "XSS",
+      "severity": "HIGH",
+      "file": "optimized/src/cult-gamification.js",
+      "line": 1,
+      "description": "Potential XSS vulnerability: innerHTML = ` <div class=\"achievement-content\"> <div class=\"achievement-icon\">${achievement.icon}</div> <div class=\"achievement-text\"> <div class=\"achievement-title\">Achievement Unlocked!</div> <div class=\"achievement-name\">${achievement.name}</div> <div class=\"achievement-description\">${achievement.description}</div> <div class=\"achievement-points\">+${achievement.points}XP</div> </div> </div> `;document.body.appendChild(notification);setTimeout(()=> notification.classList.add('show'),100);setTimeout(()=>{notification.classList.remove('show');setTimeout(()=> notification.remove(),300);},5000);this.playSoundEffect('achievement');this.emitGamificationEvent('achievement-unlocked',achievement);}showRankUpCelebration(){const rankData = this.rankThresholds[this.cultRank];const celebration = document.createElement('div');celebration.className = 'rank-up-celebration';celebration.innerHTML = ` <div class=\"rank-celebration-content\"> <div class=\"rank-icon\">${rankData.icon}</div> <div class=\"rank-title\">RANK UP!</div> <div class=\"rank-name\" style=\"color: ${rankData.color}\">${rankData.name}</div> <div class=\"rank-subtitle\">You have ascended in the cult hierarchy</div> </div> `;document.body.appendChild(celebration);setTimeout(()=> celebration.classList.add('show'),100);setTimeout(()=>{celebration.classList.remove('show');setTimeout(()=> celebration.remove(),300);},6000);this.playSoundEffect('rankup');this.updateRankDisplay();this.emitGamificationEvent('rank-up',rankData);}showSwapCelebration(usdValue){if(usdValue < 100)return;const celebration = document.createElement('div');celebration.className = 'swap-celebration';celebration.innerHTML = ` <div class=\"swap-celebration-content\"> <div class=\"swap-amount\">$${this.formatNumber(usdValue)}</div> <div class=\"swap-text\">SOULS TRADED</div> <div class=\"swap-particles\"></div> </div> `;document.body.appendChild(celebration);this.createCelebrationParticles(celebration.querySelector('.swap-particles'));setTimeout(()=> celebration.classList.add('show'),100);setTimeout(()=>{celebration.classList.remove('show');setTimeout(()=> celebration.remove(),300);},3000);}createCelebrationParticles(container){for(let i = 0;i < 20;i++){const particle = document.createElement('div');particle.className = 'celebration-particle';particle.innerHTML = ['\ud83d\udc80','\ud83d\udc7b','\ud83c\udf19','\u2b50','\u2728'][Math.floor(Math.random()* 5)];particle.style.left = Math.random()* 100 + '%';particle.style.animationDelay = Math.random()* 2 + 's';particle.style.animationDuration =(2 + Math.random()* 3)+ 's';container.appendChild(particle);}}updateRankDisplay(){const rankElements = document.querySelectorAll('.cult-rank');const rankData = this.rankThresholds[this.cultRank];rankElements.forEach(element =>{element.innerHTML = ` <span class=\"rank-icon\">${rankData.icon}</span> <span class=\"rank-name\" style=\"color: ${rankData.color}\">${rankData.name}</span> `;});this.updateRankProgress();}updateRankProgress(){const currentRank = this.rankThresholds[this.cultRank];const nextRank = this.rankThresholds[this.cultRank + 1];if(nextRank){const progress =(this.tradingVolume - currentRank.minVolume)/(nextRank.minVolume - currentRank.minVolume)* 100;const progressElements = document.querySelectorAll('.rank-progress');progressElements.forEach(element =>{element.style.width = Math.min(100,Math.max(0,progress))+ '%';});const progressTexts = document.querySelectorAll('.rank-progress-text');progressTexts.forEach(element =>{element.textContent = `${this.formatNumber(this.tradingVolume)}/ ${this.formatNumber(nextRank.minVolume)}`;});}}calculateUSDValue(amount,token){const prices ={'SOL': 100,'USDC': 1,'USDT': 1,'RAY': 0.5,'SRM': 0.3};return amount *(prices[token] || 1);}playSoundEffect(type){console.log(`\ud83d\udd0a Playing ${type}sound effect`);}formatNumber(num){if(num >= 1000000){return(num / 1000000).toFixed(1)+ 'M';}else if(num >= 1000){return(num / 1000).toFixed(1)+ 'K';}return num.toFixed(0);}showWelcomeMessage(){const welcome = document.createElement('div');welcome.className = 'cult-welcome';welcome.innerHTML = ` <div class=\"welcome-content\"> <div class=\"welcome-icon\">\ud83c\udf19</div> <div class=\"welcome-title\">Welcome to the Cult</div> <div class=\"welcome-subtitle\">Begin your journey in the NocturneSwap hierarchy</div> <div class=\"welcome-rank\">Starting Rank: ${this.rankThresholds[0].icon}${this.rankThresholds[0].name}</div> </div> `;document.body.appendChild(welcome);setTimeout(()=> welcome.classList.add('show'),100);setTimeout(()=>{welcome.classList.remove('show');setTimeout(()=> welcome.remove(),300);},8000);}startPeriodicUpdates(){setInterval(()=>{this.updateChallenges();this.updateLeaderboard();},60000);}updateChallenges(){this.emitGamificationEvent('challenges-updated',this.challenges);}updateLeaderboard(){this.emitGamificationEvent('leaderboard-updated',this.leaderboard);}emitGamificationEvent(eventType,data){const event = new CustomEvent(`nocturne-gamification-${eventType}`,{detail: data});window.dispatchEvent(event);}getUserStats(){return{level: this.userLevel,rank: this.cultRank,tradingVolume: this.tradingVolume,achievements: Array.from(this.achievements),achievementCount: this.achievements.size,totalAchievements: this.achievementTypes.length};}getRankInfo(){return this.rankThresholds[this.cultRank];}getNextRankInfo(){return this.rankThresholds[this.cultRank +",
+      "recommendation": "Use proper input sanitization and avoid dangerous DOM manipulation"
+    },
+    {
+      "type": "CSRF",
+      "severity": "MEDIUM",
+      "file": "mobile-test.html",
+      "description": "Forms found without CSRF protection",
+      "recommendation": "Implement CSRF tokens for all state-changing operations"
+    },
+    {
+      "type": "CSRF",
+      "severity": "MEDIUM",
+      "file": "build/index.html",
+      "description": "Forms found without CSRF protection",
+      "recommendation": "Implement CSRF tokens for all state-changing operations"
+    },
+    {
+      "type": "CSRF",
+      "severity": "MEDIUM",
+      "file": "optimized/index-wallet.html",
+      "description": "Forms found without CSRF protection",
+      "recommendation": "Implement CSRF tokens for all state-changing operations"
+    },
+    {
+      "type": "CSRF",
+      "severity": "MEDIUM",
+      "file": "optimized/index-stable.html",
+      "description": "Forms found without CSRF protection",
+      "recommendation": "Implement CSRF tokens for all state-changing operations"
+    },
+    {
+      "type": "CSRF",
+      "severity": "MEDIUM",
+      "file": "optimized/dev.html",
+      "description": "Forms found without CSRF protection",
+      "recommendation": "Implement CSRF tokens for all state-changing operations"
+    },
+    {
+      "type": "CSRF",
+      "severity": "MEDIUM",
+      "file": "optimized/index.html",
+      "description": "Forms found without CSRF protection",
+      "recommendation": "Implement CSRF tokens for all state-changing operations"
+    },
+    {
+      "type": "CSRF",
+      "severity": "MEDIUM",
+      "file": "optimized/index-simple.html",
+      "description": "Forms found without CSRF protection",
+      "recommendation": "Implement CSRF tokens for all state-changing operations"
+    },
+    {
+      "type": "CSRF",
+      "severity": "MEDIUM",
+      "file": "optimized/index-broken-backup.html",
+      "description": "Forms found without CSRF protection",
+      "recommendation": "Implement CSRF tokens for all state-changing operations"
+    },
+    {
+      "type": "CSRF",
+      "severity": "MEDIUM",
+      "file": "optimized/index-professional.html",
+      "description": "Forms found without CSRF protection",
+      "recommendation": "Implement CSRF tokens for all state-changing operations"
+    },
+    {
+      "type": "CSRF",
+      "severity": "MEDIUM",
+      "file": "optimized/index-complex.html",
+      "description": "Forms found without CSRF protection",
+      "recommendation": "Implement CSRF tokens for all state-changing operations"
+    },
+    {
+      "type": "CSRF",
+      "severity": "MEDIUM",
+      "file": "frontend/index-wallet.html",
+      "description": "Forms found without CSRF protection",
+      "recommendation": "Implement CSRF tokens for all state-changing operations"
+    },
+    {
+      "type": "CSRF",
+      "severity": "MEDIUM",
+      "file": "frontend/index-stable.html",
+      "description": "Forms found without CSRF protection",
+      "recommendation": "Implement CSRF tokens for all state-changing operations"
+    },
+    {
+      "type": "CSRF",
+      "severity": "MEDIUM",
+      "file": "frontend/dev.html",
+      "description": "Forms found without CSRF protection",
+      "recommendation": "Implement CSRF tokens for all state-changing operations"
+    },
+    {
+      "type": "CSRF",
+      "severity": "MEDIUM",
+      "file": "frontend/index.html",
+      "description": "Forms found without CSRF protection",
+      "recommendation": "Implement CSRF tokens for all state-changing operations"
+    },
+    {
+      "type": "CSRF",
+      "severity": "MEDIUM",
+      "file": "frontend/index-simple.html",
+      "description": "Forms found without CSRF protection",
+      "recommendation": "Implement CSRF tokens for all state-changing operations"
+    },
+    {
+      "type": "CSRF",
+      "severity": "MEDIUM",
+      "file": "frontend/index-broken-backup.html",
+      "description": "Forms found without CSRF protection",
+      "recommendation": "Implement CSRF tokens for all state-changing operations"
+    },
+    {
+      "type": "CSRF",
+      "severity": "MEDIUM",
+      "file": "frontend/index-professional.html",
+      "description": "Forms found without CSRF protection",
+      "recommendation": "Implement CSRF tokens for all state-changing operations"
+    },
+    {
+      "type": "CSRF",
+      "severity": "MEDIUM",
+      "file": "frontend/index-complex.html",
+      "description": "Forms found without CSRF protection",
+      "recommendation": "Implement CSRF tokens for all state-changing operations"
+    },
+    {
+      "type": "CSRF",
+      "severity": "MEDIUM",
+      "file": "frontend/public/index.html",
+      "description": "Forms found without CSRF protection",
+      "recommendation": "Implement CSRF tokens for all state-changing operations"
+    },
+    {
+      "type": "MISSING_HEADER",
+      "severity": "MEDIUM",
+      "description": "Missing security header: Content-Security-Policy",
+      "recommendation": "Configure Content-Security-Policy header in your web server"
+    },
+    {
+      "type": "MISSING_HEADER",
+      "severity": "MEDIUM",
+      "description": "Missing security header: Referrer-Policy",
+      "recommendation": "Configure Referrer-Policy header in your web server"
+    },
+    {
+      "type": "MISSING_HEADER",
+      "severity": "MEDIUM",
+      "description": "Missing security header: Permissions-Policy",
+      "recommendation": "Configure Permissions-Policy header in your web server"
+    },
+    {
+      "type": "MISSING_LOCK_FILE",
+      "severity": "LOW",
+      "file": "package.json",
+      "description": "Missing package-lock.json",
+      "recommendation": "Commit package-lock.json for reproducible builds"
+    },
+    {
+      "type": "MISSING_LOCK_FILE",
+      "severity": "LOW",
+      "file": "frontend/package.json",
+      "description": "Missing package-lock.json",
+      "recommendation": "Commit package-lock.json for reproducible builds"
+    }
+  ],
+  "recommendations": [
+    {
+      "priority": "HIGH",
+      "title": "Address High-Severity Vulnerabilities",
+      "description": "Fix 4 high-severity vulnerabilities immediately",
+      "action": "Review and fix all HIGH severity issues before deployment"
+    },
+    {
+      "priority": "MEDIUM",
+      "title": "Implement Security Headers",
+      "description": "Add missing security headers to protect against common attacks",
+      "action": "Configure CSP, X-Frame-Options, and other security headers"
+    }
+  ],
+  "compliant_items": [
+    {
+      "type": "XSS_PROTECTION",
+      "file": "build/index.html",
+      "description": "Uses safe DOM text methods"
+    },
+    {
+      "type": "XSS_PROTECTION",
+      "file": "optimized/index-wallet.html",
+      "description": "Uses safe DOM text methods"
+    },
+    {
+      "type": "XSS_PROTECTION",
+      "file": "optimized/index-stable.html",
+      "description": "Uses safe DOM text methods"
+    },
+    {
+      "type": "XSS_PROTECTION",
+      "file": "optimized/index.html",
+      "description": "Uses safe DOM text methods"
+    },
+    {
+      "type": "XSS_PROTECTION",
+      "file": "optimized/index-simple.html",
+      "description": "Uses safe DOM text methods"
+    },
+    {
+      "type": "XSS_PROTECTION",
+      "file": "optimized/index-broken-backup.html",
+      "description": "Uses safe DOM text methods"
+    },
+    {
+      "type": "XSS_PROTECTION",
+      "file": "optimized/index-professional.html",
+      "description": "Uses safe DOM text methods"
+    },
+    {
+      "type": "XSS_PROTECTION",
+      "file": "frontend/index-wallet.html",
+      "description": "Uses safe DOM text methods"
+    },
+    {
+      "type": "XSS_PROTECTION",
+      "file": "frontend/index-stable.html",
+      "description": "Uses safe DOM text methods"
+    },
+    {
+      "type": "XSS_PROTECTION",
+      "file": "frontend/index.html",
+      "description": "Uses safe DOM text methods"
+    },
+    {
+      "type": "XSS_PROTECTION",
+      "file": "frontend/index-simple.html",
+      "description": "Uses safe DOM text methods"
+    },
+    {
+      "type": "XSS_PROTECTION",
+      "file": "frontend/index-broken-backup.html",
+      "description": "Uses safe DOM text methods"
+    },
+    {
+      "type": "XSS_PROTECTION",
+      "file": "frontend/index-professional.html",
+      "description": "Uses safe DOM text methods"
+    },
+    {
+      "type": "XSS_PROTECTION",
+      "file": "optimized/src/cult-gamification.js",
+      "description": "Uses safe DOM text methods"
+    },
+    {
+      "type": "XSS_PROTECTION",
+      "file": "frontend/src/cult-gamification.js",
+      "description": "Uses safe DOM text methods"
+    },
+    {
+      "type": "SECURITY_HEADER",
+      "file": "vercel.json",
+      "description": "X-Frame-Options header configured"
+    },
+    {
+      "type": "SECURITY_HEADER",
+      "file": "vercel.json",
+      "description": "X-Content-Type-Options header configured"
+    },
+    {
+      "type": "ENV_VARS",
+      "file": "security-audit.py",
+      "description": "Uses environment variables for configuration"
+    },
+    {
+      "type": "OVERFLOW_PROTECTION",
+      "file": "contracts/programs/nocturne-swap/src/lib.rs",
+      "description": "Uses checked arithmetic operations"
+    },
+    {
+      "type": "ERROR_HANDLING",
+      "file": "contracts/programs/nocturne-swap/src/lib.rs",
+      "description": "Implements proper error handling"
+    },
+    {
+      "type": "DEPLOYMENT_CONFIG",
+      "file": "vercel.json",
+      "description": "Has deployment configuration: vercel.json"
+    },
+    {
+      "type": "GITIGNORE",
+      "file": ".gitignore",
+      "description": "Has .gitignore file to prevent sensitive file commits"
+    },
+    {
+      "type": "SECURITY_CONFIG",
+      "file": "vercel.json",
+      "description": "Contains security-related configuration"
+    }
+  ]
+}

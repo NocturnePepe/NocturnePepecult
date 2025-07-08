@@ -1,0 +1,176 @@
+{
+  "version": "1.0.0",
+  "timestamp": "2025-07-08T07:56:18.643955",
+  "optimization_level": "production",
+  "features": [
+    "html_minification",
+    "css_minification",
+    "js_minification",
+    "image_optimization",
+    "gzip_compression"
+  ],
+  "files": [
+    {
+      "path": "index-wallet.html",
+      "size": 10915,
+      "compressed": true
+    },
+    {
+      "path": "index-stable.html",
+      "size": 14238,
+      "compressed": true
+    },
+    {
+      "path": "dev.html",
+      "size": 16377,
+      "compressed": true
+    },
+    {
+      "path": "sw.js",
+      "size": 6426,
+      "compressed": true
+    },
+    {
+      "path": "index.html",
+      "size": 41373,
+      "compressed": true
+    },
+    {
+      "path": "index-simple.html",
+      "size": 6619,
+      "compressed": true
+    },
+    {
+      "path": "index-broken-backup.html",
+      "size": 31252,
+      "compressed": true
+    },
+    {
+      "path": "index-professional.html",
+      "size": 41513,
+      "compressed": true
+    },
+    {
+      "path": "index-complex.html",
+      "size": 13407,
+      "compressed": true
+    },
+    {
+      "path": "src/cult-theme.css",
+      "size": 7034,
+      "compressed": true
+    },
+    {
+      "path": "src/analytics.js",
+      "size": 9166,
+      "compressed": true
+    },
+    {
+      "path": "src/App.css",
+      "size": 5075,
+      "compressed": true
+    },
+    {
+      "path": "src/SwapInterface.css",
+      "size": 4017,
+      "compressed": true
+    },
+    {
+      "path": "src/solana-rpc.js",
+      "size": 5654,
+      "compressed": true
+    },
+    {
+      "path": "src/AdminDashboard.css",
+      "size": 4195,
+      "compressed": true
+    },
+    {
+      "path": "src/api.js",
+      "size": 8991,
+      "compressed": true
+    },
+    {
+      "path": "src/cult-gamification.js",
+      "size": 10692,
+      "compressed": true
+    },
+    {
+      "path": "src/wallet-integration.js",
+      "size": 7845,
+      "compressed": true
+    },
+    {
+      "path": "src/jupiter-integration.js",
+      "size": 4201,
+      "compressed": true
+    },
+    {
+      "path": "src/pages/SwapPage.css",
+      "size": 2379,
+      "compressed": true
+    },
+    {
+      "path": "src/pages/PoolsPage.css",
+      "size": 4067,
+      "compressed": true
+    },
+    {
+      "path": "src/pages/HomePage.css",
+      "size": 4221,
+      "compressed": true
+    },
+    {
+      "path": "src/pages/AdminPage.css",
+      "size": 114,
+      "compressed": true
+    },
+    {
+      "path": "backup/src/index.css",
+      "size": 325,
+      "compressed": true
+    },
+    {
+      "path": "backup/src/App.css",
+      "size": 5075,
+      "compressed": true
+    },
+    {
+      "path": "backup/src/SwapInterface.css",
+      "size": 4017,
+      "compressed": true
+    },
+    {
+      "path": "backup/src/AdminDashboard.css",
+      "size": 4195,
+      "compressed": true
+    },
+    {
+      "path": "backup/src/pages/SwapPage.css",
+      "size": 2379,
+      "compressed": true
+    },
+    {
+      "path": "backup/src/pages/PoolsPage.css",
+      "size": 4067,
+      "compressed": true
+    },
+    {
+      "path": "backup/src/pages/HomePage.css",
+      "size": 4221,
+      "compressed": true
+    },
+    {
+      "path": "backup/src/pages/AdminPage.css",
+      "size": 114,
+      "compressed": true
+    }
+  ],
+  "metrics": {
+    "original_size": 0,
+    "optimized_size": 0,
+    "compression_ratio": 0,
+    "files_processed": 31,
+    "time_taken": 0
+  }
+}

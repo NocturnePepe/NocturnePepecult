@@ -1,0 +1,408 @@
+/* Advanced Cult-Themed UI/UX Polish for NocturneSwap */
+
+/* Custom Cult Icons and Graphics */
+.cult-icon {
+  display: inline-block;
+  font-size: 1.2em;
+  margin-right: 8px;
+  animation: cultIconGlow 4s ease-in-out infinite;
+}
+
+@keyframes cultIconGlow {
+  0%, 100% { 
+    filter: drop-shadow(0 0 3px rgba(75, 0, 130, 0.5)); 
+    transform: scale(1);
+  }
+  50% { 
+    filter: drop-shadow(0 0 8px rgba(139, 0, 139, 0.8)); 
+    transform: scale(1.05);
+  }
+}
+
+/* Animated Token Logos */
+.token-logo {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: linear-gradient(45deg, rgba(75, 0, 130, 0.3), rgba(139, 0, 139, 0.2));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2em;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.token-logo::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  animation: tokenShine 3s linear infinite;
+}
+
+@keyframes tokenShine {
+  0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+  100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+}
+
+.token-logo:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 20px rgba(75, 0, 130, 0.5);
+}
+
+/* Price Movement Animations */
+.price-movement {
+  position: relative;
+  overflow: hidden;
+}
+
+.price-up {
+  color: #00ff88;
+  animation: priceUp 0.5s ease-out;
+}
+
+.price-down {
+  color: #ff4757;
+  animation: priceDown 0.5s ease-out;
+}
+
+@keyframes priceUp {
+  0% { transform: translateY(0); color: #e0e0e0; }
+  50% { transform: translateY(-3px); color: #00ff88; }
+  100% { transform: translateY(0); color: #00ff88; }
+}
+
+@keyframes priceDown {
+  0% { transform: translateY(0); color: #e0e0e0; }
+  50% { transform: translateY(3px); color: #ff4757; }
+  100% { transform: translateY(0); color: #ff4757; }
+}
+
+/* Custom Cult Cursor */
+.cult-cursor {
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><text y="20" font-size="16" fill="%23%239d4edd">☾</text></svg>'), auto;
+}
+
+/* Mystical Particles Effect */
+.mystical-particles {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.particle {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: rgba(75, 0, 130, 0.6);
+  border-radius: 50%;
+  animation: float 10s infinite linear;
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(100vh) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-100px) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+/* Interactive Hover Effects */
+.cult-button {
+  position: relative;
+  overflow: hidden;
+  transform-style: preserve-3d;
+}
+
+.cult-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s ease;
+}
+
+.cult-button:hover::before {
+  left: 100%;
+}
+
+.cult-button:hover {
+  transform: translateZ(10px);
+}
+
+/* Advanced Glassmorphism */
+.glass-morphism {
+  background: rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.glass-morphism-dark {
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(25px);
+  border: 1px solid rgba(75, 0, 130, 0.2);
+  box-shadow: 
+    0 12px 40px rgba(0, 0, 0, 0.5),
+    0 0 20px rgba(75, 0, 130, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+/* Neon Text Effects */
+.neon-text {
+  text-shadow: 
+    0 0 5px rgba(75, 0, 130, 0.8),
+    0 0 10px rgba(139, 0, 139, 0.6),
+    0 0 20px rgba(75, 0, 130, 0.4),
+    0 0 40px rgba(139, 0, 139, 0.2);
+  animation: neonFlicker 3s ease-in-out infinite;
+}
+
+@keyframes neonFlicker {
+  0%, 100% { 
+    text-shadow: 
+      0 0 5px rgba(75, 0, 130, 0.8),
+      0 0 10px rgba(139, 0, 139, 0.6),
+      0 0 20px rgba(75, 0, 130, 0.4);
+  }
+  50% { 
+    text-shadow: 
+      0 0 10px rgba(75, 0, 130, 1),
+      0 0 20px rgba(139, 0, 139, 0.8),
+      0 0 40px rgba(75, 0, 130, 0.6),
+      0 0 80px rgba(139, 0, 139, 0.4);
+  }
+}
+
+/* Cult-themed Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(45deg, rgba(75, 0, 130, 0.6), rgba(139, 0, 139, 0.4));
+  border-radius: 10px;
+  border: 1px solid rgba(75, 0, 130, 0.3);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(45deg, rgba(75, 0, 130, 0.8), rgba(139, 0, 139, 0.6));
+}
+
+/* Advanced Loading States */
+.cult-loading {
+  position: relative;
+  display: inline-block;
+}
+
+.cult-loading::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, transparent, rgba(75, 0, 130, 0.3), transparent);
+  animation: cultShimmer 2s infinite;
+}
+
+@keyframes cultShimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+/* Cult-themed Tooltips */
+.cult-tooltip {
+  position: relative;
+  cursor: help;
+}
+
+.cult-tooltip::before {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(145deg, rgba(0, 0, 0, 0.9), rgba(15, 15, 15, 0.8));
+  color: #e0e0e0;
+  padding: 8px 12px;
+  border-radius: 8px;
+  white-space: nowrap;
+  font-size: 0.9rem;
+  border: 1px solid rgba(75, 0, 130, 0.3);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  z-index: 1000;
+}
+
+.cult-tooltip:hover::before {
+  opacity: 1;
+}
+
+/* Cult-themed Progress Bars */
+.cult-progress {
+  width: 100%;
+  height: 6px;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 3px;
+  overflow: hidden;
+  position: relative;
+}
+
+.cult-progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, 
+    rgba(75, 0, 130, 0.8), 
+    rgba(139, 0, 139, 0.6), 
+    rgba(75, 0, 130, 0.8)
+  );
+  background-size: 200% 100%;
+  animation: cultProgressFlow 2s ease-in-out infinite;
+  border-radius: 3px;
+  transition: width 0.3s ease;
+}
+
+@keyframes cultProgressFlow {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* Cult-themed Badges */
+.cult-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  background: linear-gradient(45deg, rgba(75, 0, 130, 0.3), rgba(139, 0, 139, 0.2));
+  border: 1px solid rgba(75, 0, 130, 0.4);
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #e0e0e0;
+  text-shadow: 0 0 5px rgba(75, 0, 130, 0.5);
+  position: relative;
+  overflow: hidden;
+}
+
+.cult-badge::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  animation: badgeShine 3s ease-in-out infinite;
+}
+
+@keyframes badgeShine {
+  0% { left: -100%; }
+  50% { left: 100%; }
+  100% { left: 100%; }
+}
+
+/* Cult-themed Switches */
+.cult-switch {
+  position: relative;
+  width: 60px;
+  height: 30px;
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 15px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(75, 0, 130, 0.3);
+}
+
+.cult-switch::before {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 24px;
+  height: 24px;
+  background: linear-gradient(45deg, rgba(75, 0, 130, 0.8), rgba(139, 0, 139, 0.6));
+  border-radius: 50%;
+  transition: transform 0.3s ease;
+  box-shadow: 0 0 10px rgba(75, 0, 130, 0.3);
+}
+
+.cult-switch.active {
+  background: linear-gradient(45deg, rgba(75, 0, 130, 0.3), rgba(139, 0, 139, 0.2));
+  border-color: rgba(75, 0, 130, 0.6);
+}
+
+.cult-switch.active::before {
+  transform: translateX(30px);
+  box-shadow: 0 0 15px rgba(75, 0, 130, 0.6);
+}
+
+/* Cult-themed Checkboxes */
+.cult-checkbox {
+  position: relative;
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  margin-right: 8px;
+}
+
+.cult-checkbox input {
+  display: none;
+}
+
+.cult-checkbox::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(75, 0, 130, 0.3);
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+.cult-checkbox input:checked + .cult-checkbox::before {
+  background: linear-gradient(45deg, rgba(75, 0, 130, 0.8), rgba(139, 0, 139, 0.6));
+  border-color: rgba(75, 0, 130, 0.8);
+}
+
+.cult-checkbox input:checked + .cult-checkbox::after {
+  content: '✓';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: bold;
+  text-shadow: 0 0 5px rgba(75, 0, 130, 0.8);
+}
