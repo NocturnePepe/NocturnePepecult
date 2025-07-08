@@ -2,111 +2,76 @@ import React, { useState, useCallback, useMemo } from 'react';
 import { useWallet } from '@solana/wallet-adapter-react';
 import { WalletMultiButton } from '@solana/wallet-adapter-react-ui';
 import { PublicKey } from '@solana/web3.js';
+import { useJupiterQuotes, POPULAR_TOKENS, formatTokenAmount, toRawAmount } from './hooks/useJupiterQuotes';
 import './SwapInterface.css';
-
-// Jupiter Hook (from CDN)
-declare global {
-  interface Window {
-    useJupiter: any;
-  }
-}
 
 interface SwapInterfaceProps {
   connection: any;
   program: any;
 }
 
-const SwapInterface: React.FC<SwapInterfaceProps> = () => {
+const SwapInterface = ({ connection, program }: SwapInterfaceProps) => {
   const { publicKey, connected, signTransaction } = useWallet();
   const [inputAmount, setInputAmount] = useState('');
-  const [outputAmount, setOutputAmount] = useState('');
-  const [isSwapping, setIsSwapping] = useState(false);
   const [swapError, setSwapError] = useState('');
+  
+  // Token selection (you can make this dynamic later)
+  const [inputToken] = useState(POPULAR_TOKENS.SOL);
+  const [outputToken] = useState(POPULAR_TOKENS.USDC);
 
-  // Jupiter integration (fallback if CDN not loaded)
-  const useJupiter = window?.useJupiter || (() => ({
-    quote: null,
-    exchange: async () => {},
-    loading: false,
-    error: null
-  }));
+  // Calculate raw amount for Jupiter API
+  const rawInputAmount = useMemo(() => {
+    if (!inputAmount || isNaN(parseFloat(inputAmount))) return 0;
+    return toRawAmount(inputAmount, inputToken.decimals);
+  }, [inputAmount, inputToken.decimals]);
 
-  // Default SOL -> USDC configuration
-  const jupiterConfig = useMemo(() => ({
-    inputMint: new PublicKey('So11111111111111111111111111111111111111112'), // SOL
-    outputMint: new PublicKey('EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v'), // USDC
-    amount: inputAmount ? Math.floor(parseFloat(inputAmount) * 1e9) : 0, // Convert to lamports
-    slippageBps: 100, // 1% slippage
-  }), [inputAmount]);
+  // Use our mobile-friendly Jupiter hook
+  const { 
+    quote, 
+    loading, 
+    error, 
+    priceImpact, 
+    rate, 
+    routes 
+  } = useJupiterQuotes({
+    inputMint: inputToken.mint,
+    outputMint: outputToken.mint,
+    amount: rawInputAmount,
+    slippageBps: 100 // 1% slippage
+  });
 
-  const { quote, exchange, loading } = useJupiter(jupiterConfig);
+  // Calculate output amount from quote
+  const outputAmount = useMemo(() => {
+    if (!quote) return '';
+    return formatTokenAmount(quote.outAmount, outputToken.decimals).toFixed(6);
+  }, [quote, outputToken.decimals]);
 
-  // Update output amount when quote changes
-  React.useEffect(() => {
-    if (quote?.outAmount) {
-      const output = quote.outAmount / 1e6; // USDC has 6 decimals
-      setOutputAmount(output.toFixed(6));
-    } else {
-      setOutputAmount('');
-    }
-  }, [quote]);
-
-  // Execute swap
-  const handleSwap = useCallback(async () => {
+  // Handle swap execution (placeholder for now - just show quote details)
+  const handleSwap = useCallback(() => {
     if (!connected || !publicKey || !quote) {
       setSwapError('Please connect wallet and enter amount');
       return;
     }
 
-    setIsSwapping(true);
-    setSwapError('');
+    // For now, just log the quote details
+    console.log('🌙 Jupiter Quote Details:');
+    console.log('Input:', inputAmount, inputToken.symbol);
+    console.log('Output:', outputAmount, outputToken.symbol);
+    console.log('Rate:', rate.toFixed(6), `${outputToken.symbol} per ${inputToken.symbol}`);
+    console.log('Price Impact:', priceImpact.toFixed(2) + '%');
+    console.log('Routes:', routes);
+    console.log('Raw Quote:', quote);
     
-    try {
-      console.log('🌙 Starting Jupiter swap...');
-      console.log('From:', inputAmount, 'SOL');
-      console.log('To:', outputAmount, 'USDC');
-      
-      const result = await exchange({
-        wallet: { publicKey, signTransaction },
-        onTransaction: (txid: string) => {
-          console.log('🔄 Transaction submitted:', txid);
-        }
-      });
-
-      if (result?.txid) {
-        console.log('✅ Swap successful!');
-        console.log('Transaction ID:', result.txid);
-        console.log('Explorer:', `https://solscan.io/tx/${result.txid}`);
-        
-        // Reset form
-        setInputAmount('');
-        setOutputAmount('');
-        
-        // Track with analytics
-        if (window.nocturneAnalytics) {
-          window.nocturneAnalytics.trackSwap({
-            tokenIn: 'SOL',
-            tokenOut: 'USDC',
-            amountIn: inputAmount,
-            amountOut: outputAmount,
-            signature: result.txid
-          });
-        }
-      }
-    } catch (error: any) {
-      console.error('❌ Swap failed:', error);
-      setSwapError(`Swap failed: ${error.message || 'Unknown error'}`);
-    } finally {
-      setIsSwapping(false);
-    }
-  }, [connected, publicKey, quote, exchange, inputAmount, outputAmount]);
+    setSwapError(''); // Clear any previous errors
+    alert(`Quote Preview:\n${inputAmount} ${inputToken.symbol} → ${outputAmount} ${outputToken.symbol}\nRate: ${rate.toFixed(4)}\nPrice Impact: ${priceImpact.toFixed(2)}%`);
+  }, [connected, publicKey, quote, inputAmount, outputAmount, rate, priceImpact, routes, inputToken, outputToken]);
 
   return (
     <div className="swap-interface">
       <div className="swap-container">
         <div className="swap-header">
           <h2>🌙 NocturneSwap</h2>
-          <p>Jupiter-powered SOL ⇄ USDC swapping</p>
+          <p>Live Jupiter quotes • {inputToken.symbol} ⇄ {outputToken.symbol}</p>
         </div>
 
         <div className="wallet-connection">
@@ -119,13 +84,20 @@ const SwapInterface: React.FC<SwapInterfaceProps> = () => {
           </div>
         )}
 
+        {error && (
+          <div className="error-message">
+            🔴 Quote Error: {error}
+          </div>
+        )}
+
         <div className="swap-form">
-          {/* Input Token - SOL */}
+          {/* Input Token */}
           <div className="token-input">
             <div className="token-input-header">
               <label>From</label>
               <div className="token-selector">
-                <span>🔮 SOL</span>
+                <img src={inputToken.logoURI} alt={inputToken.symbol} width="20" height="20" />
+                <span>{inputToken.symbol}</span>
               </div>
             </div>
             <input
@@ -145,62 +117,97 @@ const SwapInterface: React.FC<SwapInterfaceProps> = () => {
             </button>
           </div>
 
-          {/* Output Token - USDC */}
+          {/* Output Token */}
           <div className="token-input">
             <div className="token-input-header">
-              <label>To</label>
+              <label>To (Jupiter Quote)</label>
               <div className="token-selector">
-                <span>💵 USDC</span>
+                <img src={outputToken.logoURI} alt={outputToken.symbol} width="20" height="20" />
+                <span>{outputToken.symbol}</span>
               </div>
             </div>
             <input
               type="number"
               value={outputAmount}
               readOnly
-              placeholder={loading ? 'Loading...' : '0.0'}
-              className="amount-input readonly"
+              placeholder={loading ? 'Getting quote...' : '0.0'}
+              className={`amount-input readonly ${loading ? 'loading' : ''}`}
             />
           </div>
 
-          {/* Quote Info */}
+          {/* Live Quote Details */}
           {quote && inputAmount && (
             <div className="quote-info">
-              <div className="quote-detail">
-                <span>Rate</span>
-                <span>
-                  1 SOL = {(parseFloat(outputAmount) / parseFloat(inputAmount) || 0).toFixed(4)} USDC
+              <div className="quote-header">
+                <h4>📊 Live Jupiter Quote</h4>
+                <span className="quote-timestamp">
+                  Updated: {new Date().toLocaleTimeString()}
                 </span>
               </div>
+              
               <div className="quote-detail">
-                <span>Slippage</span>
-                <span>1%</span>
+                <span>Exchange Rate</span>
+                <span className="rate-value">
+                  1 {inputToken.symbol} = {rate.toFixed(4)} {outputToken.symbol}
+                </span>
               </div>
-              {quote.priceImpactPct && (
+              
+              <div className="quote-detail">
+                <span>Price Impact</span>
+                <span className={`impact-value ${priceImpact > 5 ? 'high-impact' : 'low-impact'}`}>
+                  {priceImpact.toFixed(3)}%
+                </span>
+              </div>
+              
+              <div className="quote-detail">
+                <span>Slippage Protection</span>
+                <span>1.0%</span>
+              </div>
+              
+              {routes.length > 0 && (
                 <div className="quote-detail">
-                  <span>Price Impact</span>
-                  <span className={quote.priceImpactPct > 5 ? 'high-impact' : 'low-impact'}>
-                    {quote.priceImpactPct.toFixed(2)}%
+                  <span>Route</span>
+                  <span className="route-info">
+                    {routes.slice(0, 2).join(' → ')}
+                    {routes.length > 2 && ` +${routes.length - 2} more`}
                   </span>
                 </div>
               )}
+              
               <div className="quote-detail">
-                <span>Route</span>
-                <span>Jupiter Aggregator</span>
+                <span>Minimum Received</span>
+                <span>
+                  {(parseFloat(outputAmount) * 0.99).toFixed(6)} {outputToken.symbol}
+                </span>
+              </div>
+              
+              <div className="quote-stats">
+                <small>
+                  📈 Jupiter found {quote.routePlan?.length || 1} route(s) • 
+                  Response time: {quote.timeTaken}ms
+                </small>
               </div>
             </div>
           )}
 
-          {/* Swap Button */}
+          {/* Loading State */}
+          {loading && inputAmount && (
+            <div className="loading-quote">
+              <div className="loading-spinner"></div>
+              <span>Fetching best rate from Jupiter...</span>
+            </div>
+          )}
+
+          {/* Quote Preview Button */}
           <button
             onClick={handleSwap}
-            disabled={!connected || !quote || isSwapping || !inputAmount}
+            disabled={!connected || !quote || loading || !inputAmount}
             className="swap-button"
           >
             {!connected ? 'Connect Wallet' :
-             isSwapping ? 'Swapping...' :
              loading ? 'Getting Quote...' :
              !quote ? 'Enter Amount' :
-             'Swap Tokens'}
+             '🔍 Preview Quote Details'}
           </button>
         </div>
 
