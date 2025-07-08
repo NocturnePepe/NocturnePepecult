@@ -1,0 +1,1393 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta name="description" content="NocturneSwap - Professional Solana DEX with real-time trading, liquidity pools, and portfolio management" />
+    <title>NocturneSwap - Professional Solana DEX</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="keywords" content="Solana, DEX, DeFi, Swap, Trading, Jupiter, Liquidity, Portfolio" />
+    <meta name="author" content="NocturneSwap" />
+    <meta property="og:title" content="NocturneSwap - Professional Solana DEX" />
+    <meta property="og:description" content="Trade tokens, provide liquidity, and manage your portfolio on Solana" />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    
+    <!-- Embedded favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌙</text></svg>">
+    
+    <!-- External APIs -->
+    <script src="https://unpkg.com/@solana/web3.js@latest/lib/index.iife.min.js"></script>
+    <script src="src/analytics.js"></script>
+    <script src="src/api.js"></script>
+    
+    <style>
+      /* Global Styles */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+          'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+          sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        color: #333;
+      }
+      
+      /* Loading Screen */
+      .loading-screen {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        z-index: 9999;
+      }
+      
+      .loading-spinner {
+        width: 60px;
+        height: 60px;
+        border: 4px solid rgba(255, 255, 255, 0.3);
+        border-top: 4px solid white;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+        margin-bottom: 20px;
+      }
+      
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+      
+      .loading-text {
+        font-size: 1.5rem;
+        margin-bottom: 10px;
+      }
+      
+      .loading-subtitle {
+        font-size: 1rem;
+        opacity: 0.8;
+      }
+      
+      /* Main App Container */
+      .app-container {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 20px;
+        display: none;
+      }
+      
+      /* Header */
+      .header {
+        text-align: center;
+        margin-bottom: 30px;
+        color: white;
+      }
+      
+      .header h1 {
+        font-size: 3rem;
+        margin-bottom: 10px;
+        background: linear-gradient(45deg, #fff, #f0f0f0);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+      
+      .header p {
+        font-size: 1.2rem;
+        opacity: 0.9;
+      }
+      
+      /* Navigation */
+      .navigation {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        margin-bottom: 30px;
+        flex-wrap: wrap;
+      }
+      
+      .nav-button {
+        background: rgba(255, 255, 255, 0.1);
+        color: white;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 8px;
+        padding: 12px 24px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s;
+        text-decoration: none;
+        display: inline-block;
+        backdrop-filter: blur(10px);
+      }
+      
+      .nav-button:hover {
+        background: rgba(255, 255, 255, 0.2);
+        color: white;
+        text-decoration: none;
+        transform: translateY(-2px);
+      }
+      
+      .nav-button.active {
+        background: white;
+        color: #667eea;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      }
+      
+      /* Main Content Area */
+      .main-content {
+        display: grid;
+        grid-template-columns: 1fr 300px;
+        gap: 30px;
+        margin-bottom: 30px;
+      }
+      
+      /* Swap Container */
+      .swap-container {
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 20px;
+        padding: 30px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(10px);
+      }
+      
+      .swap-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+      }
+      
+      .swap-title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #333;
+      }
+      
+      .settings-btn {
+        background: #f8f9fa;
+        border: 1px solid #e9ecef;
+        border-radius: 8px;
+        padding: 8px 12px;
+        cursor: pointer;
+        font-size: 1rem;
+        transition: all 0.2s;
+      }
+      
+      .settings-btn:hover {
+        background: #e9ecef;
+      }
+      
+      /* Token Input */
+      .token-input {
+        background: #f8f9fa;
+        border: 1px solid #e9ecef;
+        border-radius: 12px;
+        padding: 20px;
+        margin-bottom: 10px;
+        position: relative;
+      }
+      
+      .token-input.error {
+        border-color: #dc3545;
+        background: #fff5f5;
+      }
+      
+      .token-label {
+        font-size: 0.9rem;
+        color: #666;
+        margin-bottom: 10px;
+        display: block;
+      }
+      
+      .token-input-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+      }
+      
+      .token-input-row input {
+        background: transparent;
+        border: none;
+        outline: none;
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: #333;
+        flex: 1;
+        min-width: 0;
+      }
+      
+      .token-select {
+        background: #007bff;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        padding: 8px 16px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s;
+        white-space: nowrap;
+        flex-shrink: 0;
+        min-width: 80px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      
+      .token-select:hover {
+        background: #0056b3;
+        transform: translateY(-1px);
+      }
+      
+      .token-balance {
+        font-size: 0.8rem;
+        color: #666;
+        margin-top: 5px;
+      }
+      
+      /* Swap Arrow */
+      .swap-arrow {
+        display: flex;
+        justify-content: center;
+        margin: 10px 0;
+      }
+      
+      .swap-icon {
+        width: 40px;
+        height: 40px;
+        background: white;
+        border: 1px solid #e9ecef;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.2s;
+        font-size: 1.2rem;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
+      
+      .swap-icon:hover {
+        transform: rotate(180deg);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      }
+      
+      /* Swap Details */
+      .swap-details {
+        background: #f8f9fa;
+        border-radius: 12px;
+        padding: 15px;
+        margin: 20px 0;
+      }
+      
+      .detail-row {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 8px;
+        font-size: 0.9rem;
+      }
+      
+      .detail-row:last-child {
+        margin-bottom: 0;
+      }
+      
+      .detail-label {
+        color: #666;
+      }
+      
+      .detail-value {
+        font-weight: 600;
+        color: #333;
+      }
+      
+      .detail-value.positive {
+        color: #28a745;
+      }
+      
+      .detail-value.negative {
+        color: #dc3545;
+      }
+      
+      /* Swap Button */
+      .swap-button {
+        background: linear-gradient(45deg, #667eea, #764ba2);
+        color: white;
+        border: none;
+        border-radius: 12px;
+        padding: 16px 32px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s;
+        width: 100%;
+        position: relative;
+        overflow: hidden;
+      }
+      
+      .swap-button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+      }
+      
+      .swap-button:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        transform: none;
+      }
+      
+      .swap-button.loading {
+        color: transparent;
+      }
+      
+      .swap-button.loading::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 20px;
+        height: 20px;
+        margin: -10px 0 0 -10px;
+        border: 2px solid transparent;
+        border-top: 2px solid white;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+      }
+      
+      /* Sidebar */
+      .sidebar {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+      
+      .sidebar-card {
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 16px;
+        padding: 20px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(10px);
+      }
+      
+      .sidebar-card h3 {
+        margin-bottom: 15px;
+        color: #333;
+        font-size: 1.2rem;
+      }
+      
+      /* Wallet Card */
+      .wallet-status {
+        text-align: center;
+        padding: 20px;
+      }
+      
+      .wallet-connect-btn {
+        background: linear-gradient(45deg, #9945ff, #14f195);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        padding: 12px 24px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s;
+        margin: 5px;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+      }
+      
+      .wallet-connect-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      }
+      
+      .wallet-info {
+        display: none;
+        text-align: left;
+      }
+      
+      .wallet-address {
+        font-family: monospace;
+        font-size: 0.9rem;
+        background: #f8f9fa;
+        padding: 8px 12px;
+        border-radius: 6px;
+        margin: 10px 0;
+        word-break: break-all;
+      }
+      
+      .balance-item {
+        display: flex;
+        justify-content: space-between;
+        margin: 8px 0;
+        padding: 8px;
+        background: #f8f9fa;
+        border-radius: 6px;
+      }
+      
+      /* Market Stats */
+      .stats-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+      }
+      
+      .stat-item {
+        text-align: center;
+        padding: 12px;
+        background: #f8f9fa;
+        border-radius: 8px;
+      }
+      
+      .stat-value {
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 4px;
+      }
+      
+      .stat-label {
+        font-size: 0.8rem;
+        color: #666;
+      }
+      
+      /* Recent Trades */
+      .trade-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px;
+        margin: 8px 0;
+        background: #f8f9fa;
+        border-radius: 8px;
+        font-size: 0.9rem;
+      }
+      
+      .trade-pair {
+        font-weight: 600;
+        color: #333;
+      }
+      
+      .trade-amount {
+        color: #666;
+      }
+      
+      .trade-time {
+        color: #999;
+        font-size: 0.8rem;
+      }
+      
+      /* Pool Interface */
+      .pool-interface {
+        display: none;
+      }
+      
+      .pool-stats {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 15px;
+        margin-bottom: 20px;
+      }
+      
+      .pool-stat {
+        background: #f8f9fa;
+        padding: 15px;
+        border-radius: 8px;
+        text-align: center;
+      }
+      
+      .pool-stat-value {
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 5px;
+      }
+      
+      .pool-stat-label {
+        font-size: 0.9rem;
+        color: #666;
+      }
+      
+      /* Admin Interface */
+      .admin-interface {
+        display: none;
+      }
+      
+      .admin-controls {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 15px;
+        margin-bottom: 20px;
+      }
+      
+      .admin-card {
+        background: #f8f9fa;
+        padding: 20px;
+        border-radius: 12px;
+        text-align: center;
+      }
+      
+      .admin-card h4 {
+        margin-bottom: 10px;
+        color: #333;
+      }
+      
+      .admin-btn {
+        background: #007bff;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        padding: 10px 20px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: all 0.2s;
+        width: 100%;
+      }
+      
+      .admin-btn:hover {
+        background: #0056b3;
+        transform: translateY(-1px);
+      }
+      
+      .admin-btn.danger {
+        background: #dc3545;
+      }
+      
+      .admin-btn.danger:hover {
+        background: #c82333;
+      }
+      
+      /* Trading History Styles */
+      .trade-entry {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px;
+        margin: 8px 0;
+        background: white;
+        border-radius: 8px;
+        border: 1px solid #e9ecef;
+        transition: all 0.2s;
+      }
+      
+      .trade-entry:hover {
+        background: #f8f9fa;
+        transform: translateY(-1px);
+      }
+      
+      .trade-pair {
+        font-weight: 600;
+        color: #333;
+      }
+      
+      .trade-amount {
+        color: #007bff;
+        font-weight: 500;
+      }
+      
+      .trade-time {
+        color: #666;
+        font-size: 0.9rem;
+      }
+      
+      .portfolio-stats {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+      
+      /* Mobile Responsive */
+      @media (max-width: 768px) {
+        .main-content {
+          grid-template-columns: 1fr;
+        }
+        
+        .sidebar {
+          order: -1;
+        }
+        
+        .header h1 {
+          font-size: 2rem;
+        }
+        
+        .swap-container {
+          padding: 20px;
+        }
+        
+        .token-input-row {
+          flex-direction: column;
+          align-items: stretch;
+          gap: 10px;
+        }
+        
+        .token-input-row input {
+          text-align: center;
+          padding: 10px;
+          background: white;
+          border: 1px solid #e9ecef;
+          border-radius: 8px;
+        }
+        
+        .token-select {
+          width: 100%;
+          justify-content: center;
+        }
+        
+        .navigation {
+          flex-direction: column;
+          align-items: center;
+        }
+        
+        .nav-button {
+          width: 200px;
+          text-align: center;
+        }
+      }
+      
+      @media (max-width: 480px) {
+        .app-container {
+          padding: 10px;
+        }
+        
+        .swap-container {
+          padding: 15px;
+        }
+        
+        .sidebar-card {
+          padding: 15px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+      <div class="loading-spinner"></div>
+      <div class="loading-text">🌙 Loading NocturneSwap</div>
+      <div class="loading-subtitle">Initializing professional DEX interface...</div>
+    </div>
+
+    <!-- Main App -->
+    <div class="app-container" id="appContainer">
+      <header class="header">
+        <h1>🌙 NocturneSwap</h1>
+        <p>Professional Solana DEX - Trade • Pool • Earn</p>
+      </header>
+      
+      <nav class="navigation" role="navigation" aria-label="Main navigation">
+        <button class="nav-button active" data-section="swap" aria-pressed="true">💱 Swap</button>
+        <button class="nav-button" data-section="pools" aria-pressed="false">🏊 Pools</button>
+        <button class="nav-button" data-section="portfolio" aria-pressed="false">📊 Portfolio</button>
+        <button class="nav-button" data-section="admin" aria-pressed="false">⚙️ Admin</button>
+      </nav>
+      
+      <main class="main-content" role="main">
+        <!-- Swap Interface -->
+        <div class="swap-container" id="swapInterface">
+          <div class="swap-header">
+            <h2 class="swap-title">Token Swap</h2>
+            <button class="settings-btn" id="settingsBtn">⚙️</button>
+          </div>
+          
+          <div class="token-input" id="fromTokenInput">
+            <label class="token-label">From</label>
+            <div class="token-input-row">
+              <input type="number" placeholder="0.0" id="fromAmount" step="0.000001" />
+              <button class="token-select" id="fromTokenSelect">
+                <span>SOL</span>
+                <span>▼</span>
+              </button>
+            </div>
+            <div class="token-balance" id="fromBalance">Balance: --</div>
+          </div>
+          
+          <div class="swap-arrow">
+            <div class="swap-icon" id="swapIcon">⇅</div>
+          </div>
+          
+          <div class="token-input" id="toTokenInput">
+            <label class="token-label">To</label>
+            <div class="token-input-row">
+              <input type="number" placeholder="0.0" id="toAmount" readonly />
+              <button class="token-select" id="toTokenSelect">
+                <span>USDC</span>
+                <span>▼</span>
+              </button>
+            </div>
+            <div class="token-balance" id="toBalance">Balance: --</div>
+          </div>
+          
+          <div class="swap-details" id="swapDetails">
+            <div class="detail-row">
+              <span class="detail-label">Rate</span>
+              <span class="detail-value" id="exchangeRate">--</span>
+            </div>
+            <div class="detail-row">
+              <span class="detail-label">Price Impact</span>
+              <span class="detail-value" id="priceImpact">--</span>
+            </div>
+            <div class="detail-row">
+              <span class="detail-label">Minimum Received</span>
+              <span class="detail-value" id="minReceived">--</span>
+            </div>
+            <div class="detail-row">
+              <span class="detail-label">Fee</span>
+              <span class="detail-value" id="tradingFee">~0.3%</span>
+            </div>
+          </div>
+          
+          <button class="swap-button" id="swapButton" disabled>
+            Connect Wallet
+          </button>
+        </div>
+        
+        <!-- Sidebar -->
+        <div class="sidebar">
+          <!-- Wallet Card -->
+          <div class="sidebar-card">
+            <h3>🔗 Wallet</h3>
+            <div class="wallet-status" id="walletStatus">
+              <button class="wallet-connect-btn" id="connectPhantom">
+                👻 Phantom
+              </button>
+              <button class="wallet-connect-btn" id="connectSolflare">
+                🌟 Solflare
+              </button>
+              
+              <div class="wallet-info" id="walletInfo">
+                <div><strong>Connected:</strong> <span id="walletName">--</span></div>
+                <div class="wallet-address" id="walletAddress">--</div>
+                <div class="balance-item">
+                  <span>SOL</span>
+                  <span id="solBalance">--</span>
+                </div>
+                <div class="balance-item">
+                  <span>USDC</span>
+                  <span id="usdcBalance">--</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Market Stats -->
+          <div class="sidebar-card">
+            <h3>📈 Market Stats</h3>
+            <div class="stats-grid">
+              <div class="stat-item">
+                <div class="stat-value" id="totalVolume">$--</div>
+                <div class="stat-label">24h Volume</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-value" id="totalLiquidity">$--</div>
+                <div class="stat-label">Total Liquidity</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-value" id="totalUsers">--</div>
+                <div class="stat-label">Active Users</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-value" id="totalTrades">--</div>
+                <div class="stat-label">Total Trades</div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Recent Trades -->
+          <div class="sidebar-card">
+            <h3>🔄 Recent Trades</h3>
+            <div id="recentTrades">
+              <div class="trade-item">
+                <div>
+                  <div class="trade-pair">SOL/USDC</div>
+                  <div class="trade-amount">12.5 SOL</div>
+                </div>
+                <div class="trade-time">2m ago</div>
+              </div>
+              <div class="trade-item">
+                <div>
+                  <div class="trade-pair">USDC/USDT</div>
+                  <div class="trade-amount">1,250 USDC</div>
+                </div>
+                <div class="trade-time">5m ago</div>
+              </div>
+              <div class="trade-item">
+                <div>
+                  <div class="trade-pair">RAY/SOL</div>
+                  <div class="trade-amount">85 RAY</div>
+                </div>
+                <div class="trade-time">8m ago</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Pool Interface -->
+      <div class="pool-interface" id="poolInterface">
+        <div class="sidebar-card">
+          <h3>🏊 Liquidity Pools</h3>
+          <div class="pool-stats">
+            <div class="pool-stat">
+              <div class="pool-stat-value" id="poolCount">--</div>
+              <div class="pool-stat-label">Active Pools</div>
+            </div>
+            <div class="pool-stat">
+              <div class="pool-stat-value" id="poolTVL">$--</div>
+              <div class="pool-stat-label">Total TVL</div>
+            </div>
+            <div class="pool-stat">
+              <div class="pool-stat-value" id="poolAPY">--%</div>
+              <div class="pool-stat-label">Average APY</div>
+            </div>
+          </div>
+          <p>🚧 Pool creation and management coming soon!</p>
+        </div>
+      </div>
+      
+      <!-- Portfolio Interface -->
+      <div class="admin-interface" id="portfolioInterface">
+        <div class="sidebar-card">
+          <h3>📊 Portfolio</h3>
+          <div class="portfolio-stats">
+            <div class="admin-card">
+              <h4>Portfolio Value</h4>
+              <div id="portfolioValue">$--</div>
+            </div>
+            <div class="admin-card">
+              <h4>24h Change</h4>
+              <div id="portfolioChange">--</div>
+            </div>
+            <div class="admin-card">
+              <h4>Trading History</h4>
+              <div id="tradingHistory">
+                <div class="trade-entry">
+                  <div class="trade-pair">SOL → USDC</div>
+                  <div class="trade-amount">1.5 SOL</div>
+                  <div class="trade-time">2 mins ago</div>
+                </div>
+                <div class="trade-entry">
+                  <div class="trade-pair">USDC → RAY</div>
+                  <div class="trade-amount">50 USDC</div>
+                  <div class="trade-time">15 mins ago</div>
+                </div>
+                <div class="trade-entry">
+                  <div class="trade-pair">RAY → SOL</div>
+                  <div class="trade-amount">100 RAY</div>
+                  <div class="trade-time">1 hour ago</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Admin Interface -->
+      <div class="admin-interface" id="adminInterface">
+        <div class="sidebar-card">
+          <h3>⚙️ Admin Dashboard</h3>
+          <div class="admin-controls">
+            <div class="admin-card">
+              <h4>System Status</h4>
+              <div id="systemStatus">🟢 Online</div>
+              <button class="admin-btn" id="refreshStatus">Refresh</button>
+            </div>
+            <div class="admin-card">
+              <h4>Analytics</h4>
+              <button class="admin-btn" id="exportData">Export Data</button>
+            </div>
+            <div class="admin-card">
+              <h4>Maintenance</h4>
+              <button class="admin-btn danger" id="maintenanceMode">Maintenance Mode</button>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <script>
+      console.log('🌙 NocturneSwap Professional DEX - Starting...');
+      
+      // Global State
+      let app = {
+        wallet: {
+          connected: false,
+          provider: null,
+          publicKey: null,
+          balances: {}
+        },
+        tokens: {},
+        pools: {},
+        settings: {
+          slippage: 1,
+          deadline: 20
+        },
+        currentSection: 'swap',
+        connection: null,
+        isLoading: false
+      };
+      
+      // Token Configuration
+      const TOKENS = {
+        SOL: {
+          symbol: 'SOL',
+          name: 'Solana',
+          decimals: 9,
+          mint: 'So11111111111111111111111111111111111111112',
+          logo: '☀️'
+        },
+        USDC: {
+          symbol: 'USDC',
+          name: 'USD Coin',
+          decimals: 6,
+          mint: 'EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v',
+          logo: '💵'
+        },
+        USDT: {
+          symbol: 'USDT',
+          name: 'Tether USD',
+          decimals: 6,
+          mint: 'Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB',
+          logo: '💴'
+        },
+        RAY: {
+          symbol: 'RAY',
+          name: 'Raydium',
+          decimals: 6,
+          mint: '4k3Dyjzvzp8eMZWUXbBCjEvwSkkk59S5iCNLY3QrkX6R',
+          logo: '🌊'
+        }
+      };
+      
+      // Initialize Solana Connection
+      function initializeSolana() {
+        try {
+          app.connection = new solanaWeb3.Connection(
+            'https://api.mainnet-beta.solana.com',
+            'confirmed'
+          );
+          console.log('✅ Solana connection initialized');
+        } catch (error) {
+          console.error('❌ Failed to initialize Solana connection:', error);
+        }
+      }
+      
+      // Wallet Functions
+      async function connectWallet(provider) {
+        try {
+          setLoadingState(true);
+          
+          let walletProvider;
+          if (provider === 'phantom') {
+            if (!window.solana?.isPhantom) {
+              updateStatus('Phantom wallet not found. Please install Phantom.');
+              window.open('https://phantom.app/', '_blank');
+              return;
+            }
+            walletProvider = window.solana;
+          } else if (provider === 'solflare') {
+            if (!window.solflare?.isSolflare) {
+              updateStatus('Solflare wallet not found. Please install Solflare.');
+              window.open('https://solflare.com/', '_blank');
+              return;
+            }
+            walletProvider = window.solflare;
+          }
+          
+          const response = await walletProvider.connect();
+          
+          app.wallet.connected = true;
+          app.wallet.provider = walletProvider;
+          app.wallet.publicKey = response.publicKey;
+          
+          updateWalletUI(provider === 'phantom' ? 'Phantom' : 'Solflare');
+          await updateBalances();
+          
+          console.log(`✅ ${provider} wallet connected:`, response.publicKey.toString());
+          
+        } catch (error) {
+          console.error(`❌ Failed to connect ${provider}:`, error);
+          updateStatus(`Failed to connect ${provider} wallet`);
+        } finally {
+          setLoadingState(false);
+        }
+      }
+      
+      // Update Wallet UI
+      function updateWalletUI(walletName) {
+        document.getElementById('walletName').textContent = walletName;
+        document.getElementById('walletAddress').textContent = 
+          app.wallet.publicKey.toString().slice(0, 4) + '...' + 
+          app.wallet.publicKey.toString().slice(-4);
+        
+        document.getElementById('walletStatus').style.display = 'none';
+        document.getElementById('walletInfo').style.display = 'block';
+        
+        document.getElementById('swapButton').disabled = false;
+        document.getElementById('swapButton').textContent = 'Review Swap';
+        
+        updateStatus('Wallet connected successfully!');
+      }
+      
+      // Update Token Balances
+      async function updateBalances() {
+        if (!app.connection || !app.wallet.publicKey) return;
+        
+        try {
+          // Get SOL balance
+          const solBalance = await app.connection.getBalance(app.wallet.publicKey);
+          const solAmount = (solBalance / solanaWeb3.LAMPORTS_PER_SOL).toFixed(4);
+          
+          app.wallet.balances.SOL = solAmount;
+          document.getElementById('solBalance').textContent = `${solAmount} SOL`;
+          
+          // Mock other token balances (in production, would fetch real token accounts)
+          app.wallet.balances.USDC = '1,234.56';
+          app.wallet.balances.USDT = '567.89';
+          app.wallet.balances.RAY = '12.34';
+          
+          document.getElementById('usdcBalance').textContent = `${app.wallet.balances.USDC} USDC`;
+          
+          updateTokenBalances();
+          
+        } catch (error) {
+          console.error('❌ Failed to update balances:', error);
+        }
+      }
+      
+      // Update Token Balance Display
+      function updateTokenBalances() {
+        const fromToken = document.getElementById('fromTokenSelect').querySelector('span').textContent;
+        const toToken = document.getElementById('toTokenSelect').querySelector('span').textContent;
+        
+        const fromBalance = app.wallet.balances[fromToken] || '0';
+        const toBalance = app.wallet.balances[toToken] || '0';
+        
+        document.getElementById('fromBalance').textContent = `Balance: ${fromBalance} ${fromToken}`;
+        document.getElementById('toBalance').textContent = `Balance: ${toBalance} ${toToken}`;
+      }
+      
+      // Calculate Swap
+      async function calculateSwap() {
+        const fromAmount = parseFloat(document.getElementById('fromAmount').value) || 0;
+        const fromToken = document.getElementById('fromTokenSelect').querySelector('span').textContent;
+        const toToken = document.getElementById('toTokenSelect').querySelector('span').textContent;
+        
+        if (fromAmount <= 0) {
+          document.getElementById('toAmount').value = '';
+          updateSwapDetails(0, fromToken, toToken);
+          return;
+        }
+        
+        try {
+          // Mock price calculation (in production, would use Jupiter API)
+          const mockPrices = {
+            'SOL/USDC': 142.35,
+            'USDC/SOL': 1 / 142.35,
+            'SOL/USDT': 142.10,
+            'USDT/SOL': 1 / 142.10,
+            'USDC/USDT': 0.999,
+            'USDT/USDC': 1.001,
+            'RAY/SOL': 0.0234,
+            'SOL/RAY': 1 / 0.0234
+          };
+          
+          const pair = `${fromToken}/${toToken}`;
+          const rate = mockPrices[pair] || 1;
+          const priceImpact = Math.min(fromAmount * 0.01, 5); // Mock price impact
+          const adjustedRate = rate * (1 - priceImpact / 100);
+          const toAmount = (fromAmount * adjustedRate).toFixed(6);
+          
+          document.getElementById('toAmount').value = toAmount;
+          updateSwapDetails(fromAmount, fromToken, toToken, rate, priceImpact, toAmount);
+          
+        } catch (error) {
+          console.error('❌ Failed to calculate swap:', error);
+          updateStatus('Error calculating swap rate');
+        }
+      }
+      
+      // Update Swap Details
+      function updateSwapDetails(fromAmount, fromToken, toToken, rate = 0, priceImpact = 0, toAmount = 0) {
+        if (fromAmount <= 0) {
+          document.getElementById('exchangeRate').textContent = '--';
+          document.getElementById('priceImpact').textContent = '--';
+          document.getElementById('minReceived').textContent = '--';
+          return;
+        }
+        
+        document.getElementById('exchangeRate').textContent = 
+          `1 ${fromToken} = ${rate.toFixed(4)} ${toToken}`;
+        
+        const impactElement = document.getElementById('priceImpact');
+        impactElement.textContent = `${priceImpact.toFixed(2)}%`;
+        impactElement.className = 'detail-value ' + (priceImpact > 3 ? 'negative' : priceImpact > 1 ? 'neutral' : 'positive');
+        
+        const minReceived = (toAmount * (1 - app.settings.slippage / 100)).toFixed(6);
+        document.getElementById('minReceived').textContent = `${minReceived} ${toToken}`;
+        
+        if (app.wallet.connected) {
+          updateStatus(`Ready to swap ${fromAmount} ${fromToken} for ~${toAmount} ${toToken}`);
+        }
+      }
+      
+      // Perform Swap
+      async function performSwap() {
+        if (!app.wallet.connected) {
+          updateStatus('Please connect your wallet first');
+          return;
+        }
+        
+        const fromAmount = parseFloat(document.getElementById('fromAmount').value) || 0;
+        const fromToken = document.getElementById('fromTokenSelect').querySelector('span').textContent;
+        const toToken = document.getElementById('toTokenSelect').querySelector('span').textContent;
+        
+        if (fromAmount <= 0) {
+          updateStatus('Please enter a valid amount');
+          return;
+        }
+        
+        try {
+          setLoadingState(true);
+          document.getElementById('swapButton').classList.add('loading');
+          updateStatus('Preparing swap transaction...');
+          
+          // Simulate transaction processing
+          await new Promise(resolve => setTimeout(resolve, 2000));
+          
+          // In production, this would:
+          // 1. Get Jupiter quote
+          // 2. Create swap transaction
+          // 3. Sign and send transaction
+          // 4. Wait for confirmation
+          
+          updateStatus('Swap completed successfully! 🎉');
+          
+          // Reset form
+          document.getElementById('fromAmount').value = '';
+          document.getElementById('toAmount').value = '';
+          updateSwapDetails(0, fromToken, toToken);
+          
+          // Update balances
+          await updateBalances();
+          
+        } catch (error) {
+          console.error('❌ Swap failed:', error);
+          updateStatus('Swap failed. Please try again.');
+        } finally {
+          setLoadingState(false);
+          document.getElementById('swapButton').classList.remove('loading');
+        }
+      }
+      
+      // Token Selection
+      function selectToken(type) {
+        const tokenList = Object.keys(TOKENS);
+        const currentElement = document.getElementById(type === 'from' ? 'fromTokenSelect' : 'toTokenSelect');
+        const currentToken = currentElement.querySelector('span').textContent;
+        const currentIndex = tokenList.indexOf(currentToken);
+        const nextIndex = (currentIndex + 1) % tokenList.length;
+        const nextToken = tokenList[nextIndex];
+        
+        currentElement.querySelector('span').textContent = nextToken;
+        updateTokenBalances();
+        calculateSwap();
+      }
+      
+      // Swap Tokens
+      function swapTokens() {
+        const fromElement = document.getElementById('fromTokenSelect').querySelector('span');
+        const toElement = document.getElementById('toTokenSelect').querySelector('span');
+        
+        const fromToken = fromElement.textContent;
+        const toToken = toElement.textContent;
+        
+        fromElement.textContent = toToken;
+        toElement.textContent = fromToken;
+        
+        const fromAmount = document.getElementById('fromAmount').value;
+        const toAmount = document.getElementById('toAmount').value;
+        
+        document.getElementById('fromAmount').value = toAmount;
+        document.getElementById('toAmount').value = fromAmount;
+        
+        updateTokenBalances();
+        calculateSwap();
+      }
+      
+      // Navigation
+      function switchSection(section) {
+        // Hide all sections
+        document.getElementById('swapInterface').style.display = 'none';
+        document.getElementById('poolInterface').style.display = 'none';
+        document.getElementById('portfolioInterface').style.display = 'none';
+        document.getElementById('adminInterface').style.display = 'none';
+        
+        // Show selected section
+        if (section === 'swap') {
+          document.getElementById('swapInterface').style.display = 'block';
+        } else if (section === 'pools') {
+          document.getElementById('poolInterface').style.display = 'block';
+        } else if (section === 'portfolio') {
+          document.getElementById('portfolioInterface').style.display = 'block';
+          updateTradingHistory();
+        } else if (section === 'admin') {
+          document.getElementById('adminInterface').style.display = 'block';
+        }
+        
+        // Update navigation
+        document.querySelectorAll('.nav-button').forEach(btn => {
+          btn.classList.remove('active');
+          btn.setAttribute('aria-pressed', 'false');
+        });
+        const activeBtn = document.querySelector(`[data-section="${section}"]`);
+        activeBtn.classList.add('active');
+        activeBtn.setAttribute('aria-pressed', 'true');
+        
+        app.currentSection = section;
+        updateStatus(`Switched to ${section} section`);
+      }
+      
+      // Utility Functions
+      function setLoadingState(loading) {
+        app.isLoading = loading;
+        if (loading) {
+          document.getElementById('swapButton').disabled = true;
+        } else {
+          document.getElementById('swapButton').disabled = !app.wallet.connected;
+        }
+      }
+      
+      function updateStatus(message) {
+        console.log('Status:', message);
+        // In production, would update a status display
+      }
+      
+      // Mock Data Updates
+      function updateMarketStats() {
+        const stats = {
+          totalVolume: '$' + (Math.random() * 10000000).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ','),
+          totalLiquidity: '$' + (Math.random() * 100000000).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ','),
+          totalUsers: Math.floor(Math.random() * 50000) + 10000,
+          totalTrades: Math.floor(Math.random() * 1000000) + 100000
+        };
+        
+        Object.entries(stats).forEach(([key, value]) => {
+          const element = document.getElementById(key);
+          if (element) element.textContent = value;
+        });
+      }
+      
+      // Update Trading History
+      function updateTradingHistory() {
+        const mockTrades = [
+          { pair: 'SOL → USDC', amount: (Math.random() * 10).toFixed(2) + ' SOL', time: Math.floor(Math.random() * 60) + ' mins ago' },
+          { pair: 'USDC → RAY', amount: (Math.random() * 100).toFixed(0) + ' USDC', time: Math.floor(Math.random() * 120) + ' mins ago' },
+          { pair: 'RAY → SOL', amount: (Math.random() * 200).toFixed(0) + ' RAY', time: Math.floor(Math.random() * 180) + ' mins ago' },
+          { pair: 'SOL → SRM', amount: (Math.random() * 5).toFixed(2) + ' SOL', time: Math.floor(Math.random() * 240) + ' mins ago' },
+          { pair: 'USDC → SOL', amount: (Math.random() * 150).toFixed(0) + ' USDC', time: Math.floor(Math.random() * 300) + ' mins ago' }
+        ];
+        
+        const historyElement = document.getElementById('tradingHistory');
+        if (historyElement) {
+          historyElement.innerHTML = mockTrades.map(trade => 
+            `<div class="trade-entry">
+              <div class="trade-pair">${trade.pair}</div>
+              <div class="trade-amount">${trade.amount}</div>
+              <div class="trade-time">${trade.time}</div>
+            </div>`
+          ).join('');
+        }
+        
+        // Update portfolio stats
+        const portfolioValue = document.getElementById('portfolioValue');
+        const portfolioChange = document.getElementById('portfolioChange');
+        if (portfolioValue) portfolioValue.textContent = '$' + (Math.random() * 10000 + 1000).toFixed(2);
+        if (portfolioChange) {
+          const change = (Math.random() - 0.5) * 20;
+          portfolioChange.textContent = (change > 0 ? '+' : '') + change.toFixed(2) + '%';
+          portfolioChange.style.color = change > 0 ? '#10b981' : '#ef4444';
+        }
+      }
+      
+      // Initialize App
+      function initializeApp() {
+        try {
+          initializeSolana();
+          
+          // Event listeners
+          document.getElementById('connectPhantom').addEventListener('click', () => connectWallet('phantom'));
+          document.getElementById('connectSolflare').addEventListener('click', () => connectWallet('solflare'));
+          
+          document.getElementById('fromAmount').addEventListener('input', calculateSwap);
+          document.getElementById('fromTokenSelect').addEventListener('click', () => selectToken('from'));
+          document.getElementById('toTokenSelect').addEventListener('click', () => selectToken('to'));
+          document.getElementById('swapIcon').addEventListener('click', swapTokens);
+          document.getElementById('swapButton').addEventListener('click', performSwap);
+          
+          // Navigation
+          document.querySelectorAll('.nav-button').forEach(button => {
+            button.addEventListener('click', () => {
+              const section = button.getAttribute('data-section');
+              switchSection(section);
+            });
+            
+            // Add keyboard navigation
+            button.addEventListener('keydown', (e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                const section = button.getAttribute('data-section');
+                switchSection(section);
+              }
+            });
+          });
+          
+          // Admin functions
+          document.getElementById('refreshStatus').addEventListener('click', () => {
+            updateStatus('System status refreshed');
+          });
+          
+          document.getElementById('exportData').addEventListener('click', () => {
+            updateStatus('Analytics data exported');
+          });
+          
+          // Update market stats periodically
+          updateMarketStats();
+          setInterval(updateMarketStats, 30000); // Update every 30 seconds
+          
+          // Hide loading screen
+          document.getElementById('loadingScreen').style.display = 'none';
+          document.getElementById('appContainer').style.display = 'block';
+          
+          console.log('✅ NocturneSwap Professional DEX initialized');
+          
+        } catch (error) {
+          console.error('❌ Failed to initialize app:', error);
+        }
+      }
+      
+      // Start app when DOM is ready
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', () => {
+          setTimeout(initializeApp, 2000); // Show loading for 2 seconds
+        });
+      } else {
+        setTimeout(initializeApp, 2000);
+      }
+      
+    </script>
+  </body>
+</html>
