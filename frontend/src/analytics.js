@@ -19,6 +19,9 @@ class NocturneAnalytics {
       timeSpent: 0
     };
     
+    // Load saved analytics data
+    this.loadFromLocalStorage();
+    
     this.initializeAnalytics();
   }
   
@@ -135,6 +138,102 @@ class NocturneAnalytics {
       const pair = `${fromToken}/${toToken}`;
       this.userBehavior.tokensSwapped[pair] = (this.userBehavior.tokensSwapped[pair] || 0) + 1;
     }
+  }
+  
+  // Enhanced swap tracking functionality
+  trackSwap(swapData) {
+    const swap = {
+      id: this.generateEventId(),
+      sessionId: this.sessionId,
+      timestamp: Date.now(),
+      type: 'swap_completed',
+      data: {
+        tokenIn: swapData.tokenIn,
+        tokenOut: swapData.tokenOut,
+        amountIn: swapData.amountIn,
+        amountOut: swapData.amountOut,
+        signature: swapData.signature,
+        priceImpact: swapData.priceImpact,
+        slippage: swapData.slippage,
+        route: swapData.route
+      },
+      userAgent: navigator.userAgent,
+      url: window.location.href
+    };
+    
+    this.events.push(swap);
+    this.userBehavior.transactionCount++;
+    this.userBehavior.totalVolume += parseFloat(swapData.amountIn) || 0;
+    
+    // Update tokens swapped counter
+    if (!this.userBehavior.tokensSwapped[swapData.tokenIn]) {
+      this.userBehavior.tokensSwapped[swapData.tokenIn] = 0;
+    }
+    this.userBehavior.tokensSwapped[swapData.tokenIn] += parseFloat(swapData.amountIn) || 0;
+    
+    // Store in localStorage for persistence
+    this.saveToLocalStorage();
+    
+    console.log('🌙 Swap tracked:', swap);
+  }
+  
+  // Get swap history for admin dashboard
+  getSwapHistory() {
+    return this.events
+      .filter(event => event.type === 'swap_completed')
+      .map(event => ({
+        id: event.id,
+        timestamp: event.timestamp,
+        tokenIn: event.data.tokenIn,
+        tokenOut: event.data.tokenOut,
+        amountIn: event.data.amountIn,
+        amountOut: event.data.amountOut,
+        signature: event.data.signature,
+        user: event.sessionId,
+        fee: (parseFloat(event.data.amountIn) || 0) * 0.003,
+        status: 'confirmed'
+      }));
+  }
+  
+  // Get analytics metrics for dashboard
+  getAnalyticsMetrics() {
+    const swapEvents = this.events.filter(event => event.type === 'swap_completed');
+    const uniqueUsers = new Set(swapEvents.map(event => event.sessionId)).size;
+    
+    return {
+      totalSwaps: swapEvents.length,
+      uniqueUsers: uniqueUsers,
+      totalVolume: this.userBehavior.totalVolume,
+      totalFees: this.userBehavior.totalVolume * 0.003,
+      avgSwapSize: swapEvents.length > 0 ? this.userBehavior.totalVolume / swapEvents.length : 0,
+      topTokens: Object.entries(this.userBehavior.tokensSwapped)
+        .sort(([, a], [, b]) => b - a)
+        .slice(0, 5)
+        .map(([token]) => token)
+    };
+  }
+  
+  // Track price feed updates
+  trackPriceFeed(priceData) {
+    this.trackEvent('price_update', {
+      token: priceData.token,
+      price: priceData.price,
+      source: priceData.source,
+      timestamp: Date.now()
+    });
+  }
+  
+  // Track RPC performance
+  trackRPCCall(rpcData) {
+    const responseTime = Date.now() - rpcData.startTime;
+    this.performance.apiResponseTimes.push(responseTime);
+    
+    this.trackEvent('rpc_call', {
+      method: rpcData.method,
+      responseTime: responseTime,
+      success: rpcData.success,
+      endpoint: rpcData.endpoint
+    });
   }
   
   trackApiCall(endpoint, duration, success) {
@@ -306,6 +405,43 @@ class NocturneAnalytics {
       value: value,
       userSegment: this.getUserSegment()
     });
+  }
+  
+  // Save analytics to localStorage
+  saveToLocalStorage() {
+    try {
+      const analyticsData = {
+        sessionId: this.sessionId,
+        events: this.events.slice(-100), // Keep last 100 events
+        userBehavior: this.userBehavior,
+        performance: this.performance,
+        timestamp: Date.now()
+      };
+      
+      localStorage.setItem('nocturne_analytics', JSON.stringify(analyticsData));
+    } catch (error) {
+      console.error('Failed to save analytics to localStorage:', error);
+    }
+  }
+  
+  // Load analytics from localStorage
+  loadFromLocalStorage() {
+    try {
+      const savedData = localStorage.getItem('nocturne_analytics');
+      if (savedData) {
+        const analyticsData = JSON.parse(savedData);
+        
+        // Only load if data is from the same session or recent
+        if (analyticsData.sessionId === this.sessionId || 
+            (Date.now() - analyticsData.timestamp) < 24 * 60 * 60 * 1000) {
+          this.events = analyticsData.events || [];
+          this.userBehavior = { ...this.userBehavior, ...analyticsData.userBehavior };
+          this.performance = { ...this.performance, ...analyticsData.performance };
+        }
+      }
+    } catch (error) {
+      console.error('Failed to load analytics from localStorage:', error);
+    }
   }
 }
 

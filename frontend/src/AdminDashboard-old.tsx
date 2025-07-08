@@ -95,6 +95,7 @@ const AdminDashboard: React.FC = () => {
   const fetchTokenData = async (mint: string, symbol: string, name: string): Promise<TokenData> => {
     try {
       let price = 0;
+      let change24h = 0;
       
       // Try to get live price from Jupiter
       if (window.jupiterIntegration) {
@@ -216,220 +217,141 @@ const AdminDashboard: React.FC = () => {
       recentSwaps: swapData.slice(0, 10)
     };
   };
+    setActiveUsers(156);
+  }, []);
 
-  // Initialize data fetching
-  useEffect(() => {
-    fetchDashboardData();
-    
-    // Set up auto-refresh
-    if (autoRefresh) {
-      const interval = setInterval(() => {
-        fetchDashboardData();
-      }, 30000); // Refresh every 30 seconds
-      
-      return () => clearInterval(interval);
+  const formatNumber = (num: number): string => {
+    if (num >= 1000000) {
+      return (num / 1000000).toFixed(1) + 'M';
+    } else if (num >= 1000) {
+      return (num / 1000).toFixed(1) + 'K';
     }
-  }, [autoRefresh, selectedTimeframe]);
-
-  const formatTimeAgo = (timestamp: number) => {
-    const now = Date.now();
-    const diff = now - timestamp;
-    const minutes = Math.floor(diff / 60000);
-    const hours = Math.floor(diff / 3600000);
-    const days = Math.floor(diff / 86400000);
-    
-    if (days > 0) return `${days}d ago`;
-    if (hours > 0) return `${hours}h ago`;
-    if (minutes > 0) return `${minutes}m ago`;
-    return 'Just now';
-  };
-
-  const formatNumber = (num: number) => {
-    if (num >= 1000000) return `${(num / 1000000).toFixed(1)}M`;
-    if (num >= 1000) return `${(num / 1000).toFixed(1)}K`;
     return num.toFixed(2);
   };
 
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case 'confirmed': return '#4ade80';
-      case 'pending': return '#fbbf24';
-      case 'failed': return '#f87171';
-      default: return '#6b7280';
+  const formatTime = (timestamp: number): string => {
+    const diff = Date.now() - timestamp;
+    const minutes = Math.floor(diff / 60000);
+    const hours = Math.floor(minutes / 60);
+    
+    if (hours > 0) {
+      return `${hours}h ${minutes % 60}m ago`;
     }
+    return `${minutes}m ago`;
   };
-
-  if (isLoading) {
-    return (
-      <div className="admin-dashboard">
-        <div className="loading-spinner">
-          <div className="spinner"></div>
-          <p>Loading dashboard data...</p>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="admin-dashboard">
       <div className="dashboard-header">
-        <div className="header-left">
-          <h1>🏛️ NocturneSwap Admin Dashboard</h1>
-          <p>Monitor DEX performance and manage token listings</p>
-        </div>
-        <div className="header-controls">
-          <select 
-            value={selectedTimeframe} 
-            onChange={(e) => setSelectedTimeframe(e.target.value as any)}
-            className="timeframe-select"
-          >
-            <option value="1h">Last Hour</option>
-            <option value="24h">Last 24 Hours</option>
-            <option value="7d">Last 7 Days</option>
-            <option value="30d">Last 30 Days</option>
-          </select>
-          <button 
-            className={`refresh-toggle ${autoRefresh ? 'active' : ''}`}
-            onClick={() => setAutoRefresh(!autoRefresh)}
-          >
-            {autoRefresh ? '🔄 Auto' : '⏸️ Manual'}
-          </button>
-          <button 
-            className="refresh-button"
-            onClick={fetchDashboardData}
-          >
-            🔄 Refresh
-          </button>
-        </div>
+        <h1>🏛️ NocturneSwap Admin Dashboard</h1>
+        <p>Monitor DEX performance and manage token listings</p>
       </div>
 
-      <div className="metrics-grid">
-        <div className="metric-card">
-          <div className="metric-header">
-            <h3>Total Volume</h3>
-            <span className="metric-icon">💰</span>
+      <div className="stats-grid">
+        <div className="stat-card">
+          <div className="stat-icon">📊</div>
+          <div className="stat-content">
+            <h3>Total Volume (24h)</h3>
+            <p className="stat-value">${formatNumber(totalVolume)}</p>
+            <span className="stat-change positive">+12.5%</span>
           </div>
-          <div className="metric-value">${formatNumber(metrics.totalVolume)}</div>
-          <div className="metric-change positive">+12.5% from yesterday</div>
         </div>
 
-        <div className="metric-card">
-          <div className="metric-header">
-            <h3>Total Fees</h3>
-            <span className="metric-icon">💸</span>
+        <div className="stat-card">
+          <div className="stat-icon">💰</div>
+          <div className="stat-content">
+            <h3>Total Fees Collected</h3>
+            <p className="stat-value">${formatNumber(totalFees)}</p>
+            <span className="stat-change positive">+8.2%</span>
           </div>
-          <div className="metric-value">${formatNumber(metrics.totalFees)}</div>
-          <div className="metric-change positive">+8.3% from yesterday</div>
         </div>
 
-        <div className="metric-card">
-          <div className="metric-header">
+        <div className="stat-card">
+          <div className="stat-icon">👥</div>
+          <div className="stat-content">
             <h3>Active Users</h3>
-            <span className="metric-icon">👥</span>
+            <p className="stat-value">{activeUsers}</p>
+            <span className="stat-change positive">+24</span>
           </div>
-          <div className="metric-value">{metrics.activeUsers}</div>
-          <div className="metric-change positive">+15.2% from yesterday</div>
         </div>
 
-        <div className="metric-card">
-          <div className="metric-header">
+        <div className="stat-card">
+          <div className="stat-icon">🔄</div>
+          <div className="stat-content">
             <h3>Total Swaps</h3>
-            <span className="metric-icon">🔄</span>
+            <p className="stat-value">{swaps.length}</p>
+            <span className="stat-change neutral">Live</span>
           </div>
-          <div className="metric-value">{metrics.totalSwaps}</div>
-          <div className="metric-change positive">+22.1% from yesterday</div>
-        </div>
-
-        <div className="metric-card">
-          <div className="metric-header">
-            <h3>Avg Swap Size</h3>
-            <span className="metric-icon">📊</span>
-          </div>
-          <div className="metric-value">${formatNumber(metrics.avgSwapSize)}</div>
-          <div className="metric-change negative">-3.2% from yesterday</div>
-        </div>
-
-        <div className="metric-card">
-          <div className="metric-header">
-            <h3>Top Token</h3>
-            <span className="metric-icon">🏆</span>
-          </div>
-          <div className="metric-value">{metrics.topTokens[0] || 'N/A'}</div>
-          <div className="metric-change neutral">Most traded today</div>
         </div>
       </div>
 
-      <div className="dashboard-grid">
-        <div className="dashboard-section">
+      <div className="dashboard-content">
+        <div className="section">
           <div className="section-header">
-            <h2>💎 Token Performance</h2>
-            <button className="export-btn">Export Data</button>
+            <h2>🪙 Token Listings</h2>
+            <button className="add-token-btn">Add New Token</button>
           </div>
-          <div className="tokens-table">
+          
+          <div className="token-table">
             <div className="table-header">
               <div>Token</div>
               <div>Price</div>
               <div>24h Change</div>
               <div>Volume</div>
               <div>Liquidity</div>
-              <div>Trades</div>
+              <div>Actions</div>
             </div>
+            
             {tokens.map((token) => (
               <div key={token.mint} className="table-row">
                 <div className="token-info">
                   <div className="token-symbol">{token.symbol}</div>
                   <div className="token-name">{token.name}</div>
                 </div>
-                <div className="token-price">${formatNumber(token.price)}</div>
+                <div className="token-price">${token.price.toFixed(4)}</div>
                 <div className={`token-change ${token.change24h >= 0 ? 'positive' : 'negative'}`}>
-                  {token.change24h >= 0 ? '+' : ''}{token.change24h.toFixed(2)}%
+                  {token.change24h >= 0 ? '+' : ''}{token.change24h.toFixed(1)}%
                 </div>
                 <div className="token-volume">${formatNumber(token.volume24h)}</div>
                 <div className="token-liquidity">${formatNumber(token.liquidity)}</div>
-                <div className="token-trades">{token.trades24h}</div>
+                <div className="token-actions">
+                  <button className="edit-btn">Edit</button>
+                  <button className="remove-btn">Remove</button>
+                </div>
               </div>
             ))}
           </div>
         </div>
 
-        <div className="dashboard-section">
+        <div className="section">
           <div className="section-header">
             <h2>🔄 Recent Swaps</h2>
-            <button className="view-all-btn">View All</button>
+            <button className="export-btn">Export Data</button>
           </div>
-          <div className="swaps-list">
-            {metrics.recentSwaps.map((swap) => (
-              <div key={swap.id} className="swap-item">
-                <div className="swap-info">
-                  <div className="swap-tokens">
-                    <span className="token-in">{swap.tokenIn}</span>
-                    <span className="swap-arrow">→</span>
-                    <span className="token-out">{swap.tokenOut}</span>
-                  </div>
-                  <div className="swap-amounts">
-                    <span>{formatNumber(swap.amountIn)} → {formatNumber(swap.amountOut)}</span>
-                  </div>
+          
+          <div className="swap-table">
+            <div className="table-header">
+              <div>Time</div>
+              <div>User</div>
+              <div>From</div>
+              <div>To</div>
+              <div>Amount</div>
+              <div>Fee</div>
+            </div>
+            
+            {swaps.map((swap) => (
+              <div key={swap.id} className="table-row">
+                <div className="swap-time">{formatTime(swap.timestamp)}</div>
+                <div className="swap-user">{swap.user}</div>
+                <div className="swap-token-in">{swap.tokenIn}</div>
+                <div className="swap-token-out">{swap.tokenOut}</div>
+                <div className="swap-amount">
+                  {swap.amountIn.toFixed(2)} → {swap.amountOut.toFixed(2)}
                 </div>
-                <div className="swap-details">
-                  <div className="swap-user">{swap.user}</div>
-                  <div className="swap-time">{formatTimeAgo(swap.timestamp)}</div>
-                  <div 
-                    className="swap-status"
-                    style={{ color: getStatusColor(swap.status) }}
-                  >
-                    {swap.status}
-                  </div>
-                </div>
+                <div className="swap-fee">${swap.fee.toFixed(2)}</div>
               </div>
             ))}
           </div>
-        </div>
-      </div>
-
-      <div className="dashboard-footer">
-        <div className="footer-stats">
-          <p>Last updated: {new Date().toLocaleString()}</p>
-          <p>Data source: Jupiter API + NocturneSwap Analytics</p>
         </div>
       </div>
     </div>

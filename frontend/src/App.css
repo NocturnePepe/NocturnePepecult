@@ -361,3 +361,80 @@
     display: none;
   }
 }
+
+/* Integration Status Styles */
+.integration-status {
+  position: relative;
+  margin-right: 16px;
+}
+
+.status-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(124, 58, 237, 0.1);
+  border: 1px solid rgba(124, 58, 237, 0.3);
+  color: #fff;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.status-toggle:hover {
+  background: rgba(124, 58, 237, 0.2);
+}
+
+.status-indicator {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  font-size: 8px;
+}
+
+.status-indicator.healthy {
+  color: #4ade80;
+}
+
+.status-indicator.warning {
+  color: #fbbf24;
+}
+
+.status-indicator.error {
+  color: #f87171;
+}
+
+.status-dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 8px;
+  background: #1a1a1a;
+  border: 1px solid rgba(124, 58, 237, 0.3);
+  border-radius: 8px;
+  padding: 12px;
+  min-width: 150px;
+  z-index: 1000;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+}
+
+.status-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 4px 0;
+  font-size: 12px;
+}
+
+.status-item span:first-child {
+  color: #888;
+}
+
+.status-item .healthy {
+  color: #4ade80;
+}
+
+.status-item .error {
+  color: #f87171;
+}
