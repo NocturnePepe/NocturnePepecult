@@ -11,7 +11,11 @@ import PriceAlert from './components/PriceAlert';
 import Portfolio from './components/Portfolio';
 import LiquidityPools from './components/LiquidityPools';
 import AdvancedTrading from './components/AdvancedTrading';
+import SecurityModal from './components/SecurityModal';
+import AchievementSystem from './components/AchievementSystem';
+import GovernanceDAO from './components/GovernanceDAO';
 import { cultSounds } from './SoundEffects.js';
+import { securityManager } from './Security.js';
 import './SwapInterface.css';
 
 interface SwapInterfaceProps {
@@ -177,6 +181,19 @@ const SwapInterface = ({ connection, program }: SwapInterfaceProps) => {
   const [showPortfolio, setShowPortfolio] = useState(false);
   const [showLiquidityPools, setShowLiquidityPools] = useState(false);
   const [showAdvancedTrading, setShowAdvancedTrading] = useState(false);
+  const [showSecurityModal, setShowSecurityModal] = useState(false);
+  const [securitySimulation, setSecuritySimulation] = useState(null);
+  const [showAchievements, setShowAchievements] = useState(false);
+  const [showGovernance, setShowGovernance] = useState(false);
+  const [userStats, setUserStats] = useState({
+    totalSwaps: 0,
+    totalVolume: 0,
+    consecutiveDays: 0,
+    bestTrade: 0,
+    referrals: 0,
+    midnightTrades: 0,
+    perfectSwaps: 0
+  });
   
   // Token selection - now dynamic!
   const [inputToken, setInputToken] = useState(EXTENDED_TOKEN_LIST[0]); // SOL
@@ -220,7 +237,7 @@ const SwapInterface = ({ connection, program }: SwapInterfaceProps) => {
     return formatTokenAmount(quote.outAmount, outputToken.decimals).toFixed(6);
   }, [quote, outputToken.decimals]);
 
-  // Handle swap execution with modal
+  // Handle swap execution with security check first
   const handleSwap = useCallback(async () => {
     if (!connected || !publicKey || !quote) {
       setSwapError('Please connect wallet and enter amount');
@@ -229,11 +246,35 @@ const SwapInterface = ({ connection, program }: SwapInterfaceProps) => {
     }
 
     setSwapError('');
+    
+    // First, run security simulation
+    try {
+      const simulation = await securityManager.simulateTransaction({
+        inputToken: inputToken.symbol,
+        outputToken: outputToken.symbol,
+        amount: inputAmount,
+        userAddress: publicKey.toString(),
+        quote: quote
+      });
+      
+      setSecuritySimulation(simulation);
+      setShowSecurityModal(true);
+      await cultSounds.playConnectSound();
+    } catch (error) {
+      console.error('Security simulation failed:', error);
+      // Proceed without security check if simulation fails
+      proceedToSwap();
+    }
+  }, [connected, publicKey, quote, inputToken, outputToken, inputAmount]);
+
+  // Proceed to swap after security approval
+  const proceedToSwap = useCallback(async () => {
+    setShowSecurityModal(false);
     setModalStep(0);
     setShowModal(true);
     setSwapSuccess(false);
-    await cultSounds.playConnectSound();
-  }, [connected, publicKey, quote]);
+    await cultSounds.playSwapSound();
+  }, []);
 
   // Handle token swapping
   const handleTokenSwap = useCallback(async () => {
@@ -256,18 +297,45 @@ const SwapInterface = ({ connection, program }: SwapInterfaceProps) => {
   }, []);
 
   // Handle actual swap execution
+  // Load user stats from localStorage on mount
+  useEffect(() => {
+    const savedStats = localStorage.getItem('nocturne_user_stats');
+    if (savedStats) {
+      setUserStats(JSON.parse(savedStats));
+    }
+  }, []);
+
+  // Handle swap execution with achievements tracking
   const handleExecuteSwap = useCallback(async (quoteToExecute: any) => {
     try {
       const result = await executeSwap(quoteToExecute);
       if (result) {
         setSwapSuccess(true);
         await cultSounds.playRitualCompleteSound();
+        
+        // Update user stats for achievements
+        const swapValue = parseFloat(inputAmount) * (inputPriceData.priceData?.price || 0);
+        const currentTime = new Date();
+        const isMiddnight = currentTime.getHours() === 0 && currentTime.getMinutes() === 0;
+        const isPerfectSwap = priceImpact < 0.01; // Less than 0.01% slippage
+        
+        const newStats = {
+          ...userStats,
+          totalSwaps: userStats.totalSwaps + 1,
+          totalVolume: userStats.totalVolume + swapValue,
+          bestTrade: Math.max(userStats.bestTrade, swapValue),
+          midnightTrades: isMiddnight ? userStats.midnightTrades + 1 : userStats.midnightTrades,
+          perfectSwaps: isPerfectSwap ? userStats.perfectSwaps + 1 : userStats.perfectSwaps
+        };
+        
+        setUserStats(newStats);
+        localStorage.setItem('nocturne_user_stats', JSON.stringify(newStats));
       }
     } catch (error) {
       console.error('Swap execution failed:', error);
       await cultSounds.playErrorSound();
     }
-  }, [executeSwap]);
+  }, [executeSwap, inputAmount, inputPriceData.priceData?.price, priceImpact, userStats]);
 
   return (
     <div className="swap-interface">
@@ -303,6 +371,20 @@ const SwapInterface = ({ connection, program }: SwapInterfaceProps) => {
               onMouseEnter={() => cultSounds.playHoverSound()}
             >
               ⚡ Advanced
+            </button>
+            <button 
+              className="achievements-btn"
+              onClick={() => setShowAchievements(true)}
+              onMouseEnter={() => cultSounds.playHoverSound()}
+            >
+              🏆 Achievements
+            </button>
+            <button 
+              className="governance-btn"
+              onClick={() => setShowGovernance(true)}
+              onMouseEnter={() => cultSounds.playHoverSound()}
+            >
+              🗳️ Governance
             </button>
           </div>
         </div>
@@ -584,6 +666,31 @@ const SwapInterface = ({ connection, program }: SwapInterfaceProps) => {
         onClose={() => setShowAdvancedTrading(false)}
         inputToken={inputToken}
         outputToken={outputToken}
+      />
+
+      {/* Security Risk Analysis Modal */}
+      <SecurityModal 
+        isVisible={showSecurityModal}
+        onClose={() => setShowSecurityModal(false)}
+        onProceed={proceedToSwap}
+        simulation={securitySimulation}
+        inputToken={inputToken}
+        outputToken={outputToken}
+        amount={inputAmount}
+      />
+
+      {/* Achievement System Modal */}
+      <AchievementSystem 
+        isVisible={showAchievements}
+        onClose={() => setShowAchievements(false)}
+        userStats={userStats}
+      />
+
+      {/* Governance DAO Modal */}
+      <GovernanceDAO 
+        isVisible={showGovernance}
+        onClose={() => setShowGovernance(false)}
+        connection={connection}
       />
     </div>
   );
