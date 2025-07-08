@@ -6,6 +6,9 @@ import { useJupiterQuotes, POPULAR_TOKENS, formatTokenAmount, toRawAmount } from
 import { useJupiterSwap } from './hooks/useJupiterSwap';
 import { usePriceData, formatPrice, formatChange, formatLargeNumber } from './hooks/usePriceData';
 import { TokenSelector, EXTENDED_TOKEN_LIST } from './components/TokenSelector';
+import PriceChart from './components/PriceChart';
+import PriceAlert from './components/PriceAlert';
+import Portfolio from './components/Portfolio';
 import { cultSounds } from './SoundEffects.js';
 import './SwapInterface.css';
 
@@ -167,6 +170,9 @@ const SwapInterface = ({ connection, program }: SwapInterfaceProps) => {
   const [showModal, setShowModal] = useState(false);
   const [modalStep, setModalStep] = useState(0);
   const [swapSuccess, setSwapSuccess] = useState(false);
+  const [chartTimeframe, setChartTimeframe] = useState('24h');
+  const [showChart, setShowChart] = useState(true);
+  const [showPortfolio, setShowPortfolio] = useState(false);
   
   // Token selection - now dynamic!
   const [inputToken, setInputToken] = useState(EXTENDED_TOKEN_LIST[0]); // SOL
@@ -265,6 +271,22 @@ const SwapInterface = ({ connection, program }: SwapInterfaceProps) => {
         <div className="swap-header">
           <h2>🌙 NocturneSwap</h2>
           <p>Live Jupiter quotes • {inputToken.symbol} ⇄ {outputToken.symbol}</p>
+          <div className="header-actions">
+            <button 
+              className="chart-toggle-btn"
+              onClick={() => setShowChart(!showChart)}
+              onMouseEnter={() => cultSounds.playHoverSound()}
+            >
+              {showChart ? '📈 Hide Chart' : '📊 Show Chart'}
+            </button>
+            <button 
+              className="portfolio-btn"
+              onClick={() => setShowPortfolio(true)}
+              onMouseEnter={() => cultSounds.playHoverSound()}
+            >
+              🏦 Portfolio
+            </button>
+          </div>
         </div>
 
         {/* Real-time Price Data */}
@@ -321,6 +343,29 @@ const SwapInterface = ({ connection, program }: SwapInterfaceProps) => {
             )}
           </div>
         </div>
+
+        {/* Price Chart Section */}
+        {showChart && inputPriceData.priceData && (
+          <PriceChart
+            tokenSymbol={inputToken.symbol}
+            currentPrice={inputPriceData.priceData.price}
+            change24h={inputPriceData.priceData.change24h}
+            timeframe={chartTimeframe as '1h' | '24h' | '7d' | '30d'}
+            onTimeframeChange={(tf) => setChartTimeframe(tf)}
+          />
+        )}
+
+        {/* Price Alert Section */}
+        {inputPriceData.priceData && (
+          <PriceAlert
+            tokenSymbol={inputToken.symbol}
+            currentPrice={inputPriceData.priceData.price}
+            onAlertTriggered={(alert) => {
+              console.log('Alert triggered:', alert);
+              // Could show a notification modal here
+            }}
+          />
+        )}
 
         <div className="wallet-connection">
           <WalletMultiButton />
@@ -499,6 +544,13 @@ const SwapInterface = ({ connection, program }: SwapInterfaceProps) => {
         txHash={txHash}
         swapError={swapExecutionError}
       />}
+
+      {/* Portfolio Modal */}
+      <Portfolio 
+        connection={connection}
+        isVisible={showPortfolio}
+        onClose={() => setShowPortfolio(false)}
+      />
     </div>
   );
 };
