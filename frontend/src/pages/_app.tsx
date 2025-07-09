@@ -1,44 +1,40 @@
 import React from 'react';
-import type { AppProps } from 'next/app';
 import { ConnectionProvider, WalletProvider } from '@solana/wallet-adapter-react';
-import { WalletAdapterNetwork } from '@solana/wallet-adapter-base';
-import { PhantomWalletAdapter, SolflareWalletAdapter } from '@solana/wallet-adapter-wallets';
 import { WalletModalProvider } from '@solana/wallet-adapter-react-ui';
+import { PhantomWalletAdapter, SolflareWalletAdapter } from '@solana/wallet-adapter-wallets';
+import { JupiterProvider } from '@jup-ag/react-hook';
 import { clusterApiUrl } from '@solana/web3.js';
+import App from '../App';
 
-// Jupiter Provider (using CDN version)
-declare global {
-  interface Window {
-    JupiterProvider: React.ComponentType<any>;
-  }
-}
+// Import wallet adapter CSS
+import '@solana/wallet-adapter-react-ui/styles.css';
 
-const JupiterProvider = window?.JupiterProvider || React.Fragment;
-
-export default function App({ Component, pageProps }: AppProps) {
-  // Solana network configuration
-  const network = WalletAdapterNetwork.Mainnet;
-  const endpoint = clusterApiUrl(network);
-  
-  // Wallet adapters
+const AppWithProviders: React.FC = () => {
+  // Configure supported wallets
   const wallets = [
     new PhantomWalletAdapter(),
     new SolflareWalletAdapter(),
   ];
+
+  // Solana RPC endpoint
+  const endpoint = clusterApiUrl('mainnet-beta');
 
   return (
     <ConnectionProvider endpoint={endpoint}>
       <WalletProvider wallets={wallets} autoConnect>
         <WalletModalProvider>
           <JupiterProvider
-            connection={endpoint}
             cluster="mainnet-beta"
+            userPublicKey={undefined} // Will be set by wallet connection
+            routeMap={undefined} // Use default Jupiter route map
             defaultReferrer="nocturnepepe.sol"
           >
-            <Component {...pageProps} />
+            <App />
           </JupiterProvider>
         </WalletModalProvider>
       </WalletProvider>
     </ConnectionProvider>
   );
-}
+};
+
+export default AppWithProviders;

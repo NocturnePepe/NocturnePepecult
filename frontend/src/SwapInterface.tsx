@@ -1,471 +1,112 @@
-import React, { useState, useCallback, useMemo, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { useWallet } from '@solana/wallet-adapter-react';
 import { WalletMultiButton } from '@solana/wallet-adapter-react-ui';
+import { useJupiter } from '@jup-ag/react-hook';
 import { PublicKey } from '@solana/web3.js';
-import { useJupiterQuotes, POPULAR_TOKENS, formatTokenAmount, toRawAmount } from './hooks/useJupiterQuotes';
-import { useJupiterSwap } from './hooks/useJupiterSwap';
-import { usePriceData, formatPrice, formatChange, formatLargeNumber } from './hooks/usePriceData';
-import { TokenSelector, EXTENDED_TOKEN_LIST } from './components/TokenSelector';
-import PriceChart from './components/PriceChart';
-import PriceAlert from './components/PriceAlert';
-import Portfolio from './components/Portfolio';
-import LiquidityPools from './components/LiquidityPools';
-import AdvancedTrading from './components/AdvancedTrading';
-import SecurityModal from './components/SecurityModal';
-import AchievementSystem from './components/AchievementSystem';
-import GovernanceDAO from './components/GovernanceDAO';
-import { cultSounds } from './SoundEffects.js';
-import { securityManager } from './Security.js';
 import './SwapInterface.css';
 
+// Token mints for SOL and USDC
+const SOL_MINT = 'So11111111111111111111111111111111111111112';
+const USDC_MINT = 'EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v';
+
 interface SwapInterfaceProps {
-  connection: any;
-  program: any;
+  // Remove unused props - Jupiter handles connection internally
 }
 
-interface RitualModalProps {
-  inputAmount: string;
-  inputToken: any;
-  outputAmount: string;
-  outputToken: any;
-  rate: number;
-  priceImpact: number;
-  quote: any;
-  onClose: () => void;
-  onExecuteSwap: (quote: any) => Promise<void>;
-  swapLoading: boolean;
-  txHash: string | null;
-  swapError: string | null;
-}
-
-const RitualModal = ({
-  inputAmount,
-  inputToken,
-  outputAmount,
-  outputToken,
-  rate,
-  priceImpact,
-  quote,
-  onClose,
-  onExecuteSwap,
-  swapLoading,
-  txHash,
-  swapError
-}: RitualModalProps) => {
-  const [step, setStep] = useState(0);
-  const [typewriterText, setTypewriterText] = useState('');
-  const [isExecuting, setIsExecuting] = useState(false);
-  
-  const steps = [
-    "🔮 Initiating ancient swap ritual...",
-    "⚡ Connecting to the void networks...",
-    "🌙 Jupiter spirits are calculating optimal routes...", 
-    "💀 Summoning liquidity from shadow pools...",
-    "🕯️ Executing mystical transaction...",
-    "✨ Ritual complete! The exchange has been blessed."
-  ];
-
-  const handleExecuteSwap = useCallback(async () => {
-    if (!quote || isExecuting) return;
-    
-    setIsExecuting(true);
-    setStep(4); // Move to execution step
-    await onExecuteSwap(quote);
-    setIsExecuting(false);
-    
-    // Move to completion step after execution
-    setTimeout(() => setStep(5), 1000);
-  }, [quote, onExecuteSwap, isExecuting]);
-
-  useEffect(() => {
-    const typeText = async () => {
-      const text = steps[step];
-      setTypewriterText('');
-      
-      // Play mystical sound for each step
-      if (step === 0) await cultSounds.playSwapSound();
-      else await cultSounds.playHoverSound();
-      
-      for (let i = 0; i <= text.length; i++) {
-        setTypewriterText(text.slice(0, i));
-        await new Promise(resolve => setTimeout(resolve, 50));
-      }
-      
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      
-      if (step < 3) {
-        setStep(prev => prev + 1);
-      } else if (step === 3) {
-        // Wait for user to click execute
-        // Step 4 (execution) and 5 (completion) are handled by button clicks
-      }
-    };
-
-    if (step < 4) {
-      typeText();
-    }
-  }, [step]);
-
-  // Handle actual swap execution
-  const executeRealSwap = useCallback(async () => {
-    await handleExecuteSwap();
-  }, [handleExecuteSwap]);
-
-  return (
-    <div className="ritual-modal-overlay">
-      <div className="ritual-modal">
-        <div className="ritual-header">
-          <h3>🌙 Nocturne Ritual</h3>
-          <button className="ritual-close" onClick={onClose}>×</button>
-        </div>
-        
-        <div className="ritual-content">
-          <div className="ritual-typewriter">
-            <p>{typewriterText}</p>
-            <span className="cursor">|</span>
-          </div>
-          
-          <div className="ritual-details">
-            <div className="ritual-trade">
-              <span>{inputAmount} {inputToken.symbol}</span>
-              <span className="ritual-arrow">→</span>
-              <span>{outputAmount} {outputToken.symbol}</span>
-            </div>
-            
-            <div className="ritual-stats">
-              <div>Rate: {rate.toFixed(4)} {outputToken.symbol}/{inputToken.symbol}</div>
-              <div>Impact: {priceImpact.toFixed(2)}%</div>
-              <div>TX: {txHash ? `${txHash.slice(0, 8)}...${txHash.slice(-8)}` : 'Pending...'}</div>
-              {swapError && <div style={{color: '#ff6b6b'}}>Error: {swapError}</div>}
-            </div>
-          </div>
-          
-          {step === 3 && !isExecuting && (
-            <button 
-              className="ritual-execute-btn"
-              onClick={executeRealSwap}
-              disabled={swapLoading}
-              onMouseEnter={() => cultSounds.playHoverSound()}
-            >
-              {swapLoading ? '🕯️ Executing...' : '⚡ Execute Swap'}
-            </button>
-          )}
-          
-          {(step === 5 || txHash) && (
-            <button 
-              className="ritual-complete-btn"
-              onClick={async () => {
-                await cultSounds.playConnectSound();
-                onClose();
-              }}
-              onMouseEnter={() => cultSounds.playHoverSound()}
-            >
-              Close Ritual
-            </button>
-          )}
-        </div>
-      </div>
-    </div>
-  );
-};
-
-const SwapInterface = ({ connection, program }: SwapInterfaceProps) => {
-  const { publicKey, connected, signTransaction } = useWallet();
+const SwapInterface: React.FC<SwapInterfaceProps> = () => {
+  const { publicKey, sendTransaction } = useWallet();
   const [inputAmount, setInputAmount] = useState('');
+  const [outputAmount, setOutputAmount] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   const [swapError, setSwapError] = useState('');
-  const [showModal, setShowModal] = useState(false);
-  const [modalStep, setModalStep] = useState(0);
-  const [swapSuccess, setSwapSuccess] = useState(false);
-  const [chartTimeframe, setChartTimeframe] = useState('24h');
-  const [showChart, setShowChart] = useState(true);
-  const [showPortfolio, setShowPortfolio] = useState(false);
-  const [showLiquidityPools, setShowLiquidityPools] = useState(false);
-  const [showAdvancedTrading, setShowAdvancedTrading] = useState(false);
-  const [showSecurityModal, setShowSecurityModal] = useState(false);
-  const [securitySimulation, setSecuritySimulation] = useState(null);
-  const [showAchievements, setShowAchievements] = useState(false);
-  const [showGovernance, setShowGovernance] = useState(false);
-  const [userStats, setUserStats] = useState({
-    totalSwaps: 0,
-    totalVolume: 0,
-    consecutiveDays: 0,
-    bestTrade: 0,
-    referrals: 0,
-    midnightTrades: 0,
-    perfectSwaps: 0
-  });
-  
-  // Token selection - now dynamic!
-  const [inputToken, setInputToken] = useState(EXTENDED_TOKEN_LIST[0]); // SOL
-  const [outputToken, setOutputToken] = useState(EXTENDED_TOKEN_LIST[1]); // USDC
+  const [swapSuccess, setSwapSuccess] = useState('');
 
-  // Real-time price data for both tokens
-  const inputPriceData = usePriceData(inputToken.symbol);
-  const outputPriceData = usePriceData(outputToken.symbol);
+  // Set default swap pair: SOL -> USDC
+  const [inputMint, setInputMint] = useState(SOL_MINT);
+  const [outputMint, setOutputMint] = useState(USDC_MINT);
 
-  // Calculate raw amount for Jupiter API
-  const rawInputAmount = useMemo(() => {
-    if (!inputAmount || isNaN(parseFloat(inputAmount))) return 0;
-    return toRawAmount(inputAmount, inputToken.decimals);
-  }, [inputAmount, inputToken.decimals]);
+  // Jupiter hook configuration
+  const jupiterConfig = useMemo(() => ({
+    amount: inputAmount ? Number(inputAmount) * 1e9 : 0, // Convert to lamports
+    inputMint: new PublicKey(inputMint),
+    outputMint: new PublicKey(outputMint),
+    slippage: 1, // 1% slippage
+    debounceTime: 250,
+  }), [inputAmount, inputMint, outputMint]);
 
-  // Use our mobile-friendly Jupiter hooks
-  const { 
-    quote, 
-    loading, 
-    error, 
-    priceImpact, 
-    rate, 
-    routes 
-  } = useJupiterQuotes({
-    inputMint: inputToken.mint,
-    outputMint: outputToken.mint,
-    amount: rawInputAmount,
-    slippageBps: 100 // 1% slippage
-  });
+  // Initialize Jupiter hook
+  const {
+    routeMap,
+    routes,
+    loading: routesLoading,
+    exchange,
+    error: jupiterError,
+  } = useJupiter(jupiterConfig);
 
-  const { 
-    executeSwap, 
-    loading: swapLoading, 
-    error: swapExecutionError, 
-    txHash 
-  } = useJupiterSwap();
+  // Update output amount when routes change
+  useEffect(() => {
+    if (routes && routes.length > 0 && routes[0].outAmount) {
+      const bestRoute = routes[0];
+      const outputInDecimals = bestRoute.outAmount / 1e6; // USDC has 6 decimals
+      setOutputAmount(outputInDecimals.toFixed(6));
+    } else {
+      setOutputAmount('');
+    }
+  }, [routes]);
 
-  // Calculate output amount from quote
-  const outputAmount = useMemo(() => {
-    if (!quote) return '';
-    return formatTokenAmount(quote.outAmount, outputToken.decimals).toFixed(6);
-  }, [quote, outputToken.decimals]);
-
-  // Handle swap execution with security check first
-  const handleSwap = useCallback(async () => {
-    if (!connected || !publicKey || !quote) {
-      setSwapError('Please connect wallet and enter amount');
-      await cultSounds.playErrorSound();
+  // Handle swap execution
+  const handleSwap = async () => {
+    if (!publicKey || !sendTransaction || !routes || routes.length === 0) {
+      setSwapError('Please connect wallet and enter a valid amount');
       return;
     }
 
+    setIsLoading(true);
     setSwapError('');
-    
-    // First, run security simulation
+    setSwapSuccess('');
+
     try {
-      const simulation = await securityManager.simulateTransaction({
-        inputToken: inputToken.symbol,
-        outputToken: outputToken.symbol,
-        amount: inputAmount,
-        userAddress: publicKey.toString(),
-        quote: quote
-      });
+      console.log('🚀 Starting swap execution...');
       
-      setSecuritySimulation(simulation);
-      setShowSecurityModal(true);
-      await cultSounds.playConnectSound();
-    } catch (error) {
-      console.error('Security simulation failed:', error);
-      // Proceed without security check if simulation fails
-      proceedToSwap();
-    }
-  }, [connected, publicKey, quote, inputToken, outputToken, inputAmount]);
+      // Execute swap through Jupiter
+      const result = await exchange({
+        routeInfo: routes[0],
+        userPublicKey: publicKey,
+      });
 
-  // Proceed to swap after security approval
-  const proceedToSwap = useCallback(async () => {
-    setShowSecurityModal(false);
-    setModalStep(0);
-    setShowModal(true);
-    setSwapSuccess(false);
-    await cultSounds.playSwapSound();
-  }, []);
-
-  // Handle token swapping
-  const handleTokenSwap = useCallback(async () => {
-    const tempToken = inputToken;
-    setInputToken(outputToken);
-    setOutputToken(tempToken);
-    setInputAmount(''); // Clear amount when swapping
-    await cultSounds.playSwapSound();
-  }, [inputToken, outputToken]);
-
-  // Handle token selection
-  const handleInputTokenSelect = useCallback(async (token: any) => {
-    setInputToken(token);
-    await cultSounds.playHoverSound();
-  }, []);
-
-  const handleOutputTokenSelect = useCallback(async (token: any) => {
-    setOutputToken(token);
-    await cultSounds.playHoverSound();
-  }, []);
-
-  // Handle actual swap execution
-  // Load user stats from localStorage on mount
-  useEffect(() => {
-    const savedStats = localStorage.getItem('nocturne_user_stats');
-    if (savedStats) {
-      setUserStats(JSON.parse(savedStats));
-    }
-  }, []);
-
-  // Handle swap execution with achievements tracking
-  const handleExecuteSwap = useCallback(async (quoteToExecute: any) => {
-    try {
-      const result = await executeSwap(quoteToExecute);
-      if (result) {
-        setSwapSuccess(true);
-        await cultSounds.playRitualCompleteSound();
+      if (result.txid) {
+        setSwapSuccess(`Swap successful! Transaction: ${result.txid}`);
+        console.log('✅ Swap completed successfully:', result.txid);
         
-        // Update user stats for achievements
-        const swapValue = parseFloat(inputAmount) * (inputPriceData.priceData?.price || 0);
-        const currentTime = new Date();
-        const isMiddnight = currentTime.getHours() === 0 && currentTime.getMinutes() === 0;
-        const isPerfectSwap = priceImpact < 0.01; // Less than 0.01% slippage
-        
-        const newStats = {
-          ...userStats,
-          totalSwaps: userStats.totalSwaps + 1,
-          totalVolume: userStats.totalVolume + swapValue,
-          bestTrade: Math.max(userStats.bestTrade, swapValue),
-          midnightTrades: isMiddnight ? userStats.midnightTrades + 1 : userStats.midnightTrades,
-          perfectSwaps: isPerfectSwap ? userStats.perfectSwaps + 1 : userStats.perfectSwaps
-        };
-        
-        setUserStats(newStats);
-        localStorage.setItem('nocturne_user_stats', JSON.stringify(newStats));
+        // Reset form
+        setInputAmount('');
+        setOutputAmount('');
+      } else {
+        throw new Error('Swap failed - no transaction ID returned');
       }
     } catch (error) {
-      console.error('Swap execution failed:', error);
-      await cultSounds.playErrorSound();
+      console.error('❌ Swap failed:', error);
+      setSwapError(`Swap failed: ${error.message || 'Unknown error'}`);
+    } finally {
+      setIsLoading(false);
     }
-  }, [executeSwap, inputAmount, inputPriceData.priceData?.price, priceImpact, userStats]);
+  };
+
+  // Token swap direction handler
+  const handleSwapDirection = () => {
+    setInputMint(outputMint);
+    setOutputMint(inputMint);
+    setInputAmount(outputAmount);
+    setOutputAmount('');
+  };
 
   return (
     <div className="swap-interface">
       <div className="swap-container">
         <div className="swap-header">
           <h2>🌙 NocturneSwap</h2>
-          <p>Live Jupiter quotes • {inputToken.symbol} ⇄ {outputToken.symbol}</p>
-          <div className="header-actions">
-            <button 
-              className="chart-toggle-btn"
-              onClick={() => setShowChart(!showChart)}
-              onMouseEnter={() => cultSounds.playHoverSound()}
-            >
-              {showChart ? '📈 Hide Chart' : '📊 Show Chart'}
-            </button>
-            <button 
-              className="portfolio-btn"
-              onClick={() => setShowPortfolio(true)}
-              onMouseEnter={() => cultSounds.playHoverSound()}
-            >
-              🏦 Portfolio
-            </button>
-            <button 
-              className="liquidity-btn"
-              onClick={() => setShowLiquidityPools(true)}
-              onMouseEnter={() => cultSounds.playHoverSound()}
-            >
-              💧 Liquidity
-            </button>
-            <button 
-              className="advanced-trading-btn"
-              onClick={() => setShowAdvancedTrading(true)}
-              onMouseEnter={() => cultSounds.playHoverSound()}
-            >
-              ⚡ Advanced
-            </button>
-            <button 
-              className="achievements-btn"
-              onClick={() => setShowAchievements(true)}
-              onMouseEnter={() => cultSounds.playHoverSound()}
-            >
-              🏆 Achievements
-            </button>
-            <button 
-              className="governance-btn"
-              onClick={() => setShowGovernance(true)}
-              onMouseEnter={() => cultSounds.playHoverSound()}
-            >
-              🗳️ Governance
-            </button>
-          </div>
+          <p>Jupiter-powered token swapping</p>
         </div>
-
-        {/* Real-time Price Data */}
-        <div className="price-data-section">
-          <div className="token-price-card">
-            <div className="price-card-header">
-              <span className="token-symbol">{inputToken.symbol}</span>
-              <span className="token-name">{inputToken.name}</span>
-            </div>
-            {inputPriceData.loading ? (
-              <div className="price-loading">Loading...</div>
-            ) : inputPriceData.priceData ? (
-              <div className="price-details">
-                <div className="current-price">
-                  {formatPrice(inputPriceData.priceData.price)}
-                </div>
-                <div className={`price-change ${inputPriceData.priceData.change24h >= 0 ? 'positive' : 'negative'}`}>
-                  {formatChange(inputPriceData.priceData.change24h)}
-                </div>
-                <div className="price-stats">
-                  <span>Vol: {formatLargeNumber(inputPriceData.priceData.volume24h)}</span>
-                  <span>MCap: {formatLargeNumber(inputPriceData.priceData.marketCap)}</span>
-                </div>
-              </div>
-            ) : (
-              <div className="price-unavailable">Price data unavailable</div>
-            )}
-          </div>
-
-          <div className="price-divider">⇄</div>
-
-          <div className="token-price-card">
-            <div className="price-card-header">
-              <span className="token-symbol">{outputToken.symbol}</span>
-              <span className="token-name">{outputToken.name}</span>
-            </div>
-            {outputPriceData.loading ? (
-              <div className="price-loading">Loading...</div>
-            ) : outputPriceData.priceData ? (
-              <div className="price-details">
-                <div className="current-price">
-                  {formatPrice(outputPriceData.priceData.price)}
-                </div>
-                <div className={`price-change ${outputPriceData.priceData.change24h >= 0 ? 'positive' : 'negative'}`}>
-                  {formatChange(outputPriceData.priceData.change24h)}
-                </div>
-                <div className="price-stats">
-                  <span>Vol: {formatLargeNumber(outputPriceData.priceData.volume24h)}</span>
-                  <span>MCap: {formatLargeNumber(outputPriceData.priceData.marketCap)}</span>
-                </div>
-              </div>
-            ) : (
-              <div className="price-unavailable">Price data unavailable</div>
-            )}
-          </div>
-        </div>
-
-        {/* Price Chart Section */}
-        {showChart && inputPriceData.priceData && (
-          <PriceChart
-            tokenSymbol={inputToken.symbol}
-            currentPrice={inputPriceData.priceData.price}
-            change24h={inputPriceData.priceData.change24h}
-            timeframe={chartTimeframe as '1h' | '24h' | '7d' | '30d'}
-            onTimeframeChange={(tf) => setChartTimeframe(tf)}
-          />
-        )}
-
-        {/* Price Alert Section */}
-        {inputPriceData.priceData && (
-          <PriceAlert
-            tokenSymbol={inputToken.symbol}
-            currentPrice={inputPriceData.priceData.price}
-            onAlertTriggered={(alert) => {
-              console.log('Alert triggered:', alert);
-              // Could show a notification modal here
-            }}
-          />
-        )}
 
         <div className="wallet-connection">
           <WalletMultiButton />
@@ -477,221 +118,86 @@ const SwapInterface = ({ connection, program }: SwapInterfaceProps) => {
           </div>
         )}
 
-        {error && (
-          <div className="error-message">
-            🔴 Quote Error: {error}
+        {swapSuccess && (
+          <div className="success-message">
+            ✅ {swapSuccess}
           </div>
         )}
 
         <div className="swap-form">
-          {/* Input Token */}
           <div className="token-input">
-            <TokenSelector
-              selectedToken={inputToken}
-              onTokenSelect={handleInputTokenSelect}
-              otherToken={outputToken}
-              label="From"
-            />
-            <div className="amount-input-container">
+            <label>From</label>
+            <div className="input-group">
               <input
                 type="number"
                 value={inputAmount}
                 onChange={(e) => setInputAmount(e.target.value)}
                 placeholder="0.0"
                 step="0.000001"
-                className="amount-input"
               />
-              {inputAmount && inputPriceData.priceData && (
-                <div className="usd-value">
-                  ≈ {formatPrice(parseFloat(inputAmount) * inputPriceData.priceData.price)}
-                </div>
-              )}
+              <div className="token-symbol">
+                {inputMint === SOL_MINT ? 'SOL' : 'USDC'}
+              </div>
             </div>
           </div>
 
-          {/* Swap Arrow */}
           <div className="swap-arrow">
-            <button 
-              className="swap-tokens-btn" 
-              type="button"
-              onClick={handleTokenSwap}
-              onMouseEnter={() => cultSounds.playHoverSound()}
-            >
+            <button onClick={handleSwapDirection}>
               ⇅
             </button>
           </div>
 
-          {/* Output Token */}
           <div className="token-input">
-            <TokenSelector
-              selectedToken={outputToken}
-              onTokenSelect={handleOutputTokenSelect}
-              otherToken={inputToken}
-              label="To (Jupiter Quote)"
-            />
-            <div className="amount-input-container">
+            <label>To</label>
+            <div className="input-group">
               <input
                 type="number"
                 value={outputAmount}
                 readOnly
-                placeholder={loading ? 'Getting quote...' : '0.0'}
-                className={`amount-input readonly ${loading ? 'loading' : ''}`}
+                placeholder={routesLoading ? 'Loading...' : '0.0'}
+                className={routesLoading ? 'loading' : ''}
               />
-              {outputAmount && outputPriceData.priceData && (
-                <div className="usd-value">
-                  ≈ {formatPrice(parseFloat(outputAmount) * outputPriceData.priceData.price)}
-                </div>
-              )}
+              <div className="token-symbol">
+                {outputMint === SOL_MINT ? 'SOL' : 'USDC'}
+              </div>
             </div>
           </div>
 
-          {/* Live Quote Details */}
-          {quote && inputAmount && (
-            <div className="quote-info">
-              <div className="quote-header">
-                <h4>📊 Live Jupiter Quote</h4>
-                <span className="quote-timestamp">
-                  Updated: {new Date().toLocaleTimeString()}
-                </span>
-              </div>
-              
-              <div className="quote-detail">
-                <span>Exchange Rate</span>
-                <span className="rate-value">
-                  1 {inputToken.symbol} = {rate.toFixed(4)} {outputToken.symbol}
-                </span>
-              </div>
-              
-              <div className="quote-detail">
-                <span>Price Impact</span>
-                <span className={`impact-value ${priceImpact > 5 ? 'high-impact' : 'low-impact'}`}>
-                  {priceImpact.toFixed(3)}%
-                </span>
-              </div>
-              
-              <div className="quote-detail">
-                <span>Slippage Protection</span>
-                <span>1.0%</span>
-              </div>
-              
-              {routes.length > 0 && (
-                <div className="quote-detail">
-                  <span>Route</span>
-                  <span className="route-info">
-                    {routes.slice(0, 2).join(' → ')}
-                    {routes.length > 2 && ` +${routes.length - 2} more`}
-                  </span>
-                </div>
-              )}
-              
-              <div className="quote-detail">
-                <span>Minimum Received</span>
-                <span>
-                  {(parseFloat(outputAmount) * 0.99).toFixed(6)} {outputToken.symbol}
-                </span>
-              </div>
-              
-              <div className="quote-stats">
-                <small>
-                  📈 Jupiter found {quote.routePlan?.length || 1} route(s) • 
-                  Response time: {quote.timeTaken}ms
-                </small>
-              </div>
+          <div className="swap-details">
+            <div className="detail-row">
+              <span>Slippage Tolerance</span>
+              <span>1%</span>
             </div>
-          )}
+            
+            {routes && routes.length > 0 && (
+              <div className="detail-row">
+                <span>Route</span>
+                <span className="route-info">
+                  {routes[0].marketInfos?.length || 1} hop(s) via Jupiter
+                </span>
+              </div>
+            )}
+          </div>
 
-          {/* Loading State */}
-          {loading && inputAmount && (
-            <div className="loading-quote">
-              <div className="loading-spinner"></div>
-              <span>Fetching best rate from Jupiter...</span>
-            </div>
-          )}
-
-          {/* Quote Preview Button */}
-          <button
+          <button 
+            className="swap-button" 
             onClick={handleSwap}
-            onMouseEnter={() => cultSounds.playHoverSound()}
-            disabled={!connected || !quote || loading || !inputAmount}
-            className="swap-button"
+            disabled={!publicKey || isLoading || !inputAmount || !outputAmount || routesLoading}
           >
-            {!connected ? 'Connect Wallet' :
-             loading ? 'Getting Quote...' :
-             !quote ? 'Enter Amount' :
-             '� Begin Ritual'}
+            {isLoading ? 'Swapping...' : 
+             routesLoading ? 'Getting Quote...' : 
+             !publicKey ? 'Connect Wallet' :
+             !inputAmount ? 'Enter Amount' : 
+             'Swap Tokens'}
           </button>
         </div>
 
         <div className="swap-info">
-          <p>⚡ Powered by Jupiter Aggregator</p>
-          <p>🔒 Best rates across all Solana DEXs</p>
-          <p>💀 NocturnePepe referrer bonus</p>
+          <p>⚡ Fast Jupiter-powered swaps</p>
+          <p>🔒 Secure on-chain execution</p>
+          <p>💀 Cult-approved interface</p>
         </div>
       </div>
-
-      {/* Custom Cult Ritual Modal */}
-      {showModal && <RitualModal 
-        inputAmount={inputAmount}
-        inputToken={inputToken}
-        outputAmount={outputAmount}
-        outputToken={outputToken}
-        rate={rate}
-        priceImpact={priceImpact}
-        quote={quote}
-        onClose={() => setShowModal(false)}
-        onExecuteSwap={handleExecuteSwap}
-        swapLoading={swapLoading}
-        txHash={txHash}
-        swapError={swapExecutionError}
-      />}
-
-      {/* Portfolio Modal */}
-      <Portfolio 
-        connection={connection}
-        isVisible={showPortfolio}
-        onClose={() => setShowPortfolio(false)}
-      />
-
-      {/* Liquidity Pools Modal */}
-      <LiquidityPools 
-        connection={connection}
-        isVisible={showLiquidityPools}
-        onClose={() => setShowLiquidityPools(false)}
-      />
-
-      {/* Advanced Trading Modal */}
-      <AdvancedTrading 
-        connection={connection}
-        isVisible={showAdvancedTrading}
-        onClose={() => setShowAdvancedTrading(false)}
-        inputToken={inputToken}
-        outputToken={outputToken}
-      />
-
-      {/* Security Risk Analysis Modal */}
-      <SecurityModal 
-        isVisible={showSecurityModal}
-        onClose={() => setShowSecurityModal(false)}
-        onProceed={proceedToSwap}
-        simulation={securitySimulation}
-        inputToken={inputToken}
-        outputToken={outputToken}
-        amount={inputAmount}
-      />
-
-      {/* Achievement System Modal */}
-      <AchievementSystem 
-        isVisible={showAchievements}
-        onClose={() => setShowAchievements(false)}
-        userStats={userStats}
-      />
-
-      {/* Governance DAO Modal */}
-      <GovernanceDAO 
-        isVisible={showGovernance}
-        onClose={() => setShowGovernance(false)}
-        connection={connection}
-      />
     </div>
   );
 };
