@@ -1,0 +1,479 @@
+/* AnalyticsPage.css - Mystical Analytics Dashboard Styles */
+
+.analytics-page {
+  padding: 20px;
+  min-height: 100vh;
+  background: 
+    radial-gradient(circle at 20% 80%, rgba(75, 0, 130, 0.15) 0%, transparent 60%),
+    radial-gradient(circle at 80% 20%, rgba(139, 0, 139, 0.12) 0%, transparent 60%),
+    linear-gradient(135deg, #000000 0%, #0a0a0a 25%, #1a0a1a 50%, #0a0a0a 75%, #000000 100%);
+}
+
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  gap: 20px;
+}
+
+.loading-text {
+  font-size: 1.5rem;
+  text-align: center;
+}
+
+.page-header {
+  text-align: center;
+  margin-bottom: 40px;
+  padding: 30px;
+  position: relative;
+}
+
+.page-header h1 {
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+}
+
+.timeframe-selector {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.timeframe-btn {
+  padding: 8px 16px;
+  border: 2px solid rgba(255, 140, 0, 0.3);
+  background: rgba(0, 0, 0, 0.5);
+  color: #c0c0c0;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 600;
+}
+
+.timeframe-btn.active,
+.timeframe-btn:hover {
+  border-color: #ff8c00;
+  background: rgba(255, 140, 0, 0.2);
+  color: #fff;
+  box-shadow: 0 0 15px rgba(255, 140, 0, 0.3);
+}
+
+.analytics-content {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* Metrics Overview */
+.metrics-overview {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+  margin-bottom: 40px;
+}
+
+.metric-card {
+  padding: 25px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.metric-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, #ff8c00, transparent);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.metric-card:hover::before {
+  opacity: 1;
+}
+
+.metric-icon {
+  font-size: 2.5rem;
+  margin-bottom: 15px;
+  filter: drop-shadow(0 0 10px rgba(255, 140, 0, 0.5));
+}
+
+.metric-value {
+  font-size: 2.2rem;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.metric-label {
+  color: #c0c0c0;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 10px;
+}
+
+.metric-change {
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 4px 8px;
+  border-radius: 12px;
+  display: inline-block;
+}
+
+.metric-change.positive {
+  background: rgba(0, 255, 128, 0.2);
+  color: #00ff80;
+  border: 1px solid #00ff80;
+}
+
+.metric-change.negative {
+  background: rgba(255, 68, 68, 0.2);
+  color: #ff4444;
+  border: 1px solid #ff4444;
+}
+
+/* Analytics Grid */
+.analytics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 30px;
+  margin-bottom: 40px;
+}
+
+/* Top Tokens */
+.top-tokens {
+  padding: 25px;
+}
+
+.tokens-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.token-row {
+  display: grid;
+  grid-template-columns: 30px 1fr 1fr 80px;
+  gap: 15px;
+  align-items: center;
+  padding: 15px;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+}
+
+.token-row:hover {
+  border-color: rgba(255, 140, 0, 0.5);
+  background: rgba(255, 140, 0, 0.05);
+}
+
+.token-rank {
+  font-weight: bold;
+  color: #ff8c00;
+}
+
+.token-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.token-symbol {
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+.token-price {
+  font-size: 0.9rem;
+  color: #888;
+}
+
+.token-stats {
+  display: flex;
+  flex-direction: column;
+  text-align: right;
+}
+
+.token-volume {
+  font-weight: bold;
+}
+
+.token-trades {
+  font-size: 0.8rem;
+  color: #888;
+}
+
+.token-change {
+  font-weight: bold;
+  text-align: center;
+}
+
+.token-change.positive {
+  color: #00ff80;
+}
+
+.token-change.negative {
+  color: #ff4444;
+}
+
+/* Performance Metrics */
+.performance-metrics {
+  padding: 25px;
+}
+
+.performance-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.performance-item {
+  text-align: center;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.performance-label {
+  font-size: 0.9rem;
+  color: #c0c0c0;
+  margin-bottom: 10px;
+}
+
+.performance-value {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.performance-bar {
+  width: 100%;
+  height: 6px;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.performance-fill {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.3s ease;
+}
+
+.performance-fill.success {
+  background: linear-gradient(90deg, #00ff80, #00cc66);
+}
+
+.performance-indicator {
+  font-size: 0.8rem;
+  font-weight: bold;
+  padding: 4px 8px;
+  border-radius: 12px;
+  display: inline-block;
+}
+
+.performance-indicator.fast {
+  background: rgba(0, 255, 128, 0.2);
+  color: #00ff80;
+}
+
+.performance-indicator.excellent {
+  background: rgba(255, 215, 0, 0.2);
+  color: #ffd700;
+}
+
+.performance-trend {
+  font-size: 0.8rem;
+  color: #00ff80;
+}
+
+/* Volume Chart */
+.volume-chart {
+  padding: 25px;
+  grid-column: span 2;
+}
+
+.chart-placeholder {
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.chart-bars {
+  display: flex;
+  align-items: end;
+  gap: 4px;
+  height: 150px;
+  margin-bottom: 20px;
+}
+
+.chart-bar {
+  width: 12px;
+  background: linear-gradient(to top, #ff8c00, #ffaa00);
+  border-radius: 2px 2px 0 0;
+  animation: chartBarGrow 0.5s ease-out forwards;
+  opacity: 0;
+}
+
+@keyframes chartBarGrow {
+  from {
+    height: 0;
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.chart-label {
+  color: #c0c0c0;
+  font-size: 0.9rem;
+}
+
+/* Recent Activity */
+.recent-activity {
+  padding: 25px;
+}
+
+.activity-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.activity-item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 15px;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+}
+
+.activity-item:hover {
+  border-color: rgba(255, 140, 0, 0.3);
+  background: rgba(255, 140, 0, 0.05);
+}
+
+.activity-icon {
+  font-size: 1.5rem;
+  width: 40px;
+  text-align: center;
+}
+
+.activity-details {
+  flex: 1;
+}
+
+.activity-type {
+  font-weight: bold;
+  margin-bottom: 4px;
+}
+
+.activity-amount {
+  font-size: 0.9rem;
+  color: #ff8c00;
+}
+
+.activity-meta {
+  text-align: right;
+}
+
+.activity-time {
+  font-size: 0.8rem;
+  color: #888;
+  margin-bottom: 4px;
+}
+
+.activity-tx {
+  font-size: 0.8rem;
+  color: #666;
+  font-family: monospace;
+}
+
+/* Export Section */
+.export-section {
+  padding: 25px;
+  text-align: center;
+}
+
+.export-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .analytics-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .volume-chart {
+    grid-column: span 1;
+  }
+}
+
+@media (max-width: 768px) {
+  .analytics-page {
+    padding: 10px;
+  }
+  
+  .metrics-overview {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .analytics-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  
+  .token-row {
+    grid-template-columns: 1fr;
+    gap: 8px;
+    text-align: center;
+  }
+  
+  .performance-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .timeframe-selector {
+    flex-wrap: wrap;
+  }
+  
+  .export-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .export-buttons .glow-btn {
+    width: 200px;
+  }
+}
+
+@media (max-width: 480px) {
+  .metrics-overview {
+    grid-template-columns: 1fr;
+  }
+  
+  .performance-grid {
+    grid-template-columns: 1fr;
+  }
+}

@@ -18,12 +18,25 @@
     <!-- Embedded favicon -->
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌙</text></svg>">
     
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="NocturneSwap">
+    
     <!-- External APIs -->
     <script src="https://unpkg.com/@solana/web3.js@latest/lib/index.iife.min.js"></script>
     <script src="src/analytics.js"></script>
     <script src="src/api.js"></script>
     <script src="src/jupiter-integration.js"></script>
     <script src="src/nocturne-integration.js"></script>
+    
+    <!-- Enhanced Visual Effects -->
+    <script src="static/js/advanced-visuals.js"></script>
+    
+    <!-- Enhanced Stylesheets -->
+    <link rel="stylesheet" href="static/css/main-enhanced.css">
+    <link rel="stylesheet" href="static/css/mobile-enhancements.css">
     
     <style>
       /* Global Styles - Dark Cult Theme */
@@ -165,6 +178,46 @@
         font-size: 1.1rem;
         opacity: 0.9;
         text-shadow: 0 0 5px rgba(75, 0, 130, 0.5);
+      }
+      
+      /* Enhanced Loading Progress */
+      .loading-progress {
+        margin-top: 30px;
+        width: 300px;
+        text-align: center;
+      }
+      
+      .progress-bar {
+        width: 100%;
+        height: 4px;
+        background: rgba(75, 0, 130, 0.2);
+        border-radius: 2px;
+        overflow: hidden;
+        margin-bottom: 10px;
+        box-shadow: 0 0 10px rgba(75, 0, 130, 0.3);
+      }
+      
+      .progress-fill {
+        height: 100%;
+        background: linear-gradient(90deg, 
+          rgba(75, 0, 130, 0.8), 
+          rgba(139, 0, 139, 0.8), 
+          rgba(255, 140, 0, 0.8));
+        border-radius: 2px;
+        width: 0%;
+        transition: width 0.3s ease;
+        animation: progressGlow 2s ease-in-out infinite;
+      }
+      
+      @keyframes progressGlow {
+        0%, 100% { box-shadow: 0 0 5px rgba(75, 0, 130, 0.5); }
+        50% { box-shadow: 0 0 15px rgba(139, 0, 139, 0.8); }
+      }
+      
+      .progress-text {
+        font-size: 0.9rem;
+        color: #c0c0c0;
+        text-shadow: 0 0 5px rgba(75, 0, 130, 0.3);
       }
       
       /* Main App Container */
@@ -1064,11 +1117,17 @@
     </style>
   </head>
   <body>
-    <!-- Loading Screen -->
+    <!-- Loading Screen with Matrix Effect -->
     <div class="loading-screen" id="loadingScreen">
-      <div class="loading-spinner"></div>
-      <div class="loading-text">🌙 Loading NocturneSwap</div>
-      <div class="loading-subtitle">Initializing professional DEX interface...</div>
+      <div class="mystical-loader"></div>
+      <div class="loading-text holo-text">🌙 Loading NocturneSwap</div>
+      <div class="loading-subtitle matrix-text">Initializing mystical DEX interface...</div>
+      <div class="loading-progress">
+        <div class="progress-bar">
+          <div class="progress-fill" id="progressFill"></div>
+        </div>
+        <div class="progress-text" id="progressText">Connecting to the void...</div>
+      </div>
     </div>
 
     <!-- Main App -->
@@ -1713,10 +1772,77 @@
         }
       }
       
-      // Initialize App
+      // Initialize App with Enhanced Loading
       function initializeApp() {
         try {
+          // Enhanced loading sequence
+          const loadingSteps = [
+            { progress: 10, text: "Connecting to the void..." },
+            { progress: 25, text: "Summoning Jupiter integration..." },
+            { progress: 40, text: "Awakening Solana spirits..." },
+            { progress: 60, text: "Channeling mystical energies..." },
+            { progress: 80, text: "Preparing ritual chamber..." },
+            { progress: 95, text: "Opening dimensional portal..." },
+            { progress: 100, text: "Welcome to NocturneSwap..." }
+          ];
+          
+          let stepIndex = 0;
+          const progressFill = document.getElementById('progressFill');
+          const progressText = document.getElementById('progressText');
+          
+          const updateProgress = () => {
+            if (stepIndex < loadingSteps.length) {
+              const step = loadingSteps[stepIndex];
+              progressFill.style.width = step.progress + '%';
+              progressText.textContent = step.text;
+              stepIndex++;
+              setTimeout(updateProgress, 300);
+            } else {
+              // Complete initialization
+              completeInitialization();
+            }
+          };
+          
+          updateProgress();
+          
+        } catch (error) {
+          console.error('❌ Failed to initialize app:', error);
+        }
+      }
+      
+      function completeInitialization() {
+        try {
           initializeSolana();
+          
+          // Register Service Worker for PWA
+          if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('./sw.js')
+              .then((registration) => {
+                console.log('🌙 Service Worker registered successfully:', registration.scope);
+                
+                // Check for app updates
+                registration.addEventListener('updatefound', () => {
+                  const newWorker = registration.installing;
+                  newWorker.addEventListener('statechange', () => {
+                    if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                      // Show update notification
+                      showUpdateNotification();
+                    }
+                  });
+                });
+              })
+              .catch((error) => {
+                console.error('❌ Service Worker registration failed:', error);
+              });
+          }
+          
+          // PWA Install Prompt
+          let deferredPrompt;
+          window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            showInstallButton();
+          });
           
           // Event listeners
           document.getElementById('connectPhantom').addEventListener('click', () => connectWallet('phantom'));
@@ -1765,8 +1891,70 @@
           console.log('✅ NocturneSwap Professional DEX initialized');
           
         } catch (error) {
-          console.error('❌ Failed to initialize app:', error);
+          console.error('❌ Failed to complete initialization:', error);
         }
+      }
+      
+      // PWA Functions
+      function showInstallButton() {
+        const installBtn = document.createElement('button');
+        installBtn.textContent = '📱 Install App';
+        installBtn.className = 'install-btn glow-btn';
+        installBtn.style.position = 'fixed';
+        installBtn.style.bottom = '20px';
+        installBtn.style.right = '20px';
+        installBtn.style.zIndex = '9999';
+        
+        installBtn.addEventListener('click', async () => {
+          if (deferredPrompt) {
+            deferredPrompt.prompt();
+            const { outcome } = await deferredPrompt.userChoice;
+            console.log(`PWA install prompt: ${outcome}`);
+            deferredPrompt = null;
+            installBtn.remove();
+          }
+        });
+        
+        document.body.appendChild(installBtn);
+        
+        // Auto-hide after 10 seconds
+        setTimeout(() => {
+          if (installBtn.parentNode) {
+            installBtn.remove();
+          }
+        }, 10000);
+      }
+      
+      function showUpdateNotification() {
+        const notification = document.createElement('div');
+        notification.className = 'update-notification';
+        notification.innerHTML = `
+          <div class="notification-content">
+            <span>🔄 App update available!</span>
+            <button onclick="location.reload()" class="update-btn">Update Now</button>
+            <button onclick="this.parentNode.parentNode.remove()" class="dismiss-btn">Later</button>
+          </div>
+        `;
+        notification.style.cssText = `
+          position: fixed;
+          top: 20px;
+          right: 20px;
+          background: linear-gradient(45deg, #9d4edd, #c77dff);
+          color: white;
+          padding: 16px;
+          border-radius: 12px;
+          z-index: 10000;
+          box-shadow: 0 8px 32px rgba(157, 78, 221, 0.3);
+        `;
+        
+        document.body.appendChild(notification);
+        
+        // Auto-hide after 8 seconds
+        setTimeout(() => {
+          if (notification.parentNode) {
+            notification.remove();
+          }
+        }, 8000);
       }
       
       // Start app when DOM is ready

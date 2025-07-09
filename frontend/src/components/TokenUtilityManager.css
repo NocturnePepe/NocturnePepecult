@@ -1,0 +1,651 @@
+/* TokenUtilityManager.css - Dark cult theme styles */
+
+.token-utility-manager {
+  padding: 24px;
+  max-width: 1400px;
+  margin: 0 auto;
+  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+  min-height: 100vh;
+  color: #e0e0e0;
+}
+
+.utility-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32px;
+  padding: 24px;
+  background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+  border-radius: 16px;
+  border: 1px solid rgba(157, 78, 221, 0.3);
+  box-shadow: 0 8px 32px rgba(157, 78, 221, 0.1);
+}
+
+.header-content h1 {
+  font-size: 2.5rem;
+  margin: 0 0 8px 0;
+  background: linear-gradient(45deg, #9d4edd, #c77dff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.header-content p {
+  color: #888;
+  margin: 0;
+  font-size: 1rem;
+}
+
+.utility-tabs {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 32px;
+  background: rgba(26, 26, 46, 0.8);
+  border-radius: 12px;
+  padding: 6px;
+  backdrop-filter: blur(10px);
+}
+
+.tab-btn {
+  flex: 1;
+  padding: 12px 20px;
+  background: transparent;
+  border: none;
+  border-radius: 8px;
+  color: #888;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 14px;
+}
+
+.tab-btn.active {
+  background: linear-gradient(45deg, #9d4edd, #c77dff);
+  color: white;
+  box-shadow: 0 4px 16px rgba(157, 78, 221, 0.3);
+}
+
+.tab-btn:hover:not(.active) {
+  color: #9d4edd;
+  background: rgba(157, 78, 221, 0.1);
+}
+
+.utilities-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+  gap: 24px;
+}
+
+.utility-card {
+  background: rgba(26, 26, 46, 0.8);
+  border-radius: 16px;
+  padding: 24px;
+  border: 1px solid rgba(157, 78, 221, 0.2);
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.utility-card:hover {
+  border-color: rgba(157, 78, 221, 0.5);
+  box-shadow: 0 8px 32px rgba(157, 78, 221, 0.15);
+  transform: translateY(-2px);
+}
+
+.utility-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 16px;
+}
+
+.utility-icon-name {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.utility-icon {
+  font-size: 2rem;
+  filter: drop-shadow(0 0 8px currentColor);
+}
+
+.utility-info h3 {
+  margin: 0 0 4px 0;
+  color: #e0e0e0;
+  font-size: 1.2rem;
+}
+
+.utility-type {
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.utility-type.staking {
+  background: rgba(74, 222, 128, 0.2);
+  color: #4ade80;
+  border: 1px solid rgba(74, 222, 128, 0.3);
+}
+
+.utility-type.governance {
+  background: rgba(157, 78, 221, 0.2);
+  color: #9d4edd;
+  border: 1px solid rgba(157, 78, 221, 0.3);
+}
+
+.utility-type.fee_discount {
+  background: rgba(251, 191, 36, 0.2);
+  color: #fbbf24;
+  border: 1px solid rgba(251, 191, 36, 0.3);
+}
+
+.utility-type.access {
+  background: rgba(59, 130, 246, 0.2);
+  color: #3b82f6;
+  border: 1px solid rgba(59, 130, 246, 0.3);
+}
+
+.utility-type.rewards {
+  background: rgba(245, 158, 11, 0.2);
+  color: #f59e0b;
+  border: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+.utility-type.burn {
+  background: rgba(239, 68, 68, 0.2);
+  color: #ef4444;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.status-toggle {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.status-toggle.active {
+  background: linear-gradient(45deg, #4ade80, #22c55e);
+  color: white;
+  box-shadow: 0 4px 12px rgba(74, 222, 128, 0.3);
+}
+
+.status-toggle.inactive {
+  background: linear-gradient(45deg, #6b7280, #4b5563);
+  color: white;
+  box-shadow: 0 4px 12px rgba(107, 114, 128, 0.3);
+}
+
+.utility-description {
+  color: #888;
+  font-size: 14px;
+  line-height: 1.5;
+  margin-bottom: 20px;
+}
+
+.utility-requirements, .utility-benefits, .utility-metrics {
+  margin-bottom: 20px;
+}
+
+.utility-requirements h4, .utility-benefits h4 {
+  color: #9d4edd;
+  font-size: 13px;
+  font-weight: 600;
+  margin: 0 0 8px 0;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.requirement-item, .metric-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 0;
+  border-bottom: 1px solid rgba(157, 78, 221, 0.1);
+  font-size: 13px;
+}
+
+.requirement-item span:first-child, .metric-item span:first-child {
+  color: #888;
+}
+
+.requirement-item span:last-child, .metric-item span:last-child {
+  color: #e0e0e0;
+  font-weight: 600;
+}
+
+.benefits-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.benefit-tag {
+  background: rgba(157, 78, 221, 0.2);
+  color: #9d4edd;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 500;
+  border: 1px solid rgba(157, 78, 221, 0.3);
+}
+
+.apr {
+  color: #4ade80 !important;
+  font-weight: 700 !important;
+}
+
+.utility-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.edit-btn, .view-details-btn {
+  flex: 1;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.edit-btn {
+  background: linear-gradient(45deg, #3b82f6, #1d4ed8);
+  color: white;
+}
+
+.view-details-btn {
+  background: rgba(157, 78, 221, 0.2);
+  color: #9d4edd;
+  border: 1px solid rgba(157, 78, 221, 0.3);
+}
+
+.edit-btn:hover, .view-details-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* Staking Pools */
+.staking-pools {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+  gap: 24px;
+}
+
+.staking-pool-card {
+  background: rgba(26, 26, 46, 0.8);
+  border-radius: 16px;
+  padding: 24px;
+  border: 1px solid rgba(74, 222, 128, 0.2);
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.staking-pool-card:hover {
+  border-color: rgba(74, 222, 128, 0.5);
+  box-shadow: 0 8px 32px rgba(74, 222, 128, 0.15);
+  transform: translateY(-2px);
+}
+
+.pool-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.pool-info h3 {
+  margin: 0 0 4px 0;
+  color: #e0e0e0;
+  font-size: 1.2rem;
+}
+
+.pool-token {
+  background: rgba(74, 222, 128, 0.2);
+  color: #4ade80;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 600;
+  border: 1px solid rgba(74, 222, 128, 0.3);
+}
+
+.pool-apr {
+  text-align: right;
+}
+
+.apr-label {
+  display: block;
+  color: #888;
+  font-size: 11px;
+  margin-bottom: 4px;
+}
+
+.apr-value {
+  color: #4ade80;
+  font-size: 1.5rem;
+  font-weight: 700;
+  text-shadow: 0 0 8px rgba(74, 222, 128, 0.5);
+}
+
+.pool-stats {
+  margin-bottom: 20px;
+}
+
+.stat-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(74, 222, 128, 0.1);
+  font-size: 13px;
+}
+
+.stat-item span:first-child {
+  color: #888;
+}
+
+.stat-item span:last-child {
+  color: #e0e0e0;
+  font-weight: 600;
+}
+
+.pool-utilization {
+  margin-bottom: 20px;
+}
+
+.utilization-label {
+  color: #888;
+  font-size: 12px;
+  margin-bottom: 8px;
+}
+
+.utilization-bar {
+  height: 6px;
+  background: rgba(74, 222, 128, 0.2);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.utilization-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #4ade80, #22c55e);
+  border-radius: 3px;
+  transition: width 0.3s ease;
+}
+
+.pool-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.manage-btn, .toggle-pool-btn {
+  flex: 1;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.manage-btn {
+  background: linear-gradient(45deg, #9d4edd, #c77dff);
+  color: white;
+}
+
+.toggle-pool-btn.active {
+  background: linear-gradient(45deg, #f59e0b, #d97706);
+  color: white;
+}
+
+.toggle-pool-btn.inactive {
+  background: linear-gradient(45deg, #4ade80, #22c55e);
+  color: white;
+}
+
+/* Fee Structure */
+.fee-tiers {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 24px;
+}
+
+.fee-tier-card {
+  background: rgba(26, 26, 46, 0.8);
+  border-radius: 16px;
+  padding: 24px;
+  border: 1px solid rgba(157, 78, 221, 0.2);
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.fee-tier-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(157, 78, 221, 0.15);
+}
+
+.tier-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.tier-icon {
+  font-size: 2rem;
+  filter: drop-shadow(0 0 8px currentColor);
+}
+
+.tier-info h3 {
+  margin: 0 0 4px 0;
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+
+.tier-requirement {
+  color: #888;
+  font-size: 12px;
+}
+
+.tier-benefits {
+  margin-bottom: 20px;
+}
+
+.benefit-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(157, 78, 221, 0.1);
+  font-size: 13px;
+}
+
+.benefit-item span:first-child {
+  color: #888;
+}
+
+.discount-value {
+  color: #4ade80 !important;
+  font-weight: 700 !important;
+  font-size: 14px !important;
+}
+
+.tier-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.edit-tier-btn {
+  flex: 1;
+  padding: 8px 16px;
+  background: linear-gradient(45deg, #3b82f6, #1d4ed8);
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.edit-tier-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+/* Analytics */
+.analytics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 24px;
+}
+
+.analytics-card {
+  background: rgba(26, 26, 46, 0.8);
+  border-radius: 16px;
+  padding: 24px;
+  border: 1px solid rgba(157, 78, 221, 0.2);
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+.analytics-card:hover {
+  border-color: rgba(157, 78, 221, 0.5);
+  box-shadow: 0 8px 32px rgba(157, 78, 221, 0.15);
+}
+
+.analytics-card h3 {
+  margin: 0 0 20px 0;
+  font-size: 1.3rem;
+}
+
+.distribution-stats, .performance-metrics, .revenue-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.stat-row, .metric-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(157, 78, 221, 0.1);
+  font-size: 14px;
+}
+
+.stat-row span:first-child, .metric-row span:first-child {
+  color: #888;
+}
+
+.stat-row span:last-child, .metric-row span:last-child {
+  color: #e0e0e0;
+  font-weight: 600;
+}
+
+.stat-row.total {
+  border-top: 2px solid rgba(157, 78, 221, 0.3);
+  border-bottom: none;
+  padding-top: 16px;
+  margin-top: 8px;
+}
+
+.stat-row.total span {
+  color: #9d4edd !important;
+  font-weight: 700 !important;
+  font-size: 16px !important;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .token-utility-manager {
+    padding: 16px;
+  }
+
+  .utility-header {
+    flex-direction: column;
+    gap: 16px;
+    text-align: center;
+  }
+
+  .utility-tabs {
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .utilities-grid, .staking-pools, .fee-tiers {
+    grid-template-columns: 1fr;
+  }
+
+  .analytics-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .utility-actions, .pool-actions {
+    flex-direction: column;
+  }
+}
+
+/* Common styles */
+.ember-glow {
+  text-shadow: 0 0 10px rgba(157, 78, 221, 0.5);
+  animation: ember-pulse 3s ease-in-out infinite alternate;
+}
+
+@keyframes ember-pulse {
+  0% { text-shadow: 0 0 10px rgba(157, 78, 221, 0.5); }
+  100% { text-shadow: 0 0 20px rgba(157, 78, 221, 0.8), 0 0 30px rgba(157, 78, 221, 0.3); }
+}
+
+.glow-btn {
+  background: linear-gradient(45deg, #9d4edd, #c77dff);
+  border: none;
+  border-radius: 12px;
+  color: white;
+  padding: 12px 24px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 4px 16px rgba(157, 78, 221, 0.3);
+}
+
+.glow-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(157, 78, 221, 0.4);
+  filter: brightness(1.1);
+}
+
+.holo-card {
+  background: rgba(26, 26, 46, 0.8);
+  border: 1px solid rgba(157, 78, 221, 0.2);
+  border-radius: 16px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 32px rgba(157, 78, 221, 0.1);
+  transition: all 0.3s ease;
+}
+
+.holo-card:hover {
+  border-color: rgba(157, 78, 221, 0.4);
+  box-shadow: 0 12px 40px rgba(157, 78, 221, 0.15);
+}

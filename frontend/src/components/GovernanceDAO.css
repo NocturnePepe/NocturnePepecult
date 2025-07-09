@@ -1,0 +1,564 @@
+/* GovernanceDAO.css - Mystical Governance Interface Styles */
+
+.governance-dao {
+  padding: 20px;
+  min-height: 100vh;
+  background: 
+    radial-gradient(circle at 20% 80%, rgba(75, 0, 130, 0.15) 0%, transparent 60%),
+    radial-gradient(circle at 80% 20%, rgba(139, 0, 139, 0.12) 0%, transparent 60%),
+    linear-gradient(135deg, #000000 0%, #0a0a0a 25%, #1a0a1a 50%, #0a0a0a 75%, #000000 100%);
+}
+
+.dao-header {
+  text-align: center;
+  margin-bottom: 40px;
+  padding: 30px;
+}
+
+.dao-header h1 {
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+}
+
+.governance-stats {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  margin-top: 20px;
+}
+
+.stat-item {
+  text-align: center;
+}
+
+.stat-value {
+  font-size: 1.8rem;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.stat-label {
+  color: #c0c0c0;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.dao-content {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 30px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.dao-main {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.dao-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Category Filter */
+.category-filter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+}
+
+.filter-buttons {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.filter-btn {
+  padding: 8px 16px;
+  border: 2px solid rgba(255, 140, 0, 0.3);
+  background: rgba(0, 0, 0, 0.5);
+  color: #c0c0c0;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.filter-btn.active,
+.filter-btn:hover {
+  border-color: #ff8c00;
+  background: rgba(255, 140, 0, 0.2);
+  color: #fff;
+  box-shadow: 0 0 15px rgba(255, 140, 0, 0.3);
+}
+
+.create-proposal {
+  white-space: nowrap;
+}
+
+/* Proposals List */
+.proposals-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.proposal-card {
+  padding: 25px;
+  border-left: 4px solid transparent;
+  transition: all 0.3s ease;
+}
+
+.proposal-card:hover {
+  border-left-color: #ff8c00;
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.3),
+    0 0 20px rgba(255, 140, 0, 0.2);
+}
+
+.proposal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 15px;
+}
+
+.proposal-meta {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.proposal-status {
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.proposal-status.active {
+  background: rgba(0, 255, 128, 0.2);
+  color: #00ff80;
+  border: 1px solid #00ff80;
+}
+
+.proposal-status.passed {
+  background: rgba(81, 207, 102, 0.2);
+  color: #51cf66;
+  border: 1px solid #51cf66;
+}
+
+.proposal-status.failed {
+  background: rgba(255, 107, 107, 0.2);
+  color: #ff6b6b;
+  border: 1px solid #ff6b6b;
+}
+
+.proposal-status.queued {
+  background: rgba(255, 170, 0, 0.2);
+  color: #ffaa00;
+  border: 1px solid #ffaa00;
+}
+
+.proposal-status.executed {
+  background: rgba(139, 69, 19, 0.2);
+  color: #8b4513;
+  border: 1px solid #8b4513;
+}
+
+.proposal-category {
+  padding: 2px 6px;
+  background: rgba(255, 140, 0, 0.2);
+  color: #ff8c00;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+}
+
+.proposal-id {
+  color: #888;
+  font-size: 0.8rem;
+  font-family: monospace;
+}
+
+.proposal-time {
+  text-align: right;
+}
+
+.time-remaining {
+  color: #ffaa00;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.execution-time {
+  color: #00ff80;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.proposal-content {
+  margin-bottom: 20px;
+}
+
+.proposal-title {
+  font-size: 1.3rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #fff;
+}
+
+.proposal-description {
+  color: #c0c0c0;
+  line-height: 1.6;
+  margin-bottom: 15px;
+}
+
+.proposal-proposer {
+  font-size: 0.9rem;
+  color: #888;
+}
+
+.proposer-address {
+  color: #ff8c00;
+  font-family: monospace;
+}
+
+/* Voting Section */
+.voting-section {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 20px;
+}
+
+.vote-bars {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 15px;
+}
+
+.vote-bar {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.vote-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.vote-bar.for .vote-label {
+  color: #51cf66;
+}
+
+.vote-bar.against .vote-label {
+  color: #ff6b6b;
+}
+
+.vote-progress {
+  height: 8px;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.vote-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.3s ease;
+}
+
+.vote-fill.for {
+  background: linear-gradient(90deg, #51cf66, #40c057);
+}
+
+.vote-fill.against {
+  background: linear-gradient(90deg, #ff6b6b, #ff5252);
+}
+
+.quorum-status {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
+  margin-bottom: 15px;
+  padding: 8px;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 4px;
+}
+
+.quorum-status .met {
+  color: #51cf66;
+  font-weight: bold;
+}
+
+.quorum-status .pending {
+  color: #ffaa00;
+  font-weight: bold;
+}
+
+.vote-buttons {
+  display: flex;
+  gap: 12px;
+}
+
+.vote-btn {
+  flex: 1;
+  padding: 12px;
+  border: 2px solid;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  text-align: center;
+}
+
+.vote-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.vote-btn.for {
+  border-color: #51cf66;
+  color: #51cf66;
+  background: transparent;
+}
+
+.vote-btn.for.voted,
+.vote-btn.for:hover:not(:disabled) {
+  background: #51cf66;
+  color: #000;
+}
+
+.vote-btn.against {
+  border-color: #ff6b6b;
+  color: #ff6b6b;
+  background: transparent;
+}
+
+.vote-btn.against.voted,
+.vote-btn.against:hover:not(:disabled) {
+  background: #ff6b6b;
+  color: #000;
+}
+
+/* Voting Power */
+.voting-power {
+  padding: 25px;
+}
+
+.power-breakdown {
+  margin-top: 20px;
+}
+
+.power-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.power-total {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 0;
+  font-weight: bold;
+  font-size: 1.1rem;
+  border-top: 2px solid rgba(255, 140, 0, 0.5);
+  margin-top: 10px;
+}
+
+.lock-info {
+  text-align: center;
+  margin: 15px 0;
+  font-size: 0.9rem;
+  color: #888;
+}
+
+.no-power {
+  text-align: center;
+  padding: 20px;
+}
+
+.no-power p {
+  margin-bottom: 15px;
+  color: #888;
+}
+
+/* Treasury Overview */
+.treasury-overview {
+  padding: 25px;
+}
+
+.treasury-content {
+  margin-top: 20px;
+}
+
+.treasury-total {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.treasury-breakdown {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.treasury-token {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 10px;
+  padding: 8px;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 4px;
+  font-size: 0.9rem;
+}
+
+.treasury-flow {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.flow-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 0;
+  font-size: 0.9rem;
+}
+
+.flow-item.income .positive,
+.flow-item.net .positive {
+  color: #51cf66;
+  font-weight: bold;
+}
+
+.flow-item.expense .negative {
+  color: #ff6b6b;
+  font-weight: bold;
+}
+
+/* Governance Calendar */
+.governance-calendar {
+  padding: 25px;
+}
+
+.calendar-events {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.calendar-event {
+  display: flex;
+  gap: 12px;
+  padding: 12px;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 8px;
+  border-left: 3px solid #ff8c00;
+}
+
+.event-date {
+  font-weight: bold;
+  color: #ff8c00;
+  min-width: 60px;
+  font-size: 0.9rem;
+}
+
+.event-info {
+  flex: 1;
+}
+
+.event-title {
+  font-weight: bold;
+  margin-bottom: 4px;
+  font-size: 0.9rem;
+}
+
+.event-type {
+  font-size: 0.8rem;
+  color: #888;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .dao-content {
+    grid-template-columns: 1fr;
+  }
+  
+  .dao-sidebar {
+    order: -1;
+  }
+  
+  .governance-stats {
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .governance-dao {
+    padding: 10px;
+  }
+  
+  .category-filter {
+    flex-direction: column;
+    gap: 15px;
+    align-items: stretch;
+  }
+  
+  .filter-buttons {
+    justify-content: center;
+  }
+  
+  .proposal-header {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .proposal-meta {
+    justify-content: center;
+  }
+  
+  .vote-buttons {
+    flex-direction: column;
+  }
+  
+  .governance-stats {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .treasury-token {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .filter-buttons {
+    flex-direction: column;
+  }
+  
+  .filter-btn {
+    text-align: center;
+  }
+}

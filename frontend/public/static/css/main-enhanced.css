@@ -1,0 +1,501 @@
+/* Enhanced Main CSS for NocturneSwap - Holographic & Glow Effects */
+
+:root {
+  /* Color Variables */
+  --primary-orange: #ff8c00;
+  --dark-orange: #8b4513;
+  --purple-deep: #4b0082;
+  --purple-medium: #8b008b;
+  --midnight-blue: #191970;
+  --violet-red: #c71585;
+  
+  /* Holographic Colors */
+  --holo-pink: #ff0080;
+  --holo-blue: #0080ff;
+  --holo-green: #00ff80;
+  --holo-purple: #8000ff;
+  --holo-yellow: #ffff00;
+  
+  /* Glow Effects */
+  --glow-primary: 0 0 20px var(--primary-orange);
+  --glow-secondary: 0 0 15px var(--purple-medium);
+  --glow-accent: 0 0 25px var(--holo-pink);
+  --glow-success: 0 0 20px var(--holo-green);
+  --glow-warning: 0 0 20px var(--holo-yellow);
+}
+
+/* Holographic Text Effect */
+.holo-text {
+  background: linear-gradient(
+    45deg,
+    var(--holo-pink) 0%,
+    var(--holo-blue) 25%,
+    var(--holo-green) 50%,
+    var(--holo-purple) 75%,
+    var(--holo-pink) 100%
+  );
+  background-size: 400% 400%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: holoShift 3s ease-in-out infinite;
+  font-weight: bold;
+  text-shadow: 0 0 30px rgba(255, 0, 128, 0.5);
+}
+
+@keyframes holoShift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+/* Enhanced Glow Button */
+.glow-btn {
+  position: relative;
+  background: linear-gradient(135deg, var(--dark-orange) 0%, var(--purple-deep) 100%);
+  border: 2px solid transparent;
+  border-radius: 12px;
+  color: #fff;
+  padding: 12px 24px;
+  font-weight: 600;
+  cursor: pointer;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.glow-btn::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(
+    45deg,
+    var(--primary-orange),
+    var(--holo-pink),
+    var(--holo-blue),
+    var(--holo-green),
+    var(--primary-orange)
+  );
+  background-size: 400% 400%;
+  border-radius: 12px;
+  z-index: -1;
+  animation: borderGlow 2s linear infinite;
+}
+
+.glow-btn::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  transition: left 0.5s ease;
+}
+
+.glow-btn:hover {
+  box-shadow: var(--glow-primary);
+  transform: translateY(-2px);
+}
+
+.glow-btn:hover::after {
+  left: 100%;
+}
+
+.glow-btn:active {
+  transform: translateY(0);
+  box-shadow: var(--glow-accent);
+}
+
+@keyframes borderGlow {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+/* Holographic Card Effect */
+.holo-card {
+  position: relative;
+  background: rgba(0, 0, 0, 0.8);
+  border: 1px solid rgba(255, 140, 0, 0.3);
+  border-radius: 16px;
+  padding: 24px;
+  backdrop-filter: blur(20px);
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.holo-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 0, 128, 0.1) 0%,
+    rgba(0, 128, 255, 0.1) 25%,
+    rgba(0, 255, 128, 0.1) 50%,
+    rgba(128, 0, 255, 0.1) 75%,
+    rgba(255, 0, 128, 0.1) 100%
+  );
+  background-size: 400% 400%;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  animation: holoBackground 4s ease-in-out infinite;
+  z-index: -1;
+}
+
+.holo-card:hover::before {
+  opacity: 1;
+}
+
+.holo-card:hover {
+  border-color: rgba(255, 140, 0, 0.8);
+  box-shadow: 
+    0 8px 32px rgba(255, 140, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  transform: translateY(-4px) rotateX(2deg);
+}
+
+@keyframes holoBackground {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+/* Mystical Loader */
+.mystical-loader {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  margin: 20px auto;
+}
+
+.mystical-loader::before,
+.mystical-loader::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 3px solid transparent;
+  border-radius: 50%;
+}
+
+.mystical-loader::before {
+  border-top-color: var(--primary-orange);
+  border-right-color: var(--holo-pink);
+  animation: mysticalSpin 2s linear infinite;
+}
+
+.mystical-loader::after {
+  border-bottom-color: var(--holo-blue);
+  border-left-color: var(--holo-green);
+  animation: mysticalSpin 1.5s linear infinite reverse;
+}
+
+@keyframes mysticalSpin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Pulsing Ember Effect */
+.ember-glow {
+  position: relative;
+  display: inline-block;
+}
+
+.ember-glow::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 120%;
+  height: 120%;
+  background: radial-gradient(
+    circle,
+    rgba(255, 140, 0, 0.4) 0%,
+    rgba(139, 69, 19, 0.2) 50%,
+    transparent 70%
+  );
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  animation: emberPulse 2s ease-in-out infinite;
+  z-index: -1;
+}
+
+@keyframes emberPulse {
+  0%, 100% {
+    transform: translate(-50%, -50%) scale(0.8);
+    opacity: 0.6;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.2);
+    opacity: 1;
+  }
+}
+
+/* Matrix Text Effect */
+.matrix-text {
+  font-family: 'Courier New', monospace;
+  color: var(--primary-orange);
+  text-shadow: 0 0 10px currentColor;
+  animation: matrixFlicker 3s ease-in-out infinite;
+}
+
+@keyframes matrixFlicker {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+  75% { opacity: 0.9; }
+}
+
+/* Floating Animation */
+.float-effect {
+  animation: floating 3s ease-in-out infinite;
+}
+
+@keyframes floating {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+/* Glitch Effect */
+.glitch-effect {
+  position: relative;
+  color: #fff;
+  font-weight: bold;
+}
+
+.glitch-effect::before,
+.glitch-effect::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.glitch-effect::before {
+  animation: glitch-1 0.5s infinite;
+  color: var(--holo-pink);
+  z-index: -1;
+}
+
+.glitch-effect::after {
+  animation: glitch-2 0.5s infinite;
+  color: var(--holo-blue);
+  z-index: -2;
+}
+
+@keyframes glitch-1 {
+  0%, 14%, 15%, 49%, 50%, 99%, 100% {
+    transform: translate(0);
+  }
+  15%, 49% {
+    transform: translate(-2px, 0);
+  }
+  50%, 99% {
+    transform: translate(2px, 0);
+  }
+}
+
+@keyframes glitch-2 {
+  0%, 20%, 21%, 62%, 63%, 100% {
+    transform: translate(0);
+  }
+  21%, 62% {
+    transform: translate(2px, 0);
+  }
+  63%, 100% {
+    transform: translate(-2px, 0);
+  }
+}
+
+/* Neon Outline Effect */
+.neon-outline {
+  border: 2px solid var(--primary-orange);
+  box-shadow: 
+    0 0 5px var(--primary-orange),
+    inset 0 0 5px var(--primary-orange),
+    0 0 20px var(--primary-orange),
+    inset 0 0 20px var(--primary-orange);
+  animation: neonFlicker 2s ease-in-out infinite alternate;
+}
+
+@keyframes neonFlicker {
+  0%, 18%, 22%, 25%, 53%, 57%, 100% {
+    box-shadow: 
+      0 0 5px var(--primary-orange),
+      inset 0 0 5px var(--primary-orange),
+      0 0 20px var(--primary-orange),
+      inset 0 0 20px var(--primary-orange);
+  }
+  20%, 24%, 55% {
+    box-shadow: none;
+  }
+}
+
+/* Holographic Input Field */
+.holo-input {
+  background: rgba(0, 0, 0, 0.7);
+  border: 2px solid transparent;
+  border-radius: 8px;
+  padding: 12px 16px;
+  color: #fff;
+  font-size: 16px;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.holo-input::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(
+    45deg,
+    var(--primary-orange),
+    var(--holo-pink),
+    var(--holo-blue),
+    var(--holo-green)
+  );
+  background-size: 400% 400%;
+  border-radius: 8px;
+  z-index: -1;
+  opacity: 0;
+  animation: borderGlow 2s linear infinite;
+  transition: opacity 0.3s ease;
+}
+
+.holo-input:focus::before {
+  opacity: 1;
+}
+
+.holo-input:focus {
+  outline: none;
+  box-shadow: var(--glow-primary);
+}
+
+/* Mystical Font Classes */
+.font-mystical {
+  font-family: 'Times New Roman', serif;
+  font-weight: bold;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.font-techno {
+  font-family: 'Courier New', monospace;
+  font-weight: bold;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+/* Enhanced Navigation Glow */
+.nav-link.active {
+  background: linear-gradient(135deg, var(--dark-orange) 0%, var(--purple-deep) 100%);
+  box-shadow: var(--glow-primary);
+  border-radius: 8px;
+}
+
+.nav-link:hover {
+  background: rgba(255, 140, 0, 0.1);
+  box-shadow: 0 0 15px rgba(255, 140, 0, 0.3);
+  border-radius: 8px;
+}
+
+/* Status Indicator Enhancements */
+.status-indicator.healthy {
+  color: var(--holo-green);
+  text-shadow: 0 0 10px currentColor;
+  animation: healthyPulse 2s ease-in-out infinite;
+}
+
+.status-indicator.warning {
+  color: var(--holo-yellow);
+  text-shadow: 0 0 10px currentColor;
+  animation: warningBlink 1s ease-in-out infinite;
+}
+
+.status-indicator.error {
+  color: var(--holo-pink);
+  text-shadow: 0 0 10px currentColor;
+  animation: errorFlash 0.5s ease-in-out infinite;
+}
+
+@keyframes healthyPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+@keyframes warningBlink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0.3; }
+}
+
+@keyframes errorFlash {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+/* Responsive Enhancements */
+@media (max-width: 768px) {
+  .holo-text {
+    font-size: 18px;
+  }
+  
+  .glow-btn {
+    padding: 10px 20px;
+    font-size: 14px;
+  }
+  
+  .holo-card {
+    padding: 16px;
+    margin: 8px;
+  }
+  
+  .mystical-loader {
+    width: 60px;
+    height: 60px;
+  }
+}
+
+/* Dark Mode Optimizations */
+@media (prefers-color-scheme: dark) {
+  .holo-card {
+    background: rgba(0, 0, 0, 0.9);
+  }
+  
+  .holo-input {
+    background: rgba(0, 0, 0, 0.8);
+  }
+}
+
+/* Performance Optimizations */
+.gpu-accelerated {
+  transform: translateZ(0);
+  will-change: transform;
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .holo-text,
+  .mystical-loader,
+  .ember-glow,
+  .matrix-text,
+  .glitch-effect,
+  .neon-outline {
+    animation: none;
+  }
+}
