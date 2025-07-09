@@ -1,0 +1,436 @@
+.seasonal-themes-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(10px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 0.3s ease;
+}
+
+.seasonal-themes-modal {
+  background: linear-gradient(135deg, #0a0a0a 0%, #1a0a1a 50%, #0a0a1a 100%);
+  border: 2px solid #6a0dad;
+  border-radius: 20px;
+  width: 90%;
+  max-width: 1200px;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  box-shadow: 0 20px 60px rgba(106, 13, 173, 0.3);
+}
+
+.themes-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 25px 30px;
+  border-bottom: 1px solid rgba(106, 13, 173, 0.3);
+}
+
+.themes-header h2 {
+  color: #ff69b4;
+  font-size: 28px;
+  margin: 0;
+  text-shadow: 0 0 10px currentColor;
+}
+
+.close-button {
+  background: rgba(255, 20, 147, 0.2);
+  border: 1px solid #ff1493;
+  color: #ffffff;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 18px;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.close-button:hover {
+  background: rgba(255, 20, 147, 0.4);
+  transform: scale(1.1);
+}
+
+/* Auto-Seasonal Toggle */
+.auto-seasonal-toggle {
+  padding: 20px 30px;
+  border-bottom: 1px solid rgba(106, 13, 173, 0.3);
+}
+
+.toggle-label {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  cursor: pointer;
+  font-size: 16px;
+  color: #ffffff;
+  user-select: none;
+}
+
+.toggle-label input[type="checkbox"] {
+  display: none;
+}
+
+.toggle-slider {
+  position: relative;
+  width: 50px;
+  height: 26px;
+  background: rgba(106, 13, 173, 0.3);
+  border-radius: 26px;
+  border: 1px solid #6a0dad;
+  transition: all 0.3s ease;
+}
+
+.toggle-slider::before {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 20px;
+  height: 20px;
+  background: #ffffff;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+.toggle-label input[type="checkbox"]:checked + .toggle-slider {
+  background: linear-gradient(45deg, #ff1493, #9932cc);
+  border-color: #ff1493;
+}
+
+.toggle-label input[type="checkbox"]:checked + .toggle-slider::before {
+  transform: translateX(24px);
+}
+
+.seasonal-info {
+  margin-top: 10px;
+  color: #ff69b4;
+  font-size: 14px;
+  opacity: 0.9;
+}
+
+/* Themes Grid */
+.themes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 25px;
+  padding: 30px;
+}
+
+.theme-card {
+  background: rgba(106, 13, 173, 0.1);
+  border: 2px solid transparent;
+  border-radius: 15px;
+  padding: 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.theme-card:hover {
+  transform: translateY(-5px);
+  border-color: #6a0dad;
+  box-shadow: 0 10px 25px rgba(106, 13, 173, 0.3);
+}
+
+.theme-card.active {
+  border-color: #ff1493;
+  background: rgba(255, 20, 147, 0.1);
+  box-shadow: 0 10px 30px rgba(255, 20, 147, 0.4);
+}
+
+.theme-card.previewing {
+  border-color: #ffff00;
+  box-shadow: 0 0 20px rgba(255, 255, 0, 0.5);
+}
+
+/* Theme Preview */
+.theme-preview {
+  height: 120px;
+  border-radius: 10px;
+  margin-bottom: 15px;
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.preview-card {
+  width: 80%;
+  height: 80%;
+  border-radius: 8px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  backdrop-filter: blur(5px);
+}
+
+.preview-button {
+  width: 60%;
+  height: 20px;
+  border-radius: 4px;
+  opacity: 0.8;
+}
+
+.preview-text {
+  width: 80%;
+  height: 8px;
+  border-radius: 2px;
+  background: currentColor;
+  opacity: 0.6;
+}
+
+.preview-text:nth-child(3) {
+  width: 60%;
+}
+
+/* Theme Info */
+.theme-info {
+  text-align: center;
+}
+
+.theme-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.theme-icon {
+  font-size: 24px;
+}
+
+.theme-info h3 {
+  color: #ff69b4;
+  font-size: 20px;
+  margin: 0;
+}
+
+.theme-info p {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 14px;
+  margin: 0 0 15px 0;
+  line-height: 1.4;
+}
+
+/* Color Palette */
+.color-palette {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+.color-dot {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Active Indicator */
+.active-indicator {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: linear-gradient(45deg, #00ff00, #00cc00);
+  color: #000000;
+  padding: 5px 10px;
+  border-radius: 15px;
+  font-size: 12px;
+  font-weight: bold;
+  box-shadow: 0 2px 10px rgba(0, 255, 0, 0.3);
+}
+
+/* Footer */
+.themes-footer {
+  padding: 20px 30px;
+  border-top: 1px solid rgba(106, 13, 173, 0.3);
+}
+
+.theme-tips {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 14px;
+  text-align: center;
+  line-height: 1.5;
+}
+
+/* Theme Effect Classes (Applied to body) */
+.effect-snowfall::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    radial-gradient(2px 2px at 20px 30px, #fff, transparent),
+    radial-gradient(2px 2px at 40px 70px, #fff, transparent),
+    radial-gradient(1px 1px at 90px 40px, #fff, transparent),
+    radial-gradient(1px 1px at 130px 80px, #fff, transparent),
+    radial-gradient(2px 2px at 160px 30px, #fff, transparent);
+  background-repeat: repeat;
+  background-size: 200px 100px;
+  animation: snowfall 10s linear infinite;
+  pointer-events: none;
+  opacity: 0.6;
+  z-index: -1;
+}
+
+.effect-blood::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at 50% 50%, transparent 0%, rgba(139, 0, 0, 0.1) 100%);
+  animation: bloodPulse 3s ease-in-out infinite;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.effect-growth::before {
+  content: '';
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100px;
+  background: linear-gradient(to top, rgba(0, 100, 0, 0.1), transparent);
+  animation: growth 5s ease-in-out infinite;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.effect-fire::after {
+  content: '';
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 150px;
+  background: linear-gradient(to top, rgba(255, 100, 0, 0.2), transparent);
+  animation: flicker 2s ease-in-out infinite;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.effect-leaffall::before {
+  content: '🍂 🍁 🍃 🍂 🍁 🍃 🍂 🍁 🍃';
+  position: fixed;
+  top: -50px;
+  left: 0;
+  right: 0;
+  font-size: 20px;
+  animation: leafFall 15s linear infinite;
+  pointer-events: none;
+  z-index: -1;
+  opacity: 0.7;
+}
+
+.effect-void::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at center, transparent 20%, rgba(0, 0, 0, 0.8) 80%);
+  animation: voidPulse 8s ease-in-out infinite;
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes snowfall {
+  to {
+    transform: translateY(100vh);
+  }
+}
+
+@keyframes bloodPulse {
+  0%, 100% { opacity: 0.1; }
+  50% { opacity: 0.3; }
+}
+
+@keyframes growth {
+  0%, 100% { transform: scaleY(1); }
+  50% { transform: scaleY(1.2); }
+}
+
+@keyframes flicker {
+  0%, 100% { opacity: 0.2; }
+  50% { opacity: 0.4; }
+}
+
+@keyframes leafFall {
+  0% {
+    transform: translateY(-50px) rotate(0deg);
+  }
+  100% {
+    transform: translateY(100vh) rotate(360deg);
+  }
+}
+
+@keyframes voidPulse {
+  0%, 100% { transform: scale(1); opacity: 0.8; }
+  50% { transform: scale(1.1); opacity: 0.9; }
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  .seasonal-themes-modal {
+    width: 95%;
+    max-height: 95vh;
+  }
+  
+  .themes-header {
+    padding: 20px;
+  }
+  
+  .themes-header h2 {
+    font-size: 24px;
+  }
+  
+  .themes-grid {
+    grid-template-columns: 1fr;
+    padding: 20px;
+    gap: 20px;
+  }
+  
+  .theme-card {
+    padding: 15px;
+  }
+  
+  .theme-preview {
+    height: 100px;
+  }
+  
+  .auto-seasonal-toggle {
+    padding: 15px 20px;
+  }
+  
+  .themes-footer {
+    padding: 15px 20px;
+  }
+}

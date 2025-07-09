@@ -12,7 +12,11 @@ import SecurityModal from './components/SecurityModal';
 import RoleManager from './components/RoleManager';
 import TokenUtilityManager from './components/TokenUtilityManager';
 import AdminAccessControl from './components/AdminAccessControl';
+import ChainSelector from './components/ChainSelector';
+import SeasonalThemes from './components/SeasonalThemes';
+import AchievementSystem from './components/AchievementSystem';
 import './App.css';
+import './PWA.css';
 
 // Declare global integrations
 declare global {
@@ -140,13 +144,45 @@ const Navigation = () => {
 
 function App() {
   const [showSecurityModal, setShowSecurityModal] = useState(false);
+  const [showSeasonalThemes, setShowSeasonalThemes] = useState(false);
+  const [showAchievements, setShowAchievements] = useState(false);
+  const [selectedChain, setSelectedChain] = useState('solana');
   
   useEffect(() => {
     // Initialize advanced visuals
     if (window.NocturneVisuals) {
       new window.NocturneVisuals();
     }
+
+    // Initialize PWA
+    import('./PWA.js').then(() => {
+      console.log('🌙 PWA Manager initialized');
+    });
+
+    // Load saved chain
+    const savedChain = localStorage.getItem('nocturne_selected_chain');
+    if (savedChain) {
+      setSelectedChain(savedChain);
+    }
+
+    // Check for achievements unlock
+    const handleAchievement = () => {
+      // Auto-show achievement modal when unlocked
+      setShowAchievements(true);
+    };
+
+    window.addEventListener('achievement_unlocked', handleAchievement);
+    return () => window.removeEventListener('achievement_unlocked', handleAchievement);
   }, []);
+
+  const handleChainChange = (chainId: string) => {
+    setSelectedChain(chainId);
+    
+    // Emit chain change event for other components
+    window.dispatchEvent(new CustomEvent('nocturne_chain_changed', {
+      detail: { chainId }
+    }));
+  };
 
   return (
     <Router>
@@ -168,20 +204,75 @@ function App() {
           </Routes>
         </main>
         
+        {/* Chain Selector */}
+        <div className="chain-selector-container">
+          <ChainSelector 
+            selectedChain={selectedChain}
+            onChainChange={handleChainChange}
+          />
+        </div>
+        
         {/* Security Modal */}
         <SecurityModal 
           isOpen={showSecurityModal} 
           onClose={() => setShowSecurityModal(false)} 
         />
         
-        {/* Security Button */}
-        <button 
-          className="security-btn floating-btn"
-          onClick={() => setShowSecurityModal(true)}
-          title="Security Center"
-        >
-          🛡️
-        </button>
+        {/* Seasonal Themes Modal */}
+        <SeasonalThemes 
+          isOpen={showSeasonalThemes}
+          onClose={() => setShowSeasonalThemes(false)}
+        />
+        
+        {/* Achievement System Modal */}
+        {showAchievements && (
+          <div className="modal-overlay">
+            <div className="modal-container achievement-modal">
+              <div className="modal-header">
+                <h2>🏆 Achievement System</h2>
+                <button 
+                  className="close-modal-btn"
+                  onClick={() => setShowAchievements(false)}
+                >
+                  ✕
+                </button>
+              </div>
+              <div className="modal-content">
+                <AchievementSystem />
+              </div>
+            </div>
+          </div>
+        )}
+        
+        {/* Floating Action Buttons */}
+        <div className="floating-buttons">
+          {/* Security Button */}
+          <button 
+            className="security-btn floating-btn"
+            onClick={() => setShowSecurityModal(true)}
+            title="Security Center"
+          >
+            🛡️
+          </button>
+          
+          {/* Themes Button */}
+          <button 
+            className="themes-btn floating-btn"
+            onClick={() => setShowSeasonalThemes(true)}
+            title="Seasonal Themes"
+          >
+            🎨
+          </button>
+          
+          {/* Achievements Button */}
+          <button 
+            className="achievements-btn floating-btn"
+            onClick={() => setShowAchievements(true)}
+            title="Achievements & Progress"
+          >
+            🏆
+          </button>
+        </div>
       </div>
     </Router>
   );

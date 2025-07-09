@@ -1,0 +1,499 @@
+/* PWA Install Banner */
+.pwa-install-banner {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%) translateY(-100px);
+  background: linear-gradient(135deg, #6a0dad 0%, #9932cc 100%);
+  border: 2px solid #ff1493;
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow: 0 10px 30px rgba(255, 20, 147, 0.3);
+  z-index: 1001;
+  max-width: 400px;
+  opacity: 0;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(20px);
+}
+
+.pwa-install-banner.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+.install-content {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  color: #ffffff;
+}
+
+.install-icon {
+  font-size: 32px;
+  min-width: 40px;
+}
+
+.install-text {
+  flex: 1;
+}
+
+.install-text h3 {
+  margin: 0 0 5px 0;
+  font-size: 18px;
+  color: #ff69b4;
+}
+
+.install-text p {
+  margin: 0;
+  font-size: 14px;
+  opacity: 0.9;
+}
+
+.install-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.install-btn {
+  background: linear-gradient(45deg, #ff1493, #ff69b4);
+  border: none;
+  color: #000000;
+  padding: 10px 20px;
+  border-radius: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 14px;
+}
+
+.install-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 5px 15px rgba(255, 20, 147, 0.4);
+}
+
+.dismiss-btn {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: #ffffff;
+  padding: 5px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+}
+
+.dismiss-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: #ff1493;
+}
+
+/* PWA Update Banner */
+.pwa-update-banner {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  background: linear-gradient(135deg, #0066cc 0%, #4da6ff 100%);
+  border: 2px solid #00ccff;
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow: 0 10px 30px rgba(0, 204, 255, 0.3);
+  z-index: 1001;
+  max-width: 400px;
+  opacity: 0;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(20px);
+}
+
+.pwa-update-banner.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+.update-content {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  color: #ffffff;
+}
+
+.update-icon {
+  font-size: 32px;
+  min-width: 40px;
+  animation: spin 2s linear infinite;
+}
+
+.update-text {
+  flex: 1;
+}
+
+.update-text h3 {
+  margin: 0 0 5px 0;
+  font-size: 18px;
+  color: #66ccff;
+}
+
+.update-text p {
+  margin: 0;
+  font-size: 14px;
+  opacity: 0.9;
+}
+
+.update-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.update-btn {
+  background: linear-gradient(45deg, #00ccff, #66ccff);
+  border: none;
+  color: #000000;
+  padding: 10px 20px;
+  border-radius: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 14px;
+}
+
+.update-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 5px 15px rgba(0, 204, 255, 0.4);
+}
+
+/* PWA Notifications */
+.pwa-notification {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: rgba(0, 0, 0, 0.9);
+  border-radius: 12px;
+  padding: 15px 20px;
+  color: #ffffff;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+  z-index: 1002;
+  max-width: 350px;
+  transform: translateX(400px);
+  transition: all 0.3s ease;
+  backdrop-filter: blur(20px);
+}
+
+.pwa-notification.show {
+  transform: translateX(0);
+}
+
+.pwa-notification.success {
+  border-left: 4px solid #00ff00;
+  background: rgba(0, 100, 0, 0.2);
+}
+
+.pwa-notification.error {
+  border-left: 4px solid #ff0000;
+  background: rgba(100, 0, 0, 0.2);
+}
+
+.pwa-notification.warning {
+  border-left: 4px solid #ffaa00;
+  background: rgba(100, 80, 0, 0.2);
+}
+
+.pwa-notification.info {
+  border-left: 4px solid #00aaff;
+  background: rgba(0, 80, 100, 0.2);
+}
+
+.notification-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+}
+
+.notification-message {
+  flex: 1;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.notification-close {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: #ffffff;
+  padding: 4px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+}
+
+.notification-close:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* Offline Indicator */
+.offline-indicator {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: rgba(255, 100, 0, 0.9);
+  border: 2px solid #ff6600;
+  border-radius: 25px;
+  padding: 10px 20px;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 600;
+  z-index: 1000;
+  transform: translateY(100px);
+  transition: all 0.3s ease;
+  backdrop-filter: blur(20px);
+}
+
+.offline-indicator.show {
+  transform: translateY(0);
+}
+
+.offline-content {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.offline-icon {
+  font-size: 16px;
+  animation: pulse 2s infinite;
+}
+
+.offline-text {
+  font-size: 14px;
+}
+
+/* Network Status */
+.network-status {
+  position: fixed;
+  top: 70px;
+  right: 20px;
+  background: rgba(0, 0, 0, 0.8);
+  border-radius: 8px;
+  padding: 10px 15px;
+  color: #ffffff;
+  font-size: 12px;
+  z-index: 1000;
+  transform: translateX(300px);
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.network-status.show {
+  transform: translateX(0);
+}
+
+.network-status.online {
+  border-left: 3px solid #00ff00;
+}
+
+.network-status.offline {
+  border-left: 3px solid #ff0000;
+}
+
+/* Performance Indicator */
+.performance-indicator {
+  position: fixed;
+  bottom: 80px;
+  right: 20px;
+  background: rgba(255, 170, 0, 0.2);
+  border: 1px solid #ffaa00;
+  border-radius: 20px;
+  padding: 8px 15px;
+  color: #ffaa00;
+  font-size: 12px;
+  z-index: 999;
+  opacity: 0;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.performance-indicator.show {
+  opacity: 1;
+}
+
+/* Install Prompt Floating Button */
+.install-floating-btn {
+  position: fixed;
+  bottom: 120px;
+  right: 20px;
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(45deg, #6a0dad, #9932cc);
+  border: 2px solid #ff1493;
+  border-radius: 50%;
+  color: #ffffff;
+  font-size: 24px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 5px 20px rgba(106, 13, 173, 0.4);
+}
+
+.install-floating-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 10px 30px rgba(106, 13, 173, 0.6);
+}
+
+.install-floating-btn::before {
+  content: '⬇️';
+  animation: bounce 2s infinite;
+}
+
+/* Share Button */
+.share-floating-btn {
+  position: fixed;
+  bottom: 190px;
+  right: 20px;
+  width: 50px;
+  height: 50px;
+  background: rgba(255, 20, 147, 0.8);
+  border: 1px solid #ff69b4;
+  border-radius: 50%;
+  color: #ffffff;
+  font-size: 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 5px 15px rgba(255, 20, 147, 0.3);
+}
+
+.share-floating-btn:hover {
+  transform: scale(1.1);
+  background: #ff1493;
+}
+
+.share-floating-btn::before {
+  content: '📤';
+}
+
+/* Animations */
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+  40% { transform: translateY(-10px); }
+  60% { transform: translateY(-5px); }
+}
+
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideOutRight {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
+/* Mobile Optimizations */
+@media (max-width: 768px) {
+  .pwa-install-banner,
+  .pwa-update-banner {
+    left: 10px;
+    right: 10px;
+    max-width: none;
+    transform: translateX(0) translateY(-100px);
+  }
+  
+  .pwa-install-banner.show,
+  .pwa-update-banner.show {
+    transform: translateX(0) translateY(0);
+  }
+  
+  .install-content,
+  .update-content {
+    flex-direction: column;
+    text-align: center;
+    gap: 10px;
+  }
+  
+  .install-actions,
+  .update-actions {
+    flex-direction: row;
+    justify-content: center;
+  }
+  
+  .pwa-notification {
+    left: 10px;
+    right: 10px;
+    max-width: none;
+    transform: translateY(-100px);
+  }
+  
+  .pwa-notification.show {
+    transform: translateY(0);
+  }
+  
+  .offline-indicator {
+    left: 10px;
+    right: 10px;
+    text-align: center;
+  }
+  
+  .install-floating-btn,
+  .share-floating-btn {
+    right: 15px;
+  }
+}
+
+/* PWA Display Mode Styles */
+@media (display-mode: standalone) {
+  .pwa-install-banner {
+    display: none !important;
+  }
+  
+  .install-floating-btn {
+    display: none !important;
+  }
+  
+  /* Add app-specific styles when in standalone mode */
+  body {
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+  }
+}
