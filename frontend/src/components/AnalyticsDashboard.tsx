@@ -87,7 +87,15 @@ const AnalyticsDashboard = ({ isVisible, onClose, connection }: AnalyticsDashboa
     totalUsers: 15420,
     dailyVolume: 2850000,
     totalTVL: 18500000,
-    activeSwaps: 1250
+    activeSwaps: 1250,
+    // New treasury-specific metrics
+    totalVolume24h: 3250000,
+    activeTradersCount: 892,
+    liquidityPoolsCount: 47,
+    referralConversions: 156,
+    dailyFees: 9750,
+    uniqueUsers: 2341,
+    transactionCount: 5847
   });
 
   // Load analytics data
@@ -227,19 +235,68 @@ const AnalyticsDashboard = ({ isVisible, onClose, connection }: AnalyticsDashboa
         <h4>🏛️ Platform Overview</h4>
         <div className="platform-grid">
           <div className="platform-stat">
-            <span className="stat-icon">👥</span>
+            <span className="stat-icon">�</span>
             <div className="stat-details">
-              <span className="stat-number">{platformStats.totalUsers.toLocaleString()}</span>
-              <span className="stat-desc">Active Users</span>
+              <span className="stat-number">{formatCurrency(platformStats.totalVolume24h)}</span>
+              <span className="stat-desc">Total Volume (24h)</span>
             </div>
           </div>
           
           <div className="platform-stat">
-            <span className="stat-icon">💹</span>
+            <span className="stat-icon">👤</span>
             <div className="stat-details">
-              <span className="stat-number">{formatCurrency(platformStats.dailyVolume)}</span>
-              <span className="stat-desc">24h Volume</span>
+              <span className="stat-number">{platformStats.activeTradersCount.toLocaleString()}</span>
+              <span className="stat-desc">Active Traders (24h)</span>
             </div>
+          </div>
+          
+          <div className="platform-stat">
+            <span className="stat-icon">🏊</span>
+            <div className="stat-details">
+              <span className="stat-number">{platformStats.liquidityPoolsCount}</span>
+              <span className="stat-desc">Liquidity Pools Count</span>
+            </div>
+          </div>
+          
+          <div className="platform-stat">
+            <span className="stat-icon">🚀</span>
+            <div className="stat-details">
+              <span className="stat-number">{platformStats.referralConversions}</span>
+              <span className="stat-desc">Referral Conversions</span>
+            </div>
+          </div>
+          
+          <div className="platform-stat">
+            <span className="stat-icon">👥</span>
+            <div className="stat-details">
+              <span className="stat-number">{platformStats.totalUsers.toLocaleString()}</span>
+              <span className="stat-desc">Total Users</span>
+            </div>
+          </div>
+          
+          <div className="platform-stat">
+            <span className="stat-icon">�</span>
+            <div className="stat-details">
+              <span className="stat-number">{formatCurrency(platformStats.dailyFees)}</span>
+              <span className="stat-desc">Daily Fees</span>
+            </div>
+          </div>
+          
+          <div className="platform-stat">
+            <span className="stat-icon">🔐</span>
+            <div className="stat-details">
+              <span className="stat-number">{formatCurrency(platformStats.totalTVL)}</span>
+              <span className="stat-desc">Total Value Locked</span>
+            </div>
+          </div>
+          
+          <div className="platform-stat">
+            <span className="stat-icon">⚡</span>
+            <div className="stat-details">
+              <span className="stat-number">{platformStats.transactionCount.toLocaleString()}</span>
+              <span className="stat-desc">Transactions (24h)</span>
+            </div>
+          </div>
           </div>
           
           <div className="platform-stat">

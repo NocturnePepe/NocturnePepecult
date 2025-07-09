@@ -297,7 +297,7 @@
   gap: 0.5rem;
 }
 
-.utility-btn, .multichain-btn, .admin-btn, .themes-btn {
+.utility-btn, .multichain-btn, .admin-btn, .themes-btn, .role-manager-btn {
   padding: 0.5rem;
   background: rgba(139, 69, 19, 0.2);
   border: 1px solid rgba(139, 69, 19, 0.3);
@@ -313,7 +313,7 @@
   font-size: 1.2rem;
 }
 
-.utility-btn:hover, .multichain-btn:hover, .admin-btn:hover, .themes-btn:hover {
+.utility-btn:hover, .multichain-btn:hover, .admin-btn:hover, .themes-btn:hover, .role-manager-btn:hover {
   background: rgba(139, 69, 19, 0.4);
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(139, 69, 19, 0.3);

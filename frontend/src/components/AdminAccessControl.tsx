@@ -106,6 +106,7 @@ const AdminAccessControl: React.FC<AdminAccessProps> = ({
   const [adminRole, setAdminRole] = useState<AdminRole | null>(null);
   const [hasAccess, setHasAccess] = useState(false);
   const [showRoleManager, setShowRoleManager] = useState(false);
+  const [showChainSelector, setShowChainSelector] = useState(false);
   const [adminUsers, setAdminUsers] = useState<AdminUser[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [loginAttempts, setLoginAttempts] = useState(0);

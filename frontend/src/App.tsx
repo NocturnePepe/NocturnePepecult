@@ -7,8 +7,9 @@ import HomePage from './pages/HomePage';
 import AnalyticsPage from './pages/AnalyticsPage';
 import ReferralPage from './pages/ReferralPage';
 import TokenUtilityManager from './components/TokenUtilityManager';
-import MultichainToggle from './components/MultichainToggle';
 import AdminAccessControl from './components/AdminAccessControl';
+import AdminRoleManager from './components/AdminRoleManager';
+import ChainSelector from './components/ChainSelector';
 import SeasonalThemes from './components/SeasonalThemes';
 import './App.css';
 
@@ -90,14 +91,15 @@ const Navigation = () => {
   const [isAdmin, setIsAdmin] = useState(false);
   const [showAdminModal, setShowAdminModal] = useState(false);
   const [showTokenUtility, setShowTokenUtility] = useState(false);
-  const [showMultichain, setShowMultichain] = useState(false);
+  const [showChainSelector, setShowChainSelector] = useState(false);
+  const [showRoleManager, setShowRoleManager] = useState(false);
   const [showSeasonalThemes, setShowSeasonalThemes] = useState(false);
   
   // Mock wallet connection state
   const [connectedWallet, setConnectedWallet] = useState('');
   
-  // Treasury wallet for admin access (hardcoded for demo)
-  const TREASURY_WALLET = 'NcTrEaSuRyWaLlEt123456789';
+  // Treasury wallet for admin access (from environment)
+  const TREASURY_WALLET = process.env.NEXT_PUBLIC_TREASURY_WALLET || '9sJgdsierNDXhUL3xahz4nJFy9zt2hEAHk6S9giCPtNb';
   
   useEffect(() => {
     // Check if connected wallet is treasury
@@ -211,7 +213,7 @@ const Navigation = () => {
               </button>
               <button 
                 className="multichain-btn"
-                onClick={() => setShowMultichain(true)}
+                onClick={() => setShowChainSelector(true)}
                 title="Multichain"
               >
                 🌐
@@ -220,13 +222,22 @@ const Navigation = () => {
           )}
           
           {isAdmin && (
-            <button 
-              className="admin-btn"
-              onClick={() => setShowAdminModal(true)}
-              title="Admin Controls"
-            >
-              👑
-            </button>
+            <>
+              <button 
+                className="admin-btn"
+                onClick={() => setShowAdminModal(true)}
+                title="Admin Controls"
+              >
+                👑
+              </button>
+              <button 
+                className="role-manager-btn"
+                onClick={() => setShowRoleManager(true)}
+                title="Role Manager"
+              >
+                🛡️
+              </button>
+            </>
           )}
           
           <IntegrationStatus />
@@ -257,10 +268,17 @@ const Navigation = () => {
         />
       )}
       
-      {showMultichain && (
-        <MultichainToggle 
-          isVisible={showMultichain}
-          onClose={() => setShowMultichain(false)}
+      {showChainSelector && (
+        <ChainSelector 
+          isVisible={showChainSelector}
+          onClose={() => setShowChainSelector(false)}
+        />
+      )}
+      
+      {showRoleManager && (
+        <AdminRoleManager 
+          isVisible={showRoleManager}
+          onClose={() => setShowRoleManager(false)}
         />
       )}
       
