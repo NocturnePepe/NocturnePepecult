@@ -1549,6 +1549,367 @@
         50% { transform: translate(-50%, -50%) scale(1.1); }
         100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
       }
+      
+      /* Social Features Styles */
+      .profile-info {
+        display: flex;
+        gap: 15px;
+        margin-bottom: 15px;
+      }
+      
+      .profile-avatar {
+        position: relative;
+      }
+      
+      .avatar-circle {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        background: linear-gradient(45deg, var(--neon-pink, #ff1493), var(--neon-purple, #8e44ad));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 24px;
+        color: white;
+      }
+      
+      .rank-badge {
+        position: absolute;
+        bottom: -5px;
+        right: -5px;
+        background: var(--neon-pink, #ff1493);
+        color: white;
+        padding: 2px 6px;
+        border-radius: 10px;
+        font-size: 10px;
+        font-weight: bold;
+      }
+      
+      .profile-stats {
+        flex: 1;
+      }
+      
+      .stat-item {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 5px;
+      }
+      
+      .stat-label {
+        color: #ccc;
+      }
+      
+      .stat-value {
+        color: var(--neon-pink, #ff1493);
+        font-weight: bold;
+      }
+      
+      /* Referral System */
+      .referral-section {
+        margin-top: 10px;
+      }
+      
+      .referral-stats {
+        margin-bottom: 15px;
+      }
+      
+      .stat-row {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 5px;
+        color: #ccc;
+      }
+      
+      .referral-link {
+        display: flex;
+        gap: 10px;
+      }
+      
+      .referral-link input {
+        flex: 1;
+        padding: 8px;
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid var(--neon-pink, #ff1493);
+        border-radius: 4px;
+        color: white;
+        font-size: 12px;
+      }
+      
+      /* Leaderboard */
+      .leaderboard {
+        margin-top: 10px;
+      }
+      
+      .leaderboard-entry {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 8px;
+        margin-bottom: 5px;
+        border-radius: 4px;
+        background: rgba(255, 255, 255, 0.05);
+      }
+      
+      .leaderboard-entry.top-rank {
+        background: linear-gradient(45deg, rgba(255, 215, 0, 0.2), rgba(255, 20, 147, 0.2));
+        border: 1px solid rgba(255, 215, 0, 0.5);
+      }
+      
+      .leaderboard-entry.current-user {
+        background: rgba(255, 20, 147, 0.2);
+        border: 1px solid var(--neon-pink, #ff1493);
+      }
+      
+      .leaderboard-entry .rank {
+        font-size: 14px;
+        min-width: 30px;
+      }
+      
+      .leaderboard-entry .username {
+        flex: 1;
+        color: white;
+      }
+      
+      .leaderboard-entry .score {
+        color: var(--neon-pink, #ff1493);
+        font-weight: bold;
+        font-size: 12px;
+      }
+      
+      /* Social Feed */
+      .social-feed {
+        margin-top: 10px;
+        max-height: 200px;
+        overflow-y: auto;
+      }
+      
+      .feed-item {
+        display: flex;
+        gap: 10px;
+        padding: 8px;
+        margin-bottom: 10px;
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 4px;
+      }
+      
+      .feed-avatar {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        background: var(--neon-pink, #ff1493);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 14px;
+      }
+      
+      .feed-content {
+        flex: 1;
+      }
+      
+      .feed-user {
+        font-weight: bold;
+        color: var(--neon-pink, #ff1493);
+        font-size: 12px;
+      }
+      
+      .feed-text {
+        color: white;
+        font-size: 12px;
+        margin: 2px 0;
+      }
+      
+      .feed-time {
+        color: #999;
+        font-size: 10px;
+      }
+      
+      /* DAO Governance Styles */
+      .voting-power {
+        display: flex;
+        gap: 15px;
+        margin-bottom: 15px;
+      }
+      
+      .power-circle {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        background: conic-gradient(var(--neon-pink, #ff1493), var(--neon-purple, #8e44ad), var(--neon-pink, #ff1493));
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        color: white;
+      }
+      
+      .power-value {
+        font-size: 20px;
+        font-weight: bold;
+      }
+      
+      .power-label {
+        font-size: 10px;
+        opacity: 0.8;
+      }
+      
+      .power-breakdown {
+        flex: 1;
+      }
+      
+      .power-source {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 5px;
+        font-size: 12px;
+        color: #ccc;
+      }
+      
+      /* Proposals */
+      .proposals-list {
+        margin-top: 10px;
+        max-height: 300px;
+        overflow-y: auto;
+      }
+      
+      .proposal-item {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 20, 147, 0.3);
+        border-radius: 8px;
+        padding: 15px;
+        margin-bottom: 15px;
+      }
+      
+      .proposal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+      }
+      
+      .proposal-title {
+        font-weight: bold;
+        color: white;
+        font-size: 14px;
+      }
+      
+      .proposal-status {
+        padding: 2px 8px;
+        border-radius: 10px;
+        font-size: 10px;
+        font-weight: bold;
+      }
+      
+      .proposal-status.active {
+        background: var(--neon-pink, #ff1493);
+        color: white;
+      }
+      
+      .proposal-description {
+        color: #ccc;
+        font-size: 12px;
+        margin-bottom: 10px;
+      }
+      
+      .vote-progress {
+        margin-bottom: 10px;
+      }
+      
+      .vote-bar {
+        width: 100%;
+        height: 8px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 4px;
+        overflow: hidden;
+        margin-bottom: 5px;
+      }
+      
+      .vote-fill {
+        height: 100%;
+        background: var(--neon-pink, #ff1493);
+        transition: width 0.3s ease;
+      }
+      
+      .vote-fill.yes {
+        background: #4caf50;
+      }
+      
+      .vote-counts {
+        display: flex;
+        justify-content: space-between;
+        font-size: 10px;
+      }
+      
+      .yes-votes {
+        color: #4caf50;
+      }
+      
+      .no-votes {
+        color: #f44336;
+      }
+      
+      .proposal-time {
+        color: #999;
+        font-size: 10px;
+        margin-bottom: 10px;
+      }
+      
+      .proposal-actions {
+        display: flex;
+        gap: 10px;
+      }
+      
+      .vote-btn {
+        padding: 6px 12px;
+        border: none;
+        border-radius: 4px;
+        font-size: 12px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+      
+      .vote-btn.yes {
+        background: #4caf50;
+        color: white;
+      }
+      
+      .vote-btn.no {
+        background: #f44336;
+        color: white;
+      }
+      
+      .vote-btn:hover {
+        opacity: 0.8;
+        transform: translateY(-1px);
+      }
+      
+      /* Proposal Form */
+      .proposal-form {
+        margin-top: 10px;
+      }
+      
+      .proposal-form input,
+      .proposal-form textarea {
+        width: 100%;
+        padding: 8px;
+        margin-bottom: 10px;
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 20, 147, 0.3);
+        border-radius: 4px;
+        color: white;
+        font-size: 12px;
+      }
+      
+      .proposal-form textarea {
+        resize: vertical;
+        min-height: 60px;
+      }
+      
+      .form-note {
+        font-size: 10px;
+        color: #999;
+        margin-top: 5px;
+      }
     </style>
   </head>
   <body>
@@ -1600,6 +1961,8 @@
         <button class="nav-button active" data-section="swap" aria-pressed="true">💱 Swap</button>
         <button class="nav-button" data-section="pools" aria-pressed="false">🏊 Pools</button>
         <button class="nav-button" data-section="portfolio" aria-pressed="false">📊 Portfolio</button>
+        <button class="nav-button" data-section="social" aria-pressed="false">👥 Social</button>
+        <button class="nav-button" data-section="dao" aria-pressed="false">🏛️ DAO</button>
         <button class="nav-button" data-section="admin" aria-pressed="false">⚙️ Admin</button>
       </nav>
       
@@ -1831,6 +2194,214 @@
             <div class="admin-card">
               <h4>Maintenance</h4>
               <button class="admin-btn danger" id="maintenanceMode">Maintenance Mode</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Social Features Interface -->
+      <div class="social-interface" id="socialInterface" style="display: none;">
+        <div class="sidebar-card">
+          <h3>👥 Social Hub</h3>
+          
+          <!-- User Profile -->
+          <div class="admin-card">
+            <h4>🌙 Cult Profile</h4>
+            <div class="profile-info">
+              <div class="profile-avatar">
+                <div class="avatar-circle" id="userAvatar">🌙</div>
+                <div class="rank-badge" id="userRankBadge">Rank 1</div>
+              </div>
+              <div class="profile-stats">
+                <div class="stat-item">
+                  <span class="stat-label">XP:</span>
+                  <span class="stat-value" id="profileXP">0</span>
+                </div>
+                <div class="stat-item">
+                  <span class="stat-label">Trades:</span>
+                  <span class="stat-value" id="profileTrades">0</span>
+                </div>
+                <div class="stat-item">
+                  <span class="stat-label">Volume:</span>
+                  <span class="stat-value" id="profileVolume">$0</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Referral System -->
+          <div class="admin-card">
+            <h4>🔗 Referral System</h4>
+            <div class="referral-section">
+              <div class="referral-stats">
+                <div class="stat-row">
+                  <span>Referred Users:</span>
+                  <span id="referralCount">0</span>
+                </div>
+                <div class="stat-row">
+                  <span>Bonus XP Earned:</span>
+                  <span id="referralBonus">0</span>
+                </div>
+              </div>
+              <div class="referral-link">
+                <input type="text" id="referralLink" readonly value="https://nocturneswap.com?ref=CULT001" />
+                <button class="admin-btn" id="copyReferralLink">Copy</button>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Leaderboard -->
+          <div class="admin-card">
+            <h4>🏆 Cult Leaderboard</h4>
+            <div class="leaderboard">
+              <div class="leaderboard-entry top-rank">
+                <span class="rank">🥇</span>
+                <span class="username">CultMaster</span>
+                <span class="score">2,450 XP</span>
+              </div>
+              <div class="leaderboard-entry">
+                <span class="rank">🥈</span>
+                <span class="username">MoonTrader</span>
+                <span class="score">1,890 XP</span>
+              </div>
+              <div class="leaderboard-entry">
+                <span class="rank">🥉</span>
+                <span class="username">DegenKing</span>
+                <span class="score">1,650 XP</span>
+              </div>
+              <div class="leaderboard-entry current-user">
+                <span class="rank">#47</span>
+                <span class="username">You</span>
+                <span class="score" id="leaderboardUserXP">0 XP</span>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Social Feed -->
+          <div class="admin-card">
+            <h4>📢 Cult Activity</h4>
+            <div class="social-feed">
+              <div class="feed-item">
+                <div class="feed-avatar">🌙</div>
+                <div class="feed-content">
+                  <div class="feed-user">CultMaster</div>
+                  <div class="feed-text">Just swapped 10 SOL! 🚀</div>
+                  <div class="feed-time">2 mins ago</div>
+                </div>
+              </div>
+              <div class="feed-item">
+                <div class="feed-avatar">⭐</div>
+                <div class="feed-content">
+                  <div class="feed-user">MoonTrader</div>
+                  <div class="feed-text">Reached Rank 5! 👑</div>
+                  <div class="feed-time">5 mins ago</div>
+                </div>
+              </div>
+              <div class="feed-item">
+                <div class="feed-avatar">💎</div>
+                <div class="feed-content">
+                  <div class="feed-user">DegenKing</div>
+                  <div class="feed-text">New achievement unlocked!</div>
+                  <div class="feed-time">10 mins ago</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- DAO Governance Interface -->
+      <div class="dao-interface" id="daoInterface" style="display: none;">
+        <div class="sidebar-card">
+          <h3>🏛️ DAO Governance</h3>
+          
+          <!-- Voting Power -->
+          <div class="admin-card">
+            <h4>⚡ Your Voting Power</h4>
+            <div class="voting-power">
+              <div class="power-circle">
+                <div class="power-value" id="votingPower">0</div>
+                <div class="power-label">Votes</div>
+              </div>
+              <div class="power-breakdown">
+                <div class="power-source">
+                  <span>Token Holdings:</span>
+                  <span id="tokenVotes">0</span>
+                </div>
+                <div class="power-source">
+                  <span>Cult Rank Bonus:</span>
+                  <span id="rankVotes">0</span>
+                </div>
+                <div class="power-source">
+                  <span>Activity Bonus:</span>
+                  <span id="activityVotes">0</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Active Proposals -->
+          <div class="admin-card">
+            <h4>📋 Active Proposals</h4>
+            <div class="proposals-list">
+              <div class="proposal-item">
+                <div class="proposal-header">
+                  <div class="proposal-title">Reduce Trading Fees</div>
+                  <div class="proposal-status active">Active</div>
+                </div>
+                <div class="proposal-description">Proposal to reduce trading fees from 0.3% to 0.25%</div>
+                <div class="proposal-stats">
+                  <div class="vote-progress">
+                    <div class="vote-bar">
+                      <div class="vote-fill yes" style="width: 65%"></div>
+                    </div>
+                    <div class="vote-counts">
+                      <span class="yes-votes">👍 65% (1,250 votes)</span>
+                      <span class="no-votes">👎 35% (675 votes)</span>
+                    </div>
+                  </div>
+                  <div class="proposal-time">2 days left</div>
+                </div>
+                <div class="proposal-actions">
+                  <button class="vote-btn yes" onclick="castVote('prop1', 'yes')">Vote Yes</button>
+                  <button class="vote-btn no" onclick="castVote('prop1', 'no')">Vote No</button>
+                </div>
+              </div>
+              
+              <div class="proposal-item">
+                <div class="proposal-header">
+                  <div class="proposal-title">Add New Token Pairs</div>
+                  <div class="proposal-status active">Active</div>
+                </div>
+                <div class="proposal-description">Add support for BONK, WIF, and PEPE trading pairs</div>
+                <div class="proposal-stats">
+                  <div class="vote-progress">
+                    <div class="vote-bar">
+                      <div class="vote-fill yes" style="width: 78%"></div>
+                    </div>
+                    <div class="vote-counts">
+                      <span class="yes-votes">👍 78% (1,890 votes)</span>
+                      <span class="no-votes">👎 22% (532 votes)</span>
+                    </div>
+                  </div>
+                  <div class="proposal-time">5 days left</div>
+                </div>
+                <div class="proposal-actions">
+                  <button class="vote-btn yes" onclick="castVote('prop2', 'yes')">Vote Yes</button>
+                  <button class="vote-btn no" onclick="castVote('prop2', 'no')">Vote No</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Create Proposal -->
+          <div class="admin-card">
+            <h4>✍️ Create Proposal</h4>
+            <div class="proposal-form">
+              <input type="text" placeholder="Proposal Title" id="proposalTitle" />
+              <textarea placeholder="Proposal Description" id="proposalDescription" rows="3"></textarea>
+              <button class="admin-btn" id="createProposal">Submit Proposal</button>
+              <div class="form-note">Requires 100 XP to create proposals</div>
             </div>
           </div>
         </div>
@@ -2153,6 +2724,8 @@
         document.getElementById('swapInterface').style.display = 'none';
         document.getElementById('poolInterface').style.display = 'none';
         document.getElementById('portfolioInterface').style.display = 'none';
+        document.getElementById('socialInterface').style.display = 'none';
+        document.getElementById('daoInterface').style.display = 'none';
         document.getElementById('adminInterface').style.display = 'none';
         
         // Show selected section
@@ -2163,6 +2736,12 @@
         } else if (section === 'portfolio') {
           document.getElementById('portfolioInterface').style.display = 'block';
           updateTradingHistory();
+        } else if (section === 'social') {
+          document.getElementById('socialInterface').style.display = 'block';
+          updateSocialData();
+        } else if (section === 'dao') {
+          document.getElementById('daoInterface').style.display = 'block';
+          updateDAOData();
         } else if (section === 'admin') {
           document.getElementById('adminInterface').style.display = 'block';
         }
@@ -2864,6 +3443,118 @@
         document.body.appendChild(modal);
       }
 
+      // Social Features Functions
+      function updateSocialData() {
+        // Update profile data
+        const profileXP = document.getElementById('profileXP');
+        const profileTrades = document.getElementById('profileTrades');
+        const profileVolume = document.getElementById('profileVolume');
+        const leaderboardUserXP = document.getElementById('leaderboardUserXP');
+        
+        if (profileXP) profileXP.textContent = currentXP;
+        if (profileTrades) profileTrades.textContent = localStorage.getItem('nocturne-trades') || '0';
+        if (profileVolume) profileVolume.textContent = '$' + (localStorage.getItem('nocturne-volume') || '0');
+        if (leaderboardUserXP) leaderboardUserXP.textContent = currentXP + ' XP';
+        
+        // Update referral data
+        const referralCount = document.getElementById('referralCount');
+        const referralBonus = document.getElementById('referralBonus');
+        
+        if (referralCount) referralCount.textContent = localStorage.getItem('nocturne-referrals') || '0';
+        if (referralBonus) referralBonus.textContent = localStorage.getItem('nocturne-referral-bonus') || '0';
+      }
+
+      function copyReferralLink() {
+        const referralLink = document.getElementById('referralLink');
+        if (referralLink) {
+          referralLink.select();
+          document.execCommand('copy');
+          showNotification('Referral link copied! 🔗');
+        }
+      }
+
+      // DAO Functions
+      function updateDAOData() {
+        // Calculate voting power based on XP and rank
+        const baseVotes = Math.floor(currentXP / 100);
+        const rankBonus = currentRank * 10;
+        const activityBonus = Math.floor((localStorage.getItem('nocturne-trades') || 0) / 5);
+        const totalVotes = baseVotes + rankBonus + activityBonus;
+        
+        const votingPower = document.getElementById('votingPower');
+        const tokenVotes = document.getElementById('tokenVotes');
+        const rankVotes = document.getElementById('rankVotes');
+        const activityVotes = document.getElementById('activityVotes');
+        
+        if (votingPower) votingPower.textContent = totalVotes;
+        if (tokenVotes) tokenVotes.textContent = baseVotes;
+        if (rankVotes) rankVotes.textContent = rankBonus;
+        if (activityVotes) activityVotes.textContent = activityBonus;
+      }
+
+      function castVote(proposalId, vote) {
+        const votes = JSON.parse(localStorage.getItem('nocturne-votes') || '{}');
+        
+        if (votes[proposalId]) {
+          showNotification('You have already voted on this proposal! 🗳️');
+          return;
+        }
+        
+        votes[proposalId] = vote;
+        localStorage.setItem('nocturne-votes', JSON.stringify(votes));
+        
+        // Add XP for voting
+        addXP(25);
+        
+        showNotification(`Vote cast: ${vote === 'yes' ? '👍' : '👎'} (+25 XP)`);
+        
+        // Disable vote buttons for this proposal
+        const proposalElement = document.querySelector(`[onclick*="${proposalId}"]`).closest('.proposal-item');
+        const voteButtons = proposalElement.querySelectorAll('.vote-btn');
+        voteButtons.forEach(btn => {
+          btn.disabled = true;
+          btn.style.opacity = '0.5';
+        });
+      }
+
+      function createProposal() {
+        const title = document.getElementById('proposalTitle').value;
+        const description = document.getElementById('proposalDescription').value;
+        
+        if (!title || !description) {
+          showNotification('Please fill in all fields! ✍️');
+          return;
+        }
+        
+        if (currentXP < 100) {
+          showNotification('You need at least 100 XP to create proposals! 📈');
+          return;
+        }
+        
+        // Save proposal (in real app, this would go to backend)
+        const proposals = JSON.parse(localStorage.getItem('nocturne-proposals') || '[]');
+        const newProposal = {
+          id: Date.now(),
+          title,
+          description,
+          creator: 'You',
+          createdAt: new Date().toISOString(),
+          votes: { yes: 0, no: 0 }
+        };
+        
+        proposals.push(newProposal);
+        localStorage.setItem('nocturne-proposals', JSON.stringify(proposals));
+        
+        // Clear form
+        document.getElementById('proposalTitle').value = '';
+        document.getElementById('proposalDescription').value = '';
+        
+        // Add XP for creating proposal
+        addXP(50);
+        
+        showNotification('Proposal created successfully! 🏛️ (+50 XP)');
+      }
+
       // Initialize Gaming Features
       function initializeGamingFeatures() {
         // Load saved theme
@@ -2907,6 +3598,18 @@
         const achievementBtn = document.getElementById('achievementBtn');
         if (achievementBtn) {
           achievementBtn.addEventListener('click', showAchievements);
+        }
+        
+        // Social features listeners
+        const copyReferralBtn = document.getElementById('copyReferralLink');
+        if (copyReferralBtn) {
+          copyReferralBtn.addEventListener('click', copyReferralLink);
+        }
+        
+        // DAO features listeners
+        const createProposalBtn = document.getElementById('createProposal');
+        if (createProposalBtn) {
+          createProposalBtn.addEventListener('click', createProposal);
         }
         
         // Add XP on interactions
