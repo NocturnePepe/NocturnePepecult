@@ -1,0 +1,487 @@
+/* PHASE 2: Gaming-Tier Visual Effects & Dark Cult Aesthetics */
+
+/* Enhanced Theme System - Cult Mode Default */
+:root {
+  /* Cult Mode (Default) */
+  --cult-primary: #6a0dad;
+  --cult-secondary: #9932cc;
+  --cult-accent: #ff1493;
+  --cult-bg-start: #0a0a0a;
+  --cult-bg-mid: #1a0a1a;
+  --cult-bg-end: #0a0a1a;
+  --cult-text-primary: #ffffff;
+  --cult-text-secondary: #ff69b4;
+  --cult-glow: rgba(106, 13, 173, 0.6);
+  
+  /* Cyber Void Variant */
+  --cyber-primary: #00ffff;
+  --cyber-secondary: #0066ff;
+  --cyber-accent: #ff00ff;
+  --cyber-bg-start: #000011;
+  --cyber-bg-mid: #001122;
+  --cyber-bg-end: #000033;
+  --cyber-glow: rgba(0, 255, 255, 0.6);
+  
+  /* Chaos Ember Variant */
+  --ember-primary: #ff4500;
+  --ember-secondary: #ff6347;
+  --ember-accent: #ffd700;
+  --ember-bg-start: #1a0000;
+  --ember-bg-mid: #330000;
+  --ember-bg-end: #220000;
+  --ember-glow: rgba(255, 69, 0, 0.6);
+  
+  /* Current theme (default to cult) */
+  --theme-primary: var(--cult-primary);
+  --theme-secondary: var(--cult-secondary);
+  --theme-accent: var(--cult-accent);
+  --theme-bg-start: var(--cult-bg-start);
+  --theme-bg-mid: var(--cult-bg-mid);
+  --theme-bg-end: var(--cult-bg-end);
+  --theme-text-primary: var(--cult-text-primary);
+  --theme-text-secondary: var(--cult-text-secondary);
+  --theme-glow: var(--cult-glow);
+}
+
+/* Theme Classes */
+.theme-cult {
+  --theme-primary: var(--cult-primary);
+  --theme-secondary: var(--cult-secondary);
+  --theme-accent: var(--cult-accent);
+  --theme-bg-start: var(--cult-bg-start);
+  --theme-bg-mid: var(--cult-bg-mid);
+  --theme-bg-end: var(--cult-bg-end);
+  --theme-text-primary: var(--cult-text-primary);
+  --theme-text-secondary: var(--cult-text-secondary);
+  --theme-glow: var(--cult-glow);
+}
+
+.theme-cyber {
+  --theme-primary: var(--cyber-primary);
+  --theme-secondary: var(--cyber-secondary);
+  --theme-accent: var(--cyber-accent);
+  --theme-bg-start: var(--cyber-bg-start);
+  --theme-bg-mid: var(--cyber-bg-mid);
+  --theme-bg-end: var(--cyber-bg-end);
+  --theme-text-primary: #ffffff;
+  --theme-text-secondary: #00ffff;
+  --theme-glow: var(--cyber-glow);
+}
+
+.theme-ember {
+  --theme-primary: var(--ember-primary);
+  --theme-secondary: var(--ember-secondary);
+  --theme-accent: var(--ember-accent);
+  --theme-bg-start: var(--ember-bg-start);
+  --theme-bg-mid: var(--ember-bg-mid);
+  --theme-bg-end: var(--ember-bg-end);
+  --theme-text-primary: #ffffff;
+  --theme-text-secondary: #ffd700;
+  --theme-glow: var(--ember-glow);
+}
+
+/* Enhanced App Background with Gaming-Tier Effects */
+.App {
+  background: 
+    radial-gradient(circle at 20% 80%, var(--theme-glow) 0%, transparent 60%),
+    radial-gradient(circle at 80% 20%, var(--theme-secondary) 0%, transparent 60%),
+    radial-gradient(circle at 40% 40%, var(--theme-primary) 0%, transparent 70%),
+    linear-gradient(135deg, var(--theme-bg-start) 0%, var(--theme-bg-mid) 50%, var(--theme-bg-end) 100%);
+  background-attachment: fixed;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Floating Ember Particles Background Layer */
+.App::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    radial-gradient(2px 2px at 20px 30px, var(--theme-accent), transparent),
+    radial-gradient(2px 2px at 40px 70px, var(--theme-primary), transparent),
+    radial-gradient(1px 1px at 90px 40px, var(--theme-secondary), transparent),
+    radial-gradient(1px 1px at 130px 80px, var(--theme-glow), transparent),
+    radial-gradient(2px 2px at 160px 30px, var(--theme-accent), transparent);
+  background-repeat: repeat;
+  background-size: 200px 100px;
+  animation: floatingEmbers 20s linear infinite;
+  opacity: 0.3;
+  pointer-events: none;
+  z-index: -1;
+}
+
+@keyframes floatingEmbers {
+  0% { transform: translateY(0px) rotate(0deg); }
+  100% { transform: translateY(-100px) rotate(360deg); }
+}
+
+/* Fog/Smoke Layer (toggleable) */
+.App::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    radial-gradient(ellipse at top, rgba(255, 255, 255, 0.02) 0%, transparent 60%),
+    radial-gradient(ellipse at bottom, rgba(255, 255, 255, 0.01) 0%, transparent 60%);
+  animation: smokeWave 15s ease-in-out infinite;
+  opacity: var(--fog-opacity, 0.4);
+  pointer-events: none;
+  z-index: -1;
+}
+
+@keyframes smokeWave {
+  0%, 100% { transform: translateX(0px) scale(1); }
+  33% { transform: translateX(-20px) scale(1.05); }
+  66% { transform: translateX(20px) scale(0.95); }
+}
+
+/* Gaming-Tier Button Enhancements */
+.glow-btn,
+.nav-link,
+.floating-button,
+.primary-btn,
+.secondary-btn {
+  position: relative;
+  background: linear-gradient(135deg, var(--theme-primary), var(--theme-secondary));
+  border: 2px solid var(--theme-glow);
+  border-radius: 12px;
+  color: var(--theme-text-primary);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+  box-shadow: 
+    0 4px 15px var(--theme-glow),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+/* Animated Hover Glows */
+.glow-btn:hover,
+.nav-link:hover,
+.floating-button:hover,
+.primary-btn:hover,
+.secondary-btn:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 
+    0 8px 25px var(--theme-glow),
+    0 0 30px var(--theme-accent),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  border-color: var(--theme-accent);
+}
+
+/* Shadow Pulses */
+.glow-btn::before,
+.nav-link::before,
+.floating-button::before,
+.primary-btn::before,
+.secondary-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, var(--theme-accent), var(--theme-primary));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: -1;
+}
+
+.glow-btn:hover::before,
+.nav-link:hover::before,
+.floating-button:hover::before,
+.primary-btn:hover::before,
+.secondary-btn:hover::before {
+  opacity: 0.2;
+  animation: shadowPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes shadowPulse {
+  0%, 100% { opacity: 0.1; transform: scale(1); }
+  50% { opacity: 0.3; transform: scale(1.05); }
+}
+
+/* Rune-Etched Corners (SVG Overlays) */
+.rune-corners::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M2 2L8 2L8 8L2 8Z' fill='none' stroke='%23ff1493' stroke-width='1'/%3E%3C/svg%3E"),
+    url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M12 12L18 12L18 18L12 18Z' fill='none' stroke='%23ff1493' stroke-width='1'/%3E%3C/svg%3E");
+  background-position: top left, bottom right;
+  background-repeat: no-repeat;
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+/* Dark Runic Borders Around Panels/Cards */
+.panel,
+.card,
+.modal-content,
+.status-dropdown,
+.hero-section {
+  position: relative;
+  background: rgba(0, 0, 0, 0.8);
+  border: 2px solid var(--theme-glow);
+  border-radius: 16px;
+  backdrop-filter: blur(20px);
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.panel::before,
+.card::before,
+.modal-content::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(45deg, var(--theme-primary), var(--theme-accent), var(--theme-secondary));
+  border-radius: 18px;
+  z-index: -1;
+  opacity: 0.3;
+  animation: runicBorderGlow 3s ease-in-out infinite;
+}
+
+@keyframes runicBorderGlow {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.6; }
+}
+
+/* Modal Enhancements */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(10px);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: modalFadeIn 0.3s ease-out;
+}
+
+@keyframes modalFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.modal-content {
+  max-width: 90vw;
+  max-height: 90vh;
+  overflow-y: auto;
+  animation: modalSlideIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes modalSlideIn {
+  from { 
+    opacity: 0; 
+    transform: translateY(-20px) scale(0.95); 
+  }
+  to { 
+    opacity: 1; 
+    transform: translateY(0) scale(1); 
+  }
+}
+
+/* Glowing Border for Modals */
+.modal-content {
+  border: 3px solid var(--theme-accent);
+  box-shadow: 
+    0 0 40px var(--theme-glow),
+    0 0 80px var(--theme-accent),
+    inset 0 2px 0 rgba(255, 255, 255, 0.2);
+}
+
+/* Runes on Top-Left/Bottom-Right of Modals */
+.modal-content::before {
+  content: '⚡';
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  font-size: 18px;
+  color: var(--theme-accent);
+  text-shadow: 0 0 10px var(--theme-accent);
+  animation: runeGlow 2s ease-in-out infinite;
+}
+
+.modal-content::after {
+  content: '🌙';
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  font-size: 18px;
+  color: var(--theme-accent);
+  text-shadow: 0 0 10px var(--theme-accent);
+  animation: runeGlow 2s ease-in-out infinite reverse;
+}
+
+@keyframes runeGlow {
+  0%, 100% { 
+    text-shadow: 0 0 10px var(--theme-accent);
+    transform: scale(1);
+  }
+  50% { 
+    text-shadow: 0 0 20px var(--theme-accent), 0 0 30px var(--theme-accent);
+    transform: scale(1.1);
+  }
+}
+
+/* Cult Tier Rank Color Palette */
+.rank-tier-1,
+.rank-tier-2,
+.rank-tier-3 {
+  --theme-primary: #0066cc;
+  --theme-secondary: #4da6ff;
+  --theme-accent: #00ccff;
+  --theme-glow: rgba(0, 102, 204, 0.6);
+}
+
+.rank-tier-4,
+.rank-tier-5,
+.rank-tier-6 {
+  --theme-primary: #cc0000;
+  --theme-secondary: #ff3333;
+  --theme-accent: #ff6666;
+  --theme-glow: rgba(204, 0, 0, 0.6);
+}
+
+.rank-tier-7,
+.rank-tier-8,
+.rank-tier-9,
+.rank-tier-10 {
+  --theme-primary: #6a0dad;
+  --theme-secondary: #9932cc;
+  --theme-accent: #da70d6;
+  --theme-glow: rgba(106, 13, 173, 0.6);
+}
+
+/* Theme Navigation with Rune Symbols */
+.theme-nav {
+  display: flex;
+  gap: 16px;
+  padding: 20px;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.6);
+  border-radius: 12px;
+  margin: 20px 0;
+}
+
+.theme-option {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 16px;
+  border: 2px solid transparent;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.theme-option.active {
+  border-color: var(--theme-accent);
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 0 20px var(--theme-glow);
+}
+
+.theme-option:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(255, 255, 255, 0.1);
+}
+
+.theme-rune {
+  font-size: 24px;
+  text-shadow: 0 0 10px currentColor;
+  animation: themeRuneFloat 3s ease-in-out infinite;
+}
+
+@keyframes themeRuneFloat {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-4px); }
+}
+
+.theme-name {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--theme-text-secondary);
+}
+
+/* Fog Toggle Control */
+.fog-toggle {
+  position: fixed;
+  bottom: 20px;
+  right: 80px;
+  z-index: 1001;
+  background: rgba(0, 0, 0, 0.8);
+  border: 1px solid var(--theme-glow);
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 20px;
+}
+
+.fog-toggle:hover {
+  background: rgba(0, 0, 0, 0.9);
+  box-shadow: 0 0 20px var(--theme-glow);
+  transform: scale(1.1);
+}
+
+/* Performance Optimizations */
+@media (prefers-reduced-motion: reduce) {
+  .App::before,
+  .App::after,
+  .floatingEmbers,
+  .smokeWave,
+  .shadowPulse,
+  .runicBorderGlow,
+  .runeGlow,
+  .themeRuneFloat {
+    animation: none !important;
+  }
+}
+
+/* High Performance Mode (for mobile) */
+@media (max-width: 768px) {
+  .App::before {
+    opacity: 0.2;
+    animation-duration: 30s;
+  }
+  
+  .App::after {
+    opacity: 0.2;
+  }
+  
+  .panel::before,
+  .card::before,
+  .modal-content::before {
+    animation: none;
+    opacity: 0.2;
+  }
+}

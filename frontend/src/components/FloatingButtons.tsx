@@ -4,7 +4,7 @@ import './FloatingButtons.css';
 
 // Lazy load modals for performance
 const SecurityModal = lazy(() => import('./SecurityModal'));
-const SeasonalThemes = lazy(() => import('./SeasonalThemes'));
+const EnhancedThemeSystem = lazy(() => import('./EnhancedThemeSystem'));
 const AchievementSystem = lazy(() => import('./AchievementSystem'));
 
 interface FloatingButtonsProps {
@@ -110,7 +110,7 @@ const FloatingButtons: React.FC<FloatingButtonsProps> = ({ position = 'left' }) 
           />
         )}
         {activeModal === 'themes' && (
-          <SeasonalThemes 
+          <EnhancedThemeSystem 
             isOpen={true} 
             onClose={closeModal}
           />

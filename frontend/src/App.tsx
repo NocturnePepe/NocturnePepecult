@@ -3,8 +3,10 @@ import { BrowserRouter as Router, Routes, Route, Link, useLocation } from 'react
 import { MockWalletProvider } from './contexts/MockWalletContext';
 import XPRankBar from './components/XPRankBar';
 import FloatingButtons from './components/FloatingButtons';
+import EnhancedThemeSystem from './components/EnhancedThemeSystem';
 import './App.css';
 import './PWA.css';
+import './GamingTierFX.css';
 
 // Lazy load pages for better performance
 const HomePage = lazy(() => import('./pages/HomePage'));
