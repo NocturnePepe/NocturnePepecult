@@ -1910,6 +1910,656 @@
         color: #999;
         margin-top: 5px;
       }
+      
+      /* Advanced Trading Features */
+      .trading-modes {
+        margin: 15px 0;
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 8px;
+        padding: 15px;
+      }
+      
+      .mode-tabs {
+        display: flex;
+        gap: 5px;
+        margin-bottom: 15px;
+      }
+      
+      .mode-tab {
+        flex: 1;
+        padding: 8px 12px;
+        background: transparent;
+        border: 1px solid rgba(255, 20, 147, 0.3);
+        color: #ccc;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 12px;
+        transition: all 0.3s ease;
+      }
+      
+      .mode-tab.active {
+        background: var(--neon-pink, #ff1493);
+        color: white;
+        border-color: var(--neon-pink, #ff1493);
+      }
+      
+      .trading-panel {
+        margin-top: 10px;
+      }
+      
+      .limit-controls, .dca-controls {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 10px;
+      }
+      
+      .limit-input-group, .dca-input-group {
+        flex: 1;
+      }
+      
+      .limit-label, .dca-label {
+        display: block;
+        font-size: 10px;
+        color: #ccc;
+        margin-bottom: 5px;
+      }
+      
+      .limit-input-group input, .dca-input-group select {
+        width: 100%;
+        padding: 6px;
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 20, 147, 0.3);
+        border-radius: 4px;
+        color: white;
+        font-size: 12px;
+      }
+      
+      .price-unit {
+        font-size: 10px;
+        color: #ccc;
+        margin-left: 5px;
+      }
+      
+      .limit-info, .dca-preview {
+        margin-top: 10px;
+        padding: 8px;
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 4px;
+      }
+      
+      .dca-stat {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 5px;
+        font-size: 12px;
+        color: #ccc;
+      }
+      
+      /* Advanced Portfolio Analytics */
+      .portfolio-value-display {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      
+      .current-value {
+        font-size: 24px;
+        font-weight: bold;
+        color: var(--neon-pink, #ff1493);
+      }
+      
+      .value-change {
+        font-size: 14px;
+        padding: 2px 6px;
+        border-radius: 4px;
+      }
+      
+      .value-change.positive {
+        background: rgba(76, 175, 80, 0.2);
+        color: #4caf50;
+      }
+      
+      .value-change.negative {
+        background: rgba(244, 67, 54, 0.2);
+        color: #f44336;
+      }
+      
+      .performance-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        margin-top: 10px;
+      }
+      
+      .performance-item {
+        display: flex;
+        justify-content: space-between;
+        font-size: 12px;
+      }
+      
+      .metric-label {
+        color: #ccc;
+      }
+      
+      .metric-value {
+        font-weight: bold;
+        color: white;
+      }
+      
+      .metric-value.positive {
+        color: #4caf50;
+      }
+      
+      .holdings-list {
+        margin-top: 10px;
+      }
+      
+      .holding-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px;
+        margin-bottom: 8px;
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 6px;
+      }
+      
+      .holding-token {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      
+      .token-icon {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        background: var(--neon-pink, #ff1493);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 14px;
+      }
+      
+      .token-name {
+        font-weight: bold;
+        color: white;
+      }
+      
+      .token-amount {
+        font-size: 12px;
+        color: #ccc;
+      }
+      
+      .holding-value {
+        text-align: right;
+      }
+      
+      .value-usd {
+        font-weight: bold;
+        color: white;
+      }
+      
+      .trade-filters {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 10px;
+      }
+      
+      .trade-filters select {
+        padding: 4px 8px;
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 20, 147, 0.3);
+        border-radius: 4px;
+        color: white;
+        font-size: 11px;
+      }
+      
+      .trade-entry.advanced {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px;
+        margin-bottom: 8px;
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 6px;
+      }
+      
+      .trade-info {
+        flex: 1;
+      }
+      
+      .trade-type {
+        font-size: 10px;
+        color: #ccc;
+      }
+      
+      .trade-amounts {
+        flex: 1;
+        text-align: center;
+      }
+      
+      .trade-value {
+        font-size: 11px;
+        color: #ccc;
+      }
+      
+      .trade-meta {
+        flex: 1;
+        text-align: right;
+      }
+      
+      .trade-pnl {
+        font-weight: bold;
+        font-size: 12px;
+      }
+      
+      .trade-pnl.positive {
+        color: #4caf50;
+      }
+      
+      .trade-pnl.negative {
+        color: #f44336;
+      }
+      
+      /* Enhanced Admin Dashboard */
+      .analytics-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        margin-top: 10px;
+      }
+      
+      .analytics-item {
+        text-align: center;
+        padding: 10px;
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 6px;
+      }
+      
+      .analytics-value {
+        font-size: 18px;
+        font-weight: bold;
+        color: var(--neon-pink, #ff1493);
+      }
+      
+      .analytics-label {
+        font-size: 10px;
+        color: #ccc;
+        margin-top: 5px;
+      }
+      
+      .analytics-change {
+        font-size: 9px;
+        font-weight: bold;
+        margin-top: 2px;
+      }
+      
+      .analytics-change.positive {
+        color: #4caf50;
+      }
+      
+      .analytics-change.negative {
+        color: #f44336;
+      }
+      
+      /* Seasonal Events */
+      .events-management {
+        margin-top: 10px;
+      }
+      
+      .current-event {
+        padding: 10px;
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 6px;
+        margin-bottom: 15px;
+      }
+      
+      .event-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+      }
+      
+      .event-name {
+        font-weight: bold;
+        color: white;
+      }
+      
+      .event-status.active {
+        background: #4caf50;
+        color: white;
+        padding: 2px 8px;
+        border-radius: 10px;
+        font-size: 10px;
+      }
+      
+      .event-progress {
+        margin-bottom: 10px;
+      }
+      
+      .progress-bar {
+        width: 100%;
+        height: 6px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 3px;
+        overflow: hidden;
+        margin-bottom: 5px;
+      }
+      
+      .progress-fill {
+        height: 100%;
+        background: var(--neon-pink, #ff1493);
+        transition: width 0.3s ease;
+      }
+      
+      .progress-text {
+        font-size: 10px;
+        color: #ccc;
+      }
+      
+      .event-rewards {
+        display: flex;
+        gap: 10px;
+        font-size: 11px;
+        color: #ccc;
+        margin-bottom: 10px;
+      }
+      
+      .event-actions {
+        display: flex;
+        gap: 5px;
+      }
+      
+      .admin-btn.small {
+        padding: 4px 8px;
+        font-size: 10px;
+      }
+      
+      .event-creator {
+        padding: 10px;
+        background: rgba(255, 255, 255, 0.03);
+        border-radius: 6px;
+      }
+      
+      .event-creator h5 {
+        margin: 0 0 10px 0;
+        color: white;
+      }
+      
+      .event-creator input, .event-creator select {
+        width: 100%;
+        padding: 6px;
+        margin-bottom: 8px;
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 20, 147, 0.3);
+        border-radius: 4px;
+        color: white;
+        font-size: 12px;
+      }
+      
+      /* System Controls */
+      .system-controls {
+        margin-top: 10px;
+      }
+      
+      .control-group {
+        margin-bottom: 15px;
+        padding: 10px;
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 6px;
+      }
+      
+      .control-group h5 {
+        margin: 0 0 10px 0;
+        color: white;
+        font-size: 12px;
+      }
+      
+      .status-display {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 8px;
+      }
+      
+      .status-indicator {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: #4caf50;
+      }
+      
+      .uptime {
+        font-size: 10px;
+        color: #ccc;
+        margin-left: auto;
+      }
+      
+      .feature-toggles {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+      
+      .toggle-switch {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        cursor: pointer;
+      }
+      
+      .toggle-slider {
+        position: relative;
+        width: 30px;
+        height: 16px;
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 16px;
+        transition: background 0.3s ease;
+      }
+      
+      .toggle-slider::before {
+        content: '';
+        position: absolute;
+        top: 2px;
+        left: 2px;
+        width: 12px;
+        height: 12px;
+        background: white;
+        border-radius: 50%;
+        transition: transform 0.3s ease;
+      }
+      
+      .toggle-switch input:checked + .toggle-slider {
+        background: var(--neon-pink, #ff1493);
+      }
+      
+      .toggle-switch input:checked + .toggle-slider::before {
+        transform: translateX(14px);
+      }
+      
+      .toggle-label {
+        font-size: 11px;
+        color: white;
+      }
+      
+      .data-controls {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+      }
+      
+      .danger-zone {
+        border: 1px solid rgba(244, 67, 54, 0.3);
+        background: rgba(244, 67, 54, 0.1);
+      }
+      
+      /* Cult Wars */
+      .cult-wars {
+        margin-top: 10px;
+      }
+      
+      .current-battle {
+        padding: 15px;
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 8px;
+        margin-bottom: 15px;
+      }
+      
+      .battle-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 15px;
+      }
+      
+      .battle-title {
+        font-weight: bold;
+        color: white;
+        font-size: 14px;
+      }
+      
+      .battle-timer {
+        background: var(--neon-pink, #ff1493);
+        color: white;
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 11px;
+        font-weight: bold;
+      }
+      
+      .battle-teams {
+        margin-bottom: 15px;
+      }
+      
+      .team {
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 6px;
+        padding: 10px;
+        margin-bottom: 8px;
+      }
+      
+      .team-name {
+        font-weight: bold;
+        margin-bottom: 8px;
+      }
+      
+      .team.moon-cult .team-name {
+        color: #ff1493;
+      }
+      
+      .team.degen-army .team-name {
+        color: #00ff85;
+      }
+      
+      .team-progress {
+        margin-bottom: 5px;
+      }
+      
+      .team-bar {
+        height: 8px;
+        margin-bottom: 5px;
+      }
+      
+      .progress-fill.moon {
+        background: linear-gradient(90deg, #ff1493, #8e44ad);
+      }
+      
+      .progress-fill.degen {
+        background: linear-gradient(90deg, #00ff85, #00fff7);
+      }
+      
+      .team-score {
+        font-weight: bold;
+        font-size: 12px;
+      }
+      
+      .team-members {
+        font-size: 10px;
+        color: #ccc;
+      }
+      
+      .vs-divider {
+        text-align: center;
+        font-weight: bold;
+        color: var(--neon-pink, #ff1493);
+        margin: 10px 0;
+      }
+      
+      .battle-rewards {
+        margin-bottom: 15px;
+      }
+      
+      .battle-rewards h5 {
+        margin: 0 0 10px 0;
+        color: white;
+        font-size: 12px;
+      }
+      
+      .rewards-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 8px;
+      }
+      
+      .reward-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 8px;
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 4px;
+      }
+      
+      .reward-icon {
+        font-size: 16px;
+        margin-bottom: 4px;
+      }
+      
+      .reward-text {
+        font-size: 9px;
+        text-align: center;
+        color: #ccc;
+      }
+      
+      .your-contribution {
+        padding: 10px;
+        background: rgba(255, 255, 255, 0.03);
+        border-radius: 6px;
+      }
+      
+      .your-contribution h5 {
+        margin: 0 0 10px 0;
+        color: white;
+        font-size: 12px;
+      }
+      
+      .contribution-stats {
+        margin-bottom: 10px;
+      }
+      
+      .contrib-stat {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 5px;
+        font-size: 11px;
+      }
+      
+      .contrib-label {
+        color: #ccc;
+      }
+      
+      .contrib-value {
+        color: white;
+        font-weight: bold;
+      }
+      
+      .cult-btn {
+        background: linear-gradient(45deg, #ff1493, #8e44ad);
+        border: none;
+        color: white;
+      }
     </style>
   </head>
   <body>
@@ -2032,6 +2682,71 @@
             </div>
           </div>
           
+          <!-- Advanced Trading Features -->
+          <div class="trading-modes" id="tradingModes">
+            <div class="mode-tabs">
+              <button class="mode-tab active" data-mode="instant">⚡ Instant</button>
+              <button class="mode-tab" data-mode="limit">📊 Limit</button>
+              <button class="mode-tab" data-mode="dca">🔄 DCA</button>
+            </div>
+            
+            <!-- Limit Order Panel -->
+            <div class="trading-panel" id="limitPanel" style="display: none;">
+              <div class="limit-controls">
+                <div class="limit-input-group">
+                  <label class="limit-label">Target Price</label>
+                  <input type="number" id="limitPrice" placeholder="0.0" step="0.000001" />
+                  <span class="price-unit">USDC</span>
+                </div>
+                <div class="limit-input-group">
+                  <label class="limit-label">Expires In</label>
+                  <select id="limitExpiry">
+                    <option value="1h">1 Hour</option>
+                    <option value="24h">24 Hours</option>
+                    <option value="7d">7 Days</option>
+                    <option value="30d">30 Days</option>
+                  </select>
+                </div>
+              </div>
+              <div class="limit-info">
+                <span class="limit-status" id="limitStatus">Set your target price</span>
+              </div>
+            </div>
+            
+            <!-- DCA Panel -->
+            <div class="trading-panel" id="dcaPanel" style="display: none;">
+              <div class="dca-controls">
+                <div class="dca-input-group">
+                  <label class="dca-label">Frequency</label>
+                  <select id="dcaFrequency">
+                    <option value="daily">Daily</option>
+                    <option value="weekly">Weekly</option>
+                    <option value="monthly">Monthly</option>
+                  </select>
+                </div>
+                <div class="dca-input-group">
+                  <label class="dca-label">Duration</label>
+                  <select id="dcaDuration">
+                    <option value="1w">1 Week</option>
+                    <option value="1m">1 Month</option>
+                    <option value="3m">3 Months</option>
+                    <option value="6m">6 Months</option>
+                  </select>
+                </div>
+              </div>
+              <div class="dca-preview">
+                <div class="dca-stat">
+                  <span>Total Purchases:</span>
+                  <span id="dcaTotalPurchases">--</span>
+                </div>
+                <div class="dca-stat">
+                  <span>Amount per Purchase:</span>
+                  <span id="dcaAmountPerPurchase">--</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          
           <button class="swap-button" id="swapButton" disabled>
             Connect Wallet
           </button>
@@ -2143,35 +2858,121 @@
       <!-- Portfolio Interface -->
       <div class="admin-interface" id="portfolioInterface">
         <div class="sidebar-card">
-          <h3>📊 Portfolio</h3>
+          <h3>📊 Advanced Portfolio Analytics</h3>
+          
+          <!-- Portfolio Overview -->
           <div class="portfolio-stats">
             <div class="admin-card">
-              <h4>Portfolio Value</h4>
-              <div id="portfolioValue">$--</div>
+              <h4>💰 Portfolio Value</h4>
+              <div class="portfolio-value-display">
+                <div class="current-value" id="portfolioValue">$--</div>
+                <div class="value-change" id="portfolioChange">--</div>
+              </div>
             </div>
+            
             <div class="admin-card">
-              <h4>24h Change</h4>
-              <div id="portfolioChange">--</div>
-            </div>
-            <div class="admin-card">
-              <h4>Trading History</h4>
-              <div id="tradingHistory">
-                <div class="trade-entry">
-                  <div class="trade-pair">SOL → USDC</div>
-                  <div class="trade-amount">1.5 SOL</div>
-                  <div class="trade-time">2 mins ago</div>
+              <h4>📈 Performance Metrics</h4>
+              <div class="performance-grid">
+                <div class="performance-item">
+                  <span class="metric-label">Total Return:</span>
+                  <span class="metric-value positive" id="totalReturn">+$--</span>
                 </div>
-                <div class="trade-entry">
-                  <div class="trade-pair">USDC → RAY</div>
-                  <div class="trade-amount">50 USDC</div>
-                  <div class="trade-time">15 mins ago</div>
+                <div class="performance-item">
+                  <span class="metric-label">Win Rate:</span>
+                  <span class="metric-value" id="winRate">--%</span>
                 </div>
-                <div class="trade-entry">
-                  <div class="trade-pair">RAY → SOL</div>
-                  <div class="trade-amount">100 RAY</div>
-                  <div class="trade-time">1 hour ago</div>
+                <div class="performance-item">
+                  <span class="metric-label">Avg Trade Size:</span>
+                  <span class="metric-value" id="avgTradeSize">$--</span>
+                </div>
+                <div class="performance-item">
+                  <span class="metric-label">Best Trade:</span>
+                  <span class="metric-value positive" id="bestTrade">+$--</span>
                 </div>
               </div>
+            </div>
+            
+            <!-- Holdings Breakdown -->
+            <div class="admin-card">
+              <h4>🪙 Token Holdings</h4>
+              <div class="holdings-list">
+                <div class="holding-item">
+                  <div class="holding-token">
+                    <div class="token-icon">◎</div>
+                    <div class="token-info">
+                      <div class="token-name">SOL</div>
+                      <div class="token-amount">0.00 SOL</div>
+                    </div>
+                  </div>
+                  <div class="holding-value">
+                    <div class="value-usd">$0.00</div>
+                    <div class="value-change">+0.00%</div>
+                  </div>
+                </div>
+                <div class="holding-item">
+                  <div class="holding-token">
+                    <div class="token-icon">$</div>
+                    <div class="token-info">
+                      <div class="token-name">USDC</div>
+                      <div class="token-amount">0.00 USDC</div>
+                    </div>
+                  </div>
+                  <div class="holding-value">
+                    <div class="value-usd">$0.00</div>
+                    <div class="value-change">+0.00%</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Trading History with Advanced Filters -->
+            <div class="admin-card">
+              <h4>📊 Trading History</h4>
+              <div class="trade-filters">
+                <select id="timeFilter">
+                  <option value="24h">Last 24 Hours</option>
+                  <option value="7d">Last 7 Days</option>
+                  <option value="30d">Last 30 Days</option>
+                  <option value="all">All Time</option>
+                </select>
+                <select id="typeFilter">
+                  <option value="all">All Trades</option>
+                  <option value="swaps">Swaps Only</option>
+                  <option value="limits">Limit Orders</option>
+                  <option value="dca">DCA Orders</option>
+                </select>
+              </div>
+              <div id="tradingHistory">
+                <div class="trade-entry advanced">
+                  <div class="trade-info">
+                    <div class="trade-pair">SOL → USDC</div>
+                    <div class="trade-type">Instant Swap</div>
+                  </div>
+                  <div class="trade-amounts">
+                    <div class="trade-amount">1.5 SOL</div>
+                    <div class="trade-value">$150.75</div>
+                  </div>
+                  <div class="trade-meta">
+                    <div class="trade-pnl positive">+$2.50</div>
+                    <div class="trade-time">2 mins ago</div>
+                  </div>
+                </div>
+                <div class="trade-entry advanced">
+                  <div class="trade-info">
+                    <div class="trade-pair">USDC → RAY</div>
+                    <div class="trade-type">Limit Order</div>
+                  </div>
+                  <div class="trade-amounts">
+                    <div class="trade-amount">50 USDC</div>
+                    <div class="trade-value">125 RAY</div>
+                  </div>
+                  <div class="trade-meta">
+                    <div class="trade-pnl negative">-$1.20</div>
+                    <div class="trade-time">15 mins ago</div>
+                  </div>
+                </div>
+              </div>
+              <button class="admin-btn" id="exportTrades">Export CSV</button>
             </div>
           </div>
         </div>
@@ -2180,20 +2981,128 @@
       <!-- Admin Interface -->
       <div class="admin-interface" id="adminInterface">
         <div class="sidebar-card">
-          <h3>⚙️ Admin Dashboard</h3>
+          <h3>⚙️ Enhanced Admin Dashboard</h3>
+          
+          <!-- Real-time Analytics -->
           <div class="admin-controls">
             <div class="admin-card">
-              <h4>System Status</h4>
-              <div id="systemStatus">🟢 Online</div>
-              <button class="admin-btn" id="refreshStatus">Refresh</button>
+              <h4>📊 Live Analytics</h4>
+              <div class="analytics-grid">
+                <div class="analytics-item">
+                  <div class="analytics-value" id="totalUsers">1,247</div>
+                  <div class="analytics-label">Total Users</div>
+                  <div class="analytics-change positive">+12 today</div>
+                </div>
+                <div class="analytics-item">
+                  <div class="analytics-value" id="totalVolume">$847K</div>
+                  <div class="analytics-label">24h Volume</div>
+                  <div class="analytics-change positive">+15.3%</div>
+                </div>
+                <div class="analytics-item">
+                  <div class="analytics-value" id="totalTrades">5,239</div>
+                  <div class="analytics-label">Total Trades</div>
+                  <div class="analytics-change positive">+89 today</div>
+                </div>
+                <div class="analytics-item">
+                  <div class="analytics-value" id="avgTradeSize">$162</div>
+                  <div class="analytics-label">Avg Trade</div>
+                  <div class="analytics-change negative">-2.1%</div>
+                </div>
+              </div>
             </div>
+            
+            <!-- Seasonal Events Management -->
             <div class="admin-card">
-              <h4>Analytics</h4>
-              <button class="admin-btn" id="exportData">Export Data</button>
+              <h4>🎃 Seasonal Events</h4>
+              <div class="events-management">
+                <div class="current-event">
+                  <div class="event-header">
+                    <span class="event-name">Halloween Trading Frenzy</span>
+                    <span class="event-status active">ACTIVE</span>
+                  </div>
+                  <div class="event-details">
+                    <div class="event-progress">
+                      <div class="progress-bar">
+                        <div class="progress-fill" style="width: 65%"></div>
+                      </div>
+                      <span class="progress-text">65% Complete</span>
+                    </div>
+                    <div class="event-rewards">
+                      <span>Bonus XP: 2x</span>
+                      <span>Special NFT: 🎃</span>
+                    </div>
+                  </div>
+                  <div class="event-actions">
+                    <button class="admin-btn small" id="editEvent">Edit</button>
+                    <button class="admin-btn small danger" id="endEvent">End</button>
+                  </div>
+                </div>
+                
+                <div class="event-creator">
+                  <h5>Create New Event</h5>
+                  <input type="text" placeholder="Event Name" id="eventName" />
+                  <select id="eventType">
+                    <option value="xp_boost">XP Boost</option>
+                    <option value="trading_contest">Trading Contest</option>
+                    <option value="special_nft">Special NFT Drop</option>
+                    <option value="fee_reduction">Fee Reduction</option>
+                  </select>
+                  <input type="number" placeholder="Duration (hours)" id="eventDuration" />
+                  <button class="admin-btn" id="createEvent">Create Event</button>
+                </div>
+              </div>
             </div>
+            
+            <!-- Advanced System Controls -->
             <div class="admin-card">
-              <h4>Maintenance</h4>
-              <button class="admin-btn danger" id="maintenanceMode">Maintenance Mode</button>
+              <h4>🔧 System Controls</h4>
+              <div class="system-controls">
+                <div class="control-group">
+                  <h5>Server Status</h5>
+                  <div class="status-display">
+                    <span class="status-indicator online" id="serverStatus"></span>
+                    <span id="systemStatus">🟢 Online</span>
+                    <span class="uptime" id="uptime">99.8% uptime</span>
+                  </div>
+                  <button class="admin-btn" id="refreshStatus">Refresh Status</button>
+                </div>
+                
+                <div class="control-group">
+                  <h5>Feature Toggles</h5>
+                  <div class="feature-toggles">
+                    <label class="toggle-switch">
+                      <input type="checkbox" id="limitOrdersToggle" checked />
+                      <span class="toggle-slider"></span>
+                      <span class="toggle-label">Limit Orders</span>
+                    </label>
+                    <label class="toggle-switch">
+                      <input type="checkbox" id="dcaToggle" checked />
+                      <span class="toggle-slider"></span>
+                      <span class="toggle-label">DCA Trading</span>
+                    </label>
+                    <label class="toggle-switch">
+                      <input type="checkbox" id="socialFeedToggle" checked />
+                      <span class="toggle-slider"></span>
+                      <span class="toggle-label">Social Feed</span>
+                    </label>
+                  </div>
+                </div>
+                
+                <div class="control-group">
+                  <h5>Data Management</h5>
+                  <div class="data-controls">
+                    <button class="admin-btn" id="exportData">📊 Export Analytics</button>
+                    <button class="admin-btn" id="exportUsers">👥 Export Users</button>
+                    <button class="admin-btn" id="backupData">💾 Backup Data</button>
+                  </div>
+                </div>
+                
+                <div class="control-group danger-zone">
+                  <h5>⚠️ Danger Zone</h5>
+                  <button class="admin-btn danger" id="maintenanceMode">🚧 Maintenance Mode</button>
+                  <button class="admin-btn danger" id="emergencyStop">🛑 Emergency Stop</button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -2304,6 +3213,78 @@
                   <div class="feed-text">New achievement unlocked!</div>
                   <div class="feed-time">10 mins ago</div>
                 </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Cult Wars - Competitive Feature -->
+          <div class="admin-card">
+            <h4>⚔️ Cult Wars</h4>
+            <div class="cult-wars">
+              <div class="current-battle">
+                <div class="battle-header">
+                  <span class="battle-title">Weekly Trading Battle</span>
+                  <span class="battle-timer" id="battleTimer">2d 14h left</span>
+                </div>
+                <div class="battle-teams">
+                  <div class="team moon-cult">
+                    <div class="team-name">🌙 Moon Cult</div>
+                    <div class="team-progress">
+                      <div class="progress-bar team-bar">
+                        <div class="progress-fill moon" style="width: 65%"></div>
+                      </div>
+                      <span class="team-score">$2.4M Volume</span>
+                    </div>
+                    <div class="team-members">847 members</div>
+                  </div>
+                  <div class="vs-divider">VS</div>
+                  <div class="team degen-army">
+                    <div class="team-name">🦍 Degen Army</div>
+                    <div class="team-progress">
+                      <div class="progress-bar team-bar">
+                        <div class="progress-fill degen" style="width: 58%"></div>
+                      </div>
+                      <span class="team-score">$2.1M Volume</span>
+                    </div>
+                    <div class="team-members">723 members</div>
+                  </div>
+                </div>
+                <div class="battle-rewards">
+                  <h5>🏆 Battle Rewards</h5>
+                  <div class="rewards-grid">
+                    <div class="reward-item">
+                      <span class="reward-icon">👑</span>
+                      <span class="reward-text">Exclusive Badge</span>
+                    </div>
+                    <div class="reward-item">
+                      <span class="reward-icon">💎</span>
+                      <span class="reward-text">2x XP Weekend</span>
+                    </div>
+                    <div class="reward-item">
+                      <span class="reward-icon">🎁</span>
+                      <span class="reward-text">Mystery NFT</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="your-contribution">
+                <h5>Your Contribution</h5>
+                <div class="contribution-stats">
+                  <div class="contrib-stat">
+                    <span class="contrib-label">Team:</span>
+                    <span class="contrib-value">🌙 Moon Cult</span>
+                  </div>
+                  <div class="contrib-stat">
+                    <span class="contrib-label">Volume:</span>
+                    <span class="contrib-value" id="userBattleVolume">$0</span>
+                  </div>
+                  <div class="contrib-stat">
+                    <span class="contrib-label">Rank:</span>
+                    <span class="contrib-value" id="userBattleRank">#--</span>
+                  </div>
+                </div>
+                <button class="admin-btn cult-btn" id="switchTeam">Switch Team</button>
               </div>
             </div>
           </div>
@@ -3555,6 +4536,228 @@
         showNotification('Proposal created successfully! 🏛️ (+50 XP)');
       }
 
+      // Advanced Trading Features
+      function switchTradingMode(mode) {
+        // Hide all panels
+        document.getElementById('limitPanel').style.display = 'none';
+        document.getElementById('dcaPanel').style.display = 'none';
+        
+        // Remove active class from all tabs
+        document.querySelectorAll('.mode-tab').forEach(tab => {
+          tab.classList.remove('active');
+        });
+        
+        // Show selected panel and activate tab
+        if (mode === 'limit') {
+          document.getElementById('limitPanel').style.display = 'block';
+          updateSwapButtonText('Place Limit Order');
+        } else if (mode === 'dca') {
+          document.getElementById('dcaPanel').style.display = 'block';
+          updateDCAPreview();
+          updateSwapButtonText('Start DCA');
+        } else {
+          updateSwapButtonText('Swap');
+        }
+        
+        // Activate clicked tab
+        document.querySelector(`[data-mode="${mode}"]`).classList.add('active');
+        
+        addXP(5); // XP for exploring features
+      }
+      
+      function updateSwapButtonText(text) {
+        const swapButton = document.getElementById('swapButton');
+        if (swapButton && !swapButton.disabled) {
+          swapButton.textContent = text;
+        }
+      }
+      
+      function updateDCAPreview() {
+        const frequency = document.getElementById('dcaFrequency').value;
+        const duration = document.getElementById('dcaDuration').value;
+        const amount = parseFloat(document.getElementById('fromAmount').value) || 0;
+        
+        let purchases = 0;
+        switch(frequency) {
+          case 'daily':
+            purchases = duration === '1w' ? 7 : duration === '1m' ? 30 : duration === '3m' ? 90 : 180;
+            break;
+          case 'weekly':
+            purchases = duration === '1w' ? 1 : duration === '1m' ? 4 : duration === '3m' ? 12 : 24;
+            break;
+          case 'monthly':
+            purchases = duration === '1w' ? 0.25 : duration === '1m' ? 1 : duration === '3m' ? 3 : 6;
+            break;
+        }
+        
+        const amountPerPurchase = purchases > 0 ? (amount / purchases).toFixed(4) : 0;
+        
+        document.getElementById('dcaTotalPurchases').textContent = Math.floor(purchases);
+        document.getElementById('dcaAmountPerPurchase').textContent = `${amountPerPurchase} SOL`;
+      }
+      
+      // Portfolio Analytics Functions
+      function exportTradingHistory() {
+        const trades = [
+          ['Date', 'Pair', 'Type', 'Amount', 'Value', 'PnL'],
+          ['2025-07-10 14:30', 'SOL → USDC', 'Instant Swap', '1.5 SOL', '$150.75', '+$2.50'],
+          ['2025-07-10 14:15', 'USDC → RAY', 'Limit Order', '50 USDC', '125 RAY', '-$1.20'],
+          ['2025-07-10 13:45', 'RAY → SOL', 'DCA', '100 RAY', '0.8 SOL', '+$0.85']
+        ];
+        
+        const csvContent = trades.map(row => row.join(',')).join('\n');
+        const blob = new Blob([csvContent], { type: 'text/csv' });
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'nocturne_trading_history.csv';
+        a.click();
+        window.URL.revokeObjectURL(url);
+        
+        addXP(20);
+        showNotification('Trading history exported! 📊 (+20 XP)');
+      }
+      
+      // Cult Wars Functions
+      function switchCultTeam() {
+        const currentTeam = localStorage.getItem('nocturne-cult-team') || 'moon-cult';
+        const newTeam = currentTeam === 'moon-cult' ? 'degen-army' : 'moon-cult';
+        
+        localStorage.setItem('nocturne-cult-team', newTeam);
+        
+        const teamName = newTeam === 'moon-cult' ? '🌙 Moon Cult' : '🦍 Degen Army';
+        showNotification(`Switched to ${teamName}! ⚔️ (+30 XP)`);
+        
+        addXP(30);
+        updateCultWarsDisplay();
+      }
+      
+      function updateCultWarsDisplay() {
+        const currentTeam = localStorage.getItem('nocturne-cult-team') || 'moon-cult';
+        const teamDisplay = document.querySelector('.contrib-value');
+        if (teamDisplay) {
+          teamDisplay.textContent = currentTeam === 'moon-cult' ? '🌙 Moon Cult' : '🦍 Degen Army';
+        }
+        
+        // Update battle timer
+        const timer = document.getElementById('battleTimer');
+        if (timer) {
+          updateBattleTimer();
+        }
+      }
+      
+      function updateBattleTimer() {
+        const endDate = new Date();
+        endDate.setDate(endDate.getDate() + 2);
+        endDate.setHours(endDate.getHours() + 14);
+        
+        const now = new Date();
+        const timeLeft = endDate - now;
+        
+        const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        
+        const timer = document.getElementById('battleTimer');
+        if (timer) {
+          timer.textContent = `${days}d ${hours}h left`;
+        }
+      }
+      
+      // Seasonal Events Functions
+      function createSeasonalEvent() {
+        const name = document.getElementById('eventName').value;
+        const type = document.getElementById('eventType').value;
+        const duration = document.getElementById('eventDuration').value;
+        
+        if (!name || !duration) {
+          showNotification('Please fill in all event details! 📋');
+          return;
+        }
+        
+        if (currentXP < 500) {
+          showNotification('You need 500 XP to create seasonal events! 📈');
+          return;
+        }
+        
+        const event = {
+          id: Date.now(),
+          name,
+          type,
+          duration: parseInt(duration),
+          created: new Date().toISOString(),
+          active: true
+        };
+        
+        const events = JSON.parse(localStorage.getItem('nocturne-seasonal-events') || '[]');
+        events.push(event);
+        localStorage.setItem('nocturne-seasonal-events', JSON.stringify(events));
+        
+        // Clear form
+        document.getElementById('eventName').value = '';
+        document.getElementById('eventDuration').value = '';
+        
+        addXP(100);
+        showNotification(`Seasonal event "${name}" created! 🎉 (+100 XP)`);
+      }
+      
+      // Advanced Analytics Functions
+      function updateAdvancedAnalytics() {
+        // Update portfolio analytics
+        const trades = parseInt(localStorage.getItem('nocturne-trades') || '0');
+        const volume = parseFloat(localStorage.getItem('nocturne-volume') || '0');
+        
+        const totalReturn = Math.floor(Math.random() * 1000) + 500; // Mock data
+        const winRate = Math.floor(Math.random() * 40) + 60; // 60-100%
+        const avgTradeSize = volume > 0 ? Math.floor(volume / trades) : 0;
+        const bestTrade = Math.floor(Math.random() * 200) + 50;
+        
+        const totalReturnEl = document.getElementById('totalReturn');
+        const winRateEl = document.getElementById('winRate');
+        const avgTradeSizeEl = document.getElementById('avgTradeSize');
+        const bestTradeEl = document.getElementById('bestTrade');
+        
+        if (totalReturnEl) totalReturnEl.textContent = `+$${totalReturn}`;
+        if (winRateEl) winRateEl.textContent = `${winRate}%`;
+        if (avgTradeSizeEl) avgTradeSizeEl.textContent = `$${avgTradeSize}`;
+        if (bestTradeEl) bestTradeEl.textContent = `+$${bestTrade}`;
+        
+        // Update cult wars user stats
+        const userVolume = Math.floor(Math.random() * 5000);
+        const userRank = Math.floor(Math.random() * 100) + 1;
+        
+        const volumeEl = document.getElementById('userBattleVolume');
+        const rankEl = document.getElementById('userBattleRank');
+        
+        if (volumeEl) volumeEl.textContent = `$${userVolume}`;
+        if (rankEl) rankEl.textContent = `#${userRank}`;
+      }
+      
+      // Enhanced initialization
+      function initializeAdvancedFeatures() {
+        // Initialize trading mode listeners
+        const dcaFrequency = document.getElementById('dcaFrequency');
+        const dcaDuration = document.getElementById('dcaDuration');
+        
+        if (dcaFrequency && dcaDuration) {
+          dcaFrequency.addEventListener('change', updateDCAPreview);
+          dcaDuration.addEventListener('change', updateDCAPreview);
+        }
+        
+        // Initialize cult wars
+        updateCultWarsDisplay();
+        
+        // Update analytics
+        updateAdvancedAnalytics();
+        
+        // Start battle timer updates
+        setInterval(updateBattleTimer, 60000); // Update every minute
+        
+        // Periodic analytics updates
+        setInterval(updateAdvancedAnalytics, 30000); // Update every 30 seconds
+        
+        console.log('✨ Advanced features initialized');
+      }
+
       // Initialize Gaming Features
       function initializeGamingFeatures() {
         // Load saved theme
@@ -3612,6 +4815,30 @@
           createProposalBtn.addEventListener('click', createProposal);
         }
         
+        // Advanced Trading Features listeners
+        document.querySelectorAll('.mode-tab').forEach(tab => {
+          tab.addEventListener('click', (e) => {
+            switchTradingMode(e.target.dataset.mode);
+          });
+        });
+        
+        // Advanced features listeners
+        const exportTradesBtn = document.getElementById('exportTrades');
+        if (exportTradesBtn) {
+          exportTradesBtn.addEventListener('click', exportTradingHistory);
+        }
+        
+        const switchTeamBtn = document.getElementById('switchTeam');
+        if (switchTeamBtn) {
+          switchTeamBtn.addEventListener('click', switchCultTeam);
+        }
+        
+        // Seasonal events listeners
+        const createEventBtn = document.getElementById('createEvent');
+        if (createEventBtn) {
+          createEventBtn.addEventListener('click', createSeasonalEvent);
+        }
+        
         // Add XP on interactions
         document.addEventListener('click', (e) => {
           if (e.target.classList.contains('glow-btn') || 
@@ -3636,12 +4863,14 @@
           setTimeout(() => {
             initializeApp();
             initializeGamingFeatures();
+            initializeAdvancedFeatures();
           }, 2000); // Show loading for 2 seconds
         });
       } else {
         setTimeout(() => {
           initializeApp();
           initializeGamingFeatures();
+          initializeAdvancedFeatures();
         }, 2000);
       }
       
