@@ -398,15 +398,38 @@
   color: var(--theme-accent);
 }
 
-/* Mobile Responsive */
+/* Mobile Responsive with Performance Optimizations */
 @media (max-width: 768px) {
   .enhanced-theme-modal {
     width: 95vw;
     max-height: 95vh;
+    /* Reduce heavy effects for mobile performance */
+    backdrop-filter: blur(5px);
+    /* Disable animations on mobile for better performance */
+    animation: none;
+  }
+  
+  .enhanced-theme-modal::before,
+  .enhanced-theme-modal::after {
+    /* Disable decorative animations on mobile */
+    animation: none;
   }
 
   .theme-content {
     padding: 16px;
+    /* Optimize scrolling for mobile */
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+  }
+
+  /* Reduce animations for mobile performance */
+  .enhanced-theme-modal::before,
+  .enhanced-theme-modal::after {
+    animation: none;
+  }
+
+  .theme-preview::before {
+    animation-duration: 6s; /* Slower animation for mobile */
   }
 
   .theme-grid {
@@ -415,11 +438,19 @@
   }
 
   .theme-card {
-    padding: 12px;
+    padding: 16px;
+    /* Increase touch target size for mobile */
+    min-height: 140px;
   }
 
   .theme-preview {
-    height: 60px;
+    height: 70px;
+    /* Reduce complex animations on mobile */
+  }
+  
+  .theme-preview::before {
+    /* Disable shimmer effect on mobile for performance */
+    animation: none;
   }
 
   .theme-rune {
@@ -438,8 +469,15 @@
     font-size: 11px;
   }
 
-  .effects-controls {
-    gap: 12px;
+  .control-checkbox {
+    width: 22px;
+    height: 22px;
+    /* Larger touch target for mobile */
+  }
+  
+  .control-label {
+    padding: 8px 0;
+    /* More touch-friendly spacing */
   }
 
   .modal-header {
@@ -448,5 +486,72 @@
 
   .modal-header h2 {
     font-size: 20px;
+  }
+}
+
+/* Mobile Chrome Desktop Mode Support */
+@media (max-width: 1024px) and (pointer: coarse) {
+  .theme-card {
+    /* Larger touch targets for mobile Chrome desktop mode */
+    min-height: 200px;
+    padding: 20px;
+  }
+  
+  .control-checkbox {
+    width: 24px;
+    height: 24px;
+    /* Better visibility for touch screens */
+  }
+  
+  .effect-tag {
+    padding: 8px 12px;
+    font-size: 12px;
+    /* Touch-friendly sizes */
+  }
+}
+
+/* Mobile Chrome Desktop Mode Optimizations */
+@media (max-width: 1024px) and (hover: none) {
+  /* Touch device optimizations regardless of screen size */
+  .theme-card:hover {
+    /* Disable hover effects on touch devices */
+    transform: none;
+    background: rgba(255, 255, 255, 0.05);
+  }
+  
+  .close-btn:hover {
+    /* Ensure close button works on touch */
+    transform: scale(1.05);
+  }
+}
+
+/* Extra small mobile devices */
+@media (max-width: 480px) {
+  .enhanced-theme-modal {
+    width: 98vw;
+    border-radius: 12px;
+    /* Further reduce effects for very small screens */
+  }
+  
+  .modal-header {
+    padding: 12px 16px;
+  }
+  
+  .modal-header h2 {
+    font-size: 18px;
+  }
+  
+  .theme-content {
+    padding: 12px;
+  }
+  
+  .theme-grid {
+    gap: 12px;
+  }
+  
+  .close-btn {
+    width: 32px;
+    height: 32px;
+    font-size: 16px;
   }
 }
