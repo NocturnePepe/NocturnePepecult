@@ -712,24 +712,47 @@
         margin-bottom: 30px;
       }
       
-      /* Enhanced Swap Container */
+      /* Enhanced Swap Container with 175% Parity Gaming Effects */
       .swap-container {
         background: 
           linear-gradient(145deg, rgba(0, 0, 0, 0.95), rgba(15, 15, 15, 0.9)),
-          linear-gradient(145deg, rgba(75, 0, 130, 0.12), rgba(139, 0, 139, 0.08));
-        border: 2px solid rgba(75, 0, 130, 0.4);
-        border-radius: 30px;
-        padding: 40px;
+          radial-gradient(circle at 20% 80%, rgba(75, 0, 130, 0.25) 0%, transparent 50%),
+          radial-gradient(circle at 80% 20%, rgba(139, 0, 139, 0.15) 0%, transparent 50%),
+          radial-gradient(circle at 40% 40%, rgba(138, 43, 226, 0.1) 0%, transparent 60%);
+        border: 3px solid;
+        border-image: linear-gradient(45deg, rgba(75, 0, 130, 0.8), rgba(139, 0, 139, 0.6), rgba(147, 112, 219, 0.4), rgba(75, 0, 130, 0.8)) 1;
+        border-radius: 35px;
+        padding: 45px;
         box-shadow: 
-          0 30px 60px rgba(0, 0, 0, 0.6),
-          0 0 40px rgba(75, 0, 130, 0.2),
-          0 0 80px rgba(139, 0, 139, 0.1),
-          inset 0 1px 0 rgba(255, 255, 255, 0.08),
-          inset 0 -1px 0 rgba(0, 0, 0, 0.3);
-        backdrop-filter: blur(25px);
+          0 40px 80px rgba(0, 0, 0, 0.7),
+          0 0 60px rgba(75, 0, 130, 0.4),
+          0 0 120px rgba(139, 0, 139, 0.2),
+          0 0 200px rgba(138, 43, 226, 0.1),
+          inset 0 2px 0 rgba(255, 255, 255, 0.12),
+          inset 0 0 40px rgba(75, 0, 130, 0.08);
+        backdrop-filter: blur(30px);
         position: relative;
         overflow: hidden;
-        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        animation: containerBreathing 8s ease-in-out infinite;
+      }
+
+      @keyframes containerBreathing {
+        0%, 100% { 
+          transform: scale(1);
+          box-shadow: 
+            0 40px 80px rgba(0, 0, 0, 0.7),
+            0 0 60px rgba(75, 0, 130, 0.4),
+            0 0 120px rgba(139, 0, 139, 0.2);
+        }
+        50% { 
+          transform: scale(1.005);
+          box-shadow: 
+            0 50px 100px rgba(0, 0, 0, 0.8),
+            0 0 80px rgba(75, 0, 130, 0.6),
+            0 0 160px rgba(139, 0, 139, 0.3),
+            0 0 240px rgba(138, 43, 226, 0.15);
+        }
       }
 
       .swap-container::before {
@@ -3298,10 +3321,387 @@
         font-weight: bold;
       }
       
-      .cult-btn {
-        background: linear-gradient(45deg, #ff1493, #8e44ad);
-        border: none;
-        color: white;
+      /* Epic Gaming-Tier Cult Wars Interface */
+      .cult-wars-interface {
+        background: 
+          linear-gradient(135deg, rgba(0, 0, 0, 0.98), rgba(10, 0, 15, 0.95)),
+          radial-gradient(circle at 30% 70%, rgba(139, 0, 139, 0.3) 0%, transparent 60%),
+          radial-gradient(circle at 70% 30%, rgba(75, 0, 130, 0.25) 0%, transparent 50%);
+        border: 3px solid;
+        border-image: linear-gradient(45deg, 
+          rgba(220, 20, 60, 0.8), 
+          rgba(255, 20, 147, 0.9), 
+          rgba(139, 0, 139, 0.7), 
+          rgba(75, 0, 130, 0.8)) 1;
+        border-radius: 25px;
+        padding: 35px;
+        margin-bottom: 30px;
+        position: relative;
+        overflow: hidden;
+        box-shadow: 
+          0 0 60px rgba(220, 20, 60, 0.4),
+          0 0 120px rgba(255, 20, 147, 0.3),
+          0 20px 40px rgba(0, 0, 0, 0.8),
+          inset 0 0 50px rgba(139, 0, 139, 0.1);
+        animation: cultWarsGlow 6s ease-in-out infinite;
+      }
+
+      @keyframes cultWarsGlow {
+        0%, 100% { 
+          box-shadow: 
+            0 0 60px rgba(220, 20, 60, 0.4),
+            0 0 120px rgba(255, 20, 147, 0.3),
+            0 20px 40px rgba(0, 0, 0, 0.8);
+        }
+        50% { 
+          box-shadow: 
+            0 0 80px rgba(220, 20, 60, 0.6),
+            0 0 160px rgba(255, 20, 147, 0.4),
+            0 0 200px rgba(139, 0, 139, 0.2),
+            0 25px 50px rgba(0, 0, 0, 0.9);
+        }
+      }
+
+      .cult-wars-interface::before {
+        content: '⚔️ ☾ ⚔️ ☽ ⚔️';
+        position: absolute;
+        top: -15px;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 1.5rem;
+        color: rgba(255, 20, 147, 0.8);
+        text-shadow: 0 0 20px rgba(255, 20, 147, 1);
+        animation: warRunes 8s ease-in-out infinite;
+      }
+
+      @keyframes warRunes {
+        0%, 100% { 
+          opacity: 0.6; 
+          transform: translateX(-50%) scale(1) rotate(0deg); 
+        }
+        50% { 
+          opacity: 1; 
+          transform: translateX(-50%) scale(1.1) rotate(5deg); 
+        }
+      }
+
+      .battle-arena {
+        display: grid;
+        grid-template-columns: 1fr 80px 1fr;
+        gap: 20px;
+        align-items: center;
+        margin-bottom: 25px;
+        padding: 20px;
+        background: 
+          linear-gradient(90deg, 
+            rgba(75, 0, 130, 0.2) 0%, 
+            rgba(139, 0, 139, 0.1) 50%, 
+            rgba(75, 0, 130, 0.2) 100%);
+        border-radius: 15px;
+        border: 2px solid rgba(255, 20, 147, 0.3);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .battle-arena::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, 
+          transparent, 
+          rgba(255, 20, 147, 0.15), 
+          transparent);
+        animation: battleSweep 4s linear infinite;
+      }
+
+      @keyframes battleSweep {
+        0% { left: -100%; }
+        100% { left: 100%; }
+      }
+
+      .cult-faction {
+        text-align: center;
+        padding: 20px;
+        background: 
+          linear-gradient(145deg, rgba(0, 0, 0, 0.9), rgba(15, 15, 15, 0.7)),
+          radial-gradient(circle, rgba(255, 20, 147, 0.1), transparent 70%);
+        border: 2px solid rgba(255, 20, 147, 0.4);
+        border-radius: 15px;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .cult-faction::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: linear-gradient(90deg, 
+          transparent, 
+          rgba(255, 20, 147, 0.8), 
+          transparent);
+        animation: factionPulse 3s ease-in-out infinite;
+      }
+
+      @keyframes factionPulse {
+        0%, 100% { opacity: 0.4; }
+        50% { opacity: 1; }
+      }
+
+      .cult-faction:hover {
+        transform: translateY(-5px) scale(1.02);
+        border-color: rgba(255, 20, 147, 0.8);
+        box-shadow: 
+          0 20px 40px rgba(0, 0, 0, 0.5),
+          0 0 40px rgba(255, 20, 147, 0.4),
+          0 0 80px rgba(139, 0, 139, 0.2);
+      }
+
+      .faction-icon {
+        font-size: 3rem;
+        margin-bottom: 10px;
+        display: block;
+        animation: iconFloat 4s ease-in-out infinite;
+        text-shadow: 0 0 20px rgba(255, 20, 147, 0.8);
+      }
+
+      @keyframes iconFloat {
+        0%, 100% { transform: translateY(0px); }
+        50% { transform: translateY(-8px); }
+      }
+
+      .faction-name {
+        font-size: 1.4rem;
+        font-weight: 700;
+        color: #fff;
+        margin-bottom: 10px;
+        text-shadow: 0 0 15px rgba(255, 20, 147, 0.6);
+      }
+
+      .faction-power {
+        font-size: 1.1rem;
+        color: #ff69b4;
+        margin-bottom: 15px;
+        font-weight: 600;
+      }
+
+      .battle-vs {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        font-size: 2.5rem;
+        color: rgba(255, 20, 147, 0.9);
+        text-shadow: 0 0 25px rgba(255, 20, 147, 1);
+        animation: battleVsGlow 3s ease-in-out infinite;
+        position: relative;
+      }
+
+      @keyframes battleVsGlow {
+        0%, 100% { 
+          transform: scale(1); 
+          text-shadow: 0 0 25px rgba(255, 20, 147, 1);
+        }
+        50% { 
+          transform: scale(1.1); 
+          text-shadow: 
+            0 0 35px rgba(255, 20, 147, 1.2),
+            0 0 50px rgba(139, 0, 139, 0.8);
+        }
+      }
+
+      .battle-vs::before {
+        content: '⚡';
+        position: absolute;
+        top: -20px;
+        animation: lightningStrike 2s ease-in-out infinite;
+        font-size: 1.5rem;
+      }
+
+      @keyframes lightningStrike {
+        0%, 100% { opacity: 0.3; transform: rotate(0deg); }
+        50% { opacity: 1; transform: rotate(15deg); }
+      }
+
+      .battle-progress {
+        margin-bottom: 25px;
+        padding: 20px;
+        background: rgba(0, 0, 0, 0.6);
+        border-radius: 12px;
+        border: 1px solid rgba(255, 20, 147, 0.3);
+      }
+
+      .progress-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 15px;
+      }
+
+      .battle-timer {
+        font-size: 1.2rem;
+        font-weight: 700;
+        color: #ff69b4;
+        text-shadow: 0 0 10px rgba(255, 20, 147, 0.8);
+      }
+
+      .battle-reward {
+        font-size: 1rem;
+        color: #ffd700;
+        text-shadow: 0 0 10px rgba(255, 215, 0, 0.8);
+      }
+
+      .war-progress-bar {
+        width: 100%;
+        height: 12px;
+        background: 
+          linear-gradient(90deg, 
+            rgba(75, 0, 130, 0.3), 
+            rgba(139, 0, 139, 0.2), 
+            rgba(75, 0, 130, 0.3));
+        border-radius: 6px;
+        overflow: hidden;
+        position: relative;
+        box-shadow: 
+          inset 0 2px 4px rgba(0, 0, 0, 0.5),
+          0 0 15px rgba(255, 20, 147, 0.3);
+      }
+
+      .war-progress-fill {
+        height: 100%;
+        background: 
+          linear-gradient(90deg, 
+            rgba(255, 20, 147, 0.9), 
+            rgba(255, 69, 180, 0.8), 
+            rgba(255, 20, 147, 0.9));
+        border-radius: 6px;
+        width: 0%;
+        transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        animation: progressGlow 3s ease-in-out infinite;
+      }
+
+      @keyframes progressGlow {
+        0%, 100% { 
+          box-shadow: 0 0 20px rgba(255, 20, 147, 0.6);
+        }
+        50% { 
+          box-shadow: 
+            0 0 30px rgba(255, 20, 147, 0.8),
+            0 0 50px rgba(139, 0, 139, 0.4);
+        }
+      }
+
+      .war-progress-fill::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 30px;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4));
+        border-radius: 0 6px 6px 0;
+        animation: progressShimmer 2s linear infinite;
+      }
+
+      @keyframes progressShimmer {
+        0% { opacity: 0; transform: translateX(-10px); }
+        50% { opacity: 1; transform: translateX(0); }
+        100% { opacity: 0; transform: translateX(10px); }
+      }
+
+      .faction-join-btn {
+        background: 
+          linear-gradient(145deg, rgba(255, 20, 147, 0.9), rgba(139, 0, 139, 0.7)),
+          linear-gradient(145deg, rgba(0, 0, 0, 0.95), rgba(20, 20, 20, 0.8));
+        color: #ffffff;
+        border: 2px solid rgba(255, 20, 147, 0.6);
+        border-radius: 12px;
+        padding: 12px 24px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        text-shadow: 0 0 15px rgba(0, 0, 0, 0.8);
+        box-shadow: 
+          0 6px 20px rgba(0, 0, 0, 0.4),
+          0 0 25px rgba(255, 20, 147, 0.3);
+        position: relative;
+        overflow: hidden;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+
+      .faction-join-btn::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, 
+          transparent, 
+          rgba(255, 255, 255, 0.2), 
+          transparent);
+        transition: left 0.6s ease;
+      }
+
+      .faction-join-btn:hover::before {
+        left: 100%;
+      }
+
+      .faction-join-btn:hover {
+        transform: translateY(-3px) scale(1.05);
+        border-color: rgba(255, 20, 147, 1);
+        box-shadow: 
+          0 12px 35px rgba(0, 0, 0, 0.5),
+          0 0 40px rgba(255, 20, 147, 0.6),
+          0 0 80px rgba(139, 0, 139, 0.3);
+        text-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
+      }
+
+      .war-stats {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+        gap: 15px;
+        margin-top: 20px;
+      }
+
+      .war-stat {
+        text-align: center;
+        padding: 15px;
+        background: 
+          linear-gradient(145deg, rgba(0, 0, 0, 0.8), rgba(15, 15, 15, 0.6)),
+          radial-gradient(circle, rgba(255, 20, 147, 0.1), transparent 70%);
+        border: 1px solid rgba(255, 20, 147, 0.3);
+        border-radius: 10px;
+        transition: all 0.3s ease;
+      }
+
+      .war-stat:hover {
+        transform: translateY(-3px);
+        border-color: rgba(255, 20, 147, 0.6);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+      }
+
+      .war-stat-value {
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: #ff69b4;
+        margin-bottom: 5px;
+        text-shadow: 0 0 15px rgba(255, 20, 147, 0.8);
+      }
+
+      .war-stat-label {
+        font-size: 0.9rem;
+        color: #ccc;
+        text-transform: uppercase;
+        letter-spacing: 1px;
       }
     </style>
   </head>
@@ -3724,7 +4124,231 @@
         </div>
       </div>
       
-      <!-- Admin Interface -->
+      <!-- Social Interface with Epic Cult Wars -->
+      <div class="admin-interface" id="socialInterface">
+        <!-- Epic Cult Wars Section -->
+        <div class="cult-wars-interface">
+          <h3 style="text-align: center; font-size: 2rem; color: #ff1493; text-shadow: 0 0 20px rgba(255, 20, 147, 0.8); margin-bottom: 25px;">
+            ⚔️ CULT WARS: ETERNAL BATTLE ⚔️
+          </h3>
+          
+          <div class="battle-arena">
+            <div class="cult-faction">
+              <div class="faction-icon">🌙</div>
+              <div class="faction-name">Shadow Cult</div>
+              <div class="faction-power">Power: 12,847</div>
+              <div class="faction-members">Members: 1,247</div>
+              <button class="faction-join-btn">JOIN SHADOWS</button>
+            </div>
+            
+            <div class="battle-vs">
+              ⚔️
+              <div style="font-size: 0.8rem; margin: 5px 0;">VS</div>
+              💀
+            </div>
+            
+            <div class="cult-faction">
+              <div class="faction-icon">⚡</div>
+              <div class="faction-name">Lightning Cult</div>
+              <div class="faction-power">Power: 11,592</div>
+              <div class="faction-members">Members: 1,156</div>
+              <button class="faction-join-btn">JOIN LIGHTNING</button>
+            </div>
+          </div>
+          
+          <div class="battle-progress">
+            <div class="progress-header">
+              <div class="battle-timer">⏰ Battle ends in: 2d 14h 32m</div>
+              <div class="battle-reward">🏆 Reward Pool: 50,000 NOCTURNE</div>
+            </div>
+            <div class="war-progress-bar">
+              <div class="war-progress-fill" style="width: 52.3%"></div>
+            </div>
+            <div style="display: flex; justify-content: space-between; margin-top: 10px; font-size: 0.9rem; color: #ccc;">
+              <span>🌙 Shadow: 52.3%</span>
+              <span>⚡ Lightning: 47.7%</span>
+            </div>
+          </div>
+          
+          <div class="war-stats">
+            <div class="war-stat">
+              <div class="war-stat-value">2,403</div>
+              <div class="war-stat-label">Total Battles</div>
+            </div>
+            <div class="war-stat">
+              <div class="war-stat-value">847K</div>
+              <div class="war-stat-label">Volume Traded</div>
+            </div>
+            <div class="war-stat">
+              <div class="war-stat-value">156</div>
+              <div class="war-stat-label">Active Warriors</div>
+            </div>
+            <div class="war-stat">
+              <div class="war-stat-value">75%</div>
+              <div class="war-stat-label">Battle Intensity</div>
+            </div>
+          </div>
+          
+          <!-- Your War Contribution -->
+          <div class="your-contribution">
+            <h5>⚔️ Your War Contribution</h5>
+            <div class="contribution-stats">
+              <div class="contrib-stat">
+                <span class="contrib-label">Faction:</span>
+                <span class="contrib-value">🌙 Shadow Cult</span>
+              </div>
+              <div class="contrib-stat">
+                <span class="contrib-label">War Rank:</span>
+                <span class="contrib-value">Shadow Warrior</span>
+              </div>
+              <div class="contrib-stat">
+                <span class="contrib-label">Battles Won:</span>
+                <span class="contrib-value">23/35 (65.7%)</span>
+              </div>
+              <div class="contrib-stat">
+                <span class="contrib-label">Volume Contributed:</span>
+                <span class="contrib-value">$12,847</span>
+              </div>
+              <div class="contrib-stat">
+                <span class="contrib-label">War Points:</span>
+                <span class="contrib-value">2,456 WP</span>
+              </div>
+            </div>
+            
+            <div class="rewards-grid">
+              <div class="reward-item">
+                <div class="reward-icon">🏆</div>
+                <div class="reward-text">Victory Bonus: 500 NOCTURNE</div>
+              </div>
+              <div class="reward-item">
+                <div class="reward-icon">⭐</div>
+                <div class="reward-text">Participation: 50 XP</div>
+              </div>
+              <div class="reward-item">
+                <div class="reward-icon">🎖️</div>
+                <div class="reward-text">War Badge NFT</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="sidebar-card">
+          <h3>👥 Social Hub</h3>
+          
+          <!-- User Profile -->
+          <div class="admin-card">
+            <h4>👤 Your Profile</h4>
+            <div class="profile-info">
+              <div class="profile-avatar">
+                <div class="avatar-circle">
+                  <span id="userInitial">A</span>
+                </div>
+                <div class="rank-badge" id="userRank">L5</div>
+              </div>
+              <div class="profile-stats">
+                <div class="stat-item">
+                  <span class="stat-label">Level:</span>
+                  <span class="stat-value">5</span>
+                </div>
+                <div class="stat-item">
+                  <span class="stat-label">XP:</span>
+                  <span class="stat-value">2,456</span>
+                </div>
+                <div class="stat-item">
+                  <span class="stat-label">Total Trades:</span>
+                  <span class="stat-value">89</span>
+                </div>
+                <div class="stat-item">
+                  <span class="stat-label">Win Rate:</span>
+                  <span class="stat-value">72%</span>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Referral System -->
+            <div class="referral-section">
+              <h5>🔗 Referral Program</h5>
+              <div class="referral-stats">
+                <div class="stat-row">
+                  <span>Referrals:</span>
+                  <span>12 users</span>
+                </div>
+                <div class="stat-row">
+                  <span>Earned:</span>
+                  <span>240 NOCTURNE</span>
+                </div>
+              </div>
+              <div class="referral-link">
+                <input type="text" value="https://nocturne.swap/ref/ABC123" readonly />
+                <button class="admin-btn small">Copy</button>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Leaderboard -->
+          <div class="admin-card">
+            <h4>🏆 Leaderboard</h4>
+            <div class="leaderboard">
+              <div class="leaderboard-entry top-rank">
+                <span class="rank">🥇</span>
+                <span class="username">ShadowTrader</span>
+                <span class="score">15.2K</span>
+              </div>
+              <div class="leaderboard-entry top-rank">
+                <span class="rank">🥈</span>
+                <span class="username">LightningQueen</span>
+                <span class="score">12.8K</span>
+              </div>
+              <div class="leaderboard-entry top-rank">
+                <span class="rank">🥉</span>
+                <span class="username">VoidMaster</span>
+                <span class="score">11.1K</span>
+              </div>
+              <div class="leaderboard-entry">
+                <span class="rank">4</span>
+                <span class="username">CryptoNinja</span>
+                <span class="score">9.5K</span>
+              </div>
+              <div class="leaderboard-entry current-user">
+                <span class="rank">12</span>
+                <span class="username">You</span>
+                <span class="score">2.5K</span>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Social Feed -->
+          <div class="admin-card">
+            <h4>📢 Community Feed</h4>
+            <div class="social-feed">
+              <div class="feed-item">
+                <div class="feed-avatar">S</div>
+                <div class="feed-content">
+                  <div class="feed-user">ShadowTrader</div>
+                  <div class="feed-text">Just hit a massive 500 SOL trade! 🚀</div>
+                  <div class="feed-time">2 mins ago</div>
+                </div>
+              </div>
+              <div class="feed-item">
+                <div class="feed-avatar">L</div>
+                <div class="feed-content">
+                  <div class="feed-user">LightningQueen</div>
+                  <div class="feed-text">Our faction is crushing it! ⚡</div>
+                  <div class="feed-time">5 mins ago</div>
+                </div>
+              </div>
+              <div class="feed-item">
+                <div class="feed-avatar">V</div>
+                <div class="feed-content">
+                  <div class="feed-user">VoidMaster</div>
+                  <div class="feed-text">New limit order strategy working perfectly!</div>
+                  <div class="feed-time">12 mins ago</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
       <div class="admin-interface" id="adminInterface">
         <div class="sidebar-card">
           <h3>⚙️ Enhanced Admin Dashboard</h3>
@@ -4037,102 +4661,109 @@
         </div>
       </div>
       
-      <!-- DAO Governance Interface -->
-      <div class="dao-interface" id="daoInterface" style="display: none;">
+      <!-- DAO Governance Interface with Epic Visuals -->
+      <div class="admin-interface" id="daoInterface">
         <div class="sidebar-card">
-          <h3>🏛️ DAO Governance</h3>
+          <h3 style="text-align: center; font-size: 1.8rem; color: #ff1493; text-shadow: 0 0 15px rgba(255, 20, 147, 0.8); margin-bottom: 20px;">
+            🏛️ DAO GOVERNANCE CHAMBER 🏛️
+          </h3>
           
-          <!-- Voting Power -->
-          <div class="admin-card">
-            <h4>⚡ Your Voting Power</h4>
+          <!-- Voting Power with Epic Styling -->
+          <div class="admin-card" style="background: linear-gradient(145deg, rgba(0, 0, 0, 0.95), rgba(15, 15, 15, 0.9)); border: 2px solid rgba(255, 20, 147, 0.4); border-radius: 20px; padding: 25px;">
+            <h4 style="color: #ff69b4; text-shadow: 0 0 10px rgba(255, 20, 147, 0.6);">⚡ Your Voting Power</h4>
             <div class="voting-power">
-              <div class="power-circle">
-                <div class="power-value" id="votingPower">0</div>
-                <div class="power-label">Votes</div>
+              <div class="power-circle" style="background: conic-gradient(rgba(255, 20, 147, 0.8), rgba(139, 0, 139, 0.6), rgba(255, 20, 147, 0.8)); border: 3px solid rgba(255, 20, 147, 0.5); box-shadow: 0 0 30px rgba(255, 20, 147, 0.4);">
+                <div class="power-value" id="votingPower" style="font-size: 1.8rem; font-weight: 700; color: #fff; text-shadow: 0 0 10px rgba(255, 20, 147, 0.8);">2,456</div>
+                <div class="power-label" style="font-size: 0.8rem; color: #ff69b4;">VOTES</div>
               </div>
               <div class="power-breakdown">
-                <div class="power-source">
-                  <span>Token Holdings:</span>
-                  <span id="tokenVotes">0</span>
+                <div class="power-source" style="color: #e0e0e0; margin-bottom: 8px;">
+                  <span>🪙 Token Holdings:</span>
+                  <span id="tokenVotes" style="color: #ff69b4; font-weight: 600;">1,847</span>
                 </div>
-                <div class="power-source">
-                  <span>Cult Rank Bonus:</span>
-                  <span id="rankVotes">0</span>
+                <div class="power-source" style="color: #e0e0e0; margin-bottom: 8px;">
+                  <span>⭐ Cult Rank Bonus:</span>
+                  <span id="rankVotes" style="color: #ff69b4; font-weight: 600;">456</span>
                 </div>
-                <div class="power-source">
-                  <span>Activity Bonus:</span>
-                  <span id="activityVotes">0</span>
+                <div class="power-source" style="color: #e0e0e0; margin-bottom: 8px;">
+                  <span>🔥 Activity Bonus:</span>
+                  <span id="activityVotes" style="color: #ff69b4; font-weight: 600;">153</span>
                 </div>
               </div>
             </div>
           </div>
           
-          <!-- Active Proposals -->
-          <div class="admin-card">
-            <h4>📋 Active Proposals</h4>
+          <!-- Active Proposals with Gaming-Tier Visuals -->
+          <div class="admin-card" style="background: linear-gradient(145deg, rgba(0, 0, 0, 0.95), rgba(15, 15, 15, 0.9)); border: 2px solid rgba(255, 20, 147, 0.4); border-radius: 20px; padding: 25px;">
+            <h4 style="color: #ff69b4; text-shadow: 0 0 10px rgba(255, 20, 147, 0.6);">📋 Active Proposals</h4>
             <div class="proposals-list">
-              <div class="proposal-item">
+              <div class="proposal-item" style="background: rgba(255, 255, 255, 0.03); border: 2px solid rgba(255, 20, 147, 0.3); border-radius: 15px; padding: 20px; margin-bottom: 20px; transition: all 0.3s ease;">
                 <div class="proposal-header">
-                  <div class="proposal-title">Reduce Trading Fees</div>
-                  <div class="proposal-status active">Active</div>
+                  <div class="proposal-title" style="color: #fff; font-weight: 700; font-size: 1.1rem;">🎯 Reduce Trading Fees</div>
+                  <div class="proposal-status active" style="background: linear-gradient(45deg, #4caf50, #45a049); padding: 4px 12px; border-radius: 12px; font-size: 0.8rem; font-weight: 700;">ACTIVE</div>
                 </div>
-                <div class="proposal-description">Proposal to reduce trading fees from 0.3% to 0.25%</div>
+                <div class="proposal-description" style="color: #ccc; margin: 10px 0; font-size: 0.9rem;">Proposal to reduce trading fees from 0.3% to 0.25% for all swaps</div>
                 <div class="proposal-stats">
                   <div class="vote-progress">
-                    <div class="vote-bar">
-                      <div class="vote-fill yes" style="width: 65%"></div>
+                    <div class="vote-bar" style="background: rgba(255, 255, 255, 0.1); border-radius: 6px; overflow: hidden; margin-bottom: 8px;">
+                      <div class="vote-fill yes" style="background: linear-gradient(90deg, #4caf50, #66bb6a); height: 12px; width: 65%; border-radius: 6px; box-shadow: 0 0 15px rgba(76, 175, 80, 0.4);"></div>
                     </div>
-                    <div class="vote-counts">
-                      <span class="yes-votes">👍 65% (1,250 votes)</span>
-                      <span class="no-votes">👎 35% (675 votes)</span>
+                    <div class="vote-counts" style="display: flex; justify-content: space-between; font-size: 0.8rem;">
+                      <span class="yes-votes" style="color: #4caf50; font-weight: 600;">👍 65% (1,250 votes)</span>
+                      <span class="no-votes" style="color: #f44336; font-weight: 600;">👎 35% (675 votes)</span>
                     </div>
                   </div>
-                  <div class="proposal-time">2 days left</div>
+                  <div class="proposal-time" style="color: #ff69b4; font-size: 0.8rem; margin: 10px 0;">⏰ 2 days left</div>
                 </div>
-                <div class="proposal-actions">
-                  <button class="vote-btn yes" onclick="castVote('prop1', 'yes')">Vote Yes</button>
-                  <button class="vote-btn no" onclick="castVote('prop1', 'no')">Vote No</button>
+                <div class="proposal-actions" style="display: flex; gap: 10px;">
+                  <button class="vote-btn yes" style="background: linear-gradient(45deg, #4caf50, #45a049); color: white; border: none; padding: 8px 16px; border-radius: 8px; cursor: pointer; font-weight: 600; transition: all 0.3s ease;">Vote Yes</button>
+                  <button class="vote-btn no" style="background: linear-gradient(45deg, #f44336, #d32f2f); color: white; border: none; padding: 8px 16px; border-radius: 8px; cursor: pointer; font-weight: 600; transition: all 0.3s ease;">Vote No</button>
                 </div>
               </div>
               
-              <div class="proposal-item">
+              <div class="proposal-item" style="background: rgba(255, 255, 255, 0.03); border: 2px solid rgba(255, 20, 147, 0.3); border-radius: 15px; padding: 20px; margin-bottom: 20px; transition: all 0.3s ease;">
                 <div class="proposal-header">
-                  <div class="proposal-title">Add New Token Pairs</div>
-                  <div class="proposal-status active">Active</div>
+                  <div class="proposal-title" style="color: #fff; font-weight: 700; font-size: 1.1rem;">🚀 Add New Token Pairs</div>
+                  <div class="proposal-status active" style="background: linear-gradient(45deg, #4caf50, #45a049); padding: 4px 12px; border-radius: 12px; font-size: 0.8rem; font-weight: 700;">ACTIVE</div>
                 </div>
-                <div class="proposal-description">Add support for BONK, WIF, and PEPE trading pairs</div>
+                <div class="proposal-description" style="color: #ccc; margin: 10px 0; font-size: 0.9rem;">Add support for BONK, WIF, and PEPE trading pairs</div>
                 <div class="proposal-stats">
                   <div class="vote-progress">
-                    <div class="vote-bar">
-                      <div class="vote-fill yes" style="width: 78%"></div>
+                    <div class="vote-bar" style="background: rgba(255, 255, 255, 0.1); border-radius: 6px; overflow: hidden; margin-bottom: 8px;">
+                      <div class="vote-fill yes" style="background: linear-gradient(90deg, #4caf50, #66bb6a); height: 12px; width: 78%; border-radius: 6px; box-shadow: 0 0 15px rgba(76, 175, 80, 0.4);"></div>
                     </div>
-                    <div class="vote-counts">
-                      <span class="yes-votes">👍 78% (1,890 votes)</span>
-                      <span class="no-votes">👎 22% (532 votes)</span>
+                    <div class="vote-counts" style="display: flex; justify-content: space-between; font-size: 0.8rem;">
+                      <span class="yes-votes" style="color: #4caf50; font-weight: 600;">👍 78% (1,890 votes)</span>
+                      <span class="no-votes" style="color: #f44336; font-weight: 600;">👎 22% (532 votes)</span>
                     </div>
                   </div>
-                  <div class="proposal-time">5 days left</div>
+                  <div class="proposal-time" style="color: #ff69b4; font-size: 0.8rem; margin: 10px 0;">⏰ 5 days left</div>
                 </div>
-                <div class="proposal-actions">
-                  <button class="vote-btn yes" onclick="castVote('prop2', 'yes')">Vote Yes</button>
-                  <button class="vote-btn no" onclick="castVote('prop2', 'no')">Vote No</button>
+                <div class="proposal-actions" style="display: flex; gap: 10px;">
+                  <button class="vote-btn yes" style="background: linear-gradient(45deg, #4caf50, #45a049); color: white; border: none; padding: 8px 16px; border-radius: 8px; cursor: pointer; font-weight: 600; transition: all 0.3s ease;">Vote Yes</button>
+                  <button class="vote-btn no" style="background: linear-gradient(45deg, #f44336, #d32f2f); color: white; border: none; padding: 8px 16px; border-radius: 8px; cursor: pointer; font-weight: 600; transition: all 0.3s ease;">Vote No</button>
                 </div>
               </div>
             </div>
           </div>
           
-          <!-- Create Proposal -->
-          <div class="admin-card">
-            <h4>✍️ Create Proposal</h4>
+          <!-- Create Proposal with Epic Styling -->
+          <div class="admin-card" style="background: linear-gradient(145deg, rgba(0, 0, 0, 0.95), rgba(15, 15, 15, 0.9)); border: 2px solid rgba(255, 20, 147, 0.4); border-radius: 20px; padding: 25px;">
+            <h4 style="color: #ff69b4; text-shadow: 0 0 10px rgba(255, 20, 147, 0.6);">✍️ Create Proposal</h4>
             <div class="proposal-form">
-              <input type="text" placeholder="Proposal Title" id="proposalTitle" />
-              <textarea placeholder="Proposal Description" id="proposalDescription" rows="3"></textarea>
-              <button class="admin-btn" id="createProposal">Submit Proposal</button>
-              <div class="form-note">Requires 100 XP to create proposals</div>
+              <input type="text" placeholder="Proposal Title" id="proposalTitle" style="width: 100%; padding: 12px; margin-bottom: 15px; background: rgba(255, 255, 255, 0.1); border: 2px solid rgba(255, 20, 147, 0.3); border-radius: 10px; color: white; font-size: 1rem; transition: all 0.3s ease;" />
+              <textarea placeholder="Proposal Description" id="proposalDescription" rows="4" style="width: 100%; padding: 12px; margin-bottom: 15px; background: rgba(255, 255, 255, 0.1); border: 2px solid rgba(255, 20, 147, 0.3); border-radius: 10px; color: white; font-size: 1rem; resize: vertical; transition: all 0.3s ease;"></textarea>
+              <button class="admin-btn" id="createProposal" style="background: linear-gradient(145deg, rgba(255, 20, 147, 0.9), rgba(139, 0, 139, 0.7)); color: white; border: 2px solid rgba(255, 20, 147, 0.6); border-radius: 12px; padding: 12px 24px; font-weight: 700; cursor: pointer; transition: all 0.3s ease; text-transform: uppercase; letter-spacing: 1px;">Submit Proposal</button>
+              <div class="form-note" style="font-size: 0.8rem; color: #999; margin-top: 10px;">Requires 100 XP to create proposals</div>
             </div>
           </div>
         </div>
       </div>
+      
+      <!-- Enhanced Admin Interface -->
+      <div class="admin-interface" id="adminInterface">
+        <div class="sidebar-card">
+          <h3 style="text-align: center; font-size: 1.8rem; color: #ff1493; text-shadow: 0 0 15px rgba(255, 20, 147, 0.8); margin-bottom: 20px;">⚙️ ADMIN CONTROL CENTER ⚙️</h3>
     </div>
 
     <script>
