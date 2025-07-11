@@ -866,6 +866,341 @@
           transform: scale(1.2) rotate(45deg); 
         }
       }
+
+      /* 🌙 Enhanced Loading Runes Background */
+      .loading-runes {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        overflow: hidden;
+        z-index: 1;
+      }
+
+      .rune {
+        position: absolute;
+        font-size: 2rem;
+        color: rgba(255, 20, 147, 0.3);
+        text-shadow: 0 0 20px rgba(255, 20, 147, 0.6);
+        animation: runeFloat 15s linear infinite;
+        opacity: 0.7;
+      }
+
+      .rune:nth-child(1) {
+        top: 20%;
+        left: 10%;
+        animation-delay: 0s;
+        animation-duration: 12s;
+      }
+
+      .rune:nth-child(2) {
+        top: 60%;
+        left: 80%;
+        animation-delay: 2s;
+        animation-duration: 16s;
+      }
+
+      .rune:nth-child(3) {
+        top: 30%;
+        left: 70%;
+        animation-delay: 4s;
+        animation-duration: 14s;
+      }
+
+      .rune:nth-child(4) {
+        top: 80%;
+        left: 20%;
+        animation-delay: 6s;
+        animation-duration: 18s;
+      }
+
+      .rune:nth-child(5) {
+        top: 10%;
+        left: 50%;
+        animation-delay: 8s;
+        animation-duration: 13s;
+      }
+
+      .rune:nth-child(6) {
+        top: 70%;
+        left: 40%;
+        animation-delay: 10s;
+        animation-duration: 17s;
+      }
+
+      @keyframes runeFloat {
+        0% {
+          transform: translateY(100vh) rotate(0deg) scale(0.8);
+          opacity: 0;
+        }
+        10% {
+          opacity: 0.7;
+        }
+        90% {
+          opacity: 0.7;
+        }
+        100% {
+          transform: translateY(-100px) rotate(360deg) scale(1.2);
+          opacity: 0;
+        }
+      }
+
+      /* 🎮 Loading Content Container */
+      .loading-content {
+        position: relative;
+        z-index: 3;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 30px;
+      }
+
+      /* ⚡ Skeleton Loading Styles */
+      .loading-skeleton {
+        width: 100%;
+        max-width: 600px;
+        margin: 20px 0;
+        opacity: 0.6;
+        animation: skeletonFadeIn 2s ease-in-out infinite alternate;
+      }
+
+      .skeleton-animate {
+        background: linear-gradient(90deg,
+          rgba(255, 20, 147, 0.1) 25%,
+          rgba(139, 0, 139, 0.2) 50%,
+          rgba(255, 20, 147, 0.1) 75%);
+        background-size: 200% 100%;
+        animation: skeletonShimmer 2s ease-in-out infinite;
+        border-radius: 8px;
+      }
+
+      @keyframes skeletonShimmer {
+        0% { background-position: -200% 0; }
+        100% { background-position: 200% 0; }
+      }
+
+      @keyframes skeletonFadeIn {
+        0% { opacity: 0.4; }
+        100% { opacity: 0.8; }
+      }
+
+      /* Skeleton Header */
+      .skeleton-header {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        margin-bottom: 20px;
+      }
+
+      .skeleton-bar {
+        height: 20px;
+        border-radius: 10px;
+      }
+
+      .skeleton-bar.short {
+        width: 60%;
+      }
+
+      /* Skeleton Navigation */
+      .skeleton-nav {
+        display: flex;
+        gap: 15px;
+        justify-content: center;
+        margin-bottom: 25px;
+      }
+
+      .skeleton-pill {
+        width: 80px;
+        height: 35px;
+        border-radius: 18px;
+      }
+
+      /* Skeleton Content */
+      .skeleton-content {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: 20px;
+        width: 100%;
+      }
+
+      .skeleton-box {
+        height: 200px;
+        border-radius: 15px;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      .skeleton-circle {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        align-self: center;
+      }
+
+      .skeleton-lines {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        flex-grow: 1;
+      }
+
+      .skeleton-line {
+        height: 12px;
+        border-radius: 6px;
+      }
+
+      .skeleton-line.short {
+        width: 70%;
+      }
+
+      .skeleton-sidebar {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      .skeleton-card {
+        height: 80px;
+        border-radius: 12px;
+      }
+
+      /* Mobile Skeleton Optimization */
+      @media (max-width: 768px) {
+        .skeleton-content {
+          grid-template-columns: 1fr;
+          gap: 15px;
+        }
+        
+        .skeleton-nav {
+          flex-wrap: wrap;
+          gap: 10px;
+        }
+        
+        .skeleton-pill {
+          width: 70px;
+          height: 30px;
+        }
+        
+        .loading-skeleton {
+          max-width: 90%;
+        }
+      }
+
+      /* 🎭 Enhanced Loading Message Styling */
+      .loading-message {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #FF1493;
+        text-align: center;
+        text-shadow: 0 0 30px rgba(255, 20, 147, 0.8);
+        animation: loadingPulse 3s ease-in-out infinite;
+        margin-bottom: 20px;
+        position: relative;
+        z-index: 4;
+      }
+
+      .loading-submessage {
+        font-size: 1rem;
+        color: rgba(139, 0, 139, 0.9);
+        text-align: center;
+        margin-top: 10px;
+        animation: subtlePulse 4s ease-in-out infinite;
+        font-style: italic;
+      }
+
+      @keyframes loadingPulse {
+        0%, 100% { 
+          opacity: 0.8; 
+          text-shadow: 0 0 20px rgba(255, 20, 147, 0.6);
+          transform: scale(1);
+        }
+        50% { 
+          opacity: 1; 
+          text-shadow: 0 0 40px rgba(255, 20, 147, 1);
+          transform: scale(1.05);
+        }
+      }
+
+      @keyframes subtlePulse {
+        0%, 100% { opacity: 0.7; }
+        50% { opacity: 1; }
+      }
+
+      /* 💎 Enhanced Loading Progress with Gems */
+      .loading-progress {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        margin: 30px 0;
+        position: relative;
+        z-index: 4;
+        justify-content: center;
+      }
+
+      .progress-gem {
+        width: 20px;
+        height: 20px;
+        background: linear-gradient(45deg, #FF1493, #8B008B);
+        clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+        animation: progressGems 2s ease-in-out infinite;
+        box-shadow: 0 0 15px rgba(255, 20, 147, 0.6);
+      }
+
+      .progress-gem:nth-child(1) { animation-delay: 0s; }
+      .progress-gem:nth-child(2) { animation-delay: 0.3s; }
+      .progress-gem:nth-child(3) { animation-delay: 0.6s; }
+      .progress-gem:nth-child(4) { animation-delay: 0.9s; }
+      .progress-gem:nth-child(5) { animation-delay: 1.2s; }
+
+      /* 🌟 Loading Fade Effect */
+      .loading-screen.fade-out {
+        opacity: 0;
+        transform: scale(1.1);
+        transition: all 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      /* 🌫️ Loading Screen Atmospheric Effects */
+      .loading-screen::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: 
+          radial-gradient(circle at 20% 30%, rgba(255, 20, 147, 0.08) 0%, transparent 40%),
+          radial-gradient(circle at 80% 70%, rgba(139, 0, 139, 0.06) 0%, transparent 50%),
+          radial-gradient(circle at 50% 50%, rgba(75, 0, 130, 0.04) 0%, transparent 60%);
+        opacity: 0.7;
+        animation: atmosphericFlow 20s ease-in-out infinite;
+        pointer-events: none;
+      }
+
+      @keyframes atmosphericFlow {
+        0%, 100% {
+          transform: scale(1) rotate(0deg);
+          opacity: 0.7;
+        }
+        33% {
+          transform: scale(1.1) rotate(120deg);
+          opacity: 0.9;
+        }
+        66% {
+          transform: scale(0.9) rotate(240deg);
+          opacity: 0.5;
+        }
+      }
+      
+      /* Progress Bar Tail Animation Fix */
+      .progress-bar::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
         width: 20px;
         height: 100%;
         background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4));
@@ -903,36 +1238,110 @@
         display: none;
       }
       
-      /* 🌙 Premium Cult Header - Gaming-Tier Polish */
+      /* 🌙 Premium Cult Header - Enhanced Glassmorphism */
       .header {
         text-align: center;
         margin-bottom: 50px;
         color: #e0e0e0;
         position: relative;
-        padding: 30px 20px 40px 20px;
+        padding: 35px 25px 45px 25px;
         background: 
+          /* Enhanced glassmorphism layers */
           linear-gradient(135deg, 
-            rgba(0, 0, 0, 0.95) 0%, 
-            rgba(10, 0, 15, 0.98) 25%, 
-            rgba(5, 0, 10, 0.96) 50%, 
-            rgba(10, 0, 15, 0.98) 75%, 
-            rgba(0, 0, 0, 0.95) 100%),
-          radial-gradient(circle at 30% 70%, rgba(255, 20, 147, 0.08) 0%, transparent 60%),
-          radial-gradient(circle at 70% 30%, rgba(139, 0, 139, 0.06) 0%, transparent 50%);
-        border: 2px solid;
+            rgba(0, 0, 0, 0.85) 0%, 
+            rgba(10, 0, 15, 0.92) 25%, 
+            rgba(5, 0, 10, 0.88) 50%, 
+            rgba(10, 0, 15, 0.92) 75%, 
+            rgba(0, 0, 0, 0.85) 100%),
+          radial-gradient(circle at 30% 70%, rgba(255, 20, 147, 0.12) 0%, transparent 60%),
+          radial-gradient(circle at 70% 30%, rgba(139, 0, 139, 0.10) 0%, transparent 50%),
+          radial-gradient(circle at 50% 50%, rgba(75, 0, 130, 0.06) 0%, transparent 70%);
+        border: 3px solid;
         border-image: linear-gradient(45deg, 
-          rgba(255, 20, 147, 0.6), 
-          rgba(139, 0, 139, 0.4), 
-          rgba(75, 0, 130, 0.5), 
-          rgba(255, 20, 147, 0.6)) 1;
-        border-radius: 20px;
+          rgba(255, 20, 147, 0.8), 
+          rgba(139, 0, 139, 0.6), 
+          rgba(75, 0, 130, 0.7), 
+          rgba(255, 20, 147, 0.8)) 1;
+        border-radius: 25px;
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
         box-shadow: 
-          0 0 40px rgba(255, 20, 147, 0.3),
-          0 0 80px rgba(139, 0, 139, 0.2),
-          0 10px 30px rgba(0, 0, 0, 0.5),
-          inset 0 0 30px rgba(255, 20, 147, 0.05);
-        animation: headerBreathing 8s ease-in-out infinite;
+          /* Enhanced glow effects */
+          0 0 50px rgba(255, 20, 147, 0.4),
+          0 0 100px rgba(139, 0, 139, 0.25),
+          0 0 150px rgba(75, 0, 130, 0.15),
+          0 15px 40px rgba(0, 0, 0, 0.6),
+          inset 0 0 40px rgba(255, 20, 147, 0.08),
+          inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        animation: 
+          headerBreathing 8s ease-in-out infinite,
+          headerPulse 12s ease-in-out infinite;
         overflow: hidden;
+        transform-style: preserve-3d;
+      }
+
+      /* Enhanced ember particles behind header */
+      .header::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: 
+          radial-gradient(2px 2px at 15% 25%, rgba(255, 20, 147, 0.6), transparent),
+          radial-gradient(1px 1px at 85% 75%, rgba(139, 0, 139, 0.4), transparent),
+          radial-gradient(1px 1px at 45% 15%, rgba(255, 255, 255, 0.3), transparent),
+          radial-gradient(2px 2px at 75% 85%, rgba(255, 20, 147, 0.5), transparent),
+          radial-gradient(1px 1px at 25% 65%, rgba(75, 0, 130, 0.4), transparent);
+        background-size: 150px 150px, 120px 120px, 100px 100px, 180px 180px, 140px 140px;
+        animation: 
+          emberFloat 25s linear infinite,
+          emberTwinkle 8s ease-in-out infinite;
+        opacity: 0.6;
+        z-index: 1;
+        pointer-events: none;
+      }
+
+      @keyframes headerPulse {
+        0%, 100% { 
+          border-image: linear-gradient(45deg, 
+            rgba(255, 20, 147, 0.8), 
+            rgba(139, 0, 139, 0.6), 
+            rgba(75, 0, 130, 0.7), 
+            rgba(255, 20, 147, 0.8)) 1;
+        }
+        25% { 
+          border-image: linear-gradient(45deg, 
+            rgba(139, 0, 139, 0.9), 
+            rgba(255, 20, 147, 0.7), 
+            rgba(139, 0, 139, 0.8), 
+            rgba(75, 0, 130, 0.8)) 1;
+        }
+        50% { 
+          border-image: linear-gradient(45deg, 
+            rgba(75, 0, 130, 0.9), 
+            rgba(139, 0, 139, 0.8), 
+            rgba(255, 20, 147, 0.7), 
+            rgba(139, 0, 139, 0.9)) 1;
+        }
+        75% { 
+          border-image: linear-gradient(45deg, 
+            rgba(255, 20, 147, 0.8), 
+            rgba(75, 0, 130, 0.7), 
+            rgba(139, 0, 139, 0.9), 
+            rgba(255, 20, 147, 0.8)) 1;
+        }
+      }
+
+      @keyframes emberFloat {
+        0% { transform: translateY(0) translateX(0) rotate(0deg); }
+        100% { transform: translateY(-20px) translateX(10px) rotate(360deg); }
+      }
+
+      @keyframes emberTwinkle {
+        0%, 100% { opacity: 0.6; filter: brightness(1); }
+        50% { opacity: 0.9; filter: brightness(1.3); }
       }
 
       .header::before {
@@ -1016,32 +1425,107 @@
         }
       }
       
-      /* 🌙 Premium Header Title */
+      /* 🌙 Enhanced Premium Header Title with Soft Glow */
       .header h1 {
-        font-size: 3.8rem;
+        font-size: 4rem;
         margin-bottom: 20px;
         background: linear-gradient(45deg, 
           rgba(255, 255, 255, 1) 0%, 
-          rgba(255, 20, 147, 0.9) 20%, 
-          rgba(139, 0, 139, 0.8) 40%, 
-          rgba(255, 255, 255, 1) 60%, 
-          rgba(255, 20, 147, 0.9) 80%, 
+          rgba(255, 20, 147, 0.95) 15%, 
+          rgba(139, 0, 139, 0.9) 30%, 
+          rgba(255, 255, 255, 1) 45%, 
+          rgba(255, 20, 147, 0.95) 60%, 
+          rgba(139, 0, 139, 0.9) 75%, 
           rgba(255, 255, 255, 1) 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
-        background-size: 200% 100%;
+        background-size: 300% 100%;
         position: relative;
-        font-weight: 800;
-        letter-spacing: 3px;
+        font-weight: 900;
+        letter-spacing: 4px;
         animation: 
-          titleShimmer 4s ease-in-out infinite,
-          titleGlow 6s ease-in-out infinite,
-          titleFloat 8s ease-in-out infinite;
-        text-shadow: 
-          0 0 30px rgba(255, 20, 147, 0.5),
-          0 0 60px rgba(139, 0, 139, 0.3);
+          titleShimmer 6s ease-in-out infinite,
+          titleGlow 8s ease-in-out infinite,
+          titleFloat 10s ease-in-out infinite;
+        filter: 
+          drop-shadow(0 0 20px rgba(255, 20, 147, 0.6))
+          drop-shadow(0 0 40px rgba(139, 0, 139, 0.4))
+          drop-shadow(0 0 60px rgba(75, 0, 130, 0.2));
         z-index: 3;
+        text-transform: uppercase;
+      }
+
+      /* Soft glow behind title */
+      .header h1::before {
+        content: '🌙 NocturneSwap';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(45deg, 
+          rgba(255, 20, 147, 0.3), 
+          rgba(139, 0, 139, 0.2), 
+          rgba(255, 20, 147, 0.3));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        filter: blur(8px);
+        animation: 
+          titleGlowPulse 6s ease-in-out infinite,
+          titleShimmer 8s ease-in-out infinite reverse;
+        z-index: -1;
+        opacity: 0.8;
+      }
+
+      /* Enhanced moon symbols */
+      .header h1::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 150px;
+        height: 150px;
+        background: 
+          radial-gradient(circle, 
+            rgba(255, 20, 147, 0.15) 0%, 
+            rgba(139, 0, 139, 0.1) 30%, 
+            transparent 70%);
+        border-radius: 50%;
+        transform: translate(-50%, -50%);
+        animation: 
+          titleHalo 12s ease-in-out infinite,
+          titleHaloRotate 20s linear infinite;
+        z-index: -1;
+        pointer-events: none;
+      }
+
+      @keyframes titleGlowPulse {
+        0%, 100% { 
+          opacity: 0.6; 
+          transform: scale(1); 
+        }
+        50% { 
+          opacity: 1; 
+          transform: scale(1.05); 
+        }
+      }
+
+      @keyframes titleHalo {
+        0%, 100% { 
+          opacity: 0.6; 
+          transform: translate(-50%, -50%) scale(1); 
+        }
+        50% { 
+          opacity: 0.9; 
+          transform: translate(-50%, -50%) scale(1.2); 
+        }
+      }
+
+      @keyframes titleHaloRotate {
+        0% { transform: translate(-50%, -50%) rotate(0deg); }
+        100% { transform: translate(-50%, -50%) rotate(360deg); }
       }
 
       .header h1::before {
@@ -1267,6 +1751,127 @@
       @keyframes headerTopShimmer {
         0% { left: -100%; }
         100% { left: 100%; }
+      }
+
+      /* 🌓 Enhanced Theme Controls with Premium Polish */
+      .theme-controls {
+        position: relative;
+        z-index: 10;
+      }
+
+      .theme-btn {
+        background: 
+          linear-gradient(145deg, 
+            rgba(0, 0, 0, 0.9), 
+            rgba(15, 15, 15, 0.8)),
+          radial-gradient(circle, 
+            rgba(255, 20, 147, 0.1) 0%, 
+            transparent 70%);
+        color: rgba(255, 255, 255, 0.9);
+        border: 2px solid rgba(255, 20, 147, 0.4);
+        border-radius: 12px;
+        padding: 12px 20px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        backdrop-filter: blur(15px);
+        -webkit-backdrop-filter: blur(15px);
+        box-shadow: 
+          0 6px 20px rgba(0, 0, 0, 0.4),
+          0 0 25px rgba(255, 20, 147, 0.2),
+          inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        font-size: 1rem;
+        letter-spacing: 1px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .theme-btn::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, 
+          transparent, 
+          rgba(255, 20, 147, 0.3), 
+          transparent);
+        transition: left 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      .theme-btn:hover::before {
+        left: 100%;
+      }
+
+      .theme-btn:hover {
+        border-color: rgba(255, 20, 147, 0.8);
+        box-shadow: 
+          0 8px 25px rgba(0, 0, 0, 0.5),
+          0 0 35px rgba(255, 20, 147, 0.4),
+          0 0 60px rgba(139, 0, 139, 0.2),
+          inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        transform: translateY(-2px);
+        color: rgba(255, 255, 255, 1);
+      }
+
+      .theme-dropdown {
+        position: absolute;
+        top: 100%;
+        right: 0;
+        margin-top: 8px;
+        background: 
+          linear-gradient(145deg, 
+            rgba(0, 0, 0, 0.95), 
+            rgba(15, 15, 15, 0.9));
+        border: 2px solid rgba(255, 20, 147, 0.4);
+        border-radius: 12px;
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        box-shadow: 
+          0 10px 30px rgba(0, 0, 0, 0.6),
+          0 0 40px rgba(255, 20, 147, 0.3),
+          inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-10px);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        z-index: 1000;
+        min-width: 140px;
+      }
+
+      .theme-dropdown.show {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+      }
+
+      .theme-option {
+        width: 100%;
+        padding: 12px 16px;
+        background: transparent;
+        color: rgba(255, 255, 255, 0.8);
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-size: 0.95rem;
+        letter-spacing: 0.5px;
+        text-align: left;
+      }
+
+      .theme-option:hover {
+        background: rgba(255, 20, 147, 0.15);
+        color: rgba(255, 255, 255, 1);
+        transform: translateX(4px);
+      }
+
+      .theme-option:first-child {
+        border-radius: 10px 10px 8px 8px;
+      }
+
+      .theme-option:last-child {
+        border-radius: 8px 8px 10px 10px;
       }
       
       /* Enhanced Navigation */
@@ -3433,18 +4038,15 @@
         
         /* Ensure minimum readable font sizes on mobile */
         .reward-text {
-          font-size: 0.85rem;
-          min-font-size: 14px;
+          font-size: max(14px, 0.85rem);
         }
         
         .contrib-stat {
-          font-size: 0.9rem;
-          min-font-size: 14px;
+          font-size: max(14px, 0.9rem);
         }
         
         .your-contribution h5 {
-          font-size: 1.1rem;
-          min-font-size: 16px;
+          font-size: max(16px, 1.1rem);
         }
         
         /* Improve touch targets for very small screens */
@@ -5849,16 +6451,58 @@
     <!-- Enhanced Particle Overlay -->
     <div class="particle-overlay"></div>
     
-    <!-- Loading Screen with Matrix Effect -->
+    <!-- Enhanced Loading Screen with Skeleton & Cult Themes -->
     <div class="loading-screen" id="loadingScreen">
-      <div class="mystical-loader"></div>
-      <div class="loading-text holo-text">🌙 Loading NocturneSwap</div>
-      <div class="loading-subtitle matrix-text">Initializing mystical DEX interface...</div>
-      <div class="loading-progress">
-        <div class="progress-bar">
-          <div class="progress-fill" id="progressFill"></div>
+      <!-- Floating runes background -->
+      <div class="loading-runes">
+        <div class="rune">⟐</div>
+        <div class="rune">◆</div>
+        <div class="rune">☾</div>
+        <div class="rune">⟐</div>
+        <div class="rune">☽</div>
+        <div class="rune">◇</div>
+      </div>
+      
+      <!-- Main loading content -->
+      <div class="loading-content">
+        <div class="mystical-loader"></div>
+        <div class="loading-text holo-text">🌙 Summoning NocturneSwap</div>
+        <div class="loading-subtitle matrix-text">Awakening the Cult Protocol...</div>
+        
+        <!-- Enhanced skeleton preview -->
+        <div class="loading-skeleton">
+          <div class="skeleton-header">
+            <div class="skeleton-bar skeleton-animate"></div>
+            <div class="skeleton-bar skeleton-animate short"></div>
+          </div>
+          <div class="skeleton-nav">
+            <div class="skeleton-pill skeleton-animate"></div>
+            <div class="skeleton-pill skeleton-animate"></div>
+            <div class="skeleton-pill skeleton-animate"></div>
+            <div class="skeleton-pill skeleton-animate"></div>
+          </div>
+          <div class="skeleton-content">
+            <div class="skeleton-box skeleton-animate">
+              <div class="skeleton-circle skeleton-animate"></div>
+              <div class="skeleton-lines">
+                <div class="skeleton-line skeleton-animate"></div>
+                <div class="skeleton-line skeleton-animate short"></div>
+                <div class="skeleton-line skeleton-animate"></div>
+              </div>
+            </div>
+            <div class="skeleton-sidebar">
+              <div class="skeleton-card skeleton-animate"></div>
+              <div class="skeleton-card skeleton-animate"></div>
+            </div>
+          </div>
         </div>
-        <div class="progress-text" id="progressText">Connecting to the void...</div>
+        
+        <div class="loading-progress">
+          <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+          </div>
+          <div class="progress-text" id="progressText">Binding cult contracts...</div>
+        </div>
       </div>
     </div>
 
@@ -8545,6 +9189,42 @@
         createEmberEffect(savedTheme);
       }
       
+      // 🎭 Enhanced Loading Experience with Dynamic Messages
+      function initializeLoadingExperience() {
+        const loadingMessages = [
+          { text: "Summoning NocturneSwap", sub: "Awakening the Cult Protocol" },
+          { text: "Loading Cult Pools", sub: "Gathering Dark Liquidity" },
+          { text: "Initializing Ritual", sub: "Connecting to the Void" },
+          { text: "Channeling Power", sub: "Preparing Sacred Interface" },
+          { text: "Almost Ready", sub: "Final Preparations Complete" }
+        ];
+        
+        const messageEl = document.querySelector('.loading-message');
+        const subMessageEl = document.querySelector('.loading-submessage');
+        
+        if (messageEl && subMessageEl && loadingMessages.length > 0) {
+          let currentIndex = 0;
+          
+          const updateMessage = () => {
+            if (currentIndex < loadingMessages.length) {
+              const message = loadingMessages[currentIndex];
+              messageEl.textContent = message.text;
+              subMessageEl.textContent = message.sub;
+              currentIndex++;
+              
+              // Update every 800ms
+              setTimeout(updateMessage, 800);
+            }
+          };
+          
+          // Start message cycling after a short delay
+          setTimeout(updateMessage, 300);
+        }
+      }
+      
+      // Start loading experience immediately
+      initializeLoadingExperience();
+      
       // Failsafe: Ensure loading screen is hidden after max 10 seconds
       setTimeout(() => {
         const loadingScreen = document.getElementById('loadingScreen');
@@ -8564,13 +9244,34 @@
               initializeApp();
               initializeGamingFeatures();
               initializeAdvancedFeatures();
+              
+              // 🌟 Smooth Fade Transition
+              const loadingScreen = document.getElementById('loadingScreen');
+              const appContainer = document.getElementById('appContainer');
+              
+              if (loadingScreen && appContainer) {
+                loadingScreen.classList.add('fade-out');
+                setTimeout(() => {
+                  loadingScreen.style.display = 'none';
+                  appContainer.style.display = 'block';
+                  appContainer.style.opacity = '0';
+                  appContainer.style.transform = 'scale(0.95)';
+                  appContainer.style.transition = 'all 1s cubic-bezier(0.4, 0, 0.2, 1)';
+                  
+                  // Fade in app
+                  requestAnimationFrame(() => {
+                    appContainer.style.opacity = '1';
+                    appContainer.style.transform = 'scale(1)';
+                  });
+                }, 1500); // Wait for fade-out animation
+              }
             } catch (error) {
               console.error('❌ Critical initialization error:', error);
               // Force show app even with errors
               document.getElementById('loadingScreen').style.display = 'none';
               document.getElementById('appContainer').style.display = 'block';
             }
-          }, 2000); // Show loading for 2 seconds
+          }, 4000); // Show loading for 4 seconds to see all messages
         });
       } else {
         setTimeout(() => {
@@ -8578,13 +9279,34 @@
             initializeApp();
             initializeGamingFeatures();
             initializeAdvancedFeatures();
+            
+            // 🌟 Smooth Fade Transition
+            const loadingScreen = document.getElementById('loadingScreen');
+            const appContainer = document.getElementById('appContainer');
+            
+            if (loadingScreen && appContainer) {
+              loadingScreen.classList.add('fade-out');
+              setTimeout(() => {
+                loadingScreen.style.display = 'none';
+                appContainer.style.display = 'block';
+                appContainer.style.opacity = '0';
+                appContainer.style.transform = 'scale(0.95)';
+                appContainer.style.transition = 'all 1s cubic-bezier(0.4, 0, 0.2, 1)';
+                
+                // Fade in app
+                requestAnimationFrame(() => {
+                  appContainer.style.opacity = '1';
+                  appContainer.style.transform = 'scale(1)';
+                });
+              }, 1500); // Wait for fade-out animation
+            }
           } catch (error) {
             console.error('❌ Critical initialization error:', error);
             // Force show app even with errors
             document.getElementById('loadingScreen').style.display = 'none';
             document.getElementById('appContainer').style.display = 'block';
           }
-        }, 2000);
+        }, 4000);
       }
       
     </script>
