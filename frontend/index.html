@@ -6102,19 +6102,7 @@
             `;
           }).join('');
         }
-      }
-        
-        const historyElement = document.getElementById('tradingHistory');
-        if (historyElement) {
-          historyElement.innerHTML = mockTrades.map(trade => 
-            `<div class="trade-entry">
-              <div class="trade-pair">${trade.pair}</div>
-              <div class="trade-amount">${trade.amount}</div>
-              <div class="trade-time">${trade.time}</div>
-            </div>`
-          ).join('');
-        }
-        
+
         // Update portfolio stats
         const portfolioValue = document.getElementById('portfolioValue');
         const portfolioChange = document.getElementById('portfolioChange');
@@ -6238,17 +6226,39 @@
           initializeGamingFeatures();
           
           // Initialize enhanced mock data with diverse, realistic values
-          updateMarketStats();
-          updateRecentTrades();
-          updateTradingHistory();
-          updateSocialFeed();
-          updatePoolOverview();
+          try {
+            updateMarketStats();
+          } catch (e) { console.warn('Market stats update failed:', e); }
+          
+          try {
+            updateRecentTrades();
+          } catch (e) { console.warn('Recent trades update failed:', e); }
+          
+          try {
+            updateTradingHistory();
+          } catch (e) { console.warn('Trading history update failed:', e); }
+          
+          try {
+            updateSocialFeed();
+          } catch (e) { console.warn('Social feed update failed:', e); }
+          
+          try {
+            updatePoolOverview();
+          } catch (e) { console.warn('Pool overview update failed:', e); }
           
           // Update market stats and other data periodically
-          setInterval(updateMarketStats, 30000); // Update every 30 seconds
-          setInterval(updateRecentTrades, 45000); // Update every 45 seconds
-          setInterval(updateSocialFeed, 60000); // Update every minute
-          setInterval(updatePoolOverview, 120000); // Update every 2 minutes
+          setInterval(() => {
+            try { updateMarketStats(); } catch (e) { console.warn('Market stats interval failed:', e); }
+          }, 30000);
+          setInterval(() => {
+            try { updateRecentTrades(); } catch (e) { console.warn('Recent trades interval failed:', e); }
+          }, 45000);
+          setInterval(() => {
+            try { updateSocialFeed(); } catch (e) { console.warn('Social feed interval failed:', e); }
+          }, 60000);
+          setInterval(() => {
+            try { updatePoolOverview(); } catch (e) { console.warn('Pool overview interval failed:', e); }
+          }, 120000);
           
           // Hide loading screen
           document.getElementById('loadingScreen').style.display = 'none';
@@ -6258,7 +6268,11 @@
           
         } catch (error) {
           console.error('❌ Failed to complete initialization:', error);
-        }      }
+          // Still hide loading screen even if there are errors
+          document.getElementById('loadingScreen').style.display = 'none';
+          document.getElementById('appContainer').style.display = 'block';
+        }
+      }
       
       // Gaming-Tier Enhancement Functions
       function initializeGamingFeatures() {
@@ -7255,20 +7269,45 @@
         createEmberEffect(savedTheme);
       }
       
+      // Failsafe: Ensure loading screen is hidden after max 10 seconds
+      setTimeout(() => {
+        const loadingScreen = document.getElementById('loadingScreen');
+        const appContainer = document.getElementById('appContainer');
+        if (loadingScreen && loadingScreen.style.display !== 'none') {
+          console.warn('⚠️ Failsafe: Forcing loading screen to hide after timeout');
+          loadingScreen.style.display = 'none';
+          if (appContainer) appContainer.style.display = 'block';
+        }
+      }, 10000); // 10 second failsafe
+      
       // Start app when DOM is ready
       if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', () => {
           setTimeout(() => {
-            initializeApp();
-            initializeGamingFeatures();
-            initializeAdvancedFeatures();
+            try {
+              initializeApp();
+              initializeGamingFeatures();
+              initializeAdvancedFeatures();
+            } catch (error) {
+              console.error('❌ Critical initialization error:', error);
+              // Force show app even with errors
+              document.getElementById('loadingScreen').style.display = 'none';
+              document.getElementById('appContainer').style.display = 'block';
+            }
           }, 2000); // Show loading for 2 seconds
         });
       } else {
         setTimeout(() => {
-          initializeApp();
-          initializeGamingFeatures();
-          initializeAdvancedFeatures();
+          try {
+            initializeApp();
+            initializeGamingFeatures();
+            initializeAdvancedFeatures();
+          } catch (error) {
+            console.error('❌ Critical initialization error:', error);
+            // Force show app even with errors
+            document.getElementById('loadingScreen').style.display = 'none';
+            document.getElementById('appContainer').style.display = 'block';
+          }
         }, 2000);
       }
       
