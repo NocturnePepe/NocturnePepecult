@@ -783,34 +783,71 @@
       }
       
       /* Optimized Swap Container with Better Visibility */
+      /* Enhanced Swap Container with Premium Polish */
       .swap-container {
         background: 
           linear-gradient(145deg, rgba(0, 0, 0, 0.98), rgba(15, 15, 15, 0.95)),
-          radial-gradient(circle at 20% 80%, rgba(75, 0, 130, 0.15) 0%, transparent 50%),
-          radial-gradient(circle at 80% 20%, rgba(139, 0, 139, 0.1) 0%, transparent 50%);
-        border: 2px solid rgba(75, 0, 130, 0.6);
-        border-radius: 25px;
-        padding: 35px;
+          radial-gradient(circle at 20% 80%, rgba(75, 0, 130, 0.18) 0%, transparent 50%),
+          radial-gradient(circle at 80% 20%, rgba(139, 0, 139, 0.12) 0%, transparent 50%),
+          radial-gradient(circle at 50% 50%, rgba(138, 43, 226, 0.08) 0%, transparent 60%);
+        border: 3px solid;
+        border-image: linear-gradient(45deg, 
+          rgba(75, 0, 130, 0.8), 
+          rgba(139, 0, 139, 0.6), 
+          rgba(147, 112, 219, 0.7), 
+          rgba(75, 0, 130, 0.8)) 1;
+        border-radius: 28px;
+        padding: 40px;
         box-shadow: 
-          0 20px 40px rgba(0, 0, 0, 0.8),
-          0 0 30px rgba(75, 0, 130, 0.3),
-          0 0 60px rgba(139, 0, 139, 0.15),
-          inset 0 1px 0 rgba(255, 255, 255, 0.1);
-        backdrop-filter: blur(20px);
-        position: relative;
-        overflow: hidden;
-        transition: all 0.3s ease;
-        z-index: 10; /* Ensure it's above particles */
-      }
-
-      /* Subtle hover effect without performance impact */
-      .swap-container:hover {
-        border-color: rgba(75, 0, 130, 0.8);
-        box-shadow: 
-          0 25px 50px rgba(0, 0, 0, 0.85),
+          0 25px 50px rgba(0, 0, 0, 0.9),
           0 0 40px rgba(75, 0, 130, 0.4),
           0 0 80px rgba(139, 0, 139, 0.2),
-          inset 0 1px 0 rgba(255, 255, 255, 0.15);
+          0 0 120px rgba(138, 43, 226, 0.1),
+          inset 0 2px 0 rgba(255, 255, 255, 0.12),
+          inset 0 -2px 0 rgba(0, 0, 0, 0.3),
+          inset 0 0 30px rgba(75, 0, 130, 0.05);
+        backdrop-filter: blur(25px);
+        position: relative;
+        overflow: hidden;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        z-index: 10;
+        animation: containerGlow 8s ease-in-out infinite;
+      }
+
+      @keyframes containerGlow {
+        0%, 100% { 
+          box-shadow: 
+            0 25px 50px rgba(0, 0, 0, 0.9),
+            0 0 40px rgba(75, 0, 130, 0.4),
+            0 0 80px rgba(139, 0, 139, 0.2),
+            inset 0 2px 0 rgba(255, 255, 255, 0.12);
+        }
+        50% { 
+          box-shadow: 
+            0 30px 60px rgba(0, 0, 0, 0.95),
+            0 0 50px rgba(75, 0, 130, 0.6),
+            0 0 100px rgba(139, 0, 139, 0.3),
+            0 0 150px rgba(138, 43, 226, 0.15),
+            inset 0 2px 0 rgba(255, 255, 255, 0.15);
+        }
+      }
+
+      /* Enhanced Hover Effect with Premium Feel */
+      .swap-container:hover {
+        transform: translateY(-3px) scale(1.01);
+        border-image: linear-gradient(45deg, 
+          rgba(75, 0, 130, 1), 
+          rgba(139, 0, 139, 0.8), 
+          rgba(147, 112, 219, 0.9), 
+          rgba(75, 0, 130, 1)) 1;
+        box-shadow: 
+          0 35px 70px rgba(0, 0, 0, 0.95),
+          0 0 60px rgba(75, 0, 130, 0.6),
+          0 0 120px rgba(139, 0, 139, 0.4),
+          0 0 180px rgba(138, 43, 226, 0.2),
+          inset 0 2px 0 rgba(255, 255, 255, 0.18),
+          inset 0 0 40px rgba(75, 0, 130, 0.08);
+        animation-duration: 6s;
       }
 
       /* Mobile optimization for swap container */
@@ -977,23 +1014,50 @@
       }
       
       /* Enhanced Token Input */
+      /* Enhanced Token Input Boxes with Premium Polish */
       .token-input {
         background: 
-          linear-gradient(145deg, rgba(0, 0, 0, 0.9), rgba(15, 15, 15, 0.7)),
-          linear-gradient(145deg, rgba(75, 0, 130, 0.1), rgba(139, 0, 139, 0.06));
-        border: 2px solid rgba(75, 0, 130, 0.3);
-        border-radius: 20px;
-        padding: 30px;
-        margin-bottom: 20px;
+          linear-gradient(145deg, rgba(0, 0, 0, 0.95), rgba(15, 15, 15, 0.85)),
+          radial-gradient(circle at 25% 25%, rgba(75, 0, 130, 0.12) 0%, transparent 60%),
+          radial-gradient(circle at 75% 75%, rgba(139, 0, 139, 0.08) 0%, transparent 50%);
+        border: 2px solid;
+        border-image: linear-gradient(135deg, 
+          rgba(75, 0, 130, 0.5), 
+          rgba(139, 0, 139, 0.3), 
+          rgba(147, 112, 219, 0.4), 
+          rgba(75, 0, 130, 0.5)) 1;
+        border-radius: 24px;
+        padding: 32px;
+        margin-bottom: 24px;
         position: relative;
-        backdrop-filter: blur(20px);
+        backdrop-filter: blur(25px);
         box-shadow: 
-          0 12px 25px rgba(0, 0, 0, 0.4),
-          0 0 30px rgba(75, 0, 130, 0.1),
-          inset 0 1px 0 rgba(255, 255, 255, 0.05),
-          inset 0 -1px 0 rgba(0, 0, 0, 0.2);
+          0 16px 32px rgba(0, 0, 0, 0.5),
+          0 0 40px rgba(75, 0, 130, 0.15),
+          0 0 80px rgba(139, 0, 139, 0.08),
+          inset 0 2px 0 rgba(255, 255, 255, 0.08),
+          inset 0 -2px 0 rgba(0, 0, 0, 0.15);
         transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         overflow: hidden;
+        animation: inputGlow 12s ease-in-out infinite;
+      }
+
+      @keyframes inputGlow {
+        0%, 100% { 
+          box-shadow: 
+            0 16px 32px rgba(0, 0, 0, 0.5),
+            0 0 40px rgba(75, 0, 130, 0.15),
+            0 0 80px rgba(139, 0, 139, 0.08),
+            inset 0 2px 0 rgba(255, 255, 255, 0.08);
+        }
+        50% { 
+          box-shadow: 
+            0 20px 40px rgba(0, 0, 0, 0.6),
+            0 0 50px rgba(75, 0, 130, 0.25),
+            0 0 100px rgba(139, 0, 139, 0.15),
+            0 0 150px rgba(138, 43, 226, 0.1),
+            inset 0 2px 0 rgba(255, 255, 255, 0.1);
+        }
       }
 
       .token-input::before {
@@ -1522,22 +1586,50 @@
         gap: 25px;
       }
       
+      /* Enhanced Sidebar Cards with Premium Polish */
       .sidebar-card {
         background: 
-          linear-gradient(145deg, rgba(0, 0, 0, 0.9), rgba(15, 15, 15, 0.8)),
-          linear-gradient(145deg, rgba(75, 0, 130, 0.1), rgba(139, 0, 139, 0.07));
-        border: 2px solid rgba(75, 0, 130, 0.3);
-        border-radius: 25px;
-        padding: 30px;
+          linear-gradient(145deg, rgba(0, 0, 0, 0.95), rgba(15, 15, 15, 0.9)),
+          radial-gradient(circle at 30% 30%, rgba(75, 0, 130, 0.12) 0%, transparent 60%),
+          radial-gradient(circle at 70% 70%, rgba(139, 0, 139, 0.08) 0%, transparent 50%);
+        border: 2px solid;
+        border-image: linear-gradient(135deg, 
+          rgba(75, 0, 130, 0.6), 
+          rgba(139, 0, 139, 0.4), 
+          rgba(147, 112, 219, 0.5), 
+          rgba(75, 0, 130, 0.6)) 1;
+        border-radius: 28px;
+        padding: 32px;
         box-shadow: 
-          0 20px 40px rgba(0, 0, 0, 0.5),
-          0 0 30px rgba(75, 0, 130, 0.15),
-          0 0 60px rgba(139, 0, 139, 0.08),
-          inset 0 1px 0 rgba(255, 255, 255, 0.08);
-        backdrop-filter: blur(25px);
+          0 25px 50px rgba(0, 0, 0, 0.6),
+          0 0 40px rgba(75, 0, 130, 0.2),
+          0 0 80px rgba(139, 0, 139, 0.12),
+          0 0 120px rgba(138, 43, 226, 0.08),
+          inset 0 2px 0 rgba(255, 255, 255, 0.1),
+          inset 0 -1px 0 rgba(0, 0, 0, 0.2);
+        backdrop-filter: blur(30px);
         position: relative;
         overflow: hidden;
         transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        animation: cardBreathing 10s ease-in-out infinite;
+      }
+
+      @keyframes cardBreathing {
+        0%, 100% { 
+          box-shadow: 
+            0 25px 50px rgba(0, 0, 0, 0.6),
+            0 0 40px rgba(75, 0, 130, 0.2),
+            0 0 80px rgba(139, 0, 139, 0.12),
+            inset 0 2px 0 rgba(255, 255, 255, 0.1);
+        }
+        50% { 
+          box-shadow: 
+            0 30px 60px rgba(0, 0, 0, 0.7),
+            0 0 50px rgba(75, 0, 130, 0.3),
+            0 0 100px rgba(139, 0, 139, 0.18),
+            0 0 150px rgba(138, 43, 226, 0.12),
+            inset 0 2px 0 rgba(255, 255, 255, 0.12);
+        }
       }
 
       .sidebar-card::before {
@@ -1830,16 +1922,72 @@
         margin-bottom: 20px;
       }
       
+      /* Enhanced Admin Cards with Premium Polish */
       .admin-card {
-        background: #f8f9fa;
-        padding: 20px;
-        border-radius: 12px;
+        background: 
+          linear-gradient(145deg, rgba(0, 0, 0, 0.92), rgba(15, 15, 15, 0.85)),
+          radial-gradient(circle at 20% 20%, rgba(75, 0, 130, 0.1) 0%, transparent 60%),
+          radial-gradient(circle at 80% 80%, rgba(139, 0, 139, 0.08) 0%, transparent 50%);
+        border: 2px solid;
+        border-image: linear-gradient(135deg, 
+          rgba(75, 0, 130, 0.4), 
+          rgba(139, 0, 139, 0.3), 
+          rgba(147, 112, 219, 0.35), 
+          rgba(75, 0, 130, 0.4)) 1;
+        border-radius: 20px;
+        padding: 25px;
         text-align: center;
+        box-shadow: 
+          0 15px 30px rgba(0, 0, 0, 0.4),
+          0 0 25px rgba(75, 0, 130, 0.1),
+          0 0 50px rgba(139, 0, 139, 0.06),
+          inset 0 1px 0 rgba(255, 255, 255, 0.08);
+        backdrop-filter: blur(20px);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        overflow: hidden;
+      }
+      
+      .admin-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: linear-gradient(90deg, 
+          transparent, 
+          rgba(75, 0, 130, 0.5), 
+          rgba(139, 0, 139, 0.7), 
+          rgba(75, 0, 130, 0.5), 
+          transparent);
+        animation: adminCardGlow 8s ease-in-out infinite;
+      }
+
+      @keyframes adminCardGlow {
+        0%, 100% { opacity: 0.3; }
+        50% { opacity: 1; }
+      }
+      
+      .admin-card:hover {
+        transform: translateY(-3px);
+        border-image: linear-gradient(135deg, 
+          rgba(75, 0, 130, 0.7), 
+          rgba(139, 0, 139, 0.5), 
+          rgba(147, 112, 219, 0.6), 
+          rgba(75, 0, 130, 0.7)) 1;
+        box-shadow: 
+          0 20px 40px rgba(0, 0, 0, 0.5),
+          0 0 35px rgba(75, 0, 130, 0.2),
+          0 0 70px rgba(139, 0, 139, 0.12),
+          inset 0 1px 0 rgba(255, 255, 255, 0.12);
       }
       
       .admin-card h4 {
-        margin-bottom: 10px;
-        color: #333;
+        margin-bottom: 15px;
+        color: #e0e0e0;
+        text-shadow: 0 0 10px rgba(75, 0, 130, 0.4);
+        font-weight: 600;
       }
       
       .admin-btn {
