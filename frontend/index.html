@@ -206,7 +206,7 @@
         50% { opacity: 0.7; }
       }
       
-      /* Enhanced Loading Screen - Dark Cult */
+      /* 🌙 Premium Cult Loading Screen - Full Gaming Experience */
       .loading-screen {
         position: fixed;
         top: 0;
@@ -214,23 +214,212 @@
         width: 100%;
         height: 100%;
         background: 
-          radial-gradient(circle at center, rgba(75, 0, 130, 0.6) 0%, transparent 60%),
-          radial-gradient(circle at 30% 70%, rgba(139, 0, 139, 0.4) 0%, transparent 50%),
-          radial-gradient(circle at 70% 30%, rgba(138, 43, 226, 0.3) 0%, transparent 45%),
-          linear-gradient(135deg, #000000 0%, #050505 25%, #0a0a0a 50%, #050505 75%, #000000 100%);
+          /* Deep space void with moving gradients */
+          radial-gradient(circle at 20% 80%, rgba(255, 20, 147, 0.15) 0%, transparent 50%),
+          radial-gradient(circle at 80% 20%, rgba(139, 0, 139, 0.12) 0%, transparent 45%),
+          radial-gradient(circle at 40% 40%, rgba(75, 0, 130, 0.18) 0%, transparent 40%),
+          /* Animated fog layers */
+          linear-gradient(45deg, 
+            rgba(0, 0, 0, 0.95) 0%, 
+            rgba(5, 0, 10, 0.98) 25%, 
+            rgba(10, 0, 15, 0.96) 50%, 
+            rgba(5, 0, 10, 0.98) 75%, 
+            rgba(0, 0, 0, 0.95) 100%);
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
         color: #e0e0e0;
         z-index: 9999;
-        backdrop-filter: blur(3px);
-        animation: loadingBackground 4s ease-in-out infinite;
+        backdrop-filter: blur(8px);
+        animation: 
+          loadingVoidBreathing 8s ease-in-out infinite,
+          loadingParticleShift 12s linear infinite;
+        overflow: hidden;
+        position: relative;
       }
 
-      @keyframes loadingBackground {
-        0%, 100% { background-size: 100% 100%; }
-        50% { background-size: 110% 110%; }
+      /* Animated ember/fog particles */
+      .loading-screen::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 200%;
+        height: 200%;
+        background-image: 
+          radial-gradient(2px 2px at 20px 30px, rgba(255, 20, 147, 0.8), transparent),
+          radial-gradient(2px 2px at 40px 70px, rgba(139, 0, 139, 0.6), transparent),
+          radial-gradient(1px 1px at 90px 40px, rgba(255, 255, 255, 0.4), transparent),
+          radial-gradient(1px 1px at 130px 80px, rgba(255, 20, 147, 0.5), transparent),
+          radial-gradient(2px 2px at 160px 30px, rgba(75, 0, 130, 0.7), transparent);
+        background-repeat: repeat;
+        background-size: 200px 200px;
+        animation: 
+          floatingEmbers 20s linear infinite,
+          emberGlow 6s ease-in-out infinite;
+        opacity: 0.7;
+      }
+
+      /* Mystical overlay pattern */
+      .loading-screen::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: 
+          repeating-conic-gradient(from 0deg at 50% 50%, 
+            transparent 0deg, 
+            rgba(255, 20, 147, 0.02) 1deg, 
+            transparent 2deg, 
+            rgba(139, 0, 139, 0.02) 3deg, 
+            transparent 4deg);
+        animation: mysticPattern 15s linear infinite;
+        pointer-events: none;
+      }
+
+      @keyframes loadingVoidBreathing {
+        0%, 100% { 
+          background-size: 100% 100%;
+          filter: brightness(0.9) contrast(1.1);
+        }
+        50% { 
+          background-size: 120% 120%;
+          filter: brightness(1.1) contrast(1.3);
+        }
+      }
+
+      @keyframes loadingParticleShift {
+        0% { transform: translate(0, 0) rotate(0deg); }
+        25% { transform: translate(-10px, -10px) rotate(90deg); }
+        50% { transform: translate(10px, -5px) rotate(180deg); }
+        75% { transform: translate(-5px, 10px) rotate(270deg); }
+        100% { transform: translate(0, 0) rotate(360deg); }
+      }
+
+      @keyframes floatingEmbers {
+        0% { transform: translateY(0) translateX(0) rotate(0deg); }
+        100% { transform: translateY(-100vh) translateX(50px) rotate(360deg); }
+      }
+
+      @keyframes emberGlow {
+        0%, 100% { opacity: 0.7; filter: brightness(1); }
+        50% { opacity: 1; filter: brightness(1.5); }
+      }
+
+      @keyframes mysticPattern {
+        0% { transform: rotate(0deg) scale(1); }
+        100% { transform: rotate(360deg) scale(1.1); }
+      }
+
+      /* 🔮 Epic Runic Sigil Loader */
+      .mystical-loader {
+        width: 120px;
+        height: 120px;
+        margin-bottom: 40px;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .mystical-loader::before {
+        content: '⟐ ◆ ☾ ◆ ⟐';
+        position: absolute;
+        font-size: 2.5rem;
+        color: rgba(255, 20, 147, 0.9);
+        text-shadow: 
+          0 0 30px rgba(255, 20, 147, 1),
+          0 0 60px rgba(139, 0, 139, 0.8),
+          0 0 90px rgba(75, 0, 130, 0.6);
+        animation: 
+          runicSigilSpin 4s linear infinite,
+          sigilPulse 3s ease-in-out infinite,
+          sigilGlow 6s ease-in-out infinite;
+        transform-origin: center;
+        white-space: nowrap;
+        letter-spacing: 8px;
+      }
+
+      .mystical-loader::after {
+        content: '◇ ⟐ ☽ ⟐ ◇';
+        position: absolute;
+        font-size: 2rem;
+        color: rgba(139, 0, 139, 0.7);
+        text-shadow: 
+          0 0 25px rgba(139, 0, 139, 1),
+          0 0 50px rgba(75, 0, 130, 0.8),
+          0 0 75px rgba(255, 20, 147, 0.6);
+        animation: 
+          runicSigilSpin 6s linear infinite reverse,
+          sigilFloat 4s ease-in-out infinite,
+          secondarySigilGlow 8s ease-in-out infinite;
+        transform-origin: center;
+        white-space: nowrap;
+        letter-spacing: 6px;
+      }
+
+      @keyframes runicSigilSpin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+
+      @keyframes sigilPulse {
+        0%, 100% { 
+          transform: scale(1); 
+          opacity: 0.9;
+        }
+        50% { 
+          transform: scale(1.1); 
+          opacity: 1;
+        }
+      }
+
+      @keyframes sigilFloat {
+        0%, 100% { 
+          transform: scale(0.9) translateY(0px); 
+          opacity: 0.7;
+        }
+        50% { 
+          transform: scale(1) translateY(-8px); 
+          opacity: 1;
+        }
+      }
+
+      @keyframes sigilGlow {
+        0%, 100% { 
+          text-shadow: 
+            0 0 30px rgba(255, 20, 147, 1),
+            0 0 60px rgba(139, 0, 139, 0.8);
+        }
+        33% { 
+          text-shadow: 
+            0 0 40px rgba(255, 20, 147, 1.2),
+            0 0 80px rgba(139, 0, 139, 1),
+            0 0 120px rgba(75, 0, 130, 0.8);
+        }
+        66% { 
+          text-shadow: 
+            0 0 35px rgba(139, 0, 139, 1.1),
+            0 0 70px rgba(75, 0, 130, 0.9),
+            0 0 100px rgba(255, 20, 147, 0.7);
+        }
+      }
+
+      @keyframes secondarySigilGlow {
+        0%, 100% { 
+          text-shadow: 
+            0 0 25px rgba(139, 0, 139, 1),
+            0 0 50px rgba(75, 0, 130, 0.8);
+        }
+        50% { 
+          text-shadow: 
+            0 0 35px rgba(139, 0, 139, 1.3),
+            0 0 70px rgba(75, 0, 130, 1),
+            0 0 100px rgba(255, 20, 147, 0.6);
+        }
       }
       
       .loading-spinner {
@@ -311,104 +500,184 @@
         100% { transform: rotate(360deg); }
       }
       
+      /* 🌙 Enhanced Loading Text with Cult Atmosphere */
       .loading-text {
-        font-size: 2.2rem;
-        margin-bottom: 15px;
+        font-size: 2.5rem;
+        margin-bottom: 20px;
+        background: linear-gradient(45deg, 
+          rgba(255, 20, 147, 1) 0%,
+          rgba(139, 0, 139, 0.9) 25%,
+          rgba(255, 255, 255, 1) 50%,
+          rgba(139, 0, 139, 0.9) 75%,
+          rgba(255, 20, 147, 1) 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        background-size: 200% 100%;
         text-shadow: 
-          0 0 15px rgba(75, 0, 130, 1),
+          0 0 15px rgba(255, 20, 147, 0.8),
           0 0 30px rgba(139, 0, 139, 0.6),
-          0 0 45px rgba(138, 43, 226, 0.4),
-          0 0 60px rgba(147, 112, 219, 0.2);
-        animation: textGlow 4s ease-in-out infinite, textFloat 6s ease-in-out infinite;
+          0 0 45px rgba(75, 0, 130, 0.4);
+        animation: 
+          textShimmer 3s ease-in-out infinite,
+          textFloat 6s ease-in-out infinite,
+          textGlow 4s ease-in-out infinite;
         font-weight: 700;
         letter-spacing: 3px;
         position: relative;
+        text-align: center;
       }
 
       .loading-text::before {
         content: '✦';
         position: absolute;
-        left: -40px;
+        left: -50px;
         top: 50%;
         transform: translateY(-50%);
-        color: rgba(75, 0, 130, 0.8);
-        font-size: 1.5rem;
+        color: rgba(255, 20, 147, 0.9);
+        font-size: 1.8rem;
+        text-shadow: 0 0 25px rgba(255, 20, 147, 1);
         animation: starTwinkle 3s ease-in-out infinite;
       }
 
       .loading-text::after {
         content: '✦';
         position: absolute;
-        right: -40px;
+        right: -50px;
         top: 50%;
         transform: translateY(-50%);
-        color: rgba(139, 0, 139, 0.8);
-        font-size: 1.5rem;
+        color: rgba(139, 0, 139, 0.9);
+        font-size: 1.8rem;
+        text-shadow: 0 0 25px rgba(139, 0, 139, 1);
         animation: starTwinkle 3s ease-in-out infinite reverse;
+      }
+
+      @keyframes textShimmer {
+        0%, 100% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
       }
 
       @keyframes textGlow {
         0%, 100% { 
-          text-shadow: 
-            0 0 15px rgba(75, 0, 130, 1),
-            0 0 30px rgba(139, 0, 139, 0.6),
-            0 0 45px rgba(138, 43, 226, 0.4);
+          filter: drop-shadow(0 0 15px rgba(255, 20, 147, 0.8));
         }
-        50% { 
-          text-shadow: 
-            0 0 25px rgba(75, 0, 130, 1.2),
-            0 0 50px rgba(139, 0, 139, 0.8),
-            0 0 75px rgba(138, 43, 226, 0.6),
-            0 0 100px rgba(147, 112, 219, 0.4);
+        33% { 
+          filter: drop-shadow(0 0 25px rgba(255, 20, 147, 1.2));
+        }
+        66% { 
+          filter: drop-shadow(0 0 20px rgba(139, 0, 139, 1));
         }
       }
 
       @keyframes textFloat {
         0%, 100% { transform: translateY(0px); }
-        50% { transform: translateY(-10px); }
+        50% { transform: translateY(-12px); }
       }
 
       @keyframes starTwinkle {
-        0%, 100% { opacity: 0.4; transform: translateY(-50%) scale(1) rotate(0deg); }
-        50% { opacity: 1; transform: translateY(-50%) scale(1.2) rotate(180deg); }
+        0%, 100% { 
+          opacity: 0.5; 
+          transform: translateY(-50%) scale(1) rotate(0deg); 
+        }
+        50% { 
+          opacity: 1; 
+          transform: translateY(-50%) scale(1.3) rotate(180deg); 
+        }
       }
       
+      /* 💫 Enhanced Loading Subtitle */
       .loading-subtitle {
-        font-size: 1.2rem;
+        font-size: 1.4rem;
         opacity: 0.9;
-        text-shadow: 0 0 8px rgba(75, 0, 130, 0.6);
-        animation: subtitleGlow 5s ease-in-out infinite;
-        font-weight: 300;
+        color: rgba(200, 200, 200, 0.9);
+        text-shadow: 
+          0 0 12px rgba(255, 20, 147, 0.6),
+          0 0 24px rgba(139, 0, 139, 0.4);
+        animation: 
+          subtitleGlow 5s ease-in-out infinite,
+          subtitleTypewriter 8s ease-in-out infinite;
+        font-weight: 400;
         letter-spacing: 2px;
+        margin-bottom: 15px;
+        position: relative;
+        text-align: center;
+      }
+
+      .loading-subtitle::after {
+        content: '⟡';
+        position: absolute;
+        right: -25px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: rgba(255, 20, 147, 0.8);
+        animation: 
+          cursorBlink 1.5s ease-in-out infinite,
+          runeFloat 4s ease-in-out infinite;
+        font-size: 1.2rem;
       }
 
       @keyframes subtitleGlow {
-        0%, 100% { opacity: 0.7; }
-        50% { opacity: 1; }
+        0%, 100% { 
+          opacity: 0.8; 
+          text-shadow: 
+            0 0 12px rgba(255, 20, 147, 0.6),
+            0 0 24px rgba(139, 0, 139, 0.4);
+        }
+        50% { 
+          opacity: 1; 
+          text-shadow: 
+            0 0 18px rgba(255, 20, 147, 0.9),
+            0 0 36px rgba(139, 0, 139, 0.6),
+            0 0 54px rgba(75, 0, 130, 0.3);
+        }
+      }
+
+      @keyframes subtitleTypewriter {
+        0%, 10%, 100% { width: 100%; }
+        5% { width: 0%; }
+      }
+
+      @keyframes cursorBlink {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.3; }
+      }
+
+      @keyframes runeFloat {
+        0%, 100% { 
+          transform: translateY(-50%) rotate(0deg); 
+        }
+        50% { 
+          transform: translateY(-60%) rotate(180deg); 
+        }
       }
       
-      /* Enhanced Loading Progress */
+      /* 🔮 Enhanced Ritual Progress Bar */
       .loading-progress {
-        margin-top: 40px;
-        width: 350px;
+        margin-top: 45px;
+        width: 400px;
         text-align: center;
+        position: relative;
       }
       
       .progress-bar {
         width: 100%;
-        height: 6px;
+        height: 8px;
         background: 
           linear-gradient(90deg, 
-            rgba(75, 0, 130, 0.2), 
-            rgba(139, 0, 139, 0.15), 
-            rgba(75, 0, 130, 0.2));
-        border-radius: 3px;
+            rgba(0, 0, 0, 0.8) 0%,
+            rgba(75, 0, 130, 0.3) 25%, 
+            rgba(139, 0, 139, 0.2) 50%,
+            rgba(75, 0, 130, 0.3) 75%,
+            rgba(0, 0, 0, 0.8) 100%);
+        border-radius: 6px;
         overflow: hidden;
-        margin-bottom: 15px;
+        margin-bottom: 20px;
         box-shadow: 
-          0 0 15px rgba(75, 0, 130, 0.4),
-          inset 0 0 10px rgba(0, 0, 0, 0.5);
+          0 0 20px rgba(255, 20, 147, 0.4),
+          0 0 40px rgba(139, 0, 139, 0.2),
+          inset 0 0 15px rgba(0, 0, 0, 0.7);
         position: relative;
+        border: 1px solid rgba(255, 20, 147, 0.3);
       }
 
       .progress-bar::before {
@@ -418,29 +687,61 @@
         left: -100%;
         width: 100%;
         height: 100%;
-        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-        animation: progressShimmer 2s linear infinite;
+        background: linear-gradient(90deg, 
+          transparent, 
+          rgba(255, 20, 147, 0.4), 
+          rgba(255, 255, 255, 0.3),
+          rgba(139, 0, 139, 0.4),
+          transparent);
+        animation: enhancedProgressShimmer 3s linear infinite;
       }
 
-      @keyframes progressShimmer {
-        0% { left: -100%; }
-        100% { left: 100%; }
+      .progress-bar::after {
+        content: '⟐ ◆ ⟐ ◆ ⟐';
+        position: absolute;
+        top: -25px;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 0.9rem;
+        color: rgba(255, 20, 147, 0.6);
+        text-shadow: 0 0 15px rgba(255, 20, 147, 0.8);
+        animation: progressRunes 6s ease-in-out infinite;
+        letter-spacing: 8px;
+      }
+
+      @keyframes enhancedProgressShimmer {
+        0% { left: -100%; opacity: 0.6; }
+        50% { opacity: 1; }
+        100% { left: 100%; opacity: 0.6; }
+      }
+
+      @keyframes progressRunes {
+        0%, 100% { 
+          opacity: 0.6; 
+          transform: translateX(-50%) scale(1); 
+        }
+        50% { 
+          opacity: 1; 
+          transform: translateX(-50%) scale(1.1); 
+        }
       }
       
       .progress-fill {
         height: 100%;
         background: linear-gradient(90deg, 
-          rgba(75, 0, 130, 0.9), 
-          rgba(139, 0, 139, 0.9), 
-          rgba(138, 43, 226, 0.8),
-          rgba(147, 112, 219, 0.9),
-          rgba(255, 140, 0, 0.8));
-        border-radius: 3px;
+          rgba(255, 20, 147, 0.9), 
+          rgba(255, 69, 180, 0.9), 
+          rgba(139, 0, 139, 0.8),
+          rgba(255, 20, 147, 0.9),
+          rgba(255, 215, 0, 0.7));
+        border-radius: 6px;
         width: 0%;
-        transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-        animation: progressGlow 3s ease-in-out infinite;
+        transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        animation: enhancedProgressGlow 4s ease-in-out infinite;
         position: relative;
-        box-shadow: 0 0 20px rgba(75, 0, 130, 0.6);
+        box-shadow: 
+          0 0 25px rgba(255, 20, 147, 0.8),
+          0 0 50px rgba(139, 0, 139, 0.4);
       }
 
       .progress-fill::after {
@@ -448,6 +749,123 @@
         position: absolute;
         top: 0;
         right: 0;
+        width: 40px;
+        height: 100%;
+        background: linear-gradient(90deg, 
+          transparent, 
+          rgba(255, 255, 255, 0.6),
+          rgba(255, 20, 147, 0.3));
+        border-radius: 0 6px 6px 0;
+        animation: progressActiveShimmer 2.5s linear infinite;
+      }
+
+      .progress-fill::before {
+        content: '';
+        position: absolute;
+        top: -2px;
+        left: -2px;
+        right: -2px;
+        bottom: -2px;
+        background: linear-gradient(90deg, 
+          rgba(255, 20, 147, 0.3),
+          rgba(139, 0, 139, 0.2),
+          rgba(255, 20, 147, 0.3));
+        border-radius: 8px;
+        z-index: -1;
+        animation: progressHalo 3s ease-in-out infinite;
+      }
+
+      @keyframes enhancedProgressGlow {
+        0%, 100% { 
+          box-shadow: 
+            0 0 25px rgba(255, 20, 147, 0.8),
+            0 0 50px rgba(139, 0, 139, 0.4);
+        }
+        50% { 
+          box-shadow: 
+            0 0 35px rgba(255, 20, 147, 1.2),
+            0 0 70px rgba(139, 0, 139, 0.6),
+            0 0 100px rgba(75, 0, 130, 0.3);
+        }
+      }
+
+      @keyframes progressActiveShimmer {
+        0% { opacity: 0; transform: translateX(-20px); }
+        50% { opacity: 1; transform: translateX(0); }
+        100% { opacity: 0; transform: translateX(20px); }
+      }
+
+      @keyframes progressHalo {
+        0%, 100% { opacity: 0.5; transform: scale(1); }
+        50% { opacity: 0.8; transform: scale(1.05); }
+      }
+
+      /* 💫 Enhanced Progress Text with Cult Phrases */
+      .progress-text {
+        font-size: 1.1rem;
+        color: rgba(200, 200, 200, 0.9);
+        font-weight: 500;
+        letter-spacing: 1.5px;
+        text-shadow: 
+          0 0 12px rgba(255, 20, 147, 0.6),
+          0 0 24px rgba(139, 0, 139, 0.3);
+        animation: 
+          progressTextGlow 4s ease-in-out infinite,
+          progressTextFloat 5s ease-in-out infinite;
+        position: relative;
+        min-height: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .progress-text::before {
+        content: '◆';
+        position: absolute;
+        left: -30px;
+        color: rgba(255, 20, 147, 0.7);
+        animation: progressGems 3s ease-in-out infinite;
+        font-size: 1rem;
+      }
+
+      .progress-text::after {
+        content: '◆';
+        position: absolute;
+        right: -30px;
+        color: rgba(139, 0, 139, 0.7);
+        animation: progressGems 3s ease-in-out infinite reverse;
+        font-size: 1rem;
+      }
+
+      @keyframes progressTextGlow {
+        0%, 100% { 
+          text-shadow: 
+            0 0 12px rgba(255, 20, 147, 0.6),
+            0 0 24px rgba(139, 0, 139, 0.3);
+        }
+        50% { 
+          text-shadow: 
+            0 0 18px rgba(255, 20, 147, 0.9),
+            0 0 36px rgba(139, 0, 139, 0.5),
+            0 0 54px rgba(75, 0, 130, 0.2);
+        }
+      }
+
+      @keyframes progressTextFloat {
+        0%, 100% { transform: translateY(0px); }
+        50% { transform: translateY(-5px); }
+      }
+
+      @keyframes progressGems {
+        0%, 100% { 
+          opacity: 0.7; 
+          transform: scale(1) rotate(0deg); 
+        }
+        50% { 
+          opacity: 1; 
+          transform: scale(1.2) rotate(45deg); 
+        }
+      }
         width: 20px;
         height: 100%;
         background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4));
@@ -485,108 +903,370 @@
         display: none;
       }
       
-      /* Header - Dark Cult Style */
+      /* 🌙 Premium Cult Header - Gaming-Tier Polish */
       .header {
         text-align: center;
-        margin-bottom: 40px;
+        margin-bottom: 50px;
         color: #e0e0e0;
         position: relative;
-        padding: 20px 0;
+        padding: 30px 20px 40px 20px;
+        background: 
+          linear-gradient(135deg, 
+            rgba(0, 0, 0, 0.95) 0%, 
+            rgba(10, 0, 15, 0.98) 25%, 
+            rgba(5, 0, 10, 0.96) 50%, 
+            rgba(10, 0, 15, 0.98) 75%, 
+            rgba(0, 0, 0, 0.95) 100%),
+          radial-gradient(circle at 30% 70%, rgba(255, 20, 147, 0.08) 0%, transparent 60%),
+          radial-gradient(circle at 70% 30%, rgba(139, 0, 139, 0.06) 0%, transparent 50%);
+        border: 2px solid;
+        border-image: linear-gradient(45deg, 
+          rgba(255, 20, 147, 0.6), 
+          rgba(139, 0, 139, 0.4), 
+          rgba(75, 0, 130, 0.5), 
+          rgba(255, 20, 147, 0.6)) 1;
+        border-radius: 20px;
+        box-shadow: 
+          0 0 40px rgba(255, 20, 147, 0.3),
+          0 0 80px rgba(139, 0, 139, 0.2),
+          0 10px 30px rgba(0, 0, 0, 0.5),
+          inset 0 0 30px rgba(255, 20, 147, 0.05);
+        animation: headerBreathing 8s ease-in-out infinite;
+        overflow: hidden;
       }
-      
+
       .header::before {
-        content: '⟐ ◆ ⟐ ◆ ⟐';
+        content: '⟐ ◆ ☾ ◆ ⟐ ◆ ☽ ◆ ⟐';
         position: absolute;
-        top: -10px;
+        top: -15px;
         left: 50%;
         transform: translateX(-50%);
-        font-size: 1.8rem;
-        color: #9d4edd;
-        opacity: 0.7;
-        animation: runeFloat 4s ease-in-out infinite;
-        text-shadow: 0 0 15px rgba(75, 0, 130, 0.8);
+        font-size: 1.5rem;
+        color: rgba(255, 20, 147, 0.8);
+        opacity: 0.9;
+        animation: 
+          runeFloat 6s ease-in-out infinite,
+          runeGlow 4s ease-in-out infinite;
+        text-shadow: 
+          0 0 20px rgba(255, 20, 147, 1),
+          0 0 40px rgba(139, 0, 139, 0.6);
+        letter-spacing: 8px;
+        z-index: 2;
       }
 
       .header::after {
-        content: '◇ ⟐ ◇ ⟐ ◇';
+        content: '◇ ⟐ ☽ ⟐ ◇ ⟐ ☾ ⟐ ◇';
         position: absolute;
-        bottom: -10px;
+        bottom: -15px;
         left: 50%;
         transform: translateX(-50%);
-        font-size: 1.8rem;
-        color: #7209b7;
-        opacity: 0.7;
-        animation: runeFloat 4s ease-in-out infinite reverse;
-        text-shadow: 0 0 15px rgba(139, 0, 139, 0.8);
+        font-size: 1.5rem;
+        color: rgba(139, 0, 139, 0.8);
+        opacity: 0.9;
+        animation: 
+          runeFloat 6s ease-in-out infinite reverse,
+          runeGlow 4s ease-in-out infinite reverse;
+        text-shadow: 
+          0 0 20px rgba(139, 0, 139, 1),
+          0 0 40px rgba(255, 20, 147, 0.6);
+        letter-spacing: 8px;
+        z-index: 2;
       }
 
-      @keyframes runeFloat {
-        0%, 100% { transform: translateX(-50%) translateY(0px); opacity: 0.7; }
-        50% { transform: translateX(-50%) translateY(-8px); opacity: 1; }
-      }
-      
-      .header h1 {
-        font-size: 3.5rem;
-        margin-bottom: 15px;
-        background: linear-gradient(45deg, #e0e0e0 0%, #9d4edd 25%, #7209b7 50%, #6a0dad 75%, #e0e0e0 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-        text-shadow: 0 0 30px rgba(75, 0, 130, 0.5);
-        position: relative;
-        font-weight: 700;
-        letter-spacing: 2px;
-        animation: titleGlow 6s ease-in-out infinite;
-      }
-
-      @keyframes titleGlow {
+      @keyframes headerBreathing {
         0%, 100% { 
-          filter: drop-shadow(0 0 10px rgba(75, 0, 130, 0.5)); 
+          box-shadow: 
+            0 0 40px rgba(255, 20, 147, 0.3),
+            0 0 80px rgba(139, 0, 139, 0.2),
+            0 10px 30px rgba(0, 0, 0, 0.5);
           transform: scale(1);
         }
         50% { 
-          filter: drop-shadow(0 0 20px rgba(139, 0, 139, 0.8)); 
-          transform: scale(1.02);
+          box-shadow: 
+            0 0 50px rgba(255, 20, 147, 0.4),
+            0 0 100px rgba(139, 0, 139, 0.3),
+            0 0 150px rgba(75, 0, 130, 0.15),
+            0 15px 40px rgba(0, 0, 0, 0.6);
+          transform: scale(1.005);
         }
+      }
+
+      @keyframes runeFloat {
+        0%, 100% { 
+          transform: translateX(-50%) translateY(0px); 
+          opacity: 0.8; 
+        }
+        50% { 
+          transform: translateX(-50%) translateY(-10px); 
+          opacity: 1; 
+        }
+      }
+
+      @keyframes runeGlow {
+        0%, 100% { 
+          text-shadow: 
+            0 0 20px rgba(255, 20, 147, 1),
+            0 0 40px rgba(139, 0, 139, 0.6);
+        }
+        50% { 
+          text-shadow: 
+            0 0 30px rgba(255, 20, 147, 1.3),
+            0 0 60px rgba(139, 0, 139, 0.8),
+            0 0 90px rgba(75, 0, 130, 0.5);
+        }
+      }
+      
+      /* 🌙 Premium Header Title */
+      .header h1 {
+        font-size: 3.8rem;
+        margin-bottom: 20px;
+        background: linear-gradient(45deg, 
+          rgba(255, 255, 255, 1) 0%, 
+          rgba(255, 20, 147, 0.9) 20%, 
+          rgba(139, 0, 139, 0.8) 40%, 
+          rgba(255, 255, 255, 1) 60%, 
+          rgba(255, 20, 147, 0.9) 80%, 
+          rgba(255, 255, 255, 1) 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        background-size: 200% 100%;
+        position: relative;
+        font-weight: 800;
+        letter-spacing: 3px;
+        animation: 
+          titleShimmer 4s ease-in-out infinite,
+          titleGlow 6s ease-in-out infinite,
+          titleFloat 8s ease-in-out infinite;
+        text-shadow: 
+          0 0 30px rgba(255, 20, 147, 0.5),
+          0 0 60px rgba(139, 0, 139, 0.3);
+        z-index: 3;
       }
 
       .header h1::before {
         content: '☾';
         position: absolute;
-        left: -80px;
+        left: -100px;
         top: 50%;
         transform: translateY(-50%);
-        font-size: 2.5rem;
-        color: #9d4edd;
-        text-shadow: 0 0 20px rgba(75, 0, 130, 0.9);
-        animation: moonPhase 8s ease-in-out infinite;
+        font-size: 3rem;
+        color: rgba(255, 20, 147, 0.9);
+        text-shadow: 
+          0 0 25px rgba(255, 20, 147, 1),
+          0 0 50px rgba(139, 0, 139, 0.6);
+        animation: 
+          moonPhase 10s ease-in-out infinite,
+          moonGlow 6s ease-in-out infinite;
       }
 
       .header h1::after {
         content: '☽';
         position: absolute;
-        right: -80px;
+        right: -100px;
         top: 50%;
         transform: translateY(-50%);
-        font-size: 2.5rem;
-        color: #7209b7;
-        text-shadow: 0 0 20px rgba(139, 0, 139, 0.9);
-        animation: moonPhase 8s ease-in-out infinite reverse;
+        font-size: 3rem;
+        color: rgba(139, 0, 139, 0.9);
+        text-shadow: 
+          0 0 25px rgba(139, 0, 139, 1),
+          0 0 50px rgba(255, 20, 147, 0.6);
+        animation: 
+          moonPhase 10s ease-in-out infinite reverse,
+          moonGlow 6s ease-in-out infinite reverse;
+      }
+
+      @keyframes titleShimmer {
+        0%, 100% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+      }
+
+      @keyframes titleGlow {
+        0%, 100% { 
+          filter: 
+            drop-shadow(0 0 15px rgba(255, 20, 147, 0.6))
+            drop-shadow(0 0 30px rgba(139, 0, 139, 0.3));
+          transform: scale(1);
+        }
+        33% { 
+          filter: 
+            drop-shadow(0 0 25px rgba(255, 20, 147, 0.9))
+            drop-shadow(0 0 50px rgba(139, 0, 139, 0.5))
+            drop-shadow(0 0 75px rgba(75, 0, 130, 0.3));
+          transform: scale(1.02);
+        }
+        66% { 
+          filter: 
+            drop-shadow(0 0 20px rgba(139, 0, 139, 0.8))
+            drop-shadow(0 0 40px rgba(255, 20, 147, 0.4));
+          transform: scale(1.01);
+        }
+      }
+
+      @keyframes titleFloat {
+        0%, 100% { transform: translateY(0px); }
+        50% { transform: translateY(-5px); }
       }
 
       @keyframes moonPhase {
-        0%, 100% { opacity: 0.6; transform: translateY(-50%) rotate(0deg); }
-        50% { opacity: 1; transform: translateY(-50%) rotate(15deg); }
+        0%, 100% { 
+          opacity: 0.7; 
+          transform: translateY(-50%) rotate(0deg) scale(1); 
+        }
+        25% { 
+          opacity: 1; 
+          transform: translateY(-50%) rotate(15deg) scale(1.1); 
+        }
+        50% { 
+          opacity: 0.8; 
+          transform: translateY(-50%) rotate(30deg) scale(1.05); 
+        }
+        75% { 
+          opacity: 1; 
+          transform: translateY(-50%) rotate(15deg) scale(1.1); 
+        }
+      }
+
+      @keyframes moonGlow {
+        0%, 100% { 
+          text-shadow: 
+            0 0 25px rgba(255, 20, 147, 1),
+            0 0 50px rgba(139, 0, 139, 0.6);
+        }
+        50% { 
+          text-shadow: 
+            0 0 35px rgba(255, 20, 147, 1.3),
+            0 0 70px rgba(139, 0, 139, 0.8),
+            0 0 100px rgba(75, 0, 130, 0.5);
+        }
       }
       
+      /* 💫 Enhanced Header Subtitle */
       .header p {
-        font-size: 1.3rem;
-        opacity: 0.9;
-        color: #c0c0c0;
-        text-shadow: 0 0 10px rgba(75, 0, 130, 0.3);
-        margin-top: 10px;
-        font-weight: 300;
-        letter-spacing: 1px;
+        font-size: 1.5rem;
+        opacity: 0.95;
+        color: rgba(220, 220, 220, 0.9);
+        text-shadow: 
+          0 0 15px rgba(255, 20, 147, 0.4),
+          0 0 30px rgba(139, 0, 139, 0.2);
+        margin-top: 15px;
+        font-weight: 400;
+        letter-spacing: 2px;
+        position: relative;
+        animation: 
+          subtitleGlow 7s ease-in-out infinite,
+          subtitleFloat 9s ease-in-out infinite;
+      }
+
+      .header p::before {
+        content: '◆';
+        position: absolute;
+        left: -35px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: rgba(255, 20, 147, 0.7);
+        font-size: 1.2rem;
+        animation: gemTwinkle 4s ease-in-out infinite;
+      }
+
+      .header p::after {
+        content: '◆';
+        position: absolute;
+        right: -35px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: rgba(139, 0, 139, 0.7);
+        font-size: 1.2rem;
+        animation: gemTwinkle 4s ease-in-out infinite reverse;
+      }
+
+      @keyframes subtitleGlow {
+        0%, 100% { 
+          text-shadow: 
+            0 0 15px rgba(255, 20, 147, 0.4),
+            0 0 30px rgba(139, 0, 139, 0.2);
+          opacity: 0.9;
+        }
+        50% { 
+          text-shadow: 
+            0 0 20px rgba(255, 20, 147, 0.6),
+            0 0 40px rgba(139, 0, 139, 0.3),
+            0 0 60px rgba(75, 0, 130, 0.15);
+          opacity: 1;
+        }
+      }
+
+      @keyframes subtitleFloat {
+        0%, 100% { transform: translateY(0px); }
+        50% { transform: translateY(-3px); }
+      }
+
+      @keyframes gemTwinkle {
+        0%, 100% { 
+          opacity: 0.7; 
+          transform: translateY(-50%) scale(1) rotate(0deg); 
+        }
+        50% { 
+          opacity: 1; 
+          transform: translateY(-50%) scale(1.15) rotate(45deg); 
+        }
+      }
+
+      /* 🎭 Premium Header Top Container */
+      .header-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 25px;
+        padding: 20px;
+        background: 
+          linear-gradient(135deg, 
+            rgba(255, 20, 147, 0.05) 0%, 
+            rgba(0, 0, 0, 0.3) 50%, 
+            rgba(139, 0, 139, 0.05) 100%);
+        border: 1px solid rgba(255, 20, 147, 0.2);
+        border-radius: 15px;
+        box-shadow: 
+          0 0 20px rgba(255, 20, 147, 0.1),
+          inset 0 0 20px rgba(0, 0, 0, 0.2);
+        animation: headerTopGlow 7s ease-in-out infinite;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .header-top::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, 
+          transparent, 
+          rgba(255, 20, 147, 0.1), 
+          transparent);
+        animation: headerTopShimmer 8s linear infinite;
+      }
+
+      @keyframes headerTopGlow {
+        0%, 100% { 
+          border-color: rgba(255, 20, 147, 0.2);
+          box-shadow: 
+            0 0 20px rgba(255, 20, 147, 0.1),
+            inset 0 0 20px rgba(0, 0, 0, 0.2);
+        }
+        50% { 
+          border-color: rgba(255, 20, 147, 0.4);
+          box-shadow: 
+            0 0 30px rgba(255, 20, 147, 0.2),
+            0 0 50px rgba(139, 0, 139, 0.1),
+            inset 0 0 30px rgba(0, 0, 0, 0.3);
+        }
+      }
+
+      @keyframes headerTopShimmer {
+        0% { left: -100%; }
+        100% { left: 100%; }
       }
       
       /* Enhanced Navigation */
@@ -2329,13 +3009,50 @@
           order: -1;
         }
         
+        .header {
+          padding: 25px 15px 35px 15px;
+          margin-bottom: 35px;
+          border-radius: 15px;
+        }
+        
+        .header::before,
+        .header::after {
+          font-size: 1.2rem;
+          letter-spacing: 6px;
+        }
+        
         .header h1 {
-          font-size: 2.2rem;
+          font-size: 2.8rem;
+          letter-spacing: 2px;
+          margin-bottom: 15px;
         }
         
         .header h1::before,
         .header h1::after {
-          display: none; /* Hide moon symbols on mobile */
+          font-size: 2.2rem;
+        }
+        
+        .header h1::before {
+          left: -70px;
+        }
+        
+        .header h1::after {
+          right: -70px;
+        }
+        
+        .header p {
+          font-size: 1.3rem;
+          letter-spacing: 1.5px;
+        }
+        
+        .header p::before {
+          left: -25px;
+          font-size: 1rem;
+        }
+        
+        .header p::after {
+          right: -25px;
+          font-size: 1rem;
         }
         
         .navigation {
@@ -2548,12 +3265,45 @@
           padding: 15px;
         }
         
+        .header {
+          padding: 20px 12px 30px 12px;
+          margin-bottom: 30px;
+          border-radius: 12px;
+        }
+        
+        .header::before,
+        .header::after {
+          font-size: 1rem;
+          letter-spacing: 4px;
+        }
+        
         .header h1 {
+          font-size: 2.2rem;
+          letter-spacing: 1.5px;
+          margin-bottom: 12px;
+        }
+        
+        .header h1::before,
+        .header h1::after {
           font-size: 1.8rem;
         }
         
+        .header h1::before {
+          left: -50px;
+        }
+        
+        .header h1::after {
+          right: -50px;
+        }
+        
         .header p {
-          font-size: 1rem;
+          font-size: 1.1rem;
+          letter-spacing: 1px;
+        }
+        
+        .header p::before,
+        .header p::after {
+          display: none; /* Hide decorative gems on small screens */
         }
         
         .navigation {
@@ -2880,6 +3630,88 @@
         
         .reward-text {
           font-size: 0.8rem;
+        }
+        
+        /* Enhanced Header Optimization for Extra Small Screens */
+        .header {
+          padding: 18px 10px 25px 10px;
+          margin-bottom: 25px;
+        }
+        
+        .header::before,
+        .header::after {
+          font-size: 0.9rem;
+          letter-spacing: 3px;
+        }
+        
+        .header h1 {
+          font-size: 1.9rem;
+          letter-spacing: 1px;
+        }
+        
+        .header h1::before,
+        .header h1::after {
+          font-size: 1.5rem;
+        }
+        
+        .header h1::before {
+          left: -40px;
+        }
+        
+        .header h1::after {
+          right: -40px;
+        }
+        
+        .header p {
+          font-size: 1rem;
+          letter-spacing: 0.5px;
+        }
+        
+        /* Loading Screen Mobile Optimization */
+        .loading-screen {
+          padding: 20px;
+        }
+        
+        .mystical-loader {
+          width: 100px;
+          height: 100px;
+        }
+        
+        .mystical-loader::before {
+          font-size: 2rem;
+          letter-spacing: 6px;
+        }
+        
+        .mystical-loader::after {
+          font-size: 1.6rem;
+          letter-spacing: 4px;
+        }
+        
+        .loading-text {
+          font-size: 2rem;
+          letter-spacing: 2px;
+        }
+        
+        .loading-text::before,
+        .loading-text::after {
+          font-size: 1.5rem;
+        }
+        
+        .loading-text::before {
+          left: -35px;
+        }
+        
+        .loading-text::after {
+          right: -35px;
+        }
+        
+        .loading-subtitle {
+          font-size: 1.1rem;
+          letter-spacing: 1px;
+        }
+        
+        .loading-progress {
+          width: 320px;
         }
       }
 
@@ -6557,15 +7389,19 @@
       // Initialize App with Enhanced Loading
       function initializeApp() {
         try {
-          // Enhanced loading sequence
+          // 🌙 Enhanced Cult-Themed Loading Sequence
           const loadingSteps = [
-            { progress: 10, text: "Connecting to the void..." },
-            { progress: 25, text: "Summoning Jupiter integration..." },
-            { progress: 40, text: "Awakening Solana spirits..." },
-            { progress: 60, text: "Channeling mystical energies..." },
-            { progress: 80, text: "Preparing ritual chamber..." },
+            { progress: 8, text: "Binding cult contracts..." },
+            { progress: 18, text: "Channeling Moon energy..." },
+            { progress: 28, text: "Summoning swap data..." },
+            { progress: 38, text: "Awakening Shadow protocols..." },
+            { progress: 48, text: "Connecting to the void..." },
+            { progress: 58, text: "Summoning Jupiter integration..." },
+            { progress: 68, text: "Awakening Solana spirits..." },
+            { progress: 78, text: "Channeling mystical energies..." },
+            { progress: 88, text: "Preparing ritual chamber..." },
             { progress: 95, text: "Opening dimensional portal..." },
-            { progress: 100, text: "Welcome to NocturneSwap..." }
+            { progress: 100, text: "🌙 Welcome to NocturneSwap ⚔️" }
           ];
           
           let stepIndex = 0;
