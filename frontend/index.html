@@ -6000,30 +6000,109 @@
         // In production, would update a status display
       }
       
-      // Mock Data Updates
+      // Enhanced Mock Data Updates with Realistic Values
       function updateMarketStats() {
+        // Enhanced market stats with realistic varied data
+        const marketStats = [
+          { id: 'totalVolume', label: "24h Volume", value: "$1.24M", icon: "📊" },
+          { id: 'totalLiquidity', label: "Total Liquidity", value: "$8.7M", icon: "💧" },
+          { id: 'totalUsers', label: "Active Users", value: "1,032", icon: "👤" },
+          { id: 'totalTrades', label: "Total Trades", value: "8,472", icon: "🔁" }
+        ];
+
+        // Add some randomness to make it feel live
+        const volumeVariation = (Math.random() * 0.2 - 0.1); // ±10%
+        const baseVolume = 1240000;
+        const newVolume = baseVolume * (1 + volumeVariation);
+        
         const stats = {
-          totalVolume: '$' + (Math.random() * 10000000).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ','),
-          totalLiquidity: '$' + (Math.random() * 100000000).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ','),
-          totalUsers: Math.floor(Math.random() * 50000) + 10000,
-          totalTrades: Math.floor(Math.random() * 1000000) + 100000
+          totalVolume: '$' + (newVolume / 1000000).toFixed(2) + 'M',
+          totalLiquidity: '$' + (8.7 + (Math.random() * 0.6 - 0.3)).toFixed(1) + 'M',
+          totalUsers: (1032 + Math.floor(Math.random() * 20 - 10)).toString(),
+          totalTrades: (8472 + Math.floor(Math.random() * 100 - 50)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
         };
         
         Object.entries(stats).forEach(([key, value]) => {
           const element = document.getElementById(key);
-          if (element) element.textContent = value;
+          if (element) {
+            element.textContent = value;
+            // Add subtle animation on update
+            element.style.transform = 'scale(1.05)';
+            setTimeout(() => {
+              element.style.transform = 'scale(1)';
+            }, 200);
+          }
         });
       }
       
-      // Update Trading History
-      function updateTradingHistory() {
+      // Enhanced Recent Trades with Diverse Data
+      function updateRecentTrades() {
         const mockTrades = [
-          { pair: 'SOL → USDC', amount: (Math.random() * 10).toFixed(2) + ' SOL', time: Math.floor(Math.random() * 60) + ' mins ago' },
-          { pair: 'USDC → RAY', amount: (Math.random() * 100).toFixed(0) + ' USDC', time: Math.floor(Math.random() * 120) + ' mins ago' },
-          { pair: 'RAY → SOL', amount: (Math.random() * 200).toFixed(0) + ' RAY', time: Math.floor(Math.random() * 180) + ' mins ago' },
-          { pair: 'SOL → SRM', amount: (Math.random() * 5).toFixed(2) + ' SOL', time: Math.floor(Math.random() * 240) + ' mins ago' },
-          { pair: 'USDC → SOL', amount: (Math.random() * 150).toFixed(0) + ' USDC', time: Math.floor(Math.random() * 300) + ' mins ago' }
+          { wallet: "0xM0ON...cult", pair: "NCTP/SOL", amount: "420.00 NCTP", time: "just now", type: "buy" },
+          { wallet: "0xDEAD...42", pair: "SOL/USDC", amount: "17.3 SOL", time: "1m ago", type: "sell" },
+          { wallet: "0xABCD...1234", pair: "FUD/USDC", amount: "8,888 FUD", time: "2m ago", type: "buy" },
+          { wallet: "0xXAPE...69", pair: "PEPE/SOL", amount: "1.2B PEPE", time: "10m ago", type: "sell" },
+          { wallet: "0xCHAD...XP", pair: "SOL/USDC", amount: "0.88 SOL", time: "15m ago", type: "buy" },
+          { wallet: "0xG0AT...420", pair: "NCTP/USDC", amount: "3,300 NCTP", time: "30m ago", type: "sell" }
         ];
+        
+        // Add some randomness to make it feel live
+        const shuffledTrades = [...mockTrades];
+        // Randomly update first trade time
+        if (Math.random() > 0.7) {
+          shuffledTrades[0].time = "just now";
+        }
+        
+        const recentTradesElement = document.getElementById('recentTrades');
+        if (recentTradesElement) {
+          recentTradesElement.innerHTML = shuffledTrades.slice(0, 6).map(trade => `
+            <div class="trade-item" style="transition: all 0.3s ease;">
+              <div>
+                <div class="trade-pair">${trade.pair} ${trade.type === 'buy' ? '🔺' : '🔻'}</div>
+                <div class="trade-amount" style="font-family: monospace;">${trade.amount}</div>
+              </div>
+              <div class="trade-time" style="color: ${trade.time === 'just now' ? '#4ade80' : '#a0a0a0'};">${trade.time}</div>
+            </div>
+          `).join('');
+        }
+      }
+      // Enhanced Trading History with Buy/Sell + Profit/Loss
+      function updateTradingHistory() {
+        const tradeHistory = [
+          { type: "Buy", token: "NCTP", amount: "1,000", pnl: "+12.3%", date: "2025-07-11 01:05", profit: true },
+          { type: "Sell", token: "SOL", amount: "50", pnl: "-3.4%", date: "2025-07-10 23:44", profit: false },
+          { type: "Buy", token: "FUD", amount: "6,900", pnl: "+8.9%", date: "2025-07-10 21:17", profit: true },
+          { type: "Sell", token: "PEPE", amount: "2.3M", pnl: "+4.6%", date: "2025-07-10 17:55", profit: true },
+          { type: "Buy", token: "USDC", amount: "900", pnl: "0%", date: "2025-07-09 11:20", profit: null },
+          { type: "Sell", token: "NCTP", amount: "500", pnl: "-12.5%", date: "2025-07-08 19:02", profit: false }
+        ];
+        
+        const historyElement = document.getElementById('tradingHistory');
+        if (historyElement) {
+          historyElement.innerHTML = tradeHistory.map(trade => {
+            const pnlColor = trade.profit === null ? '#a0a0a0' : (trade.profit ? '#4ade80' : '#f87171');
+            const typeIcon = trade.type === 'Buy' ? '🔺' : '🔻';
+            const pnlIcon = trade.profit === null ? '' : (trade.profit ? ' 📈' : ' 📉');
+            
+            return `
+              <div class="trade-entry" style="transition: all 0.3s ease;">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <span style="font-weight: 700;">${typeIcon} ${trade.type}</span>
+                  <span style="font-family: monospace; color: #e0e0e0;">${trade.token}</span>
+                </div>
+                <div style="text-align: center;">
+                  <div style="font-family: monospace; font-weight: 600;">${trade.amount}</div>
+                  <div style="font-size: 0.8rem; color: #a0a0a0;">${trade.date.split(' ')[1]}</div>
+                </div>
+                <div style="text-align: right;">
+                  <div style="color: ${pnlColor}; font-weight: 700;">${trade.pnl}${pnlIcon}</div>
+                  <div style="font-size: 0.8rem; color: #a0a0a0;">${trade.date.split(' ')[0]}</div>
+                </div>
+              </div>
+            `;
+          }).join('');
+        }
+      }
         
         const historyElement = document.getElementById('tradingHistory');
         if (historyElement) {
@@ -6158,9 +6237,18 @@
           // Gaming-Tier Enhancements Event Listeners
           initializeGamingFeatures();
           
-          // Update market stats periodically
+          // Initialize enhanced mock data with diverse, realistic values
           updateMarketStats();
+          updateRecentTrades();
+          updateTradingHistory();
+          updateSocialFeed();
+          updatePoolOverview();
+          
+          // Update market stats and other data periodically
           setInterval(updateMarketStats, 30000); // Update every 30 seconds
+          setInterval(updateRecentTrades, 45000); // Update every 45 seconds
+          setInterval(updateSocialFeed, 60000); // Update every minute
+          setInterval(updatePoolOverview, 120000); // Update every 2 minutes
           
           // Hide loading screen
           document.getElementById('loadingScreen').style.display = 'none';
@@ -6697,6 +6785,71 @@
           document.execCommand('copy');
           showNotification('Referral link copied! 🔗');
         }
+      }
+
+      // Enhanced Social Hub Feed with XP logs, referrals, DAO actions
+      function updateSocialFeed() {
+        const logs = [
+          { user: "MoonWarden", action: "Earned XP (Trade Volume)", xp: "+75 XP", time: "3m ago", icon: "📈" },
+          { user: "Degen42", action: "Referred a cultist", xp: "+100 XP", time: "8m ago", icon: "🔗" },
+          { user: "RugSniper", action: "Upvoted DAO Proposal #12", xp: "+40 XP", time: "15m ago", icon: "🗳️" },
+          { user: "CultSeeker", action: "Completed Daily Quest", xp: "+200 XP", time: "30m ago", icon: "⭐" },
+          { user: "AirdropNomad", action: "Claimed Level 5 Bonus", xp: "+300 XP", time: "1h ago", icon: "🎁" },
+          { user: "NCTPMaxi", action: "Swapped 5,000 NCTP", xp: "+55 XP", time: "2h ago", icon: "🔄" }
+        ];
+
+        const socialFeeds = document.querySelectorAll('.social-feed');
+        socialFeeds.forEach(feedElement => {
+          if (feedElement) {
+            feedElement.innerHTML = logs.map(log => {
+              const isRecent = ['3m ago', '8m ago'].includes(log.time);
+              return `
+                <div class="feed-item" style="transition: all 0.3s ease; ${isRecent ? 'background: rgba(75, 0, 130, 0.1); border-left: 3px solid rgba(75, 0, 130, 0.5);' : ''}">
+                  <div class="feed-avatar" style="background: linear-gradient(135deg, rgba(75, 0, 130, 0.8), rgba(139, 0, 139, 0.6));">
+                    ${log.icon}
+                  </div>
+                  <div class="feed-content">
+                    <div class="feed-user" style="font-weight: 700; color: #e0e0e0;">${log.user}</div>
+                    <div class="feed-text" style="color: #c0c0c0;">${log.action}</div>
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 4px;">
+                      <div class="feed-time" style="color: ${isRecent ? '#4ade80' : '#a0a0a0'};">${log.time}</div>
+                      <div style="color: #4ade80; font-weight: 600; font-size: 0.9rem;">${log.xp}</div>
+                    </div>
+                  </div>
+                </div>
+              `;
+            }).join('');
+          }
+        });
+      }
+
+      // Enhanced Pool Overview with Detailed Pool Data
+      function updatePoolOverview() {
+        const pools = [
+          { name: "NCTP/SOL", apr: "92.4%", tvl: "$420,420", staked: "3,000 NCTP", yourShare: "12.4%", hot: true },
+          { name: "SOL/USDC", apr: "38.1%", tvl: "$1.2M", staked: "5.1 SOL", yourShare: "5.2%", hot: false },
+          { name: "FUD/USDC", apr: "66.6%", tvl: "$880K", staked: "8,888 FUD", yourShare: "1.7%", hot: false },
+          { name: "PEPE/NCTP", apr: "105%", tvl: "$1.0M", staked: "1.1M PEPE", yourShare: "9.9%", hot: true }
+        ];
+
+        // Update pool stats
+        const poolStats = {
+          poolCount: pools.length.toString(),
+          poolTVL: "$4.5M",
+          poolAPY: "75.5%"
+        };
+
+        Object.entries(poolStats).forEach(([key, value]) => {
+          const element = document.getElementById(key);
+          if (element) {
+            element.textContent = value;
+            // Add subtle animation on update
+            element.style.transform = 'scale(1.05)';
+            setTimeout(() => {
+              element.style.transform = 'scale(1)';
+            }, 200);
+          }
+        });
       }
 
       // DAO Functions
