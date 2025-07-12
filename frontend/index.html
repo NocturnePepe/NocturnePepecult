@@ -79,7 +79,8 @@
           radial-gradient(circle at 90% 20%, rgba(147, 112, 219, 0.05) 0%, transparent 40%);
         pointer-events: none;
         z-index: -2;
-        animation: mysticalPulse 15s ease-in-out infinite, slowDrift 30s linear infinite;
+        animation: mysticalPulse 12s ease-in-out infinite;
+        will-change: transform, opacity;
         transform-origin: center;
       }
 
@@ -96,7 +97,8 @@
           linear-gradient(135deg, transparent 48%, rgba(138, 43, 226, 0.02) 50%, transparent 52%);
         pointer-events: none;
         z-index: -1;
-        animation: mysticalGrid 25s linear infinite, gridPulse 8s ease-in-out infinite;
+        animation: mysticalGrid 12s linear infinite;
+        will-change: transform;
       }
 
       /* Optimized particle effect overlay - Mobile Friendly */
@@ -114,7 +116,9 @@
           radial-gradient(1px 1px at 90px 40px, rgba(138, 43, 226, 0.05), transparent);
         background-repeat: repeat;
         background-size: 200px 120px; /* Larger pattern, less dense */
-        animation: particles 40s linear infinite;
+        animation: particles 20s linear infinite;
+        will-change: transform, opacity;
+        transform: translateZ(0);
         opacity: 0.15; /* Further reduced for better component visibility */
         will-change: transform; /* Only transform for better performance */
         transform: translateZ(0); /* Hardware acceleration */
@@ -230,11 +234,11 @@
         justify-content: center;
         align-items: center;
         color: #e0e0e0;
-        z-index: 9999;
+        z-index: 50;
         backdrop-filter: blur(8px);
-        animation: 
-          loadingVoidBreathing 8s ease-in-out infinite,
-          loadingParticleShift 12s linear infinite;
+        -webkit-backdrop-filter: blur(8px);
+        will-change: filter;
+        animation: loadingVoidBreathing 8s ease-in-out infinite;
         overflow: hidden;
         position: relative;
       }
@@ -248,17 +252,14 @@
         width: 200%;
         height: 200%;
         background-image: 
-          radial-gradient(2px 2px at 20px 30px, rgba(255, 20, 147, 0.8), transparent),
-          radial-gradient(2px 2px at 40px 70px, rgba(139, 0, 139, 0.6), transparent),
-          radial-gradient(1px 1px at 90px 40px, rgba(255, 255, 255, 0.4), transparent),
-          radial-gradient(1px 1px at 130px 80px, rgba(255, 20, 147, 0.5), transparent),
-          radial-gradient(2px 2px at 160px 30px, rgba(75, 0, 130, 0.7), transparent);
+          radial-gradient(2px 2px at 20px 30px, rgba(255, 20, 147, 0.6), transparent),
+          radial-gradient(1px 1px at 90px 40px, rgba(255, 255, 255, 0.3), transparent);
         background-repeat: repeat;
         background-size: 200px 200px;
-        animation: 
-          floatingEmbers 20s linear infinite,
-          emberGlow 6s ease-in-out infinite;
-        opacity: 0.7;
+        animation: floatingEmbers 12s linear infinite;
+        opacity: 0.5;
+        will-change: transform;
+        transform: translateZ(0);
       }
 
       /* Mystical overlay pattern */
@@ -276,7 +277,9 @@
             transparent 2deg, 
             rgba(139, 0, 139, 0.02) 3deg, 
             transparent 4deg);
-        animation: mysticPattern 15s linear infinite;
+        animation: mysticPattern 12s linear infinite;
+        opacity: 0.3;
+        will-change: transform;
         pointer-events: none;
       }
 
@@ -330,17 +333,13 @@
         position: absolute;
         font-size: 2.5rem;
         color: rgba(255, 20, 147, 0.9);
-        text-shadow: 
-          0 0 30px rgba(255, 20, 147, 1),
-          0 0 60px rgba(139, 0, 139, 0.8),
-          0 0 90px rgba(75, 0, 130, 0.6);
-        animation: 
-          runicSigilSpin 4s linear infinite,
-          sigilPulse 3s ease-in-out infinite,
-          sigilGlow 6s ease-in-out infinite;
+        text-shadow: 0 0 30px rgba(255, 20, 147, 1);
+        animation: runicSigilSpin 4s linear infinite;
         transform-origin: center;
         white-space: nowrap;
         letter-spacing: 8px;
+        will-change: transform;
+        transform: translateZ(0);
       }
 
       .mystical-loader::after {
@@ -348,17 +347,13 @@
         position: absolute;
         font-size: 2rem;
         color: rgba(139, 0, 139, 0.7);
-        text-shadow: 
-          0 0 25px rgba(139, 0, 139, 1),
-          0 0 50px rgba(75, 0, 130, 0.8),
-          0 0 75px rgba(255, 20, 147, 0.6);
-        animation: 
-          runicSigilSpin 6s linear infinite reverse,
-          sigilFloat 4s ease-in-out infinite,
-          secondarySigilGlow 8s ease-in-out infinite;
+        text-shadow: 0 0 25px rgba(139, 0, 139, 1);
+        animation: runicSigilSpin 6s linear infinite reverse;
         transform-origin: center;
         white-space: nowrap;
         letter-spacing: 6px;
+        will-change: transform;
+        transform: translateZ(0);
       }
 
       @keyframes runicSigilSpin {
@@ -431,7 +426,10 @@
         border-bottom: 5px solid #6a0dad;
         border-left: 5px solid rgba(138, 43, 226, 0.8);
         border-radius: 50%;
-        animation: cultSpin 2s linear infinite, spinnerGlow 3s ease-in-out infinite;
+        animation: cultSpin 2s linear infinite;
+        will-change: transform;
+        transform: translateZ(0);
+        backface-visibility: hidden;
         margin-bottom: 30px;
         box-shadow: 
           0 0 25px rgba(75, 0, 130, 0.6),
@@ -452,7 +450,9 @@
         border-top: 3px solid rgba(139, 0, 139, 0.4);
         border-right: 3px solid rgba(147, 112, 219, 0.3);
         border-radius: 50%;
-        animation: cultSpin 3s linear infinite reverse, orbitGlow 4s ease-in-out infinite;
+        animation: cultSpin 3s linear infinite reverse;
+        will-change: transform;
+        transform: translateZ(0);
       }
 
       .loading-spinner::after {
@@ -466,7 +466,9 @@
         border-bottom: 2px solid rgba(138, 43, 226, 0.2);
         border-left: 2px solid rgba(147, 112, 219, 0.25);
         border-radius: 50%;
-        animation: cultSpin 4s linear infinite, outerOrbitGlow 5s ease-in-out infinite;
+        animation: cultSpin 4s linear infinite;
+        will-change: transform;
+        transform: translateZ(0);
       }
 
       @keyframes spinnerGlow {
@@ -518,18 +520,13 @@
           0 0 15px rgba(255, 20, 147, 0.8),
           0 0 30px rgba(139, 0, 139, 0.6),
           0 0 45px rgba(75, 0, 130, 0.4);
-        animation: 
-          textShimmer 3s ease-in-out infinite,
-          textFloat 6s ease-in-out infinite,
-          textGlow 4s ease-in-out infinite;
+        text-shadow: 0 0 15px rgba(255, 20, 147, 0.8);
+        animation: textShimmer 3s ease-in-out infinite;
         font-weight: 700;
         letter-spacing: 3px;
         position: relative;
         text-align: center;
-      }
-
-      .loading-text::before {
-        content: '✦';
+        will-change: background-position;
         position: absolute;
         left: -50px;
         top: 50%;
@@ -886,6 +883,9 @@
         text-shadow: 0 0 20px rgba(255, 20, 147, 0.6);
         animation: runeFloat 15s linear infinite;
         opacity: 0.7;
+        will-change: transform, opacity;
+        transform: translateZ(0);
+        backface-visibility: hidden;
       }
 
       .rune:nth-child(1) {
@@ -932,7 +932,7 @@
 
       @keyframes runeFloat {
         0% {
-          transform: translateY(100vh) rotate(0deg) scale(0.8);
+          transform: translateY(100vh) rotate(0deg) scale(0.8) translateZ(0);
           opacity: 0;
         }
         10% {
@@ -942,7 +942,7 @@
           opacity: 0.7;
         }
         100% {
-          transform: translateY(-100px) rotate(360deg) scale(1.2);
+          transform: translateY(-100px) rotate(360deg) scale(1.2) translateZ(0);
           opacity: 0;
         }
       }
@@ -1068,25 +1068,148 @@
         border-radius: 12px;
       }
 
-      /* Mobile Skeleton Optimization */
+      /* 🚀 Performance Optimizations & Mobile Enhancements */
+      
+      /* Reduce Motion for Accessibility */
+      @media (prefers-reduced-motion: reduce) {
+        * {
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.01ms !important;
+        }
+        
+        .loading-screen::before,
+        .loading-screen::after,
+        .mystical-loader::before,
+        .mystical-loader::after,
+        .header::before,
+        .header::after {
+          animation: none !important;
+        }
+      }
+
+      /* Enhanced Mobile Optimizations */
       @media (max-width: 768px) {
-        .skeleton-content {
-          grid-template-columns: 1fr;
-          gap: 15px;
+        /* Disable heavy effects on mobile */
+        .loading-screen::before {
+          display: none;
         }
         
-        .skeleton-nav {
-          flex-wrap: wrap;
-          gap: 10px;
+        .loading-screen::after {
+          opacity: 0.2;
         }
         
-        .skeleton-pill {
-          width: 70px;
-          height: 30px;
+        .header {
+          backdrop-filter: blur(8px);
+          -webkit-backdrop-filter: blur(8px);
         }
         
-        .loading-skeleton {
-          max-width: 90%;
+        .header::before,
+        .header::after {
+          animation: none;
+        }
+        
+        /* Simplify box shadows on mobile */
+        .swap-container,
+        .pool-card,
+        .modal-content {
+          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* Optimize animations for touch devices */
+        .nav-button {
+          transition: background-color 0.2s ease;
+        }
+        
+        .nav-button:hover {
+          transform: none;
+        }
+      }
+
+      /* GPU Acceleration for Critical Elements */
+      .swap-container,
+      .pool-card,
+      .chart-container,
+      .modal-content,
+      .navigation,
+      .floating-buttons {
+        will-change: transform;
+        transform: translateZ(0);
+        backface-visibility: hidden;
+      }
+
+      /* Optimize Large Shadows */
+      .swap-container,
+      .pool-card {
+        box-shadow: 
+          0 8px 32px rgba(0, 0, 0, 0.3),
+          0 0 20px var(--theme-glow);
+      }
+
+      /* Optimize Backdrop Filters */
+      .modal-overlay,
+      .header,
+      .navigation {
+        will-change: filter;
+      }
+
+      /* Limit Animation Layers */
+      .loading-text::before,
+      .loading-text::after {
+        animation: starTwinkle 3s ease-in-out infinite;
+        will-change: opacity;
+      }
+
+      /* Optimize Theme Animations */
+      .theme-ember .mystical-background {
+        animation: mysticalPulse 8s ease-in-out infinite;
+      }
+
+      .theme-cyber .mystical-background {
+        animation: mysticalPulse 10s ease-in-out infinite;
+      }
+
+      /* Performance-First Animation Keyframes */
+      @keyframes optimizedPulse {
+        0%, 100% { 
+          opacity: 0.8; 
+          transform: translateZ(0) scale(1);
+        }
+        50% { 
+          opacity: 1; 
+          transform: translateZ(0) scale(1.02);
+        }
+      }
+
+      /* Optimized Ember Animation */
+      .ember {
+        position: fixed;
+        bottom: -10px;
+        width: 4px;
+        height: 4px;
+        background: radial-gradient(circle, rgba(255, 20, 147, 0.8), transparent);
+        border-radius: 50%;
+        animation: emberRise 6s linear forwards;
+        pointer-events: none;
+        z-index: 1;
+        will-change: transform, opacity;
+        transform: translateZ(0);
+      }
+
+      @keyframes emberRise {
+        0% {
+          transform: translateY(0) translateX(0) translateZ(0);
+          opacity: 0;
+        }
+        10% {
+          opacity: 1;
+        }
+        90% {
+          opacity: 1;
+        }
+        100% {
+          transform: translateY(-100vh) translateX(50px) translateZ(0);
+          opacity: 0;
         }
       }
 
@@ -1239,6 +1362,8 @@
       }
       
       /* 🌙 Premium Cult Header - Enhanced Glassmorphism */
+      
+      /* 🌙 Premium Cult Header - Enhanced Glassmorphism */
       .header {
         text-align: center;
         margin-bottom: 50px;
@@ -1246,38 +1371,27 @@
         position: relative;
         padding: 35px 25px 45px 25px;
         background: 
-          /* Enhanced glassmorphism layers */
+          /* Optimized glassmorphism layers */
           linear-gradient(135deg, 
             rgba(0, 0, 0, 0.85) 0%, 
-            rgba(10, 0, 15, 0.92) 25%, 
-            rgba(5, 0, 10, 0.88) 50%, 
-            rgba(10, 0, 15, 0.92) 75%, 
+            rgba(10, 0, 15, 0.92) 50%, 
             rgba(0, 0, 0, 0.85) 100%),
-          radial-gradient(circle at 30% 70%, rgba(255, 20, 147, 0.12) 0%, transparent 60%),
-          radial-gradient(circle at 70% 30%, rgba(139, 0, 139, 0.10) 0%, transparent 50%),
-          radial-gradient(circle at 50% 50%, rgba(75, 0, 130, 0.06) 0%, transparent 70%);
+          radial-gradient(circle at 50% 50%, rgba(255, 20, 147, 0.08) 0%, transparent 60%);
         border: 3px solid;
         border-image: linear-gradient(45deg, 
           rgba(255, 20, 147, 0.8), 
           rgba(139, 0, 139, 0.6), 
-          rgba(75, 0, 130, 0.7), 
           rgba(255, 20, 147, 0.8)) 1;
         border-radius: 25px;
-        backdrop-filter: blur(20px);
-        -webkit-backdrop-filter: blur(20px);
+        backdrop-filter: blur(15px);
+        -webkit-backdrop-filter: blur(15px);
+        will-change: filter;
         box-shadow: 
-          /* Enhanced glow effects */
-          0 0 50px rgba(255, 20, 147, 0.4),
-          0 0 100px rgba(139, 0, 139, 0.25),
-          0 0 150px rgba(75, 0, 130, 0.15),
-          0 15px 40px rgba(0, 0, 0, 0.6),
-          inset 0 0 40px rgba(255, 20, 147, 0.08),
-          inset 0 1px 0 rgba(255, 255, 255, 0.1);
-        animation: 
-          headerBreathing 8s ease-in-out infinite,
-          headerPulse 12s ease-in-out infinite;
+          0 0 40px rgba(255, 20, 147, 0.3),
+          0 15px 40px rgba(0, 0, 0, 0.6);
+        animation: headerBreathing 8s ease-in-out infinite;
         overflow: hidden;
-        transform-style: preserve-3d;
+        transform: translateZ(0);
       }
 
       /* Enhanced ember particles behind header */
@@ -1289,16 +1403,11 @@
         width: 100%;
         height: 100%;
         background-image: 
-          radial-gradient(2px 2px at 15% 25%, rgba(255, 20, 147, 0.6), transparent),
-          radial-gradient(1px 1px at 85% 75%, rgba(139, 0, 139, 0.4), transparent),
-          radial-gradient(1px 1px at 45% 15%, rgba(255, 255, 255, 0.3), transparent),
-          radial-gradient(2px 2px at 75% 85%, rgba(255, 20, 147, 0.5), transparent),
-          radial-gradient(1px 1px at 25% 65%, rgba(75, 0, 130, 0.4), transparent);
-        background-size: 150px 150px, 120px 120px, 100px 100px, 180px 180px, 140px 140px;
-        animation: 
-          emberFloat 25s linear infinite,
-          emberTwinkle 8s ease-in-out infinite;
-        opacity: 0.6;
+          radial-gradient(2px 2px at 15% 25%, rgba(255, 20, 147, 0.4), transparent),
+          radial-gradient(1px 1px at 85% 75%, rgba(139, 0, 139, 0.3), transparent);
+        background-size: 150px 150px, 120px 120px;
+        animation: emberFloat 12s linear infinite;
+        opacity: 0.4;
         z-index: 1;
         pointer-events: none;
       }
@@ -1345,7 +1454,7 @@
       }
 
       .header::before {
-        content: '⟐ ◆ ☾ ◆ ⟐ ◆ ☽ ◆ ⟐';
+        content: '⟐ ◆ ☾ ◆ ⟐';
         position: absolute;
         top: -15px;
         left: 50%;
@@ -1353,18 +1462,14 @@
         font-size: 1.5rem;
         color: rgba(255, 20, 147, 0.8);
         opacity: 0.9;
-        animation: 
-          runeFloat 6s ease-in-out infinite,
-          runeGlow 4s ease-in-out infinite;
-        text-shadow: 
-          0 0 20px rgba(255, 20, 147, 1),
-          0 0 40px rgba(139, 0, 139, 0.6);
+        text-shadow: 0 0 20px rgba(255, 20, 147, 1);
         letter-spacing: 8px;
         z-index: 2;
+        will-change: auto;
       }
 
       .header::after {
-        content: '◇ ⟐ ☽ ⟐ ◇ ⟐ ☾ ⟐ ◇';
+        content: '◇ ⟐ ☽ ⟐ ◇';
         position: absolute;
         bottom: -15px;
         left: 50%;
@@ -1372,30 +1477,19 @@
         font-size: 1.5rem;
         color: rgba(139, 0, 139, 0.8);
         opacity: 0.9;
-        animation: 
-          runeFloat 6s ease-in-out infinite reverse,
-          runeGlow 4s ease-in-out infinite reverse;
-        text-shadow: 
-          0 0 20px rgba(139, 0, 139, 1),
-          0 0 40px rgba(255, 20, 147, 0.6);
+        text-shadow: 0 0 20px rgba(139, 0, 139, 1);
         letter-spacing: 8px;
         z-index: 2;
+        will-change: auto;
       }
 
       @keyframes headerBreathing {
         0%, 100% { 
-          box-shadow: 
-            0 0 40px rgba(255, 20, 147, 0.3),
-            0 0 80px rgba(139, 0, 139, 0.2),
-            0 10px 30px rgba(0, 0, 0, 0.5);
+          box-shadow: 0 0 40px rgba(255, 20, 147, 0.3);
           transform: scale(1);
         }
         50% { 
-          box-shadow: 
-            0 0 50px rgba(255, 20, 147, 0.4),
-            0 0 100px rgba(139, 0, 139, 0.3),
-            0 0 150px rgba(75, 0, 130, 0.15),
-            0 15px 40px rgba(0, 0, 0, 0.6);
+          box-shadow: 0 0 50px rgba(255, 20, 147, 0.4);
           transform: scale(1.005);
         }
       }
@@ -1431,29 +1525,23 @@
         margin-bottom: 20px;
         background: linear-gradient(45deg, 
           rgba(255, 255, 255, 1) 0%, 
-          rgba(255, 20, 147, 0.95) 15%, 
-          rgba(139, 0, 139, 0.9) 30%, 
-          rgba(255, 255, 255, 1) 45%, 
-          rgba(255, 20, 147, 0.95) 60%, 
-          rgba(139, 0, 139, 0.9) 75%, 
-          rgba(255, 255, 255, 1) 100%);
+          rgba(255, 20, 147, 0.95) 30%, 
+          rgba(255, 255, 255, 1) 60%, 
+          rgba(255, 20, 147, 0.95) 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
-        background-size: 300% 100%;
+        background-size: 200% 100%;
         position: relative;
         font-weight: 900;
         letter-spacing: 4px;
-        animation: 
-          titleShimmer 6s ease-in-out infinite,
-          titleGlow 8s ease-in-out infinite,
-          titleFloat 10s ease-in-out infinite;
-        filter: 
-          drop-shadow(0 0 20px rgba(255, 20, 147, 0.6))
-          drop-shadow(0 0 40px rgba(139, 0, 139, 0.4))
-          drop-shadow(0 0 60px rgba(75, 0, 130, 0.2));
+        animation: titleShimmer 6s ease-in-out infinite;
+        filter: drop-shadow(0 0 15px rgba(255, 20, 147, 0.4));
         z-index: 3;
         text-transform: uppercase;
+        will-change: background-position, filter;
+        transform: translateZ(0);
+        backface-visibility: hidden;
       }
 
       /* Soft glow behind title */
@@ -1565,25 +1653,15 @@
         50% { background-position: 100% 50%; }
       }
 
+      /* Optimized Title Glow - Simplified */
       @keyframes titleGlow {
         0%, 100% { 
-          filter: 
-            drop-shadow(0 0 15px rgba(255, 20, 147, 0.6))
-            drop-shadow(0 0 30px rgba(139, 0, 139, 0.3));
-          transform: scale(1);
+          filter: drop-shadow(0 0 15px rgba(255, 20, 147, 0.6));
+          transform: translateZ(0) scale(1);
         }
-        33% { 
-          filter: 
-            drop-shadow(0 0 25px rgba(255, 20, 147, 0.9))
-            drop-shadow(0 0 50px rgba(139, 0, 139, 0.5))
-            drop-shadow(0 0 75px rgba(75, 0, 130, 0.3));
-          transform: scale(1.02);
-        }
-        66% { 
-          filter: 
-            drop-shadow(0 0 20px rgba(139, 0, 139, 0.8))
-            drop-shadow(0 0 40px rgba(255, 20, 147, 0.4));
-          transform: scale(1.01);
+        50% { 
+          filter: drop-shadow(0 0 25px rgba(255, 20, 147, 0.9));
+          transform: translateZ(0) scale(1.01);
         }
       }
 
@@ -1836,7 +1914,7 @@
         visibility: hidden;
         transform: translateY(-10px);
         transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        z-index: 1000;
+        z-index: 20;
         min-width: 140px;
       }
 
@@ -2067,72 +2145,38 @@
         }
       }
       
-      /* Optimized Swap Container with Better Visibility */
-      /* Enhanced Swap Container with Premium Polish */
+      /* Optimized Swap Container with Better Performance */
       .swap-container {
         background: 
           linear-gradient(145deg, rgba(0, 0, 0, 0.98), rgba(15, 15, 15, 0.95)),
-          radial-gradient(circle at 20% 80%, rgba(75, 0, 130, 0.18) 0%, transparent 50%),
-          radial-gradient(circle at 80% 20%, rgba(139, 0, 139, 0.12) 0%, transparent 50%),
-          radial-gradient(circle at 50% 50%, rgba(138, 43, 226, 0.08) 0%, transparent 60%);
+          radial-gradient(circle at 50% 50%, rgba(75, 0, 130, 0.12) 0%, transparent 60%);
         border: 3px solid;
         border-image: linear-gradient(45deg, 
           rgba(75, 0, 130, 0.8), 
           rgba(139, 0, 139, 0.6), 
-          rgba(147, 112, 219, 0.7), 
           rgba(75, 0, 130, 0.8)) 1;
         border-radius: 28px;
         padding: 40px;
         box-shadow: 
-          0 25px 50px rgba(0, 0, 0, 0.9),
-          0 0 40px rgba(75, 0, 130, 0.4),
-          0 0 80px rgba(139, 0, 139, 0.2),
-          0 0 120px rgba(138, 43, 226, 0.1),
-          inset 0 2px 0 rgba(255, 255, 255, 0.12),
-          inset 0 -2px 0 rgba(0, 0, 0, 0.3),
-          inset 0 0 30px rgba(75, 0, 130, 0.05);
-        backdrop-filter: blur(25px);
+          0 25px 50px rgba(0, 0, 0, 0.8),
+          0 0 40px rgba(75, 0, 130, 0.3);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
         position: relative;
         overflow: hidden;
-        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         z-index: 10;
-        animation: containerGlow 8s ease-in-out infinite;
+        will-change: transform;
+        transform: translateZ(0);
+        backface-visibility: hidden;
       }
 
-      @keyframes containerGlow {
-        0%, 100% { 
-          box-shadow: 
-            0 25px 50px rgba(0, 0, 0, 0.9),
-            0 0 40px rgba(75, 0, 130, 0.4),
-            0 0 80px rgba(139, 0, 139, 0.2),
-            inset 0 2px 0 rgba(255, 255, 255, 0.12);
-        }
-        50% { 
-          box-shadow: 
-            0 30px 60px rgba(0, 0, 0, 0.95),
-            0 0 50px rgba(75, 0, 130, 0.6),
-            0 0 100px rgba(139, 0, 139, 0.3),
-            0 0 150px rgba(138, 43, 226, 0.15),
-            inset 0 2px 0 rgba(255, 255, 255, 0.15);
-        }
-      }
-
-      /* Enhanced Hover Effect with Premium Feel */
+      /* Simplified Hover Effect */
       .swap-container:hover {
-        transform: translateY(-3px) scale(1.01);
-        border-image: linear-gradient(45deg, 
-          rgba(75, 0, 130, 1), 
-          rgba(139, 0, 139, 0.8), 
-          rgba(147, 112, 219, 0.9), 
-          rgba(75, 0, 130, 1)) 1;
+        transform: translateY(-2px) scale(1.005) translateZ(0);
         box-shadow: 
-          0 35px 70px rgba(0, 0, 0, 0.95),
-          0 0 60px rgba(75, 0, 130, 0.6),
-          0 0 120px rgba(139, 0, 139, 0.4),
-          0 0 180px rgba(138, 43, 226, 0.2),
-          inset 0 2px 0 rgba(255, 255, 255, 0.18),
-          inset 0 0 40px rgba(75, 0, 130, 0.08);
-        animation-duration: 6s;
+          0 30px 60px rgba(0, 0, 0, 0.9),
+          0 0 50px rgba(75, 0, 130, 0.4);
       }
 
       /* Mobile optimization for swap container */
@@ -4360,8 +4404,18 @@
         }
       }
       
-      /* --- Gaming-Tier Visual Effects --- */
+      /* 🔧 Performance Optimization CSS Variables */
       :root {
+        --animation-duration-fast: 2s;
+        --animation-duration-medium: 4s;
+        --animation-duration-slow: 8s;
+        --blur-light: blur(8px);
+        --blur-medium: blur(15px);
+        --blur-heavy: blur(20px);
+        --shadow-light: 0 0 20px rgba(255, 20, 147, 0.2);
+        --shadow-medium: 0 0 30px rgba(255, 20, 147, 0.4);
+        --shadow-heavy: 0 0 40px rgba(255, 20, 147, 0.6);
+
         --theme-cult-bg: #18122b;
         --theme-cult-primary: #ff1493;
         --theme-cult-accent: #8e44ad;
@@ -4374,6 +4428,31 @@
         --theme-ember-primary: #ff6f00;
         --theme-ember-accent: #ff1744;
         --theme-ember-fog: #ffb30044;
+      }
+
+      /* 🎯 Force GPU Layer Creation for Critical Elements */
+      .header,
+      .loading-screen,
+      .mystical-loader,
+      .rune,
+      .skeleton-animate {
+        transform: translateZ(0);
+        backface-visibility: hidden;
+        perspective: 1000px;
+      }
+
+      /* 🚀 Optimize Animation Performance */
+      .header h1,
+      .loading-text,
+      .mystical-loader::before,
+      .mystical-loader::after {
+        will-change: background-position, transform, opacity;
+      }
+
+      /* 💡 Critical Performance CSS */
+      .loading-screen,
+      .modal-overlay {
+        contain: layout style paint;
       }
       body.theme-cult {
         background: linear-gradient(120deg, var(--theme-cult-bg) 80%, #2d1436 100%);
@@ -6444,6 +6523,104 @@
         color: #ccc;
         text-transform: uppercase;
         letter-spacing: 1px;
+      }
+      /* 📱 Mobile Performance Optimizations */
+      @media (max-width: 768px) {
+        /* Reduce backdrop filters for better mobile performance */
+        .header {
+          backdrop-filter: blur(8px);
+          -webkit-backdrop-filter: blur(8px);
+        }
+        
+        .loading-screen {
+          backdrop-filter: blur(5px);
+          -webkit-backdrop-filter: blur(5px);
+        }
+        
+        /* Simplify box shadows on mobile */
+        .header,
+        .swap-container,
+        .pool-card {
+          box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3) !important;
+        }
+        
+        /* Disable heavy animations on mobile */
+        .mystical-overlay,
+        .particle-overlay,
+        .mystical-overlay-grid {
+          display: none;
+        }
+        
+        /* Optimize loading screen for mobile */
+        .loading-screen::before,
+        .loading-screen::after {
+          opacity: 0.3;
+          animation-duration: 20s;
+        }
+        
+        /* Reduce floating runes complexity */
+        .loading-runes .rune:nth-child(n+4) {
+          display: none;
+        }
+        
+        /* Simplify header decorations */
+        .header::before,
+        .header::after {
+          font-size: 1.2rem;
+          letter-spacing: 4px;
+        }
+      }
+
+      @media (max-width: 480px) {
+        /* Ultra-light mobile optimizations */
+        .loading-screen::before,
+        .loading-screen::after {
+          display: none;
+        }
+        
+        .loading-runes {
+          display: none;
+        }
+        
+        .header {
+          backdrop-filter: none;
+          -webkit-backdrop-filter: none;
+          background: rgba(0, 0, 0, 0.9);
+        }
+        
+        /* Disable all complex animations on small phones */
+        * {
+          animation-duration: 1s !important;
+        }
+        
+        .mystical-loader::before,
+        .mystical-loader::after {
+          animation: cultSpin 2s linear infinite;
+        }
+      }
+
+      /* 🎭 Prefers Reduced Motion Support */
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.01ms !important;
+        }
+        
+        .mystical-overlay,
+        .particle-overlay,
+        .loading-screen::before,
+        .loading-screen::after {
+          display: none;
+        }
+        
+        .loading-screen {
+          background: linear-gradient(135deg, 
+            rgba(0, 0, 0, 0.95) 0%, 
+            rgba(10, 0, 15, 0.98) 100%);
+        }
       }
     </style>
   </head>
@@ -8549,18 +8726,20 @@
 
       function createEmberEffect(theme) {
         const colors = {
-          cult: ['#ff1493', '#8e44ad', '#fff0fa'],
-          cyber: ['#00fff7', '#00ff85', '#0ff'],
-          ember: ['#ff6f00', '#ff1744', '#ffb300']
+          cult: ['#ff1493', '#8e44ad'],
+          cyber: ['#00fff7', '#00ff85'],
+          ember: ['#ff6f00', '#ff1744']
         };
         
         setInterval(() => {
-          if (document.querySelectorAll('.ember').length < 8) {
+          if (document.querySelectorAll('.ember').length < 6) { // Reduced from 8 to 6
             const ember = document.createElement('div');
             ember.className = 'ember';
             ember.style.left = Math.random() * 100 + 'vw';
             ember.style.animationDelay = Math.random() * 2 + 's';
-            ember.style.animationDuration = (4 + Math.random() * 4) + 's';
+            ember.style.animationDuration = (3 + Math.random() * 3) + 's'; // Reduced duration
+            ember.style.willChange = 'transform, opacity';
+            ember.style.transform = 'translateZ(0)';
             
             const themeColors = colors[theme] || colors.cult;
             const color = themeColors[Math.floor(Math.random() * themeColors.length)];
@@ -8568,10 +8747,10 @@
             
             document.body.appendChild(ember);
             
-            // Remove ember after animation
-            setTimeout(() => ember.remove(), 8000);
+            // Remove ember after animation (reduced time)
+            setTimeout(() => ember.remove(), 6000);
           }
-        }, 1000);
+        }, 1500); // Increased interval to reduce frequency
       }
 
       // XP and Rank System
