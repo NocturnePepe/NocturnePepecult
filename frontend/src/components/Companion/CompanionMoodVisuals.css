@@ -1,0 +1,305 @@
+/**
+ * PHASE 9.5 SENTIENCE EMBER - VISUAL ENHANCEMENTS
+ * ===============================================
+ * 
+ * PURPOSE: Mood-based visual animations for companion orb
+ * FEATURES: Dynamic glow, size, rotation based on mood state
+ * PERFORMANCE: GPU-accelerated 60fps animations
+ */
+
+/* ===========================================
+   MOOD-BASED ORB ANIMATIONS
+   =========================================== */
+
+.companion-orb {
+    /* Base orb styling with enhanced transitions */
+    transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform, filter, box-shadow;
+    transform: translateZ(0); /* Explicit GPU acceleration marker */
+    transform-origin: center center;
+}
+
+/* Mood State: IDLE */
+.companion-orb[data-mood="idle"] {
+    transform: scale(1.0) translateZ(0);
+    filter: brightness(0.7) saturate(0.8);
+    box-shadow: 0 0 20px rgba(168, 85, 247, 0.3);
+    animation: idlePulse 4s ease-in-out infinite;
+}
+
+@keyframes idlePulse {
+    0%, 100% { 
+        transform: scale(1.0) translateZ(0);
+        box-shadow: 0 0 20px rgba(168, 85, 247, 0.3);
+    }
+    50% { 
+        transform: scale(1.05) translateZ(0);
+        box-shadow: 0 0 25px rgba(168, 85, 247, 0.4);
+    }
+}
+
+/* Mood State: CURIOUS */
+.companion-orb[data-mood="curious"] {
+    transform: scale(1.1) translateZ(0);
+    filter: brightness(0.8) saturate(1.0);
+    box-shadow: 0 0 30px rgba(59, 130, 246, 0.5);
+    animation: curiousRotate 3s linear infinite, curiousGlow 2s ease-in-out infinite alternate;
+}
+
+@keyframes curiousRotate {
+    from { transform: scale(1.1) translateZ(0) rotate(0deg); }
+    to { transform: scale(1.1) translateZ(0) rotate(360deg); }
+}
+
+@keyframes curiousGlow {
+    0% { 
+        box-shadow: 0 0 30px rgba(59, 130, 246, 0.5);
+        filter: brightness(0.8) saturate(1.0);
+    }
+    100% { 
+        box-shadow: 0 0 40px rgba(59, 130, 246, 0.7);
+        filter: brightness(0.9) saturate(1.2);
+    }
+}
+
+/* Mood State: ALERT */
+.companion-orb[data-mood="alert"] {
+    transform: scale(1.15) translateZ(0);
+    filter: brightness(0.9) saturate(1.1);
+    box-shadow: 0 0 35px rgba(34, 197, 94, 0.6);
+    animation: alertPulse 2s ease-in-out infinite, alertRotate 10s linear infinite;
+}
+
+@keyframes alertPulse {
+    0%, 100% { 
+        transform: scale(1.15) translateZ(0) rotateY(0deg);
+        box-shadow: 0 0 35px rgba(34, 197, 94, 0.6);
+    }
+    50% { 
+        transform: scale(1.2) translateZ(0) rotateY(180deg);
+        box-shadow: 0 0 45px rgba(34, 197, 94, 0.8);
+    }
+}
+
+@keyframes alertRotate {
+    from { transform: scale(1.15) translateZ(0) rotate(0deg); }
+    to { transform: scale(1.15) translateZ(0) rotate(360deg); }
+}
+
+/* Mood State: EXCITED */
+.companion-orb[data-mood="excited"] {
+    transform: scale(1.25) translateZ(0);
+    filter: brightness(1.0) saturate(1.3);
+    box-shadow: 0 0 50px rgba(251, 191, 36, 0.8);
+    animation: excitedBounce 1s ease-in-out infinite, excitedSpin 8s linear infinite;
+}
+
+@keyframes excitedBounce {
+    0%, 100% { 
+        transform: scale(1.25) translateZ(0) translateY(0px);
+        box-shadow: 0 0 50px rgba(251, 191, 36, 0.8);
+    }
+    25% { 
+        transform: scale(1.3) translateZ(0) translateY(-5px);
+        box-shadow: 0 5px 55px rgba(251, 191, 36, 0.9);
+    }
+    50% { 
+        transform: scale(1.25) translateZ(0) translateY(0px);
+        box-shadow: 0 0 50px rgba(251, 191, 36, 0.8);
+    }
+    75% { 
+        transform: scale(1.2) translateZ(0) translateY(2px);
+        box-shadow: 0 -2px 45px rgba(251, 191, 36, 0.7);
+    }
+}
+
+@keyframes excitedSpin {
+    from { transform: scale(1.25) translateZ(0) rotate(0deg); }
+    to { transform: scale(1.25) translateZ(0) rotate(360deg); }
+}
+
+/* Mood State: CONCERNED */
+.companion-orb[data-mood="concerned"] {
+    transform: scale(0.9) translateZ(0);
+    filter: brightness(0.6) saturate(0.7);
+    box-shadow: 0 0 15px rgba(239, 68, 68, 0.4);
+    animation: concernedFlicker 6s ease-in-out infinite;
+}
+
+@keyframes concernedFlicker {
+    0%, 90%, 100% { 
+        transform: scale(0.9) translateZ(0);
+        box-shadow: 0 0 15px rgba(239, 68, 68, 0.4);
+        filter: brightness(0.6) saturate(0.7);
+    }
+    5%, 15% { 
+        transform: scale(0.85) translateZ(0);
+        box-shadow: 0 0 10px rgba(239, 68, 68, 0.2);
+        filter: brightness(0.5) saturate(0.5);
+    }
+}
+
+/* ===========================================
+   RITUAL PULSE ANIMATIONS
+   =========================================== */
+
+.companion-orb[data-ritual="active"] {
+    animation: ritualPulse 2s ease-in-out infinite;
+}
+
+@keyframes ritualPulse {
+    0%, 100% { 
+        transform: scale(1.0) translateZ(0);
+        box-shadow: 0 0 30px rgba(168, 85, 247, 0.6);
+        filter: brightness(1.0) hue-rotate(0deg);
+    }
+    25% { 
+        transform: scale(1.15) translateZ(0);
+        box-shadow: 0 0 50px rgba(168, 85, 247, 0.8);
+        filter: brightness(1.2) hue-rotate(90deg);
+    }
+    50% { 
+        transform: scale(1.3) translateZ(0);
+        box-shadow: 0 0 70px rgba(168, 85, 247, 1.0);
+        filter: brightness(1.4) hue-rotate(180deg);
+    }
+    75% { 
+        transform: scale(1.15) translateZ(0);
+        box-shadow: 0 0 50px rgba(168, 85, 247, 0.8);
+        filter: brightness(1.2) hue-rotate(270deg);
+    }
+}
+
+/* ===========================================
+   INTENSITY-BASED SCALING
+   =========================================== */
+
+.companion-orb[data-intensity="low"] {
+    opacity: 0.7;
+    transform: scale(var(--mood-scale, 1.0)) translateZ(0);
+}
+
+.companion-orb[data-intensity="medium"] {
+    opacity: 0.85;
+    transform: scale(calc(var(--mood-scale, 1.0) * 1.1)) translateZ(0);
+}
+
+.companion-orb[data-intensity="high"] {
+    opacity: 1.0;
+    transform: scale(calc(var(--mood-scale, 1.0) * 1.2)) translateZ(0);
+}
+
+/* ===========================================
+   COMPANION STATES ENHANCED
+   =========================================== */
+
+.companion.speaking[data-mood="excited"] .companion-orb {
+    animation: excitedSpeaking 0.5s ease-in-out infinite !important;
+}
+
+@keyframes excitedSpeaking {
+    0%, 100% { 
+        transform: scale(1.25) translateZ(0) scaleY(1.0);
+    }
+    50% { 
+        transform: scale(1.25) translateZ(0) scaleY(1.1);
+    }
+}
+
+.companion.thinking[data-mood="curious"] .companion-orb {
+    animation: curiousThinking 3s ease-in-out infinite !important;
+}
+
+@keyframes curiousThinking {
+    0%, 100% { 
+        transform: scale(1.1) translateZ(0) rotate(0deg);
+        filter: brightness(0.8) hue-rotate(0deg);
+    }
+    33% { 
+        transform: scale(1.15) translateZ(0) rotate(120deg);
+        filter: brightness(0.9) hue-rotate(60deg);
+    }
+    66% { 
+        transform: scale(1.05) translateZ(0) rotate(240deg);
+        filter: brightness(0.85) hue-rotate(120deg);
+    }
+}
+
+.companion.celebrating[data-mood="excited"] .companion-orb {
+    animation: celebrationBurst 2s ease-out !important;
+}
+
+@keyframes celebrationBurst {
+    0% { 
+        transform: scale(1.25) translateZ(0);
+        box-shadow: 0 0 50px rgba(251, 191, 36, 0.8);
+    }
+    25% { 
+        transform: scale(1.6) translateZ(0);
+        box-shadow: 
+            0 0 80px rgba(251, 191, 36, 1.0),
+            0 0 120px rgba(251, 191, 36, 0.6);
+    }
+    50% { 
+        transform: scale(1.4) translateZ(0);
+        box-shadow: 0 0 60px rgba(251, 191, 36, 0.9);
+    }
+    100% { 
+        transform: scale(1.25) translateZ(0);
+        box-shadow: 0 0 50px rgba(251, 191, 36, 0.8);
+    }
+}
+
+/* ===========================================
+   PERFORMANCE OPTIMIZATIONS
+   =========================================== */
+
+.companion-orb {
+    /* GPU acceleration */
+    will-change: transform, filter, box-shadow;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
+    
+    /* Optimize composite layers */
+    contain: layout style paint;
+}
+
+/* ===========================================
+   ACCESSIBILITY SUPPORT
+   =========================================== */
+
+@media (prefers-reduced-motion: reduce) {
+    .companion-orb,
+    .companion-orb[data-mood] {
+        animation: none !important;
+        transition: opacity 0.3s ease;
+    }
+    
+    .companion-orb[data-mood="excited"] {
+        transform: scale(1.1) translateZ(0);
+    }
+    
+    .companion-orb[data-mood="alert"] {
+        transform: scale(1.05) translateZ(0);
+    }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    .companion-orb {
+        border: 2px solid currentColor;
+    }
+    
+    .companion-orb[data-mood="excited"] {
+        border-color: #fbbf24;
+    }
+    
+    .companion-orb[data-mood="alert"] {
+        border-color: #22c55e;
+    }
+    
+    .companion-orb[data-mood="concerned"] {
+        border-color: #ef4444;
+    }
+}

@@ -47,6 +47,15 @@ const HIDDEN_EVENTS = [
 const CultCompanion = () => {
     // 🔌 Context and state hooks
     const { wallet, isConnected } = useWalletContext();
+    
+    // 🎭 Phase 9.5: Import Sentience Ember components
+    const CompanionMoodState = window.CompanionMoodState;
+    const MemoryReplay = window.MemoryReplay;
+    const CompanionAIPredict = window.CompanionAIPredict;
+    const LoreEventUnlock = window.LoreEventUnlock;
+    const RitualPulse = window.RitualPulse;
+    
+    // 🎯 Enhanced state management with Phase 9.5 features
     const [companionMode, setCompanionMode] = useState(() => 
         localStorage.getItem('cult-companion-mode') || COMPANION_MODES.ACTIVE
     );
@@ -55,13 +64,31 @@ const CultCompanion = () => {
     const [showSettings, setShowSettings] = useState(false);
     const [currentMessage, setCurrentMessage] = useState('');
     const [isMessageVisible, setIsMessageVisible] = useState(false);
+    
+    // 🎭 Phase 9.5: Enhanced mood and ritual states  
+    const [currentMood, setCurrentMood] = useState('idle');
+    const [moodIntensity, setMoodIntensity] = useState(0.5);
+    const [isRitualActive, setIsRitualActive] = useState(false);
+    const [moodVisualProps, setMoodVisualProps] = useState({});
+    
+    // 🧠 Phase 9.5: Initialize Sentience Ember components
+    const [moodStateInstance, setMoodStateInstance] = useState(null);
+    const [memoryReplayInstance, setMemoryReplayInstance] = useState(null);
+    const [aiPredictInstance, setAiPredictInstance] = useState(null);
+    const [loreEventInstance, setLoreEventInstance] = useState(null);
+    const [ritualPulseInstance, setRitualPulseInstance] = useState(null);
+    
     const [userMetrics, setUserMetrics] = useState({
         xp: 0,
         level: 1,
         referralCount: 0,
         daoVotes: 0,
         totalSwaps: 0,
-        lastActive: Date.now()
+        lastActive: Date.now(),
+        userHistory: [], // NEW: For pattern analysis
+        lastTrade: null,
+        lastVote: null,
+        lastXpGain: null
     });
 
     // 🎨 Animation and UI refs
@@ -419,7 +446,49 @@ const CultCompanion = () => {
                 </button>
             </div>
 
-            {/* 🎛️ Settings Modal */}
+            {/* Phase 9.5: Sentience Ember Components */}
+            {CompanionMoodState && (
+                <CompanionMoodState 
+                    userMetrics={userMetrics}
+                    onMoodChange={handleMoodChange}
+                />
+            )}
+            
+            {MemoryReplay && (
+                <MemoryReplay 
+                    currentContext={{
+                        xp: userMetrics.xp,
+                        level: userMetrics.level,
+                        activityType: companionState,
+                        timestamp: Date.now()
+                    }}
+                    onInsightReplay={handleMemoryReplay}
+                />
+            )}
+            
+            {CompanionAIPredict && (
+                <CompanionAIPredict 
+                    userHistory={userMetrics.userHistory}
+                    currentContext={userMetrics}
+                    onPrediction={handleAIPrediction}
+                />
+            )}
+            
+            {LoreEventUnlock && (
+                <LoreEventUnlock 
+                    userMetrics={userMetrics}
+                    onLoreEvent={handleLoreEvent}
+                />
+            )}
+            
+            {RitualPulse && (
+                <RitualPulse 
+                    userMetrics={userMetrics}
+                    onRitualTrigger={handleRitualTrigger}
+                />
+            )}
+
+            {/* Settings Modal */}
             {showSettings && (
                 <CompanionSettingsModal
                     isOpen={showSettings}
@@ -484,3 +553,87 @@ window.seasonalEvent = (eventType) => {
     console.log(`Mock seasonal event triggered: ${eventType}`);
     return { type: eventType, active: true, duration: 3600000 };
 };
+
+// 🎭 Phase 9.5: Mood change handler
+    const handleMoodChange = useCallback((moodData) => {
+        setCurrentMood(moodData.mood);
+        setMoodIntensity(moodData.intensity);
+        
+        // Update companion state based on mood
+        if (moodData.mood === 'excited' && companionState === COMPANION_STATES.IDLE) {
+            setCompanionState(COMPANION_STATES.CELEBRATING);
+        } else if (moodData.mood === 'concerned' && companionState !== COMPANION_STATES.THINKING) {
+            setCompanionState(COMPANION_STATES.THINKING);
+        }
+        
+        console.log('🎭 Companion mood updated:', moodData.mood, `(${moodData.intensity.toFixed(2)})`);
+    }, [companionState]);
+
+    // 🧠 Phase 9.5: Memory replay handler
+    const handleMemoryReplay = useCallback((replayedInsight) => {
+        const message = `🧠 ${replayedInsight.loreCallback.message} "${replayedInsight.message}"`;
+        showMessage(message, 8000); // Show for 8 seconds
+        
+        setCompanionState(COMPANION_STATES.MYSTERIOUS);
+        setTimeout(() => setCompanionState(COMPANION_STATES.IDLE), 3000);
+        
+        console.log('🧠 Memory replayed:', replayedInsight.message);
+    }, []);
+
+    // 🔮 Phase 9.5: AI prediction handler
+    const handleAIPrediction = useCallback((prediction) => {
+        if (prediction.confidence > 0.7) {
+            const message = `🔮 ${prediction.message}`;
+            showMessage(message, 6000);
+            
+            setCompanionState(COMPANION_STATES.THINKING);
+            setTimeout(() => setCompanionState(COMPANION_STATES.IDLE), 4000);
+        }
+        
+        console.log('🔮 AI prediction:', prediction.message, `(${Math.round(prediction.confidence * 100)}%)`);
+    }, []);
+
+    // 🎭 Phase 9.5: Lore event handler
+    const handleLoreEvent = useCallback((loreEvent) => {
+        const message = `✨ ${loreEvent.message}`;
+        showMessage(message, 10000); // Show for 10 seconds
+        
+        setCompanionState(COMPANION_STATES.CELEBRATING);
+        setTimeout(() => setCompanionState(COMPANION_STATES.IDLE), 5000);
+        
+        // Store in user history for pattern analysis
+        setUserMetrics(prev => ({
+            ...prev,
+            userHistory: [...prev.userHistory.slice(-49), {
+                type: 'lore_event',
+                event: loreEvent.event.id,
+                timestamp: Date.now()
+            }]
+        }));
+        
+        console.log('🎭 Lore event unlocked:', loreEvent.event.name);
+    }, []);
+
+    // ⚡ Phase 9.5: Ritual pulse handler
+    const handleRitualTrigger = useCallback((ritualData) => {
+        if (ritualData.type === 'ritual_pulse_triggered') {
+            setIsRitualActive(true);
+            const message = `⚡ ${ritualData.ritual.message}`;
+            showMessage(message, 30000); // Show for 30 seconds
+            
+            setCompanionState(COMPANION_STATES.MYSTERIOUS);
+            
+            // Auto-complete ritual after 30 seconds if not manually completed
+            setTimeout(() => {
+                if (isRitualActive) {
+                    window.companionRitualAPI?.completeRitual(0.5); // Half rewards for auto-completion
+                }
+            }, 30000);
+        } else if (ritualData.type === 'ritual_completed') {
+            setIsRitualActive(false);
+            setCompanionState(COMPANION_STATES.CELEBRATING);
+            setTimeout(() => setCompanionState(COMPANION_STATES.IDLE), 3000);
+        }
+        
+        console.log('⚡ Ritual trigger:', ritualData.type);
+    }, [isRitualActive]);
