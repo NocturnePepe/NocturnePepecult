@@ -1,4 +1,4 @@
-import React, { useState, lazy, Suspense } from 'react';
+import React, { useState, lazy, Suspense, useCallback, useMemo, memo } from 'react';
 import { useMockWallet } from '../contexts/MockWalletContext';
 import './FloatingButtons.css';
 
@@ -11,17 +11,18 @@ interface FloatingButtonsProps {
   position?: 'left' | 'right';
 }
 
-const FloatingButtons: React.FC<FloatingButtonsProps> = ({ position = 'left' }) => {
+const FloatingButtons = memo<FloatingButtonsProps>(({ position = 'left' }) => {
   const [activeModal, setActiveModal] = useState<string | null>(null);
   const [isExpanded, setIsExpanded] = useState(false);
   const { userStats } = useMockWallet();
 
-  const closeModal = () => setActiveModal(null);
-  const openModal = (modal: string) => setActiveModal(modal);
+  // Memoized callbacks for better performance
+  const closeModal = useCallback(() => setActiveModal(null), []);
+  const openModal = useCallback((modal: string) => setActiveModal(modal), []);
+  const toggleExpanded = useCallback(() => setIsExpanded(!isExpanded), [isExpanded]);
 
-  const toggleExpanded = () => setIsExpanded(!isExpanded);
-
-  const buttons = [
+  // Memoized button configuration for performance
+  const buttons = useMemo(() => [
     {
       id: 'security',
       icon: '🛡️',
@@ -47,7 +48,13 @@ const FloatingButtons: React.FC<FloatingButtonsProps> = ({ position = 'left' }) 
       pulse: userStats.achievements.length > 0,
       badge: userStats.achievements.length
     }
-  ];
+  ], [userStats.achievements.length]);
+
+  // Optimized click handler to prevent multiple state updates
+  const handleButtonClick = useCallback((buttonId: string) => {
+    openModal(buttonId);
+    setIsExpanded(false);
+  }, [openModal]);
 
   return (
     <>
@@ -70,23 +77,27 @@ const FloatingButtons: React.FC<FloatingButtonsProps> = ({ position = 'left' }) 
             <button
               key={button.id}
               className={`floating-button ${button.pulse ? 'pulse' : ''}`}
-              onClick={() => {
-                openModal(button.id);
-                setIsExpanded(false);
-              }}
+              onClick={() => handleButtonClick(button.id)}
               style={{ 
                 '--button-color': button.color,
                 '--delay': `${index * 0.1}s`
               } as React.CSSProperties}
               title={button.label}
+              aria-label={`${button.label}: ${button.description}`}
             >
-              <span className="button-icon">{button.icon}</span>
-              <div className="button-tooltip">
+              <span className="button-icon" role="img" aria-hidden="true">
+                {button.icon}
+              </span>
+              <div className="button-tooltip" role="tooltip">
                 <div className="tooltip-title">{button.label}</div>
                 <div className="tooltip-desc">{button.description}</div>
               </div>
               {button.badge && (
-                <div className="button-badge" style={{ backgroundColor: button.color }}>
+                <div 
+                  className="button-badge" 
+                  style={{ backgroundColor: button.color }}
+                  aria-label={`${button.badge} items`}
+                >
                   {button.badge}
                 </div>
               )}
@@ -124,6 +135,9 @@ const FloatingButtons: React.FC<FloatingButtonsProps> = ({ position = 'left' }) 
       </Suspense>
     </>
   );
-};
+});
+
+// Set display name for debugging
+FloatingButtons.displayName = 'FloatingButtons';
 
 export default FloatingButtons;

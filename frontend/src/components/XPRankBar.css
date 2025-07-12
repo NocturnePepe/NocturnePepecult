@@ -115,17 +115,23 @@
 .xp-bar-fill {
   height: 100%;
   border-radius: 4px;
-  transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   overflow: hidden;
-  /* GPU Optimization - Use transform instead of width */
+  
+  /* GPU Optimization - Use transform instead of width for 60fps */
   will-change: transform;
   transform: translateZ(0) scaleX(var(--xp-progress, 0));
   transform-origin: left center;
   backface-visibility: hidden;
+  
+  /* Use CSS custom properties for dynamic colors */
+  background: linear-gradient(90deg, var(--rank-color-alpha, #9932cc88), var(--rank-color, #9932cc));
+  
+  /* Smooth animation with proper easing */
+  transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.xp-bar-fill::after {
+.xp-bar-shimmer {
   content: '';
   position: absolute;
   top: 0;
@@ -139,11 +145,13 @@
     transparent 100%
   );
   animation: shimmer 2s infinite;
+  will-change: transform;
+  transform: translateZ(0);
 }
 
 @keyframes shimmer {
-  0% { left: -100%; }
-  100% { left: 100%; }
+  0% { transform: translateX(-100%) translateZ(0); }
+  100% { transform: translateX(100%) translateZ(0); }
 }
 
 .xp-bar-glow {

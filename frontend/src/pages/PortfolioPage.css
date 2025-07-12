@@ -1,0 +1,365 @@
+/* Portfolio Page Styles */
+.portfolio-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+  padding: 40px 20px;
+}
+
+.portfolio-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.portfolio-header h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #e0e0e0;
+  margin: 0 0 12px 0;
+  text-shadow: 0 0 20px rgba(255, 140, 0, 0.3);
+}
+
+.portfolio-header p {
+  font-size: 1.1rem;
+  color: #a0a0a0;
+  margin: 0;
+}
+
+.portfolio-content {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+/* Portfolio Summary */
+.portfolio-summary {
+  display: flex;
+  justify-content: center;
+}
+
+.portfolio-value-card {
+  background: rgba(26, 26, 46, 0.8);
+  border-radius: 20px;
+  padding: 40px;
+  border: 1px solid rgba(255, 140, 0, 0.2);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  min-width: 400px;
+}
+
+.portfolio-total {
+  margin-bottom: 30px;
+}
+
+.total-value {
+  font-size: 3rem;
+  font-weight: 900;
+  color: #ff8c00;
+  margin-bottom: 10px;
+  text-shadow: 0 0 20px rgba(255, 140, 0, 0.5);
+}
+
+.total-change {
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.total-change.positive {
+  color: #10b981;
+}
+
+.total-change.negative {
+  color: #ef4444;
+}
+
+.portfolio-metrics {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.metric {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.metric-label {
+  font-size: 0.9rem;
+  color: #a0a0a0;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.metric-value {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #e0e0e0;
+}
+
+.metric-value.positive {
+  color: #10b981;
+}
+
+.metric-value.negative {
+  color: #ef4444;
+}
+
+/* Portfolio Sections */
+.portfolio-sections {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+}
+
+.holdings-section,
+.transactions-section {
+  background: rgba(26, 26, 46, 0.8);
+  border-radius: 20px;
+  padding: 30px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+}
+
+.holdings-section h2,
+.transactions-section h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #e0e0e0;
+  margin: 0 0 25px 0;
+  text-shadow: 0 0 10px rgba(255, 140, 0, 0.3);
+}
+
+/* Holdings */
+.holdings-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.holding-item {
+  display: grid;
+  grid-template-columns: 1fr 120px 80px;
+  align-items: center;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  transition: all 0.3s ease;
+}
+
+.holding-item:hover {
+  border-color: rgba(255, 140, 0, 0.3);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+.holding-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.holding-symbol {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #e0e0e0;
+}
+
+.holding-name {
+  font-size: 0.9rem;
+  color: #a0a0a0;
+}
+
+.holding-amount {
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.amount {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #e0e0e0;
+  font-family: 'Monaco', monospace;
+}
+
+.value {
+  font-size: 0.9rem;
+  color: #a0a0a0;
+}
+
+.holding-change {
+  text-align: center;
+  font-size: 0.95rem;
+  font-weight: 600;
+  padding: 4px 8px;
+  border-radius: 6px;
+}
+
+.holding-change.positive {
+  color: #10b981;
+  background: rgba(16, 185, 129, 0.1);
+}
+
+.holding-change.negative {
+  color: #ef4444;
+  background: rgba(239, 68, 68, 0.1);
+}
+
+/* Transactions */
+.transactions-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.transaction-item {
+  display: grid;
+  grid-template-columns: 120px 1fr 100px;
+  align-items: center;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  transition: all 0.3s ease;
+}
+
+.transaction-item:hover {
+  border-color: rgba(255, 140, 0, 0.3);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+.transaction-type {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.tx-icon {
+  font-size: 1.2rem;
+}
+
+.tx-label {
+  font-size: 0.9rem;
+  color: #a0a0a0;
+  font-weight: 600;
+}
+
+.transaction-details {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.tx-amount {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #e0e0e0;
+  font-family: 'Monaco', monospace;
+}
+
+.tx-pair {
+  font-size: 0.9rem;
+  color: #a0a0a0;
+}
+
+.transaction-meta {
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  align-items: flex-end;
+}
+
+.tx-time {
+  font-size: 0.85rem;
+  color: #a0a0a0;
+}
+
+.tx-status {
+  font-size: 0.9rem;
+}
+
+.tx-status.confirmed {
+  color: #10b981;
+}
+
+.tx-status.pending {
+  color: #f59e0b;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .portfolio-sections {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+  
+  .portfolio-metrics {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+}
+
+@media (max-width: 768px) {
+  .portfolio-page {
+    padding: 20px 16px;
+  }
+  
+  .portfolio-header h1 {
+    font-size: 2rem;
+  }
+  
+  .portfolio-value-card {
+    padding: 30px 20px;
+    min-width: auto;
+  }
+  
+  .total-value {
+    font-size: 2.5rem;
+  }
+  
+  .holding-item {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    text-align: center;
+  }
+  
+  .holding-amount {
+    text-align: center;
+  }
+  
+  .transaction-item {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    text-align: center;
+  }
+  
+  .transaction-meta {
+    align-items: center;
+  }
+}
+
+/* GPU Optimizations */
+.holding-item,
+.transaction-item,
+.portfolio-value-card {
+  will-change: transform, box-shadow;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* Animation Enhancement */
+.total-value {
+  animation: valueGlow 3s ease-in-out infinite alternate;
+}
+
+@keyframes valueGlow {
+  0% { text-shadow: 0 0 20px rgba(255, 140, 0, 0.5); }
+  100% { text-shadow: 0 0 30px rgba(255, 140, 0, 0.8), 0 0 40px rgba(255, 140, 0, 0.3); }
+}

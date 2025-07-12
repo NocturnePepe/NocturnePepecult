@@ -1,0 +1,370 @@
+/* ===========================================
+   GAMING-TIER VISUAL FX & PERFORMANCE
+   Phase 2 & 6 Optimizations - 60fps Lock
+   =========================================== */
+
+/* GPU Acceleration Base Classes */
+.gpu-accelerated {
+  will-change: transform, opacity, filter;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+  contain: layout style paint;
+}
+
+.performance-optimized {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* ===========================================
+   ENHANCED PARTICLE SYSTEM & THEME LAYERS
+   =========================================== */
+
+/* Base particle container with optimized layering */
+.particle-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: -1;
+  overflow: hidden;
+  will-change: opacity;
+  contain: strict;
+}
+
+/* Theme-aware particle effects */
+.particles {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: var(--particle-pattern, 
+    radial-gradient(circle at 20% 30%, rgba(255, 20, 147, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 70%, rgba(157, 78, 221, 0.08) 0%, transparent 50%),
+    radial-gradient(circle at 40% 80%, rgba(106, 13, 173, 0.06) 0%, transparent 50%)
+  );
+  animation: particleFloat 20s ease-in-out infinite;
+  opacity: var(--particle-opacity, 0.6);
+}
+
+@keyframes particleFloat {
+  0%, 100% { 
+    transform: translateY(0px) scale(1) translateZ(0);
+    filter: blur(0px);
+  }
+  25% { 
+    transform: translateY(-10px) scale(1.02) translateZ(0);
+    filter: blur(0.5px);
+  }
+  50% { 
+    transform: translateY(-5px) scale(0.98) translateZ(0);
+    filter: blur(1px);
+  }
+  75% { 
+    transform: translateY(-15px) scale(1.01) translateZ(0);
+    filter: blur(0.3px);
+  }
+}
+
+/* Theme-specific particle variants */
+.theme-cult .particles {
+  --particle-pattern: 
+    radial-gradient(circle at 25% 25%, rgba(255, 20, 147, 0.12) 0%, transparent 60%),
+    radial-gradient(circle at 75% 75%, rgba(157, 78, 221, 0.1) 0%, transparent 60%),
+    radial-gradient(circle at 50% 90%, rgba(106, 13, 173, 0.08) 0%, transparent 50%);
+  --particle-opacity: 0.7;
+}
+
+.theme-cyber .particles {
+  --particle-pattern: 
+    radial-gradient(circle at 30% 20%, rgba(0, 255, 255, 0.08) 0%, transparent 50%),
+    radial-gradient(circle at 70% 80%, rgba(255, 0, 255, 0.06) 0%, transparent 50%),
+    linear-gradient(45deg, rgba(0, 255, 127, 0.03) 0%, transparent 100%);
+  --particle-opacity: 0.5;
+}
+
+.theme-ember .particles {
+  --particle-pattern: 
+    radial-gradient(circle at 40% 30%, rgba(255, 140, 0, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 60% 70%, rgba(255, 69, 0, 0.08) 0%, transparent 50%),
+    radial-gradient(circle at 20% 80%, rgba(255, 215, 0, 0.06) 0%, transparent 50%);
+  --particle-opacity: 0.6;
+}
+
+/* ===========================================
+   FOG OVERLAYS & DEPTH SYSTEM
+   =========================================== */
+
+.fog-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 1;
+  mix-blend-mode: overlay;
+  opacity: var(--fog-intensity, 0.3);
+  background: var(--fog-gradient, 
+    linear-gradient(
+      135deg,
+      rgba(0, 0, 0, 0.1) 0%,
+      rgba(75, 0, 130, 0.08) 25%,
+      rgba(139, 0, 139, 0.06) 50%,
+      rgba(106, 13, 173, 0.04) 75%,
+      rgba(0, 0, 0, 0.1) 100%
+    )
+  );
+  animation: fogDrift 30s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+@keyframes fogDrift {
+  0%, 100% { 
+    transform: translateX(0px) translateY(0px) scale(1) translateZ(0);
+    opacity: var(--fog-intensity, 0.3);
+  }
+  25% { 
+    transform: translateX(10px) translateY(-5px) scale(1.02) translateZ(0);
+    opacity: calc(var(--fog-intensity, 0.3) * 0.8);
+  }
+  50% { 
+    transform: translateX(-5px) translateY(10px) scale(0.98) translateZ(0);
+    opacity: calc(var(--fog-intensity, 0.3) * 1.2);
+  }
+  75% { 
+    transform: translateX(-10px) translateY(-8px) scale(1.01) translateZ(0);
+    opacity: calc(var(--fog-intensity, 0.3) * 0.9);
+  }
+}
+
+/* ===========================================
+   RUNIC BORDERS & GLASSMORPHISM
+   =========================================== */
+
+.runic-border {
+  position: relative;
+  border: 2px solid transparent;
+  background: 
+    linear-gradient(var(--bg-color, rgba(26, 26, 46, 0.8)), var(--bg-color, rgba(26, 26, 46, 0.8))),
+    linear-gradient(45deg, 
+      var(--border-color-1, #ff1493), 
+      var(--border-color-2, #9d4edd), 
+      var(--border-color-3, #6a0dad)
+    );
+  background-origin: border-box;
+  background-clip: content-box, border-box;
+  border-radius: var(--border-radius, 12px);
+  backdrop-filter: blur(var(--blur-strength, 10px));
+  animation: runicGlow 8s ease-in-out infinite;
+}
+
+@keyframes runicGlow {
+  0%, 100% { 
+    box-shadow: 
+      0 0 20px rgba(255, 20, 147, 0.3),
+      inset 0 0 20px rgba(157, 78, 221, 0.1);
+    filter: brightness(1);
+  }
+  50% { 
+    box-shadow: 
+      0 0 30px rgba(255, 20, 147, 0.5),
+      0 0 40px rgba(157, 78, 221, 0.3),
+      inset 0 0 30px rgba(106, 13, 173, 0.15);
+    filter: brightness(1.1);
+  }
+}
+
+.glassmorphism {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(15px) saturate(1.2);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.1);
+}
+
+/* Enhanced glassmorphism for dark themes */
+.glassmorphism-dark {
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(20px) saturate(1.5);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 
+    0 12px 40px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.02);
+}
+
+/* ===========================================
+   BREATHING ANIMATIONS & CUBIC BEZIER TIMING
+   =========================================== */
+
+.breathing-glow {
+  animation: breathingGlow 12s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes breathingGlow {
+  0%, 100% { 
+    transform: scale(1) translateZ(0);
+    filter: brightness(1) saturate(1);
+    box-shadow: 0 0 20px rgba(255, 20, 147, 0.3);
+  }
+  25% { 
+    transform: scale(1.02) translateZ(0);
+    filter: brightness(1.05) saturate(1.1);
+    box-shadow: 0 0 25px rgba(255, 20, 147, 0.4);
+  }
+  50% { 
+    transform: scale(1.01) translateZ(0);
+    filter: brightness(1.1) saturate(1.2);
+    box-shadow: 0 0 30px rgba(255, 20, 147, 0.5);
+  }
+  75% { 
+    transform: scale(1.015) translateZ(0);
+    filter: brightness(1.03) saturate(1.05);
+    box-shadow: 0 0 22px rgba(255, 20, 147, 0.35);
+  }
+}
+
+/* ===========================================
+   PERFORMANCE & ACCESSIBILITY
+   =========================================== */
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .particles,
+  .fog-overlay,
+  .breathing-glow,
+  .runic-border {
+    animation: none !important;
+  }
+  
+  .gpu-accelerated {
+    will-change: auto;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .particles,
+  .fog-overlay {
+    opacity: 0.2;
+  }
+  
+  .runic-border {
+    border: 2px solid currentColor;
+    background: var(--bg-color, rgba(26, 26, 46, 0.9));
+  }
+}
+
+/* ===========================================
+   THEME PERSISTENCE & CSS VARIABLES
+   =========================================== */
+
+:root {
+  /* Base theme variables */
+  --theme-primary: #ff1493;
+  --theme-secondary: #9d4edd;
+  --theme-accent: #6a0dad;
+  --theme-bg: rgba(26, 26, 46, 0.8);
+  --theme-text: #e0e0e0;
+  
+  /* Performance variables */
+  --animation-duration: 12s;
+  --blur-strength: 10px;
+  --particle-opacity: 0.6;
+  --fog-intensity: 0.3;
+  
+  /* Border and spacing */
+  --border-radius: 12px;
+  --spacing-unit: 8px;
+}
+
+/* Theme-specific CSS variable overrides */
+[data-theme="cult"] {
+  --theme-primary: #ff1493;
+  --theme-secondary: #9d4edd;
+  --theme-accent: #6a0dad;
+  --particle-opacity: 0.7;
+  --fog-intensity: 0.4;
+}
+
+[data-theme="cyber"] {
+  --theme-primary: #00ffff;
+  --theme-secondary: #ff00ff;
+  --theme-accent: #00ff7f;
+  --particle-opacity: 0.5;
+  --fog-intensity: 0.2;
+}
+
+[data-theme="ember"] {
+  --theme-primary: #ff8c00;
+  --theme-secondary: #ff4500;
+  --theme-accent: #ffd700;
+  --particle-opacity: 0.6;
+  --fog-intensity: 0.3;
+}
+
+/* ===========================================
+   MOBILE OPTIMIZATIONS
+   =========================================== */
+
+@media (max-width: 768px) {
+  .particles {
+    animation-duration: 15s; /* Slightly faster for mobile */
+  }
+  
+  .fog-overlay {
+    animation-duration: 25s;
+    opacity: calc(var(--fog-intensity, 0.3) * 0.7); /* Reduce intensity on mobile */
+  }
+  
+  .breathing-glow {
+    animation-duration: 10s; /* Faster breathing on mobile */
+  }
+  
+  .glassmorphism,
+  .glassmorphism-dark {
+    backdrop-filter: blur(8px); /* Reduce blur for mobile performance */
+  }
+}
+
+/* Touch device optimizations */
+@media (hover: none) and (pointer: coarse) {
+  .runic-border:active {
+    transform: scale(0.98);
+    transition: transform 0.1s ease;
+  }
+}
+
+/* ===========================================
+   MEMORY & GPU OPTIMIZATION
+   =========================================== */
+
+/* Composite layer isolation for expensive animations */
+.isolated-layer {
+  isolation: isolate;
+  contain: layout style paint;
+  will-change: transform;
+}
+
+/* Optimized transforms for 60fps */
+.transform-optimized {
+  transform: translate3d(0, 0, 0);
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+/* Preload critical animations */
+.preload-animations {
+  animation-fill-mode: both;
+  animation-play-state: paused;
+}
+
+.preload-animations.loaded {
+  animation-play-state: running;
+}

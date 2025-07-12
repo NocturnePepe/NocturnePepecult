@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useMockWallet } from '../contexts/MockWalletContext';
 import './XPRankBar.css';
 
@@ -23,34 +23,45 @@ interface XPRankBarProps {
 const XPRankBar: React.FC<XPRankBarProps> = ({ isFloating = false, compact = false }) => {
   const { userStats } = useMockWallet();
   
-  const currentRank = CULT_RANKS.find(rank => 
-    userStats.xp >= rank.minXP && userStats.xp <= rank.maxXP
-  ) || CULT_RANKS[0];
-  
-  const nextRank = CULT_RANKS[currentRank.level + 1];
-  
-  // Calculate XP progress within current level
-  const xpInCurrentLevel = userStats.xp - currentRank.minXP;
-  const xpNeededForNext = nextRank ? (nextRank.minXP - currentRank.minXP) : 1;
-  const progressPercent = Math.min((xpInCurrentLevel / xpNeededForNext) * 100, 100);
+  // Memoize expensive calculations for 60fps performance
+  const rankData = useMemo(() => {
+    const currentRank = CULT_RANKS.find(rank => 
+      userStats.xp >= rank.minXP && userStats.xp <= rank.maxXP
+    ) || CULT_RANKS[0];
+    
+    const nextRank = CULT_RANKS[currentRank.level + 1];
+    
+    // Calculate XP progress within current level
+    const xpInCurrentLevel = userStats.xp - currentRank.minXP;
+    const xpNeededForNext = nextRank ? (nextRank.minXP - currentRank.minXP) : 1;
+    const progressPercent = Math.min((xpInCurrentLevel / xpNeededForNext) * 100, 100);
+    const xpToNext = nextRank ? nextRank.minXP - userStats.xp : 0;
 
-  const xpToNext = nextRank ? nextRank.minXP - userStats.xp : 0;
+    return {
+      currentRank,
+      nextRank,
+      progressPercent,
+      xpToNext,
+      xpInCurrentLevel,
+      xpNeededForNext
+    };
+  }, [userStats.xp]);
 
   const containerClass = `xp-rank-bar ${isFloating ? 'floating' : ''} ${compact ? 'compact' : ''}`;
 
   return (
     <div className={containerClass}>
       <div className="rank-info">
-        <div className="rank-icon" style={{ color: currentRank.color }}>
-          {currentRank.icon}
+        <div className="rank-icon" style={{ color: rankData.currentRank.color }}>
+          {rankData.currentRank.icon}
         </div>
         <div className="rank-details">
-          <div className="rank-name" style={{ color: currentRank.color }}>
-            {currentRank.name}
+          <div className="rank-name" style={{ color: rankData.currentRank.color }}>
+            {rankData.currentRank.name}
           </div>
           {!compact && (
             <div className="rank-level">
-              Level {currentRank.level}
+              Level {rankData.currentRank.level}
             </div>
           )}
         </div>
@@ -61,18 +72,20 @@ const XPRankBar: React.FC<XPRankBarProps> = ({ isFloating = false, compact = fal
           <div 
             className="xp-bar-fill" 
             style={{ 
-              width: `${progressPercent}%`,
-              background: `linear-gradient(90deg, ${currentRank.color}88, ${currentRank.color})`
-            }}
+              '--xp-progress': `${rankData.progressPercent / 100}`,
+              '--rank-color': rankData.currentRank.color,
+              '--rank-color-alpha': `${rankData.currentRank.color}88`
+            } as React.CSSProperties}
           />
-          <div className="xp-bar-glow" style={{ backgroundColor: currentRank.color }} />
+          <div className="xp-bar-shimmer" />
+          <div className="xp-bar-glow" style={{ backgroundColor: rankData.currentRank.color }} />
         </div>
         
         <div className="xp-text">
           <span className="current-xp">{userStats.xp.toLocaleString()} XP</span>
-          {nextRank && !compact && (
+          {rankData.nextRank && !compact && (
             <span className="xp-to-next">
-              {xpToNext.toLocaleString()} to {nextRank.name}
+              {rankData.xpToNext.toLocaleString()} to {rankData.nextRank.name}
             </span>
           )}
         </div>
@@ -80,7 +93,7 @@ const XPRankBar: React.FC<XPRankBarProps> = ({ isFloating = false, compact = fal
 
       {!compact && (
         <div className="cult-tier">
-          <div className="tier-badge" style={{ backgroundColor: currentRank.color }}>
+          <div className="tier-badge" style={{ backgroundColor: rankData.currentRank.color }}>
             T{userStats.cultTier}
           </div>
         </div>

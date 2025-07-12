@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route, Link, useLocation } from 'react
 import { MockWalletProvider } from './contexts/MockWalletContext';
 import XPRankBar from './components/XPRankBar';
 import FloatingButtons from './components/FloatingButtons';
-import EnhancedThemeSystem from './components/EnhancedThemeSystem';
+import EnhancedVisualSystem from './components/EnhancedVisualSystem';
 import './App.css';
 import './PWA.css';
 import './GamingTierFX.css';
@@ -12,9 +12,9 @@ import './GamingTierFX.css';
 const HomePage = lazy(() => import('./pages/HomePage'));
 const SwapPage = lazy(() => import('./pages/SwapPage'));
 const PoolsPage = lazy(() => import('./pages/PoolsPage'));
+const PortfolioPage = lazy(() => import('./pages/PortfolioPage'));
+const SocialPage = lazy(() => import('./pages/SocialPage'));
 const AdminPage = lazy(() => import('./pages/AdminPage'));
-const ReferralPage = lazy(() => import('./pages/ReferralPage'));
-const AnalyticsPage = lazy(() => import('./pages/AnalyticsPage'));
 
 // Lazy load heavy components
 const AdvancedTrading = lazy(() => import('./components/AdvancedTrading'));
@@ -104,13 +104,12 @@ const IntegrationStatus = () => {
 const Navigation = () => {
   const location = useLocation();
   
+  // 6-tab navigation structure as specified in Phase 1 requirements
   const navItems = [
-    { path: '/', label: 'Home', icon: '🏠' },
     { path: '/swap', label: 'Swap', icon: '🔄' },
     { path: '/pools', label: 'Pools', icon: '🏊' },
-    { path: '/trading', label: 'Trading', icon: '📈' },
-    { path: '/analytics', label: 'Analytics', icon: '📊' },
-    { path: '/referral', label: 'Referral', icon: '👥' },
+    { path: '/portfolio', label: 'Portfolio', icon: '📊' },
+    { path: '/social', label: 'Social', icon: '👥' },
     { path: '/dao', label: 'DAO', icon: '🏛️' },
     { path: '/admin', label: 'Admin', icon: '⚙️' }
   ];
@@ -165,38 +164,42 @@ function App() {
   return (
     <MockWalletProvider>
       <Router>
-        <div className="App">
-          {/* XP & Rank Bar in header */}
-          <header className="app-header">
-            <XPRankBar />
-          </header>
+        <EnhancedVisualSystem theme="cult" performanceMode="balanced">
+          <div className="App gpu-accelerated">
+            {/* XP & Rank Bar in header */}
+            <header className="app-header">
+              <XPRankBar />
+            </header>
 
-          {/* Main Navigation */}
-          <Navigation />
-          
-          {/* Main Content with Suspense */}
-          <main className="main-content">
-            <Suspense fallback={<LoadingFallback />}>
-              <Routes>
-                {/* Core Pages */}
-                <Route path="/" element={<HomePage />} />
-                <Route path="/swap" element={<SwapPage />} />
-                <Route path="/pools" element={<PoolsPage />} />
-                <Route path="/trading" element={<AdvancedTrading />} />
-                <Route path="/analytics" element={<AnalyticsPage />} />
-                <Route path="/referral" element={<ReferralPage />} />
-                <Route path="/dao" element={<GovernanceDAO />} />
-                <Route path="/admin" element={<AdminPage />} />
-                
-                {/* Fallback route */}
-                <Route path="*" element={<HomePage />} />
-              </Routes>
-            </Suspense>
-          </main>
+            {/* Main Navigation */}
+            <Navigation />
+            
+            {/* Main Content with Suspense */}
+            <main className="main-content">
+              <Suspense fallback={<LoadingFallback />}>
+                <Routes>
+                  {/* Core Pages */}
+                  <Route path="/" element={<HomePage />} />
+                  <Route path="/swap" element={<SwapPage />} />
+                  <Route path="/pools" element={<PoolsPage />} />
+                  <Route path="/portfolio" element={<PortfolioPage />} />
+                  <Route path="/social" element={<SocialPage />} />
+                  <Route path="/dao" element={<GovernanceDAO />} />
+                  <Route path="/admin" element={<AdminPage />} />
+                  
+                  {/* Legacy routes for backward compatibility */}
+                  <Route path="/trading" element={<AdvancedTrading />} />
+                  
+                  {/* Fallback route */}
+                  <Route path="*" element={<HomePage />} />
+                </Routes>
+              </Suspense>
+            </main>
 
-          {/* Floating Action Buttons */}
-          <FloatingButtons position="left" />
-        </div>
+            {/* Floating Action Buttons */}
+            <FloatingButtons position="left" />
+          </div>
+        </EnhancedVisualSystem>
       </Router>
     </MockWalletProvider>
   );
