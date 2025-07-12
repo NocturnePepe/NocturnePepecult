@@ -1,0 +1,613 @@
+/**
+ * ENHANCED UI BOX STYLING - NOCTURNE SWAP
+ * =======================================
+ * 
+ * PURPOSE: Premium visual effects for UI components with perfect performance
+ * FEATURES: Sweep animations, glow effects, hover states, and accessibility
+ * PERFORMANCE: GPU-accelerated transforms and compositing layers
+ * MAINTENANCE: Modular CSS with clear performance comments
+ */
+
+/* ===========================================
+   PERFORMANCE FOUNDATION - CRITICAL LAYER
+   =========================================== */
+
+.ui-box-base {
+    /* GPU LAYER ISOLATION */
+    will-change: transform, opacity, box-shadow;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    contain: layout style paint;
+    
+    /* LAYOUT OPTIMIZATION */
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    
+    /* BASE STYLING */
+    border-radius: 12px;
+    backdrop-filter: blur(10px);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ===========================================
+   SWEEP ANIMATION SYSTEM
+   =========================================== */
+
+.ui-box-sweep {
+    position: relative;
+    overflow: hidden;
+}
+
+.ui-box-sweep::before {
+    /* SWEEP ELEMENT */
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.1) 30%,
+        rgba(255, 255, 255, 0.2) 50%,
+        rgba(255, 255, 255, 0.1) 70%,
+        transparent 100%
+    );
+    
+    /* GPU ACCELERATION */
+    will-change: transform;
+    transform: translateZ(0) translateX(-100%);
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    pointer-events: none;
+    z-index: 1;
+}
+
+.ui-box-sweep:hover::before {
+    transform: translateZ(0) translateX(100%);
+    transition-duration: 0.8s;
+}
+
+/* ===========================================
+   GLOW EFFECT SYSTEM
+   =========================================== */
+
+.ui-box-glow {
+    position: relative;
+}
+
+.ui-box-glow::after {
+    /* GLOW RING */
+    content: '';
+    position: absolute;
+    inset: -2px;
+    border-radius: inherit;
+    padding: 2px;
+    background: linear-gradient(
+        45deg,
+        var(--theme-primary, #6a0dad),
+        var(--theme-secondary, #9932cc),
+        var(--theme-accent, #ff1493),
+        var(--theme-primary, #6a0dad)
+    );
+    
+    /* ANIMATION SETUP */
+    background-size: 300% 300%;
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite: xor;
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    
+    /* GPU OPTIMIZATION */
+    will-change: background-position, opacity;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    animation: borderGlow 3s linear infinite;
+    pointer-events: none;
+    z-index: -1;
+}
+
+.ui-box-glow:hover::after {
+    opacity: 0.8;
+}
+
+@keyframes borderGlow {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+}
+
+/* ===========================================
+   THEME-AWARE STYLING
+   =========================================== */
+
+.ui-box-themed {
+    background: linear-gradient(
+        135deg,
+        rgba(var(--theme-primary-rgb, 106, 13, 173), 0.1) 0%,
+        rgba(var(--theme-secondary-rgb, 153, 50, 204), 0.05) 50%,
+        rgba(var(--theme-accent-rgb, 255, 20, 147), 0.1) 100%
+    );
+    border: 1px solid rgba(var(--theme-primary-rgb, 106, 13, 173), 0.3);
+    
+    /* DYNAMIC SHADOW */
+    box-shadow: 
+        0 4px 20px rgba(var(--theme-primary-rgb, 106, 13, 173), 0.1),
+        0 2px 10px rgba(0, 0, 0, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.ui-box-themed:hover {
+    background: linear-gradient(
+        135deg,
+        rgba(var(--theme-primary-rgb, 106, 13, 173), 0.15) 0%,
+        rgba(var(--theme-secondary-rgb, 153, 50, 204), 0.08) 50%,
+        rgba(var(--theme-accent-rgb, 255, 20, 147), 0.15) 100%
+    );
+    border-color: rgba(var(--theme-primary-rgb, 106, 13, 173), 0.5);
+    
+    box-shadow: 
+        0 8px 32px rgba(var(--theme-primary-rgb, 106, 13, 173), 0.2),
+        0 4px 16px rgba(0, 0, 0, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    
+    /* SUBTLE TRANSFORM */
+    transform: translateY(-2px) translateZ(0);
+}
+
+/* ===========================================
+   INTERACTIVE STATES
+   =========================================== */
+
+.ui-box-interactive {
+    cursor: pointer;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.ui-box-interactive:active {
+    transform: translateY(0) scale(0.98) translateZ(0);
+    transition-duration: 0.1s;
+}
+
+.ui-box-interactive:focus-visible {
+    outline: 2px solid var(--theme-accent, #ff1493);
+    outline-offset: 2px;
+}
+
+/* ===========================================
+   PREMIUM COMPONENT VARIANTS
+   =========================================== */
+
+/* SWAP BOX - Complete styling with all effects */
+.swap-box {
+    /* BASE STYLING */
+    will-change: transform, opacity, box-shadow;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    contain: layout style paint;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border-radius: 12px;
+    backdrop-filter: blur(10px);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    
+    /* THEMED STYLING */
+    background: linear-gradient(
+        135deg,
+        rgba(var(--theme-primary-rgb, 106, 13, 173), 0.1) 0%,
+        rgba(var(--theme-secondary-rgb, 153, 50, 204), 0.05) 50%,
+        rgba(var(--theme-accent-rgb, 255, 20, 147), 0.1) 100%
+    );
+    border: 1px solid rgba(var(--theme-primary-rgb, 106, 13, 173), 0.3);
+    box-shadow: 
+        0 4px 20px rgba(var(--theme-primary-rgb, 106, 13, 173), 0.1),
+        0 2px 10px rgba(0, 0, 0, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    
+    /* INTERACTIVE */
+    cursor: pointer;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    
+    /* DIMENSIONS */
+    min-height: 180px;
+    padding: 24px;
+}
+
+/* SWEEP EFFECT FOR SWAP BOX */
+.swap-box::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(var(--theme-accent-rgb, 255, 20, 147), 0.2) 50%,
+        transparent 100%
+    );
+    will-change: transform;
+    transform: translateZ(0) translateX(-100%);
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* GLOW EFFECT FOR SWAP BOX */
+.swap-box::after {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    border-radius: inherit;
+    padding: 2px;
+    background: linear-gradient(
+        45deg,
+        var(--theme-primary, #6a0dad),
+        var(--theme-secondary, #9932cc),
+        var(--theme-accent, #ff1493),
+        var(--theme-primary, #6a0dad)
+    );
+    background-size: 300% 300%;
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite: xor;
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    will-change: background-position, opacity;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    animation: borderGlow 3s linear infinite;
+    pointer-events: none;
+    z-index: -1;
+}
+
+.swap-box:hover::before {
+    transform: translateZ(0) translateX(100%);
+    transition-duration: 0.8s;
+}
+
+.swap-box:hover::after {
+    opacity: 0.8;
+}
+
+.swap-box:hover {
+    background: linear-gradient(
+        135deg,
+        rgba(var(--theme-primary-rgb, 106, 13, 173), 0.15) 0%,
+        rgba(var(--theme-secondary-rgb, 153, 50, 204), 0.08) 50%,
+        rgba(var(--theme-accent-rgb, 255, 20, 147), 0.15) 100%
+    );
+    border-color: rgba(var(--theme-primary-rgb, 106, 13, 173), 0.5);
+    box-shadow: 
+        0 8px 32px rgba(var(--theme-primary-rgb, 106, 13, 173), 0.2),
+        0 4px 16px rgba(0, 0, 0, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px) translateZ(0);
+}
+
+.swap-box:active {
+    transform: translateY(0) scale(0.98) translateZ(0);
+    transition-duration: 0.1s;
+}
+
+.swap-box:focus-visible {
+    outline: 2px solid var(--theme-accent, #ff1493);
+    outline-offset: 2px;
+}
+
+/* WALLET CONNECTION BOX */
+.wallet-box {
+    /* INHERIT BASE STYLES */
+    will-change: transform, opacity, box-shadow;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    contain: layout style paint;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border-radius: 12px;
+    backdrop-filter: blur(10px);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    
+    /* THEMED STYLING */
+    background: linear-gradient(
+        135deg,
+        rgba(var(--theme-primary-rgb, 106, 13, 173), 0.1) 0%,
+        rgba(var(--theme-secondary-rgb, 153, 50, 204), 0.05) 50%,
+        rgba(var(--theme-accent-rgb, 255, 20, 147), 0.1) 100%
+    );
+    border: 1px solid rgba(var(--theme-primary-rgb, 106, 13, 173), 0.3);
+    box-shadow: 
+        0 4px 20px rgba(var(--theme-primary-rgb, 106, 13, 173), 0.1),
+        0 2px 10px rgba(0, 0, 0, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    
+    /* INTERACTIVE */
+    cursor: pointer;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    
+    padding: 16px 24px;
+    border-left: 3px solid var(--theme-accent, #ff1493);
+}
+
+.wallet-box::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(var(--theme-primary-rgb, 106, 13, 173), 0.15) 50%,
+        transparent 100%
+    );
+    will-change: transform;
+    transform: translateZ(0) translateX(-100%);
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    pointer-events: none;
+    z-index: 1;
+}
+
+.wallet-box:hover::before {
+    transform: translateZ(0) translateX(100%);
+    transition-duration: 0.8s;
+}
+
+/* SETTINGS BOX */
+.settings-box {
+    /* BASE AND THEMED STYLES */
+    will-change: transform, opacity, box-shadow;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    contain: layout style paint;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border-radius: 12px;
+    backdrop-filter: blur(10px);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    
+    background: linear-gradient(
+        135deg,
+        rgba(var(--theme-primary-rgb, 106, 13, 173), 0.1) 0%,
+        rgba(var(--theme-secondary-rgb, 153, 50, 204), 0.05) 50%,
+        rgba(var(--theme-accent-rgb, 255, 20, 147), 0.1) 100%
+    );
+    border: 1px solid rgba(var(--theme-primary-rgb, 106, 13, 173), 0.3);
+    box-shadow: 
+        0 4px 20px rgba(var(--theme-primary-rgb, 106, 13, 173), 0.1),
+        0 2px 10px rgba(0, 0, 0, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    
+    padding: 20px;
+}
+
+.settings-box::after {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    border-radius: inherit;
+    padding: 2px;
+    background: linear-gradient(
+        45deg,
+        var(--theme-secondary, #9932cc),
+        var(--theme-primary, #6a0dad),
+        var(--theme-secondary, #9932cc)
+    );
+    background-size: 300% 300%;
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite: xor;
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    will-change: background-position, opacity;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    animation: borderGlow 3s linear infinite;
+    pointer-events: none;
+    z-index: -1;
+}
+
+.settings-box:hover::after {
+    opacity: 0.8;
+}
+
+/* TRANSACTION HISTORY BOX */
+.history-box {
+    /* BASE AND THEMED STYLES */
+    will-change: transform, opacity, box-shadow;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    contain: layout style paint;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border-radius: 12px;
+    backdrop-filter: blur(10px);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    
+    background: linear-gradient(
+        135deg,
+        rgba(var(--theme-primary-rgb, 106, 13, 173), 0.1) 0%,
+        rgba(var(--theme-secondary-rgb, 153, 50, 204), 0.05) 50%,
+        rgba(var(--theme-accent-rgb, 255, 20, 147), 0.1) 100%
+    );
+    border: 1px solid rgba(var(--theme-primary-rgb, 106, 13, 173), 0.3);
+    box-shadow: 
+        0 4px 20px rgba(var(--theme-primary-rgb, 106, 13, 173), 0.1),
+        0 2px 10px rgba(0, 0, 0, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    
+    padding: 16px;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+/* CUSTOM SCROLLBAR FOR HISTORY BOX */
+.history-box::-webkit-scrollbar {
+    width: 6px;
+}
+
+.history-box::-webkit-scrollbar-track {
+    background: rgba(var(--theme-primary-rgb, 106, 13, 173), 0.1);
+    border-radius: 3px;
+}
+
+.history-box::-webkit-scrollbar-thumb {
+    background: linear-gradient(
+        to bottom,
+        var(--theme-primary, #6a0dad),
+        var(--theme-secondary, #9932cc)
+    );
+    border-radius: 3px;
+}
+
+.history-box::-webkit-scrollbar-thumb:hover {
+    background: var(--theme-accent, #ff1493);
+}
+}
+    
+    /* CUSTOM SCROLLBAR */
+    &::-webkit-scrollbar {
+        width: 6px;
+    }
+    
+    &::-webkit-scrollbar-track {
+        background: rgba(var(--theme-primary-rgb, 106, 13, 173), 0.1);
+        border-radius: 3px;
+    }
+    
+    &::-webkit-scrollbar-thumb {
+        background: linear-gradient(
+            to bottom,
+            var(--theme-primary, #6a0dad),
+            var(--theme-secondary, #9932cc)
+        );
+        border-radius: 3px;
+    }
+    
+.history-box::-webkit-scrollbar-thumb:hover {
+    background: var(--theme-accent, #ff1493);
+}
+
+/* ===========================================
+   ACCESSIBILITY ENHANCEMENTS
+   =========================================== */
+
+/* REDUCED MOTION SUPPORT */
+@media (prefers-reduced-motion: reduce) {
+    .ui-box-sweep::before,
+    .ui-box-glow::after {
+        animation: none;
+        transition: none;
+    }
+    
+    .ui-box-base {
+        transition: opacity 0.2s ease;
+    }
+}
+
+/* HIGH CONTRAST SUPPORT */
+@media (prefers-contrast: high) {
+    .ui-box-themed {
+        border-width: 2px;
+        background: rgba(var(--theme-primary-rgb, 106, 13, 173), 0.2);
+    }
+    
+    .ui-box-glow::after {
+        opacity: 1;
+    }
+}
+
+/* ===========================================
+   RESPONSIVE SCALING
+   =========================================== */
+
+/* MOBILE OPTIMIZATION */
+@media (max-width: 768px) {
+    .swap-box {
+        min-height: 160px;
+        padding: 20px;
+    }
+    
+    .wallet-box,
+    .settings-box {
+        padding: 16px;
+    }
+    
+    /* REDUCE EFFECTS ON MOBILE FOR PERFORMANCE */
+    .ui-box-glow::after {
+        animation-duration: 4s; /* Slower animation */
+    }
+}
+
+/* TABLET OPTIMIZATION */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .swap-box {
+        min-height: 170px;
+        padding: 22px;
+    }
+}
+
+/* DESKTOP ENHANCEMENT */
+@media (min-width: 1025px) {
+    .ui-box-themed:hover {
+        /* ENHANCED DESKTOP EFFECTS */
+        box-shadow: 
+            0 12px 40px rgba(var(--theme-primary-rgb, 106, 13, 173), 0.25),
+            0 6px 20px rgba(0, 0, 0, 0.2),
+            inset 0 1px 0 rgba(255, 255, 255, 0.25);
+    }
+}
+
+/* ===========================================
+   PERFORMANCE UTILITIES
+   =========================================== */
+
+/* GPU LAYER PROMOTION */
+.gpu-accelerate {
+    will-change: transform;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+}
+
+/* COMPOSITE LAYER ISOLATION */
+.isolate-layer {
+    isolation: isolate;
+    contain: layout style paint;
+}
+
+/* ANIMATION PERFORMANCE */
+.smooth-animation {
+    animation-fill-mode: both;
+    animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ===========================================
+   DEBUG UTILITIES (DEVELOPMENT ONLY)
+   =========================================== */
+
+/* Uncomment for development debugging */
+/*
+.debug-gpu-layers * {
+    outline: 1px solid rgba(255, 0, 0, 0.3);
+}
+
+.debug-gpu-layers .ui-box-base {
+    outline: 2px solid rgba(0, 255, 0, 0.5);
+}
+
+.debug-gpu-layers .ui-box-sweep::before {
+    outline: 1px solid rgba(0, 0, 255, 0.5);
+}
+*/

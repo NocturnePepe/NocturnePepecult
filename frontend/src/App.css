@@ -1,6 +1,9 @@
 /* Import Gaming-Tier Effects */
 @import './styles/GamingTierFX.css';
 
+/* Import Enhanced UI Components */
+@import './styles/EnhancedUIBoxes.css';
+
 /* Enhanced App Structure for Phase 2 */
 .App {
   /* Gaming-tier background will be applied from GamingTierFX.css */
