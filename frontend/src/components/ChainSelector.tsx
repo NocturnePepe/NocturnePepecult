@@ -1,53 +1,86 @@
 import React, { useState, useEffect } from 'react';
 import './ChainSelector.css';
 
-// Supported chains configuration
-const SUPPORTED_CHAINS = {
-  solana: {
+interface ChainNetwork {
+  id: string;
+  name: string;
+  symbol: string;
+  chainId: number;
+  rpcUrl: string;
+  blockExplorer: string;
+  nativeCurrency: {
+    name: string;
+    symbol: string;
+    decimals: number;
+  };
+  icon: string;
+  color: string;
+  testnet?: boolean;
+  tvl?: number;
+  gasPrice?: number;
+  blockTime?: number;
+  features: string[];
+  dexes: string[];
+  bridges: string[];
+}
+
+interface ChainMetrics {
+  chainId: string;
+  gasPrice: number;
+  blockTime: number;
+  tvl: number;
+  activeUsers: number;
+  transactions24h: number;
+  bridgeVolume: number;
+  status: 'healthy' | 'warning' | 'congested' | 'maintenance';
+}
+
+// Enhanced supported chains configuration
+const SUPPORTED_CHAINS: ChainNetwork[] = [
+  {
     id: 'solana',
     name: 'Solana',
     symbol: 'SOL',
-    icon: '◎',
-    color: '#00FFA3',
+    chainId: 101,
     rpcUrl: 'https://api.mainnet-beta.solana.com',
-    explorerUrl: 'https://solscan.io',
-    nativeCurrency: {
-      name: 'Solana',
-      symbol: 'SOL',
-      decimals: 9
-    },
-    status: 'active',
-    features: ['swap', 'liquidity', 'governance', 'staking']
+    blockExplorer: 'https://solscan.io',
+    nativeCurrency: { name: 'Solana', symbol: 'SOL', decimals: 9 },
+    icon: '🔮',
+    color: '#9945FF',
+    tvl: 1250000000,
+    gasPrice: 0.000005,
+    blockTime: 400,
+    features: ['Fast', 'Low Fees', 'NFTs', 'DeFi'],
+    dexes: ['Jupiter', 'Raydium', 'Orca', 'Serum'],
+    bridges: ['Wormhole', 'Allbridge', 'Portal']
   },
-  ethereum: {
+  {
     id: 'ethereum',
     name: 'Ethereum',
     symbol: 'ETH',
-    icon: '⟠',
+    chainId: 1,
+    rpcUrl: 'https://mainnet.infura.io/v3/YOUR_PROJECT_ID',
+    blockExplorer: 'https://etherscan.io',
+    nativeCurrency: { name: 'Ethereum', symbol: 'ETH', decimals: 18 },
+    icon: '⚡',
     color: '#627EEA',
-    rpcUrl: 'https://mainnet.infura.io/v3/',
-    explorerUrl: 'https://etherscan.io',
-    nativeCurrency: {
-      name: 'Ethereum',
-      symbol: 'ETH',
-      decimals: 18
-    },
-    status: 'coming-soon',
-    features: ['swap', 'liquidity']
+    tvl: 25000000000,
+    gasPrice: 25,
+    blockTime: 12000,
+    features: ['Smart Contracts', 'DeFi', 'NFTs', 'L2s'],
+    dexes: ['Uniswap', 'SushiSwap', '1inch', 'Curve'],
+    bridges: ['Wormhole', 'Portal', 'Multichain', 'Hop']
   },
-  polygon: {
+  {
     id: 'polygon',
     name: 'Polygon',
     symbol: 'MATIC',
-    icon: '⬟',
-    color: '#8247E5',
+    chainId: 137,
     rpcUrl: 'https://polygon-rpc.com',
-    explorerUrl: 'https://polygonscan.com',
-    nativeCurrency: {
-      name: 'Polygon',
-      symbol: 'MATIC',
-      decimals: 18
-    },
+    blockExplorer: 'https://polygonscan.com',
+    nativeCurrency: { name: 'Polygon', symbol: 'MATIC', decimals: 18 },
+    icon: '🟣',
+    color: '#8247E5',
     status: 'coming-soon',
     features: ['swap', 'liquidity']
   },
