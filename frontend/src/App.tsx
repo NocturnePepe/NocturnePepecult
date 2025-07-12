@@ -11,8 +11,10 @@ import ParticleSystem from './components/ParticleSystem';
 import { AdvancedThemeProvider } from './contexts/AdvancedThemeContext';
 import { GamificationProvider } from './contexts/GamificationContext';
 import { SocialProvider } from './contexts/SocialContext';
+import { AdvancedTradingProvider } from './contexts/AdvancedTradingContext';
 import EnhancedAchievementSystem from './components/EnhancedAchievementSystem';
 import EnhancedSocialHub from './components/EnhancedSocialHub';
+import { ProfessionalTradingDashboard } from './components/ProfessionalTradingDashboard';
 
 // Lazy load pages for better performance
 const HomePage = lazy(() => import('./pages/HomePage'));
@@ -178,7 +180,8 @@ function App() {
       <MockWalletProvider>
         <GamificationProvider>
           <SocialProvider>
-            <Router>
+            <AdvancedTradingProvider>
+              <Router>
               <EnhancedVisualSystem theme="cult" performanceMode="balanced">
                 <div className="App gpu-accelerated">
                   {/* Gaming-Tier Particle System Background */}
@@ -193,6 +196,28 @@ function App() {
                   <header className="app-header">
                     <XPRankBar />
                     <div className="header-buttons">
+                      <button 
+                        className="pro-trading-btn"
+                        onClick={() => window.location.href = '/pro-trading'}
+                        style={{
+                          position: 'fixed',
+                          top: '20px',
+                          right: '350px',
+                          background: 'linear-gradient(135deg, #ff6b35, #f7931e)',
+                          border: 'none',
+                          borderRadius: '12px',
+                          padding: '12px 16px',
+                          color: 'white',
+                          fontWeight: '600',
+                          cursor: 'pointer',
+                          fontSize: '0.9rem',
+                          zIndex: 1000,
+                          boxShadow: '0 4px 16px rgba(255, 107, 53, 0.4)',
+                          transition: 'all 0.2s ease'
+                        }}
+                      >
+                        💼 Pro Trading
+                      </button>
                       <button 
                         className="social-hub-btn"
                         onClick={() => setShowSocialHub(true)}
@@ -256,6 +281,9 @@ function App() {
                         <Route path="/dao" element={<GovernanceDAO />} />
                         <Route path="/admin" element={<AdminPage />} />
                         
+                        {/* Phase 5: Professional Trading Dashboard */}
+                        <Route path="/pro-trading" element={<ProfessionalTradingDashboard />} />
+                        
                         {/* Legacy routes for backward compatibility */}
                         <Route path="/trading" element={<AdvancedTrading />} />
                         
@@ -282,6 +310,7 @@ function App() {
                 </div>
               </EnhancedVisualSystem>
             </Router>
+            </AdvancedTradingProvider>
           </SocialProvider>
         </GamificationProvider>
       </MockWalletProvider>
