@@ -81,12 +81,12 @@ class ParticleSystemManager {
     }
 
     /**
-     * Initialize the optimized particle system
+     * Initialize the optimized particle system with enhanced configuration
      */
     initializeOptimizedSystem() {
         const particleConfig = {
             particleCount: this.getOptimalParticleCount(),
-            speed: 1,
+            speed: 0.8, // Slightly reduced for smoother performance
             monitoring: this.config.enableMonitoring,
             enablePerformanceMonitoring: this.config.enableMonitoring
         };
@@ -96,11 +96,16 @@ class ParticleSystemManager {
         // Store reference globally for debugging
         window.nocturneParticleSystem = this.particleSystem;
         
-        console.log(`🎭 Particle system created with ${particleConfig.particleCount} particles`);
+        // Add performance monitoring if enabled
+        if (this.config.enableMonitoring) {
+            this.startPerformanceMonitoring();
+        }
+        
+        console.log(`🎭 Enhanced particle system created with ${particleConfig.particleCount} particles`);
     }
 
     /**
-     * Get optimal particle count based on device capabilities
+     * Enhanced particle count optimization
      */
     getOptimalParticleCount() {
         const userAgent = navigator.userAgent.toLowerCase();
@@ -108,12 +113,13 @@ class ParticleSystemManager {
         const isLowEnd = navigator.hardwareConcurrency && navigator.hardwareConcurrency < 4;
         const memoryGb = navigator.deviceMemory || 4;
 
+        // Enhanced optimization for better UI harmony
         if (isMobile) {
-            return memoryGb >= 6 ? 60 : 40;
+            return memoryGb >= 6 ? 30 : 20; // Reduced from 60:40
         } else if (isLowEnd) {
-            return 50;
+            return 35; // Reduced from 50
         } else {
-            return memoryGb >= 8 ? 100 : 80;
+            return memoryGb >= 8 ? 60 : 45; // Reduced from 100:80
         }
     }
 

@@ -19,16 +19,110 @@
     backface-visibility: hidden;
     contain: layout style paint;
     
-    /* LAYOUT OPTIMIZATION */
+    /* LAYERING OPTIMIZATION */
     position: relative;
+    z-index: 2; /* Ensure UI components stay above particles */
+    isolation: isolate;
+    
+    /* LAYOUT OPTIMIZATION */
     display: flex;
     flex-direction: column;
     overflow: hidden;
     
     /* BASE STYLING */
     border-radius: 12px;
-    backdrop-filter: blur(10px);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    backdrop-filter: blur(15px);
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ===========================================
+   ENHANCED COMPONENT STYLING
+   =========================================== */
+
+.swap-box, .wallet-box, .settings-box, .history-box {
+    /* CRITICAL: Ensure components render above particles */
+    position: relative;
+    z-index: 10;
+    isolation: isolate;
+    
+    /* GPU ACCELERATION */
+    will-change: transform, box-shadow, opacity;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    contain: layout style paint;
+    
+    /* ENHANCED VISUAL FOUNDATION */
+    background: linear-gradient(
+        135deg,
+        rgba(0, 0, 0, 0.95) 0%,
+        rgba(15, 15, 15, 0.92) 50%,
+        rgba(0, 0, 0, 0.95) 100%
+    );
+    
+    /* DYNAMIC THEMED BORDER */
+    border: 2px solid transparent;
+    background-clip: padding-box;
+    border-radius: 16px;
+    
+    /* PROFESSIONAL SHADOW SYSTEM */
+    box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.6),
+        0 4px 16px rgba(var(--theme-primary-rgb, 106, 13, 173), 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    
+    /* SMOOTH TRANSITIONS */
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ENHANCED HOVER STATES */
+.swap-box:hover, .wallet-box:hover, .settings-box:hover, .history-box:hover {
+    transform: translateY(-3px) scale(1.02) translateZ(0);
+    
+    /* ENHANCED SHADOW SYSTEM */
+    box-shadow: 
+        0 16px 48px rgba(0, 0, 0, 0.7),
+        0 8px 24px rgba(var(--theme-primary-rgb, 106, 13, 173), 0.3),
+        0 4px 12px rgba(var(--theme-accent-rgb, 255, 20, 147), 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    
+    /* SUBTLE BORDER ENHANCEMENT */
+    border-color: rgba(var(--theme-primary-rgb, 106, 13, 173), 0.6);
+}
+
+/* SPECIFIC COMPONENT ENHANCEMENTS */
+.swap-box {
+    /* SWAP-SPECIFIC STYLING */
+    border-image: linear-gradient(45deg, 
+        rgba(106, 13, 173, 0.6), 
+        rgba(153, 50, 204, 0.4), 
+        rgba(106, 13, 173, 0.6)) 1;
+}
+
+.wallet-box {
+    /* WALLET-SPECIFIC STYLING */
+    border-image: linear-gradient(45deg, 
+        rgba(25, 135, 84, 0.6), 
+        rgba(40, 167, 69, 0.4), 
+        rgba(25, 135, 84, 0.6)) 1;
+}
+
+.settings-box {
+    /* SETTINGS-SPECIFIC STYLING */
+    border-image: linear-gradient(45deg, 
+        rgba(255, 193, 7, 0.6), 
+        rgba(255, 205, 86, 0.4), 
+        rgba(255, 193, 7, 0.6)) 1;
+}
+
+.history-box {
+    /* HISTORY-SPECIFIC STYLING */
+    border-image: linear-gradient(45deg, 
+        rgba(220, 53, 69, 0.6), 
+        rgba(248, 81, 96, 0.4), 
+        rgba(220, 53, 69, 0.6)) 1;
 }
 
 /* ===========================================
@@ -334,7 +428,6 @@
     -webkit-tap-highlight-color: transparent;
     
     padding: 16px 24px;
-    border-left: 3px solid var(--theme-accent, #ff1493);
 }
 
 .wallet-box::before {
@@ -501,96 +594,93 @@
 }
 
 /* ===========================================
+   ENHANCED SCROLLBAR STYLING
+   =========================================== */
+
+.transaction-history, .trade-history, .activity-feed {
+    /* ENSURE SCROLLABLE CONTENT STAYS ABOVE PARTICLES */
+    position: relative;
+    z-index: 15;
+    isolation: isolate;
+}
+
+/* THEME-AWARE SCROLLBARS */
+.transaction-history::-webkit-scrollbar,
+.trade-history::-webkit-scrollbar,
+.activity-feed::-webkit-scrollbar {
+    width: 8px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 4px;
+}
+
+.transaction-history::-webkit-scrollbar-thumb,
+.trade-history::-webkit-scrollbar-thumb,
+.activity-feed::-webkit-scrollbar-thumb {
+    background: linear-gradient(
+        180deg,
+        rgba(var(--theme-primary-rgb, 106, 13, 173), 0.8),
+        rgba(var(--theme-secondary-rgb, 153, 50, 204), 0.6)
+    );
+    border-radius: 4px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.transaction-history::-webkit-scrollbar-thumb:hover,
+.trade-history::-webkit-scrollbar-thumb:hover,
+.activity-feed::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(
+        180deg,
+        rgba(var(--theme-primary-rgb, 106, 13, 173), 1),
+        rgba(var(--theme-accent-rgb, 255, 20, 147), 0.8)
+    );
+}
+
+/* ===========================================
    ACCESSIBILITY ENHANCEMENTS
    =========================================== */
 
-/* REDUCED MOTION SUPPORT */
+/* RESPECT REDUCED MOTION PREFERENCES */
 @media (prefers-reduced-motion: reduce) {
     .ui-box-sweep::before,
-    .ui-box-glow::after {
-        animation: none;
-        transition: none;
+    .ui-box-glow::after,
+    .swap-box, .wallet-box, .settings-box, .history-box {
+        animation: none !important;
+        transition: none !important;
     }
     
-    .ui-box-base {
-        transition: opacity 0.2s ease;
+    .swap-box:hover, .wallet-box:hover, 
+    .settings-box:hover, .history-box:hover {
+        transform: none !important;
     }
 }
 
-/* HIGH CONTRAST SUPPORT */
+/* HIGH CONTRAST MODE SUPPORT */
 @media (prefers-contrast: high) {
-    .ui-box-themed {
-        border-width: 2px;
-        background: rgba(var(--theme-primary-rgb, 106, 13, 173), 0.2);
-    }
-    
-    .ui-box-glow::after {
-        opacity: 1;
+    .swap-box, .wallet-box, .settings-box, .history-box {
+        border-width: 3px;
+        border-color: rgba(255, 255, 255, 0.8) !important;
+        background: rgba(0, 0, 0, 0.98) !important;
     }
 }
 
 /* ===========================================
-   RESPONSIVE SCALING
+   PERFORMANCE OPTIMIZATIONS
    =========================================== */
 
-/* MOBILE OPTIMIZATION */
-@media (max-width: 768px) {
-    .swap-box {
-        min-height: 160px;
-        padding: 20px;
-    }
-    
-    .wallet-box,
-    .settings-box {
-        padding: 16px;
-    }
-    
-    /* REDUCE EFFECTS ON MOBILE FOR PERFORMANCE */
-    .ui-box-glow::after {
-        animation-duration: 4s; /* Slower animation */
-    }
-}
-
-/* TABLET OPTIMIZATION */
-@media (min-width: 769px) and (max-width: 1024px) {
-    .swap-box {
-        min-height: 170px;
-        padding: 22px;
-    }
-}
-
-/* DESKTOP ENHANCEMENT */
-@media (min-width: 1025px) {
-    .ui-box-themed:hover {
-        /* ENHANCED DESKTOP EFFECTS */
-        box-shadow: 
-            0 12px 40px rgba(var(--theme-primary-rgb, 106, 13, 173), 0.25),
-            0 6px 20px rgba(0, 0, 0, 0.2),
-            inset 0 1px 0 rgba(255, 255, 255, 0.25);
-    }
-}
-
-/* ===========================================
-   PERFORMANCE UTILITIES
-   =========================================== */
-
-/* GPU LAYER PROMOTION */
-.gpu-accelerate {
-    will-change: transform;
+/* FORCE HARDWARE ACCELERATION ON CRITICAL ELEMENTS */
+.app-container, .swap-container, .sidebar-container,
+.swap-box, .wallet-box, .settings-box, .history-box {
     transform: translateZ(0);
     backface-visibility: hidden;
+    will-change: transform;
 }
 
-/* COMPOSITE LAYER ISOLATION */
-.isolate-layer {
-    isolation: isolate;
+/* COMPOSITE LAYER OPTIMIZATION */
+.performance-critical {
+    will-change: transform, opacity;
+    transform: translateZ(0);
+    backface-visibility: hidden;
     contain: layout style paint;
-}
-
-/* ANIMATION PERFORMANCE */
-.smooth-animation {
-    animation-fill-mode: both;
-    animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* ===========================================

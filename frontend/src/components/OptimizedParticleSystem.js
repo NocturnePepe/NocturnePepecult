@@ -62,7 +62,7 @@ class OptimizedParticleSystem {
         this.canvas.id = 'nocturne-particle-system';
         this.canvas.className = 'particle-system-layer';
         
-        // CRITICAL: Proper layering configuration
+        // CRITICAL: Enhanced layering configuration for perfect UI harmony
         this.canvas.style.cssText = `
             position: fixed;
             top: 0;
@@ -71,17 +71,25 @@ class OptimizedParticleSystem {
             height: 100%;
             z-index: -1;
             pointer-events: none;
-            will-change: transform;
+            will-change: transform, opacity;
             transform: translateZ(0);
             backface-visibility: hidden;
-            contain: strict;
-            opacity: 0.6;
+            contain: layout style paint;
+            opacity: 0.4;
+            mix-blend-mode: normal;
+            isolation: isolate;
         `;
 
-        // Insert particle layer between background and content
-        // This ensures particles are above background but below all UI
-        const targetElement = document.querySelector('.App') || document.body;
-        targetElement.insertBefore(this.canvas, targetElement.firstChild);
+        // Insert particle layer strategically after background elements but before all interactive content
+        // This ensures particles render behind ALL UI components while staying above background
+        const targetElement = document.querySelector('.app-container') || document.querySelector('.App') || document.body;
+        
+        // Insert as first child to ensure it's behind all app content
+        if (targetElement.firstElementChild) {
+            targetElement.insertBefore(this.canvas, targetElement.firstElementChild);
+        } else {
+            targetElement.appendChild(this.canvas);
+        }
 
         this.ctx = this.canvas.getContext('2d', {
             alpha: true,
@@ -92,7 +100,7 @@ class OptimizedParticleSystem {
     }
 
     /**
-     * Device-adaptive performance detection
+     * Device-adaptive performance detection with enhanced optimization
      */
     setupPerformanceDetection() {
         // Detect device capabilities
@@ -100,15 +108,31 @@ class OptimizedParticleSystem {
         const isMobile = /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(userAgent);
         const isLowEndDevice = navigator.hardwareConcurrency && navigator.hardwareConcurrency < 4;
         
-        // Adaptive particle count based on device
-        if (isMobile || isLowEndDevice) {
-            this.config.baseParticleCount = Math.min(this.config.baseParticleCount, 40);
+        // Enhanced memory detection
+        const memoryGb = navigator.deviceMemory || 4;
+        const isLowMemory = memoryGb < 4;
+        
+        // Adaptive particle count with enhanced optimization
+        if (isMobile || isLowEndDevice || isLowMemory) {
+            this.config.baseParticleCount = Math.min(this.config.baseParticleCount, 25); // Reduced from 40
             this.performance.isLowPerformanceMode = true;
+            console.log('🎮 Low-performance mode enabled: 25 particles max');
+        } else {
+            // Optimize for desktop but reduce visual overdraw
+            this.config.baseParticleCount = Math.min(this.config.baseParticleCount, 60); // Reduced from 80
+            console.log('🎮 Standard performance mode: 60 particles max');
         }
 
-        // Memory constraints
-        if (navigator.deviceMemory && navigator.deviceMemory < 4) {
-            this.config.baseParticleCount = Math.min(this.config.baseParticleCount, 30);
+        // Memory constraints with enhanced detection
+        if (memoryGb < 8) {
+            this.config.baseParticleCount = Math.min(this.config.baseParticleCount, 40);
+        }
+        
+        // Reduced motion support
+        if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            this.config.baseParticleCount = Math.min(this.config.baseParticleCount, 15);
+            this.config.animationSpeed = 0.3;
+            console.log('♿ Reduced motion mode: 15 particles, slow speed');
         }
     }
 

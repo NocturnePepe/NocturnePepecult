@@ -34,14 +34,17 @@
     <!-- Enhanced Visual Effects -->
     <script src="static/js/advanced-visuals.js"></script>
     
-    <!-- Optimized Particle System -->
+    <!-- Enhanced Particle System with Auto-Init -->
     <script src="src/components/OptimizedParticleSystem.js"></script>
     <script src="src/utils/ParticleSystemManager.js"></script>
+    <script src="src/utils/ParticleAutoInit.js"></script>
+    <script src="src/utils/PerformanceValidator.js"></script>
     
     <!-- Enhanced Stylesheets -->
     <link rel="stylesheet" href="static/css/main-enhanced.css">
     <link rel="stylesheet" href="static/css/mobile-enhancements.css">
     <link rel="stylesheet" href="src/GamingTierFX.css">
+    <link rel="stylesheet" href="src/styles/EnhancedUIBoxes.css">
     
     <style>
       /* Global Styles - Dark Cult Theme */
@@ -2149,7 +2152,7 @@
         }
       }
       
-      /* Optimized Swap Container with Better Performance */
+      /* Enhanced Swap Container with Perfect Layering */
       .swap-container {
         background: 
           linear-gradient(145deg, rgba(0, 0, 0, 0.98), rgba(15, 15, 15, 0.95)),
@@ -2166,13 +2169,19 @@
           0 0 40px rgba(75, 0, 130, 0.3);
         backdrop-filter: blur(20px);
         -webkit-backdrop-filter: blur(20px);
+        
+        /* CRITICAL: Enhanced layering to stay above particles */
         position: relative;
-        overflow: hidden;
-        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         z-index: 10;
-        will-change: transform;
+        isolation: isolate;
+        
+        /* GPU ACCELERATION */
+        overflow: hidden;
+        transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        will-change: transform, box-shadow;
         transform: translateZ(0);
         backface-visibility: hidden;
+        contain: layout style paint;
       }
 
       /* Simplified Hover Effect */
