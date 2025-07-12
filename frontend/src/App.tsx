@@ -7,6 +7,8 @@ import EnhancedVisualSystem from './components/EnhancedVisualSystem';
 import './App.css';
 import './PWA.css';
 import './GamingTierFX.css';
+import ParticleSystem from './components/ParticleSystem';
+import { AdvancedThemeProvider } from './contexts/AdvancedThemeContext';
 
 // Lazy load pages for better performance
 const HomePage = lazy(() => import('./pages/HomePage'));
@@ -162,46 +164,56 @@ function App() {
   }, []);
 
   return (
-    <MockWalletProvider>
-      <Router>
-        <EnhancedVisualSystem theme="cult" performanceMode="balanced">
-          <div className="App gpu-accelerated">
-            {/* XP & Rank Bar in header */}
-            <header className="app-header">
-              <XPRankBar />
-            </header>
+    <AdvancedThemeProvider defaultTheme="cult" defaultIntensity="medium" defaultPerformanceMode="balanced">
+      <MockWalletProvider>
+        <Router>
+          <EnhancedVisualSystem theme="cult" performanceMode="balanced">
+            <div className="App gpu-accelerated">
+              {/* Gaming-Tier Particle System Background */}
+              <ParticleSystem 
+                theme="cult" 
+                intensity="medium" 
+                interactive={true} 
+                performanceMode="auto" 
+              />
+              
+              {/* XP & Rank Bar in header */}
+              <header className="app-header">
+                <XPRankBar />
+              </header>
 
-            {/* Main Navigation */}
-            <Navigation />
-            
-            {/* Main Content with Suspense */}
-            <main className="main-content">
-              <Suspense fallback={<LoadingFallback />}>
-                <Routes>
-                  {/* Core Pages */}
-                  <Route path="/" element={<HomePage />} />
-                  <Route path="/swap" element={<SwapPage />} />
-                  <Route path="/pools" element={<PoolsPage />} />
-                  <Route path="/portfolio" element={<PortfolioPage />} />
-                  <Route path="/social" element={<SocialPage />} />
-                  <Route path="/dao" element={<GovernanceDAO />} />
-                  <Route path="/admin" element={<AdminPage />} />
-                  
-                  {/* Legacy routes for backward compatibility */}
-                  <Route path="/trading" element={<AdvancedTrading />} />
-                  
-                  {/* Fallback route */}
-                  <Route path="*" element={<HomePage />} />
-                </Routes>
-              </Suspense>
-            </main>
+              {/* Main Navigation */}
+              <Navigation />
+              
+              {/* Main Content with Suspense */}
+              <main className="main-content">
+                <Suspense fallback={<LoadingFallback />}>
+                  <Routes>
+                    {/* Core Pages */}
+                    <Route path="/" element={<HomePage />} />
+                    <Route path="/swap" element={<SwapPage />} />
+                    <Route path="/pools" element={<PoolsPage />} />
+                    <Route path="/portfolio" element={<PortfolioPage />} />
+                    <Route path="/social" element={<SocialPage />} />
+                    <Route path="/dao" element={<GovernanceDAO />} />
+                    <Route path="/admin" element={<AdminPage />} />
+                    
+                    {/* Legacy routes for backward compatibility */}
+                    <Route path="/trading" element={<AdvancedTrading />} />
+                    
+                    {/* Fallback route */}
+                    <Route path="*" element={<HomePage />} />
+                  </Routes>
+                </Suspense>
+              </main>
 
-            {/* Floating Action Buttons */}
-            <FloatingButtons position="left" />
-          </div>
-        </EnhancedVisualSystem>
-      </Router>
-    </MockWalletProvider>
+              {/* Floating Action Buttons */}
+              <FloatingButtons position="left" />
+            </div>
+          </EnhancedVisualSystem>
+        </Router>
+      </MockWalletProvider>
+    </AdvancedThemeProvider>
   );
 }
 

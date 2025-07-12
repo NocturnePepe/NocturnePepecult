@@ -1,0 +1,347 @@
+/* ===== PHASE 2: GAMING-TIER PARTICLE SYSTEM CSS ===== */
+/* Advanced Visual Effects with GPU Acceleration */
+
+.particle-system {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  will-change: transform;
+  isolation: isolate;
+}
+
+/* Particle Canvas - GPU Optimized */
+.particle-canvas {
+  display: block;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  will-change: transform;
+  image-rendering: optimizeSpeed;
+  image-rendering: crisp-edges;
+  image-rendering: pixelated;
+}
+
+/* Theme-Based Visual Enhancements */
+.particle-system.theme-cult {
+  background: radial-gradient(
+    ellipse at center,
+    rgba(156, 136, 255, 0.02) 0%,
+    rgba(124, 77, 255, 0.01) 50%,
+    transparent 100%
+  );
+}
+
+.particle-system.theme-cult::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 20% 80%, rgba(156, 136, 255, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(179, 157, 219, 0.1) 0%, transparent 50%);
+  animation: cult-ambient 20s ease-in-out infinite alternate;
+  pointer-events: none;
+  z-index: 0;
+}
+
+@keyframes cult-ambient {
+  0% {
+    opacity: 0.3;
+    transform: scale(1) rotate(0deg);
+  }
+  100% {
+    opacity: 0.6;
+    transform: scale(1.05) rotate(2deg);
+  }
+}
+
+.particle-system.theme-mystical {
+  background: radial-gradient(
+    ellipse at center,
+    rgba(79, 195, 247, 0.02) 0%,
+    rgba(41, 182, 246, 0.01) 50%,
+    transparent 100%
+  );
+}
+
+.particle-system.theme-mystical::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 30% 70%, rgba(79, 195, 247, 0.1) 0%, transparent 60%),
+    radial-gradient(circle at 70% 30%, rgba(129, 199, 132, 0.1) 0%, transparent 60%);
+  animation: mystical-flow 25s ease-in-out infinite alternate;
+  pointer-events: none;
+  z-index: 0;
+}
+
+@keyframes mystical-flow {
+  0% {
+    opacity: 0.2;
+    transform: translateX(-5px) scale(1);
+  }
+  100% {
+    opacity: 0.5;
+    transform: translateX(5px) scale(1.03);
+  }
+}
+
+.particle-system.theme-neon {
+  background: radial-gradient(
+    ellipse at center,
+    rgba(255, 64, 129, 0.03) 0%,
+    rgba(233, 30, 99, 0.01) 50%,
+    transparent 100%
+  );
+}
+
+.particle-system.theme-neon::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    linear-gradient(45deg, rgba(255, 64, 129, 0.1) 0%, transparent 50%),
+    linear-gradient(-45deg, rgba(255, 110, 199, 0.1) 0%, transparent 50%);
+  animation: neon-pulse 15s ease-in-out infinite alternate;
+  pointer-events: none;
+  z-index: 0;
+}
+
+@keyframes neon-pulse {
+  0% {
+    opacity: 0.4;
+    filter: blur(0px);
+  }
+  100% {
+    opacity: 0.7;
+    filter: blur(1px);
+  }
+}
+
+.particle-system.theme-ethereal {
+  background: radial-gradient(
+    ellipse at center,
+    rgba(255, 255, 255, 0.01) 0%,
+    rgba(245, 245, 245, 0.005) 50%,
+    transparent 100%
+  );
+}
+
+.particle-system.theme-ethereal::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 40% 60%, rgba(255, 255, 255, 0.05) 0%, transparent 70%),
+    radial-gradient(circle at 60% 40%, rgba(232, 234, 246, 0.05) 0%, transparent 70%);
+  animation: ethereal-drift 30s linear infinite;
+  pointer-events: none;
+  z-index: 0;
+}
+
+@keyframes ethereal-drift {
+  0% {
+    transform: rotate(0deg) scale(1);
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 0.6;
+  }
+  100% {
+    transform: rotate(360deg) scale(1.02);
+    opacity: 0.3;
+  }
+}
+
+/* Intensity-Based Effects */
+.particle-system.intensity-low {
+  filter: blur(0.5px);
+}
+
+.particle-system.intensity-medium {
+  filter: blur(0px);
+}
+
+.particle-system.intensity-high {
+  filter: blur(0px);
+  --particle-glow: 1.2;
+}
+
+.particle-system.intensity-ultra {
+  filter: blur(0px);
+  --particle-glow: 1.5;
+  animation: intensity-ultra-pulse 10s ease-in-out infinite alternate;
+}
+
+@keyframes intensity-ultra-pulse {
+  0% {
+    filter: brightness(1) saturate(1);
+  }
+  100% {
+    filter: brightness(1.1) saturate(1.2);
+  }
+}
+
+/* Interactive States */
+.particle-system:hover .particle-canvas {
+  filter: brightness(1.1);
+  transition: filter 0.3s ease;
+}
+
+/* Performance Optimization Classes */
+.particle-system.performance-optimized {
+  transform-style: flat;
+}
+
+.particle-system.performance-optimized .particle-canvas {
+  image-rendering: auto;
+}
+
+/* Debug Information */
+.particle-debug {
+  font-family: 'Courier New', monospace;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 4px 8px;
+  border-radius: 4px;
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  user-select: none;
+  pointer-events: none;
+}
+
+/* Mobile Optimizations */
+@media (max-width: 768px) {
+  .particle-system.intensity-ultra {
+    /* Auto-reduce to high on mobile */
+    --intensity: high;
+  }
+  
+  .particle-system.intensity-high {
+    /* Auto-reduce to medium on mobile */
+    --intensity: medium;
+  }
+  
+  .particle-canvas {
+    /* Reduce canvas quality slightly on mobile for performance */
+    image-rendering: optimizeSpeed;
+  }
+}
+
+@media (max-width: 480px) {
+  .particle-system.intensity-medium {
+    /* Auto-reduce to low on small mobile */
+    --intensity: low;
+  }
+  
+  .particle-debug {
+    display: none; /* Hide debug on small screens */
+  }
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  .particle-system::before {
+    animation: none;
+  }
+  
+  .particle-system.intensity-ultra {
+    animation: none;
+  }
+  
+  .particle-canvas {
+    /* Static particles only */
+    animation: none;
+  }
+}
+
+/* High Contrast Mode */
+@media (prefers-contrast: high) {
+  .particle-system {
+    filter: contrast(1.5);
+  }
+  
+  .particle-debug {
+    background: black;
+    border-color: white;
+    color: white;
+  }
+}
+
+/* Dark Mode Enhancements */
+@media (prefers-color-scheme: dark) {
+  .particle-system.theme-cult::before {
+    opacity: 0.8;
+  }
+  
+  .particle-system.theme-mystical::before {
+    opacity: 0.7;
+  }
+  
+  .particle-system.theme-neon::before {
+    opacity: 0.9;
+  }
+  
+  .particle-system.theme-ethereal::before {
+    opacity: 0.4;
+  }
+}
+
+/* WebGL Fallback Support */
+.particle-system.webgl-unavailable .particle-canvas {
+  /* Fallback to 2D optimizations */
+  image-rendering: crisp-edges;
+  filter: blur(0.5px);
+}
+
+/* Memory Management */
+.particle-system.memory-optimized {
+  /* Reduce visual quality for memory constrained devices */
+  filter: blur(1px);
+}
+
+.particle-system.memory-optimized::before {
+  display: none;
+}
+
+/* Print Styles */
+@media print {
+  .particle-system {
+    display: none;
+  }
+}
+
+/* Accessibility */
+.particle-system[aria-hidden="true"] {
+  pointer-events: none;
+  visibility: hidden;
+}
+
+/* Focus Management */
+.particle-system:focus-within {
+  outline: 2px solid rgba(156, 136, 255, 0.5);
+  outline-offset: 2px;
+}
+
+/* Loading States */
+.particle-system.loading {
+  opacity: 0;
+  transition: opacity 0.5s ease-in;
+}
+
+.particle-system.loaded {
+  opacity: 1;
+}
