@@ -113,8 +113,13 @@
   background: linear-gradient(90deg, #ff1493, #9932cc, #ff69b4);
   height: 100%;
   border-radius: 10px;
-  transition: width 0.5s ease;
+  transition: transform 0.5s ease;
   position: relative;
+  /* GPU Optimization - Use transform instead of width */
+  will-change: transform;
+  transform: translateZ(0) scaleX(var(--progress, 0));
+  transform-origin: left center;
+  backface-visibility: hidden;
 }
 
 .progress-fill::after {
@@ -125,7 +130,11 @@
   right: 0;
   bottom: 0;
   background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-  animation: shimmer 2s infinite;
+  animation: shimmer 8s infinite;
+  /* GPU Acceleration */
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 
 .next-rank {
@@ -403,10 +412,10 @@
 
 @keyframes shimmer {
   0% {
-    transform: translateX(-100%);
+    transform: translate3d(-100%, 0, 0);
   }
   100% {
-    transform: translateX(100%);
+    transform: translate3d(100%, 0, 0);
   }
 }
 

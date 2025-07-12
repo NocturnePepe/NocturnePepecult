@@ -115,9 +115,14 @@
 .xp-bar-fill {
   height: 100%;
   border-radius: 4px;
-  transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   overflow: hidden;
+  /* GPU Optimization - Use transform instead of width */
+  will-change: transform;
+  transform: translateZ(0) scaleX(var(--xp-progress, 0));
+  transform-origin: left center;
+  backface-visibility: hidden;
 }
 
 .xp-bar-fill::after {

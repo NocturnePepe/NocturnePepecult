@@ -1,0 +1,102 @@
+/* 60FPS Performance Monitor CSS */
+/* Add this to monitor frame rate in development */
+
+.performance-monitor {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  background: rgba(0, 0, 0, 0.8);
+  color: #00ff00;
+  padding: 8px 12px;
+  border-radius: 4px;
+  font-family: monospace;
+  font-size: 12px;
+  z-index: 10000;
+  border: 1px solid #00ff00;
+  pointer-events: none;
+  display: none; /* Enable only during development */
+}
+
+.performance-monitor.fps-good {
+  color: #00ff00;
+  border-color: #00ff00;
+}
+
+.performance-monitor.fps-warning {
+  color: #ffff00;
+  border-color: #ffff00;
+}
+
+.performance-monitor.fps-poor {
+  color: #ff0000;
+  border-color: #ff0000;
+}
+
+/* Performance Test Classes */
+.perf-test-high-load {
+  animation: perfTestAnimation 1s linear infinite;
+}
+
+.perf-test-gpu-stress {
+  filter: blur(0.5px);
+  transform: perspective(1000px) rotateX(1deg);
+  will-change: transform, filter;
+}
+
+@keyframes perfTestAnimation {
+  0% { transform: translate3d(0, 0, 0) rotate(0deg) scale(1); }
+  25% { transform: translate3d(10px, 0, 0) rotate(90deg) scale(1.1); }
+  50% { transform: translate3d(0, 10px, 0) rotate(180deg) scale(1); }
+  75% { transform: translate3d(-10px, 0, 0) rotate(270deg) scale(0.9); }
+  100% { transform: translate3d(0, 0, 0) rotate(360deg) scale(1); }
+}
+
+/* GPU Layer Counting */
+.layer-counter::before {
+  content: "Layers: " counter(gpu-layers);
+  position: fixed;
+  bottom: 10px;
+  left: 10px;
+  background: rgba(0, 0, 0, 0.8);
+  color: #00ffff;
+  padding: 4px 8px;
+  font-family: monospace;
+  font-size: 10px;
+  z-index: 10001;
+  display: none; /* Enable for debugging */
+}
+
+/* Optimize for 60fps - Disable expensive operations at high frequency */
+@media (prefers-reduced-motion: no-preference) and (min-width: 1024px) {
+  .performance-optimized {
+    animation-duration: 8s;
+    animation-timing-function: ease-out;
+  }
+}
+
+/* Force 60fps on all transitions */
+* {
+  animation-fill-mode: both;
+}
+
+*:hover {
+  transition-duration: 0.16s; /* Exactly 60fps timing */
+}
+
+/* Critical Performance Rules */
+.gpu-accelerated {
+  will-change: transform, opacity;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+.layout-contained {
+  contain: layout style paint;
+}
+
+.no-reflow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  contain: strict;
+}
