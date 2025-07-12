@@ -1,0 +1,494 @@
+/**
+ * COMPANION SETTINGS MODAL STYLES - PHASE 9
+ * ==========================================
+ * 
+ * PURPOSE: Styling for the companion control panel
+ * FEATURES: Modal overlay, settings groups, statistics display
+ * ARCHITECTURE: Responsive design with dark theme integration
+ */
+
+/* ===========================================
+   MODAL OVERLAY & CONTAINER
+   =========================================== */
+
+.companion-settings-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(8px);
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    
+    /* GPU ACCELERATION */
+    will-change: opacity;
+    transform: translateZ(0);
+    animation: modalFadeIn 0.3s ease-out;
+}
+
+.companion-settings-modal {
+    background: rgba(20, 20, 20, 0.95);
+    border: 1px solid rgba(147, 51, 234, 0.3);
+    border-radius: 20px;
+    backdrop-filter: blur(20px);
+    max-width: 600px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    
+    /* GPU ACCELERATION */
+    will-change: transform;
+    transform: translateZ(0);
+    animation: modalSlideIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    
+    /* STYLING */
+    box-shadow: 
+        0 20px 40px rgba(0, 0, 0, 0.5),
+        0 0 20px rgba(147, 51, 234, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+/* ===========================================
+   MODAL HEADER
+   =========================================== */
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px 28px 0 28px;
+    border-bottom: 1px solid rgba(147, 51, 234, 0.2);
+    margin-bottom: 24px;
+}
+
+.modal-header h2 {
+    color: #a855f7;
+    font-size: 24px;
+    font-weight: 600;
+    margin: 0;
+    text-shadow: 0 0 10px rgba(168, 85, 247, 0.5);
+}
+
+.close-button {
+    background: none;
+    border: none;
+    color: #666;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.close-button:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+}
+
+/* ===========================================
+   MODAL CONTENT
+   =========================================== */
+
+.modal-content {
+    padding: 0 28px 24px 28px;
+}
+
+.settings-section {
+    margin-bottom: 32px;
+}
+
+.settings-section h3 {
+    color: #e5e5e5;
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0 0 16px 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.setting-group {
+    margin-bottom: 20px;
+}
+
+.setting-group label {
+    display: block;
+    color: #d1d5db;
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 8px;
+}
+
+/* ===========================================
+   AVATAR SELECTOR
+   =========================================== */
+
+.avatar-selector {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+}
+
+.avatar-option {
+    background: rgba(255, 255, 255, 0.05);
+    border: 2px solid rgba(147, 51, 234, 0.3);
+    border-radius: 12px;
+    padding: 16px 12px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s ease;
+    font-size: 24px;
+}
+
+.avatar-option span {
+    font-size: 12px;
+    color: #d1d5db;
+    text-transform: capitalize;
+}
+
+.avatar-option:hover {
+    background: rgba(147, 51, 234, 0.1);
+    border-color: rgba(147, 51, 234, 0.6);
+}
+
+.avatar-option.selected {
+    background: rgba(147, 51, 234, 0.2);
+    border-color: #a855f7;
+    box-shadow: 0 0 20px rgba(168, 85, 247, 0.3);
+}
+
+/* ===========================================
+   MODE SELECTOR
+   =========================================== */
+
+.mode-selector {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.mode-option {
+    background: rgba(255, 255, 255, 0.05);
+    border: 2px solid rgba(147, 51, 234, 0.3);
+    border-radius: 12px;
+    padding: 16px 20px;
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.mode-option small {
+    color: #9ca3af;
+    font-size: 12px;
+}
+
+.mode-option:hover {
+    background: rgba(147, 51, 234, 0.1);
+    border-color: rgba(147, 51, 234, 0.6);
+}
+
+.mode-option.selected {
+    background: rgba(147, 51, 234, 0.2);
+    border-color: #a855f7;
+    color: #ffffff;
+}
+
+/* ===========================================
+   LORE CATEGORIES
+   =========================================== */
+
+.lore-categories {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+}
+
+.lore-option {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(147, 51, 234, 0.3);
+    border-radius: 8px;
+    padding: 12px 16px;
+    cursor: pointer;
+    color: #d1d5db;
+    font-size: 14px;
+    transition: all 0.2s ease;
+    text-align: center;
+}
+
+.lore-option:hover {
+    background: rgba(147, 51, 234, 0.1);
+    border-color: rgba(147, 51, 234, 0.6);
+}
+
+.lore-option.selected {
+    background: rgba(147, 51, 234, 0.2);
+    border-color: #a855f7;
+    color: #ffffff;
+}
+
+/* ===========================================
+   FORM CONTROLS
+   =========================================== */
+
+.checkbox-label {
+    display: flex !important;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+}
+
+.checkbox-label input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    accent-color: #a855f7;
+}
+
+select {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(147, 51, 234, 0.3);
+    border-radius: 8px;
+    padding: 12px 16px;
+    color: #ffffff;
+    font-size: 14px;
+    width: 100%;
+    cursor: pointer;
+}
+
+select:focus {
+    outline: none;
+    border-color: #a855f7;
+    box-shadow: 0 0 0 2px rgba(168, 85, 247, 0.2);
+}
+
+select option {
+    background: #1a1a1a;
+    color: #ffffff;
+}
+
+input[type="range"] {
+    width: calc(100% - 60px);
+    margin-right: 12px;
+    accent-color: #a855f7;
+}
+
+input[type="range"] + span {
+    color: #a855f7;
+    font-weight: 600;
+    min-width: 40px;
+}
+
+/* ===========================================
+   STATISTICS GRID
+   =========================================== */
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+}
+
+.stat-item {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(147, 51, 234, 0.2);
+    border-radius: 12px;
+    padding: 16px;
+    text-align: center;
+}
+
+.stat-label {
+    display: block;
+    color: #9ca3af;
+    font-size: 12px;
+    margin-bottom: 8px;
+}
+
+.stat-value {
+    display: block;
+    color: #a855f7;
+    font-size: 20px;
+    font-weight: 600;
+    text-shadow: 0 0 8px rgba(168, 85, 247, 0.5);
+}
+
+/* ===========================================
+   BUTTONS
+   =========================================== */
+
+.reset-button {
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+    border: none;
+    color: white;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    width: 100%;
+}
+
+.reset-button:hover {
+    background: linear-gradient(135deg, #dc2626, #b91c1c);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+}
+
+.primary-button {
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    border: none;
+    color: white;
+    padding: 14px 28px;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    
+    /* GPU ACCELERATION */
+    will-change: transform;
+    transform: translateZ(0);
+}
+
+.primary-button:hover {
+    background: linear-gradient(135deg, #7c3aed, #a855f7);
+    transform: translateZ(0) translateY(-2px);
+    box-shadow: 0 8px 25px rgba(168, 85, 247, 0.3);
+}
+
+/* ===========================================
+   MODAL FOOTER
+   =========================================== */
+
+.modal-footer {
+    padding: 20px 28px 28px 28px;
+    border-top: 1px solid rgba(147, 51, 234, 0.2);
+    display: flex;
+    justify-content: flex-end;
+}
+
+/* ===========================================
+   ANIMATIONS
+   =========================================== */
+
+@keyframes modalFadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes modalSlideIn {
+    from {
+        opacity: 0;
+        transform: translateZ(0) translateY(40px) scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: translateZ(0) translateY(0) scale(1);
+    }
+}
+
+/* ===========================================
+   RESPONSIVE DESIGN
+   =========================================== */
+
+@media (max-width: 768px) {
+    .companion-settings-modal {
+        margin: 20px;
+        max-height: calc(100vh - 40px);
+    }
+    
+    .modal-header,
+    .modal-content,
+    .modal-footer {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+    
+    .avatar-selector {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .lore-categories {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .avatar-selector {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 8px;
+    }
+    
+    .avatar-option {
+        padding: 12px 8px;
+        font-size: 20px;
+    }
+    
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ===========================================
+   ACCESSIBILITY
+   =========================================== */
+
+.avatar-option:focus-visible,
+.mode-option:focus-visible,
+.lore-option:focus-visible {
+    outline: 2px solid #a855f7;
+    outline-offset: 2px;
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+    .companion-settings-overlay,
+    .companion-settings-modal {
+        animation: none;
+    }
+    
+    .avatar-option,
+    .mode-option,
+    .lore-option,
+    .reset-button,
+    .primary-button {
+        transition: none;
+    }
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+    .companion-settings-modal {
+        border-width: 2px;
+        border-color: #a855f7;
+    }
+    
+    .avatar-option,
+    .mode-option,
+    .lore-option {
+        border-width: 2px;
+    }
+}

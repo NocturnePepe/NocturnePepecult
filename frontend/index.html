@@ -47,6 +47,17 @@
     <script src="src/ai/CultAIManager.js"></script>
     <link rel="stylesheet" href="src/ai/CultCompanion.css">
     
+    <!-- Phase 9: Cult Companion Awakens -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script type="text/babel" src="src/components/Companion/CultCompanion.js"></script>
+    <script type="text/babel" src="src/components/Companion/CompanionMessageQueue.js"></script>
+    <script type="text/babel" src="src/components/Companion/CompanionAIPredictionLayer.js"></script>
+    <script type="text/babel" src="src/components/Companion/CompanionSettingsModal.js"></script>
+    <link rel="stylesheet" href="src/components/Companion/CultCompanion.css">
+    <link rel="stylesheet" href="src/components/Companion/CompanionSettingsModal.css">
+    
     <!-- Enhanced Stylesheets -->
     <link rel="stylesheet" href="static/css/main-enhanced.css">
     <link rel="stylesheet" href="static/css/mobile-enhancements.css">
@@ -9508,6 +9519,39 @@
         }, 4000);
       }
       
+    </script>
+    
+    <!-- Phase 9: Initialize Cult Companion -->
+    <script type="text/babel">
+      // Initialize Cult Companion after page load
+      document.addEventListener('DOMContentLoaded', () => {
+        // Create companion mount point if it doesn't exist
+        if (!document.getElementById('cult-companion-root')) {
+          const companionRoot = document.createElement('div');
+          companionRoot.id = 'cult-companion-root';
+          document.body.appendChild(companionRoot);
+        }
+        
+        // Mount the Cult Companion component
+        setTimeout(() => {
+          try {
+            if (typeof CultCompanion !== 'undefined') {
+              ReactDOM.render(React.createElement(CultCompanion), document.getElementById('cult-companion-root'));
+              console.log('✅ Phase 9: Cult Companion Awakened!');
+            } else {
+              console.warn('⚠️ CultCompanion component not loaded yet, retrying...');
+              setTimeout(() => {
+                if (typeof CultCompanion !== 'undefined') {
+                  ReactDOM.render(React.createElement(CultCompanion), document.getElementById('cult-companion-root'));
+                  console.log('✅ Phase 9: Cult Companion Awakened (delayed)!');
+                }
+              }, 2000);
+            }
+          } catch (error) {
+            console.error('❌ Failed to initialize Cult Companion:', error);
+          }
+        }, 3000); // Delay to ensure all dependencies are loaded
+      });
     </script>
   </body>
 </html>
