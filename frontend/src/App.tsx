@@ -10,7 +10,9 @@ import './GamingTierFX.css';
 import ParticleSystem from './components/ParticleSystem';
 import { AdvancedThemeProvider } from './contexts/AdvancedThemeContext';
 import { GamificationProvider } from './contexts/GamificationContext';
+import { SocialProvider } from './contexts/SocialContext';
 import EnhancedAchievementSystem from './components/EnhancedAchievementSystem';
+import EnhancedSocialHub from './components/EnhancedSocialHub';
 
 // Lazy load pages for better performance
 const HomePage = lazy(() => import('./pages/HomePage'));
@@ -147,6 +149,7 @@ const Navigation = () => {
 };
 function App() {
   const [showAchievements, setShowAchievements] = useState(false);
+  const [showSocialHub, setShowSocialHub] = useState(false);
   
   useEffect(() => {
   useEffect(() => {
@@ -174,80 +177,112 @@ function App() {
     <AdvancedThemeProvider defaultTheme="cult" defaultIntensity="medium" defaultPerformanceMode="balanced">
       <MockWalletProvider>
         <GamificationProvider>
-          <Router>
-            <EnhancedVisualSystem theme="cult" performanceMode="balanced">
-              <div className="App gpu-accelerated">
-                {/* Gaming-Tier Particle System Background */}
-                <ParticleSystem 
-                  theme="cult" 
-                  intensity="medium" 
-                  interactive={true} 
-                  performanceMode="auto" 
-                />
-                
-                {/* XP & Rank Bar in header */}
-                <header className="app-header">
-                  <XPRankBar />
-                  <button 
-                    className="achievements-btn"
-                    onClick={() => setShowAchievements(true)}
-                    style={{
-                      position: 'fixed',
-                      top: '20px',
-                      right: '20px',
-                      background: 'linear-gradient(135deg, #9c88ff, #b39ddb)',
-                      border: 'none',
-                      borderRadius: '12px',
-                      padding: '12px 16px',
-                      color: 'white',
-                      fontWeight: '600',
-                      cursor: 'pointer',
-                      fontSize: '0.9rem',
-                      zIndex: 1000,
-                      boxShadow: '0 4px 16px rgba(156, 136, 255, 0.4)',
-                      transition: 'all 0.2s ease'
-                    }}
-                  >
-                    🏆 Achievements
-                  </button>
-                </header>
+          <SocialProvider>
+            <Router>
+              <EnhancedVisualSystem theme="cult" performanceMode="balanced">
+                <div className="App gpu-accelerated">
+                  {/* Gaming-Tier Particle System Background */}
+                  <ParticleSystem 
+                    theme="cult" 
+                    intensity="medium" 
+                    interactive={true} 
+                    performanceMode="auto" 
+                  />
+                  
+                  {/* XP & Rank Bar in header */}
+                  <header className="app-header">
+                    <XPRankBar />
+                    <div className="header-buttons">
+                      <button 
+                        className="social-hub-btn"
+                        onClick={() => setShowSocialHub(true)}
+                        style={{
+                          position: 'fixed',
+                          top: '20px',
+                          right: '180px',
+                          background: 'linear-gradient(135deg, #4fc3f7, #29b6f6)',
+                          border: 'none',
+                          borderRadius: '12px',
+                          padding: '12px 16px',
+                          color: 'white',
+                          fontWeight: '600',
+                          cursor: 'pointer',
+                          fontSize: '0.9rem',
+                          zIndex: 1000,
+                          boxShadow: '0 4px 16px rgba(79, 195, 247, 0.4)',
+                          transition: 'all 0.2s ease'
+                        }}
+                      >
+                        🌟 Social Hub
+                      </button>
+                      <button 
+                        className="achievements-btn"
+                        onClick={() => setShowAchievements(true)}
+                        style={{
+                          position: 'fixed',
+                          top: '20px',
+                          right: '20px',
+                          background: 'linear-gradient(135deg, #9c88ff, #b39ddb)',
+                          border: 'none',
+                          borderRadius: '12px',
+                          padding: '12px 16px',
+                          color: 'white',
+                          fontWeight: '600',
+                          cursor: 'pointer',
+                          fontSize: '0.9rem',
+                          zIndex: 1000,
+                          boxShadow: '0 4px 16px rgba(156, 136, 255, 0.4)',
+                          transition: 'all 0.2s ease'
+                        }}
+                      >
+                        🏆 Achievements
+                      </button>
+                    </div>
+                  </header>
 
-                {/* Main Navigation */}
-                <Navigation />
-                
-                {/* Main Content with Suspense */}
-                <main className="main-content">
-                  <Suspense fallback={<LoadingFallback />}>
-                    <Routes>
-                      {/* Core Pages */}
-                      <Route path="/" element={<HomePage />} />
-                      <Route path="/swap" element={<SwapPage />} />
-                      <Route path="/pools" element={<PoolsPage />} />
-                      <Route path="/portfolio" element={<PortfolioPage />} />
-                      <Route path="/social" element={<SocialPage />} />
-                      <Route path="/dao" element={<GovernanceDAO />} />
-                      <Route path="/admin" element={<AdminPage />} />
-                      
-                      {/* Legacy routes for backward compatibility */}
-                      <Route path="/trading" element={<AdvancedTrading />} />
-                      
-                      {/* Fallback route */}
-                      <Route path="*" element={<HomePage />} />
-                    </Routes>
-                  </Suspense>
-                </main>
+                  {/* Main Navigation */}
+                  <Navigation />
+                  
+                  {/* Main Content with Suspense */}
+                  <main className="main-content">
+                    <Suspense fallback={<LoadingFallback />}>
+                      <Routes>
+                        {/* Core Pages */}
+                        <Route path="/" element={<HomePage />} />
+                        <Route path="/swap" element={<SwapPage />} />
+                        <Route path="/pools" element={<PoolsPage />} />
+                        <Route path="/portfolio" element={<PortfolioPage />} />
+                        <Route path="/social" element={<SocialPage />} />
+                        <Route path="/dao" element={<GovernanceDAO />} />
+                        <Route path="/admin" element={<AdminPage />} />
+                        
+                        {/* Legacy routes for backward compatibility */}
+                        <Route path="/trading" element={<AdvancedTrading />} />
+                        
+                        {/* Fallback route */}
+                        <Route path="*" element={<HomePage />} />
+                      </Routes>
+                    </Suspense>
+                  </main>
 
-                {/* Floating Action Buttons */}
-                <FloatingButtons position="left" />
+                  {/* Floating Action Buttons */}
+                  <FloatingButtons position="left" />
 
-                {/* Enhanced Achievement System */}
-                <EnhancedAchievementSystem
-                  isOpen={showAchievements}
-                  onClose={() => setShowAchievements(false)}
-                />
-              </div>
-            </EnhancedVisualSystem>
-          </Router>
+                  {/* Enhanced Social Hub */}
+                  <EnhancedSocialHub
+                    isOpen={showSocialHub}
+                    onClose={() => setShowSocialHub(false)}
+                  />
+
+                  {/* Enhanced Achievement System */}
+                  <EnhancedAchievementSystem
+                    isOpen={showAchievements}
+                    onClose={() => setShowAchievements(false)}
+                  />
+                </div>
+              </EnhancedVisualSystem>
+            </Router>
+          </SocialProvider>
         </GamificationProvider>
       </MockWalletProvider>
     </AdvancedThemeProvider>
