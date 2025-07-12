@@ -1,0 +1,717 @@
+/* Phase 8: Market Intelligence - AI-Powered Market Analysis */
+
+.market-intelligence {
+  background: linear-gradient(135deg, 
+    rgba(26, 26, 46, 0.95) 0%,
+    rgba(40, 40, 80, 0.95) 50%,
+    rgba(60, 40, 100, 0.95) 100%);
+  border-radius: 15px;
+  border: 2px solid rgba(156, 136, 255, 0.3);
+  padding: 25px;
+  margin: 20px 0;
+  box-shadow: 
+    0 10px 40px rgba(156, 136, 255, 0.2),
+    0 0 80px rgba(108, 92, 231, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+/* Header */
+.intelligence-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 2px solid rgba(156, 136, 255, 0.2);
+}
+
+.ai-title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #9c88ff;
+  text-shadow: 0 2px 15px rgba(156, 136, 255, 0.4);
+  margin: 0;
+}
+
+.intelligence-controls {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.timeframe-selector {
+  background: rgba(156, 136, 255, 0.1);
+  border: 1px solid rgba(156, 136, 255, 0.3);
+  border-radius: 10px;
+  padding: 8px 15px;
+  color: white;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.timeframe-selector:hover {
+  background: rgba(156, 136, 255, 0.2);
+  border-color: rgba(156, 136, 255, 0.5);
+}
+
+.refresh-btn {
+  background: linear-gradient(135deg, #4caf50, #45a049);
+  border: 1px solid rgba(76, 175, 80, 0.3);
+  border-radius: 10px;
+  padding: 10px 20px;
+  color: white;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+}
+
+.refresh-btn:hover:not(:disabled) {
+  background: linear-gradient(135deg, #5cbf60, #4caf50);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 25px rgba(76, 175, 80, 0.4);
+}
+
+.refresh-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Sentiment Overview */
+.sentiment-overview {
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.sentiment-overview h3 {
+  color: #9c88ff;
+  margin-bottom: 20px;
+  font-size: 1.3rem;
+}
+
+.sentiment-gauge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;
+}
+
+.gauge-container {
+  position: relative;
+  width: 200px;
+  height: 100px;
+  background: linear-gradient(90deg, #f44336, #ff9800, #4caf50);
+  border-radius: 100px 100px 0 0;
+  overflow: hidden;
+  border: 3px solid rgba(156, 136, 255, 0.3);
+}
+
+.sentiment-needle {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform-origin: bottom center;
+  font-size: 2rem;
+  transition: transform 0.5s ease;
+  text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.gauge-labels {
+  position: absolute;
+  bottom: -25px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.sentiment-score {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.score-value {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 5px;
+}
+
+.score-label {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.9rem;
+}
+
+/* Intelligence Grid */
+.intelligence-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 25px;
+}
+
+/* Common Section Styles */
+.trends-section,
+.news-section,
+.social-section,
+.whale-section,
+.macro-section {
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(156, 136, 255, 0.2);
+  border-radius: 12px;
+  padding: 20px;
+}
+
+.trends-section h3,
+.news-section h3,
+.social-section h3,
+.whale-section h3,
+.macro-section h3 {
+  color: #9c88ff;
+  margin-bottom: 15px;
+  font-size: 1.2rem;
+}
+
+/* Market Trends */
+.trends-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.trend-card {
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  padding: 15px;
+  border-left: 4px solid #9c88ff;
+  transition: all 0.3s ease;
+}
+
+.trend-card:hover {
+  background: rgba(0, 0, 0, 0.4);
+  transform: translateX(5px);
+}
+
+.trend-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.trend-header h4 {
+  color: white;
+  margin: 0;
+  font-size: 1rem;
+}
+
+.trend-badges {
+  display: flex;
+  gap: 8px;
+}
+
+.sentiment-badge {
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: white;
+  text-transform: uppercase;
+}
+
+.impact-badge {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.8rem;
+}
+
+.trend-description {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.9rem;
+  margin-bottom: 10px;
+  line-height: 1.4;
+}
+
+.trend-footer {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* News Analysis */
+.news-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.news-card {
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  padding: 15px;
+  transition: all 0.3s ease;
+}
+
+.news-card:hover {
+  background: rgba(0, 0, 0, 0.4);
+  transform: translateY(-2px);
+}
+
+.news-header {
+  margin-bottom: 10px;
+}
+
+.news-header h4 {
+  color: white;
+  margin: 0 0 5px 0;
+  font-size: 1rem;
+  line-height: 1.3;
+}
+
+.news-meta {
+  display: flex;
+  gap: 15px;
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.news-summary {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.9rem;
+  margin-bottom: 10px;
+  line-height: 1.4;
+}
+
+.news-metrics {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.sentiment-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+}
+
+.sentiment-label {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.7);
+  min-width: 60px;
+}
+
+.sentiment-progress {
+  flex: 1;
+  height: 6px;
+  background: rgba(156, 136, 255, 0.2);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.sentiment-fill {
+  height: 100%;
+  transition: width 0.3s ease;
+}
+
+.sentiment-value {
+  font-size: 0.8rem;
+  color: white;
+  min-width: 40px;
+  text-align: right;
+}
+
+.price-impact {
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.price-impact.bullish {
+  background: rgba(76, 175, 80, 0.2);
+  color: #4caf50;
+  border: 1px solid rgba(76, 175, 80, 0.3);
+}
+
+.price-impact.bearish {
+  background: rgba(244, 67, 54, 0.2);
+  color: #f44336;
+  border: 1px solid rgba(244, 67, 54, 0.3);
+}
+
+.price-impact.neutral {
+  background: rgba(255, 152, 0, 0.2);
+  color: #ff9800;
+  border: 1px solid rgba(255, 152, 0, 0.3);
+}
+
+/* Social Sentiment */
+.social-platforms {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.platform-card {
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  padding: 15px;
+  transition: all 0.3s ease;
+}
+
+.platform-card:hover {
+  background: rgba(0, 0, 0, 0.4);
+}
+
+.platform-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.platform-header h4 {
+  color: white;
+  margin: 0;
+  font-size: 1rem;
+}
+
+.platform-trend {
+  font-size: 1.2rem;
+}
+
+.platform-metrics {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.metric {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.metric-label {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.8rem;
+}
+
+.metric-bar {
+  flex: 1;
+  height: 6px;
+  background: rgba(156, 136, 255, 0.2);
+  border-radius: 3px;
+  margin: 0 10px;
+  overflow: hidden;
+}
+
+.metric-fill {
+  height: 100%;
+  transition: width 0.3s ease;
+}
+
+.metric-value {
+  color: white;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.platform-keywords {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  align-items: center;
+}
+
+.keywords-label {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.8rem;
+  margin-right: 5px;
+}
+
+.keyword-tag {
+  background: rgba(156, 136, 255, 0.2);
+  color: #9c88ff;
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 0.7rem;
+  border: 1px solid rgba(156, 136, 255, 0.3);
+}
+
+/* Whale Activity */
+.whale-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.whale-card {
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  padding: 12px;
+  border-left: 4px solid;
+  transition: all 0.3s ease;
+}
+
+.whale-card.buy {
+  border-left-color: #4caf50;
+}
+
+.whale-card.sell {
+  border-left-color: #f44336;
+}
+
+.whale-card.transfer {
+  border-left-color: #ff9800;
+}
+
+.whale-card:hover {
+  background: rgba(0, 0, 0, 0.4);
+  transform: translateX(3px);
+}
+
+.whale-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.whale-type {
+  color: white;
+  font-weight: 600;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.whale-impact {
+  font-size: 1.1rem;
+}
+
+.whale-details {
+  margin-bottom: 8px;
+}
+
+.whale-amount {
+  color: white;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.whale-value {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.9rem;
+}
+
+.whale-exchange,
+.whale-tag {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.8rem;
+}
+
+.whale-time {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.7rem;
+  text-align: right;
+}
+
+/* Macro Events */
+.events-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.event-card {
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  padding: 15px;
+  border-left: 4px solid;
+  transition: all 0.3s ease;
+}
+
+.event-card.high {
+  border-left-color: #f44336;
+}
+
+.event-card.medium {
+  border-left-color: #ff9800;
+}
+
+.event-card.low {
+  border-left-color: #4caf50;
+}
+
+.event-card:hover {
+  background: rgba(0, 0, 0, 0.4);
+  transform: translateY(-2px);
+}
+
+.event-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.event-type {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.8rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.event-impact {
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.event-impact.bullish {
+  background: rgba(76, 175, 80, 0.2);
+  color: #4caf50;
+  border: 1px solid rgba(76, 175, 80, 0.3);
+}
+
+.event-impact.bearish {
+  background: rgba(244, 67, 54, 0.2);
+  color: #f44336;
+  border: 1px solid rgba(244, 67, 54, 0.3);
+}
+
+.event-impact.neutral {
+  background: rgba(255, 152, 0, 0.2);
+  color: #ff9800;
+  border: 1px solid rgba(255, 152, 0, 0.3);
+}
+
+.event-title {
+  color: white;
+  font-size: 1rem;
+  margin: 0 0 8px 0;
+}
+
+.event-description {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.9rem;
+  margin-bottom: 10px;
+  line-height: 1.4;
+}
+
+.event-footer {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* Mobile Optimizations */
+@media (max-width: 768px) {
+  .intelligence-header {
+    flex-direction: column;
+    gap: 15px;
+    text-align: center;
+  }
+  
+  .intelligence-controls {
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  .timeframe-selector,
+  .refresh-btn {
+    width: 100%;
+    text-align: center;
+  }
+  
+  .sentiment-gauge {
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .intelligence-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .trend-header,
+  .news-metrics,
+  .whale-header,
+  .event-header {
+    flex-direction: column;
+    gap: 8px;
+    align-items: flex-start;
+  }
+  
+  .sentiment-bar {
+    flex-direction: column;
+    gap: 5px;
+  }
+  
+  .metric {
+    flex-direction: column;
+    gap: 5px;
+    align-items: flex-start;
+  }
+  
+  .metric-bar {
+    width: 100%;
+    margin: 0;
+  }
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+  .market-intelligence {
+    border: 3px solid #9c88ff;
+    background: rgba(0, 0, 0, 0.95);
+  }
+  
+  .trends-section,
+  .news-section,
+  .social-section,
+  .whale-section,
+  .macro-section,
+  .trend-card,
+  .news-card,
+  .platform-card,
+  .whale-card,
+  .event-card {
+    border: 2px solid #9c88ff;
+    background: rgba(0, 0, 0, 0.8);
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .trend-card,
+  .news-card,
+  .platform-card,
+  .whale-card,
+  .event-card,
+  .refresh-btn {
+    transition: none;
+  }
+  
+  .sentiment-needle {
+    transition: none;
+  }
+  
+  .sentiment-fill,
+  .metric-fill {
+    transition: none;
+  }
+}

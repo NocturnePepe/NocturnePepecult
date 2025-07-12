@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import AITradingAssistant from './AITradingAssistant';
 import PredictiveAnalytics from './PredictiveAnalytics';
 import SmartPortfolioManager from './SmartPortfolioManager';
-import MarketIntelligence from './MarketIntelligence';
+import AIMarketIntelligence from './AIMarketIntelligence';
 import './AdvancedTrading.css';
 
 interface OrderBook {
@@ -39,6 +39,8 @@ const AdvancedTrading: React.FC = () => {
   const [amount, setAmount] = useState<string>('');
   const [price, setPrice] = useState<string>('');
   const [isConnected, setIsConnected] = useState<boolean>(false);
+  
+  // AI Component visibility states
   const [showAIAssistant, setShowAIAssistant] = useState<boolean>(false);
   const [showPredictiveAnalytics, setShowPredictiveAnalytics] = useState<boolean>(false);
   const [showPortfolioManager, setShowPortfolioManager] = useState<boolean>(false);
@@ -106,46 +108,32 @@ const AdvancedTrading: React.FC = () => {
       type: side,
       orderType,
       amount: parseFloat(amount),
-      price: orderType === 'market' ? undefined : parseFloat(price),
+      price: orderType !== 'market' ? parseFloat(price) : undefined,
       status: 'pending',
       timestamp: new Date().toISOString()
     };
     
     setOrders(prev => [newOrder, ...prev]);
-    
-    // Simulate order execution
-    setTimeout(() => {
-      setOrders(prev => 
-        prev.map(order => 
-          order.id === newOrder.id 
-            ? { ...order, status: Math.random() > 0.1 ? 'filled' : 'cancelled' }
-            : order
-        )
-      );
-    }, Math.random() * 5000 + 1000);
-    
-    // Clear form
     setAmount('');
-    if (orderType === 'market') {
-      setPrice('');
-    }
+    
+    // Simulate order processing
+    setTimeout(() => {
+      setOrders(prev => prev.map(order => 
+        order.id === newOrder.id 
+          ? { ...order, status: Math.random() > 0.1 ? 'filled' : 'cancelled' }
+          : order
+      ));
+    }, 2000);
   };
 
   const cancelOrder = (orderId: string) => {
-    setOrders(prev => 
-      prev.map(order => 
-        order.id === orderId 
-          ? { ...order, status: 'cancelled' }
-          : order
-      )
-    );
+    setOrders(prev => prev.map(order => 
+      order.id === orderId ? { ...order, status: 'cancelled' } : order
+    ));
   };
 
   const formatNumber = (num: number, decimals: number = 2): string => {
-    return new Intl.NumberFormat('en-US', {
-      minimumFractionDigits: decimals,
-      maximumFractionDigits: decimals
-    }).format(num);
+    return num.toFixed(decimals);
   };
 
   const formatVolume = (num: number): string => {
@@ -161,6 +149,7 @@ const AdvancedTrading: React.FC = () => {
     <div className="advanced-trading">
       <div className="trading-header holo-card">
         <h1 className="holo-text">⚔️ Advanced Trading Arena</h1>
+        <p className="font-mystical">Professional trading tools for the mystic trader</p>
         <div className="ai-controls">
           <button 
             className="ai-assistant-trigger holo-btn"
@@ -202,8 +191,7 @@ const AdvancedTrading: React.FC = () => {
       )}
 
       {showMarketIntelligence && (
-        <MarketIntelligence selectedPair={selectedPair} />
-      )}<SmartPortfolioManager />
+        <AIMarketIntelligence selectedPair={selectedPair} />
       )}
 
       <div className="trading-layout">
@@ -251,15 +239,15 @@ const AdvancedTrading: React.FC = () => {
                 );
               })}
             </div>
-            
+
             {/* Current Price */}
             <div className="current-price">
               <span className="price-label">Current Price</span>
-              <span className="price-value holo-text">
+              <span className="price-value">
                 ${formatNumber(tradingPairs.find(p => p.symbol === selectedPair)?.price || 0, 4)}
               </span>
             </div>
-            
+
             {/* Bids (Buy Orders) */}
             <div className="bids">
               {orderBook.bids.map(([price, size], index) => {
@@ -276,24 +264,22 @@ const AdvancedTrading: React.FC = () => {
           </div>
         </div>
 
-        {/* Trading Panel */}
-        <div className="trading-panel holo-card">
+        {/* Trading Form */}
+        <div className="trading-form holo-card">
           <h3 className="ember-glow">Place Order</h3>
           
-          {/* Order Type Selector */}
           <div className="order-type-selector">
-            {(['market', 'limit', 'stop'] as const).map(type => (
+            {['market', 'limit', 'stop'].map(type => (
               <button
                 key={type}
                 className={`type-btn ${orderType === type ? 'active' : ''}`}
-                onClick={() => setOrderType(type)}
+                onClick={() => setOrderType(type as any)}
               >
                 {type.charAt(0).toUpperCase() + type.slice(1)}
               </button>
             ))}
           </div>
 
-          {/* Buy/Sell Selector */}
           <div className="side-selector">
             <button
               className={`side-btn buy ${side === 'buy' ? 'active' : ''}`}
@@ -309,54 +295,48 @@ const AdvancedTrading: React.FC = () => {
             </button>
           </div>
 
-          {/* Order Form */}
-          <div className="order-form">
-            {orderType !== 'market' && (
-              <div className="form-group">
-                <label>Price</label>
-                <input
-                  type="number"
-                  className="holo-input"
-                  value={price}
-                  onChange={(e) => setPrice(e.target.value)}
-                  placeholder="0.0000"
-                  step="0.0001"
-                />
-              </div>
-            )}
-            
-            <div className="form-group">
-              <label>Amount</label>
+          <div className="form-inputs">
+            <div className="input-group">
+              <label>Amount ({selectedPair.split('/')[0]})</label>
               <input
                 type="number"
-                className="holo-input"
                 value={amount}
                 onChange={(e) => setAmount(e.target.value)}
                 placeholder="0.00"
-                step="0.01"
+                className="mystical-input"
               />
             </div>
 
-            <div className="order-summary">
-              <div className="summary-row">
-                <span>Total:</span>
-                <span className="holo-text">
-                  {orderType === 'market' 
-                    ? `≈ ${formatNumber(parseFloat(amount || '0') * (tradingPairs.find(p => p.symbol === selectedPair)?.price || 0), 2)}`
-                    : formatNumber(parseFloat(amount || '0') * parseFloat(price || '0'), 2)
-                  } USDC
-                </span>
+            {orderType !== 'market' && (
+              <div className="input-group">
+                <label>Price ({selectedPair.split('/')[1]})</label>
+                <input
+                  type="number"
+                  value={price}
+                  onChange={(e) => setPrice(e.target.value)}
+                  placeholder="0.00"
+                  className="mystical-input"
+                />
               </div>
-            </div>
-
-            <button 
-              className={`glow-btn order-btn ${side}`}
-              onClick={placeOrder}
-              disabled={!isConnected}
-            >
-              {!isConnected ? 'Connect Wallet' : `${side.toUpperCase()} ${selectedPair.split('/')[0]}`}
-            </button>
+            )}
           </div>
+
+          <button
+            className={`place-order-btn ${side}`}
+            onClick={placeOrder}
+            disabled={!isConnected}
+          >
+            {!isConnected ? 'Connect Wallet' : `Place ${side.toUpperCase()} Order`}
+          </button>
+
+          {!isConnected && (
+            <button
+              className="connect-wallet-btn"
+              onClick={() => setIsConnected(true)}
+            >
+              🔗 Connect Phantom Wallet
+            </button>
+          )}
         </div>
 
         {/* Open Orders */}
@@ -364,7 +344,7 @@ const AdvancedTrading: React.FC = () => {
           <h3 className="ember-glow">Open Orders</h3>
           <div className="orders-list">
             {orders.length === 0 ? (
-              <div className="no-orders">No active orders</div>
+              <div className="no-orders">No open orders</div>
             ) : (
               orders.map(order => (
                 <div key={order.id} className="order-item">
@@ -400,7 +380,7 @@ const AdvancedTrading: React.FC = () => {
           </div>
         </div>
       </div>
-      
+
       {/* AI Trading Assistant */}
       {showAIAssistant && (
         <AITradingAssistant 
@@ -410,54 +390,6 @@ const AdvancedTrading: React.FC = () => {
           orderBook={orderBook}
           orders={orders}
         />
-      )}
-      
-      {/* Predictive Analytics */}
-      {showPredictiveAnalytics && (
-        <div className="ai-overlay">
-          <div className="ai-panel">
-            <button 
-              className="ai-close-btn"
-              onClick={() => setShowPredictiveAnalytics(false)}
-            >
-              ✕
-            </button>
-            <PredictiveAnalytics 
-              selectedPair={selectedPair}
-              currentPrice={tradingPairs.find(p => p.symbol === selectedPair)?.price || 0}
-            />
-          </div>
-        </div>
-      )}
-      
-      {/* Smart Portfolio Manager */}
-      {showPortfolioManager && (
-        <div className="ai-overlay">
-          <div className="ai-panel">
-            <button 
-              className="ai-close-btn"
-              onClick={() => setShowPortfolioManager(false)}
-            >
-              ✕
-            </button>
-            <SmartPortfolioManager />
-          </div>
-        </div>
-      )}
-      
-      {/* Market Intelligence */}
-      {showMarketIntelligence && (
-        <div className="ai-overlay">
-          <div className="ai-panel">
-            <button 
-              className="ai-close-btn"
-              onClick={() => setShowMarketIntelligence(false)}
-            >
-              ✕
-            </button>
-            <MarketIntelligence />
-          </div>
-        </div>
       )}
     </div>
   );
