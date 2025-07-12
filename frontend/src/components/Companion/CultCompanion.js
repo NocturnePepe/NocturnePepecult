@@ -1,9 +1,9 @@
 /**
- * CULT COMPANION - PHASE 9: AWAKENS
- * ==================================
+ * CULT COMPANION - PHASE 10: DOMINION PROTOCOL INTEGRATION
+ * ========================================================
  * 
- * PURPOSE: State-aware persistent real-time assistant with AI prediction layer
- * FEATURES: Dynamic responses, XP tracking, DAO engagement, narrative lore system
+ * PURPOSE: State-aware persistent real-time assistant with AI governance layer
+ * FEATURES: Dynamic responses, XP tracking, DAO engagement, governance AI, treasury insights
  * ARCHITECTURE: Performance-optimized with 60fps rendering and scalable logic
  */
 
@@ -12,6 +12,8 @@ import { useWalletContext } from '../../contexts/WalletContext';
 import CompanionMessageQueue from './CompanionMessageQueue';
 import CompanionSettingsModal from './CompanionSettingsModal';
 import CompanionAIPredictionLayer from './CompanionAIPredictionLayer';
+import DominionProtocol from './DominionProtocol';
+import { useTreasuryPulse } from '../../hooks/useTreasuryPulse';
 import './CultCompanion.css';
 
 // 🌙 Companion states and modes
@@ -26,7 +28,13 @@ const COMPANION_STATES = {
     SPEAKING: 'speaking',
     THINKING: 'thinking',
     CELEBRATING: 'celebrating',
-    MYSTERIOUS: 'mysterious'
+    MYSTERIOUS: 'mysterious',
+    ANALYZING: 'analyzing',
+    CAUTIOUS: 'cautious',
+    WISE: 'wise',
+    ENCOURAGING: 'encouraging',
+    URGENT: 'urgent',
+    AWAKENING: 'awakening'
 };
 
 // 🎭 Lore and narrative elements
@@ -54,6 +62,19 @@ const CultCompanion = () => {
     const CompanionAIPredict = window.CompanionAIPredict;
     const LoreEventUnlock = window.LoreEventUnlock;
     const RitualPulse = window.RitualPulse;
+
+    // 🏛️ Phase 10: Dominion Protocol state
+    const [dominionProtocol, setDominionProtocol] = useState(null);
+    const [proposalRecommendations, setProposalRecommendations] = useState(new Map());
+    const [votePredictions, setVotePredictions] = useState([]);
+    const [treasuryAlerts, setTreasuryAlerts] = useState([]);
+    const [activeRitualEvents, setActiveRitualEvents] = useState(new Set());
+    const [sentientModeEnabled, setSentientModeEnabled] = useState(() => 
+        localStorage.getItem('dominion-sentient-mode') === 'true'
+    );
+    
+    // 💰 Phase 10: Treasury Pulse Hook
+    const treasuryPulse = useTreasuryPulse();
     
     // 🎯 Enhanced state management with Phase 9.5 features
     const [companionMode, setCompanionMode] = useState(() => 
@@ -65,39 +86,274 @@ const CultCompanion = () => {
     const [currentMessage, setCurrentMessage] = useState('');
     const [isMessageVisible, setIsMessageVisible] = useState(false);
     
-    // 🎭 Phase 9.5: Enhanced mood and ritual states  
+    // 🎭 Phase 9.5: Enhanced mood and ritual states
     const [currentMood, setCurrentMood] = useState('idle');
     const [moodIntensity, setMoodIntensity] = useState(0.5);
     const [isRitualActive, setIsRitualActive] = useState(false);
     const [moodVisualProps, setMoodVisualProps] = useState({});
     
-    // 🧠 Phase 9.5: Initialize Sentience Ember components
-    const [moodStateInstance, setMoodStateInstance] = useState(null);
-    const [memoryReplayInstance, setMemoryReplayInstance] = useState(null);
-    const [aiPredictInstance, setAiPredictInstance] = useState(null);
+    // 🧠 Phase 9.5: Sentience Ember components
+    const [companionSentience, setCompanionSentience] = useState(null);
     const [loreEventInstance, setLoreEventInstance] = useState(null);
-    const [ritualPulseInstance, setRitualPulseInstance] = useState(null);
     
     const [userMetrics, setUserMetrics] = useState({
         xp: 0,
         level: 1,
-        referralCount: 0,
         daoVotes: 0,
         totalSwaps: 0,
+        referralCount: 0,
+        governanceRank: 1,
         lastActive: Date.now(),
-        userHistory: [], // NEW: For pattern analysis
-        lastTrade: null,
-        lastVote: null,
-        lastXpGain: null
+        votingHistory: [],
+        userHistory: []
     });
-
-    // 🎨 Animation and UI refs
+    
+    // 🔗 Animation and UI refs
     const companionRef = useRef(null);
     const messageTimeoutRef = useRef(null);
     const idleTimeoutRef = useRef(null);
     const animationFrameRef = useRef(null);
 
-    // 📊 User data fetchers
+    // 🏛️ Phase 10: Dominion Protocol Handlers
+    const handleProposalRecommendation = useCallback((recommendation) => {
+        setProposalRecommendations(prev => {
+            const newMap = new Map(prev);
+            newMap.set(recommendation.proposalId, recommendation);
+            return newMap;
+        });
+        
+        const message = `🏛️ Proposal Analysis: ${recommendation.recommendation.vote} with ${(recommendation.confidence * 100).toFixed(1)}% confidence - ${recommendation.recommendation.reasoning}`;
+        say(message, 10000, COMPANION_STATES.ANALYZING);
+        
+        console.log('🏛️ Proposal recommendation generated:', recommendation);
+    }, []);
+
+    const handleVotePrediction = useCallback((predictions) => {
+        setVotePredictions(predictions);
+        
+        if (predictions.length > 0) {
+            const firstPrediction = predictions[0];
+            const supportProb = (firstPrediction.prediction.supportProbability * 100).toFixed(1);
+            const message = `🔮 Vote Prediction: ${supportProb}% support probability with ${(firstPrediction.prediction.confidence * 100).toFixed(1)}% confidence`;
+            
+            if (sentientModeEnabled) {
+                say(message, 8000, COMPANION_STATES.THINKING);
+            }
+        }
+        
+        console.log('🔮 Vote predictions updated:', predictions.length, 'proposals analyzed');
+    }, [sentientModeEnabled]);
+
+    const handleTreasuryAlert = useCallback((alert) => {
+        setTreasuryAlerts(prev => [...prev.slice(-4), alert]); // Keep last 5 alerts
+        
+        const alertMessages = {
+            CRITICAL_HEALTH: "⚠️ Treasury health critically low! Immediate governance attention required!",
+            LIQUIDITY_RISK: "💧 Low liquidity detected! Consider reducing staked positions!",
+            CONCENTRATION_RISK: "⚖️ Asset concentration risk identified! Diversification recommended!",
+            STAKING_OPPORTUNITY: "💎 Exceptional staking opportunity available! High APY detected!",
+            DOWNTREND_RISK: "📉 Treasury declining! Monitor market conditions closely!"
+        };
+        
+        const message = alertMessages[alert.type] || `🚨 Treasury Alert: ${alert.message}`;
+        say(message, 8000, COMPANION_STATES.URGENT);
+        
+        console.log('💰 Treasury alert triggered:', alert);
+    }, []);
+
+    const handleRitualEvent = useCallback((event) => {
+        setActiveRitualEvents(prev => new Set([...prev, event.id]));
+        
+        say(`🌟 ${event.title}: ${event.description}`, 8000, COMPANION_STATES.MYSTERIOUS);
+        
+        // Auto-cleanup after duration
+        setTimeout(() => {
+            setActiveRitualEvents(prev => {
+                const newSet = new Set(prev);
+                newSet.delete(event.id);
+                return newSet;
+            });
+        }, event.duration);
+        
+        console.log('⚡ Ritual event triggered:', event.title);
+    }, []);
+
+    // 🗣️ Message display function
+    const say = useCallback((message, duration = 5000, state = COMPANION_STATES.SPEAKING) => {
+        setCompanionState(state);
+        setCurrentMessage(message);
+        setIsMessageVisible(true);
+        
+        // Clear existing timeout
+        if (messageTimeoutRef.current) {
+            clearTimeout(messageTimeoutRef.current);
+        }
+        
+        messageTimeoutRef.current = setTimeout(() => {
+            setIsMessageVisible(false);
+            setCompanionState(COMPANION_STATES.IDLE);
+        }, duration);
+        
+        // Return to idle after fade animation
+        setTimeout(() => {
+            setCurrentMessage('');
+        }, duration + 1000);
+    }, []);
+
+    // 🧠 Phase 10: Sentient Mode Toggle
+    const toggleSentientMode = useCallback(() => {
+        const newMode = !sentientModeEnabled;
+        setSentientModeEnabled(newMode);
+        localStorage.setItem('dominion-sentient-mode', newMode.toString());
+        
+        if (dominionProtocol) {
+            dominionProtocol.enableSentientMode(newMode);
+        }
+        
+        const message = newMode ? 
+            "🧠 Sentient mode activated! I now have autonomy to analyze proposals, predict outcomes, and provide treasury insights proactively..." :
+            "😴 Sentient mode deactivated. I'll return to advisory mode and only respond when asked...";
+        say(message, 6000, COMPANION_STATES.MYSTERIOUS);
+        
+        console.log(`🧠 Sentient mode ${newMode ? 'enabled' : 'disabled'}`);
+    }, [sentientModeEnabled, dominionProtocol, say]);
+
+    // 💰 Phase 10: Treasury Pulse Integration
+    useEffect(() => {
+        if (!treasuryPulse.isReady) return;
+        
+        // Handle treasury recommendations
+        if (treasuryPulse.recommendations && treasuryPulse.recommendations.length > 0) {
+            const urgentRecommendations = treasuryPulse.recommendations.filter(r => r.priority === 'critical');
+            if (urgentRecommendations.length > 0 && sentientModeEnabled) {
+                const recommendation = urgentRecommendations[0];
+                const message = `💰 Treasury Insight: ${recommendation.message}`;
+                say(message, 8000, COMPANION_STATES.THINKING);
+            }
+        }
+        
+        // Handle high-severity alerts
+        if (treasuryPulse.needsAttention) {
+            const criticalAlerts = treasuryPulse.alerts.filter(a => a.severity >= 7);
+            if (criticalAlerts.length > 0) {
+                criticalAlerts.forEach(alert => handleTreasuryAlert(alert));
+            }
+        }
+        
+        // Handle staking opportunities
+        if (treasuryPulse.stakingOpportunities && treasuryPulse.stakingOpportunities.length > 0) {
+            const highYieldOpportunities = treasuryPulse.stakingOpportunities.filter(op => op.apy > 12);
+            if (highYieldOpportunities.length > 0 && Math.random() < 0.3) { // 30% chance to mention
+                const opportunity = highYieldOpportunities[0];
+                const message = `💎 Staking Opportunity: ${opportunity.apy.toFixed(1)}% APY available on ${opportunity.protocol}. ${opportunity.recommendation}`;
+                say(message, 6000, COMPANION_STATES.THINKING);
+            }
+        }
+    }, [treasuryPulse, sentientModeEnabled, handleTreasuryAlert, say]);
+
+    // 🏛️ Phase 10: Initialize Dominion Protocol
+    useEffect(() => {
+        if (!isConnected || !userMetrics) return;
+        
+        const protocol = new DominionProtocol({
+            userMetrics,
+            onProposalRecommendation: handleProposalRecommendation,
+            onVotePrediction: handleVotePrediction,
+            onTreasuryAlert: handleTreasuryAlert,
+            onRitualEvent: handleRitualEvent
+        });
+        
+        setDominionProtocol(protocol);
+        
+        // Enable sentient mode if previously enabled
+        if (sentientModeEnabled) {
+            setTimeout(() => protocol.enableSentientMode(true), 1000);
+        }
+        
+        console.log('🏛️ Dominion Protocol initialized');
+        
+        return () => {
+            if (protocol && protocol.clearPredictionCache) {
+                protocol.clearPredictionCache();
+            }
+        };
+    }, [isConnected, userMetrics, sentientModeEnabled, handleProposalRecommendation, handleVotePrediction, handleTreasuryAlert, handleRitualEvent]);
+
+    // 💭 Dynamic response system based on user metrics
+    const generateContextualMessage = useCallback(() => {
+        const context = {
+            timeOfDay: new Date().getHours(),
+            isNewUser: userMetrics.xp < 100,
+            isActiveTrader: userMetrics.totalSwaps > 10,
+            userActivity: {
+                isNewUser: userMetrics.xp < 100,
+                isActiveTrader: userMetrics.totalSwaps > 10,
+                isDAOParticipant: userMetrics.daoVotes > 0,
+                hasReferrals: userMetrics.referralCount > 0
+            }
+        };
+        
+        // 🌙 Time-based messages
+        if (context.timeOfDay >= 22 || context.timeOfDay <= 6) {
+            return "Perfect time for lunar-powered trades 🌙";
+        }
+        
+        // 🎯 User progression messages
+        if (context.userActivity.isNewUser) {
+            return "Your journey begins... Let the nocturne guide your first steps...";
+        }
+        
+        if (context.isActiveTrader && !context.userActivity.isDAOParticipant) {
+            return "Your trading prowess is noticed... Perhaps it's time to join the DAO governance? 🏛️";
+        }
+        
+        if (context.userActivity.isActiveTrader && !context.userActivity.hasReferrals) {
+            return "Spread the cult wisdom! Share your referral link and earn XP for each new member...";
+        }
+        
+        // 💼 Advanced trader messages
+        if (context.userActivity.isActiveTrader) {
+            return [
+                "Market sentiment shifts... Perfect moment for strategic positioning...",
+                "The DeFi protocols whisper of hidden yield opportunities...",
+                "Your reputation grows... Soon the market makers will take notice..."
+            ][Math.floor(Math.random() * 3)];
+        }
+        
+        // 🌌 Default mystical responses
+        return STORY_LINES[Math.floor(Math.random() * STORY_LINES.length)];
+    }, [userMetrics]);
+
+    // 🏛️ Phase 10: Governance AI insights and predictions
+    const shareGovernanceInsight = useCallback(() => {
+        if (!dominionProtocol) return;
+        
+        const insights = [
+            () => dominionProtocol.predictVoteOutcome(),
+            () => {
+                const health = treasuryPulse.healthScore;
+                if (health > 85) {
+                    say("💰 Treasury analysis indicates exceptional strength. Prime conditions for ambitious proposals...", 7000, COMPANION_STATES.ANALYZING);
+                } else if (health < 40) {
+                    say("⚠️ Treasury shows concerning patterns. Conservative governance approach recommended...", 7000, COMPANION_STATES.CAUTIOUS);
+                } else {
+                    say("📊 Treasury metrics within normal ranges. Standard governance protocols advised...", 6000, COMPANION_STATES.THINKING);
+                }
+            },
+            () => {
+                if (userMetrics.governanceRank >= 3) {
+                    say("👑 Your governance rank grants significant proposal influence. Use this power wisely, cultist...", 7000, COMPANION_STATES.WISE);
+                } else {
+                    say("📈 Increasing your governance participation will unlock deeper DAO mysteries...", 6000, COMPANION_STATES.ENCOURAGING);
+                }
+            }
+        ];
+        
+        const randomInsight = insights[Math.floor(Math.random() * insights.length)];
+        randomInsight();
+    }, [dominionProtocol, treasuryPulse, userMetrics, say]);
+
+    // 🤖 Helper functions for user metrics
     const getUserXP = useCallback(() => {
         return parseInt(localStorage.getItem('nocturne-xp') || '0');
     }, []);
@@ -118,127 +374,6 @@ const CultCompanion = () => {
         return parseInt(localStorage.getItem('nocturne-total-swaps') || '0');
     }, []);
 
-    // 🧠 AI Prediction and Context Analysis
-    const analyzeUserContext = useCallback(() => {
-        const now = Date.now();
-        const timeSinceLastActive = now - userMetrics.lastActive;
-        const isIdle = timeSinceLastActive > 60000; // 60 seconds
-        
-        return {
-            isIdle,
-            timeOfDay: new Date().getHours(),
-            dayOfWeek: new Date().getDay(),
-            isWeekend: [0, 6].includes(new Date().getDay()),
-            userActivity: {
-                isNewUser: userMetrics.xp < 100,
-                isActiveTrader: userMetrics.totalSwaps > 10,
-                isDAOParticipant: userMetrics.daoVotes > 0,
-                hasReferrals: userMetrics.referralCount > 0
-            }
-        };
-    }, [userMetrics]);
-
-    // 💬 Companion speech system
-    const say = useCallback((message, duration = 5000, state = COMPANION_STATES.SPEAKING) => {
-        if (companionMode === COMPANION_MODES.OFF) return;
-
-        setCurrentMessage(message);
-        setCompanionState(state);
-        setIsMessageVisible(true);
-
-        // Clear existing timeout
-        if (messageTimeoutRef.current) {
-            clearTimeout(messageTimeoutRef.current);
-        }
-
-        // Auto-hide message after duration
-        messageTimeoutRef.current = setTimeout(() => {
-            setIsMessageVisible(false);
-            setCompanionState(COMPANION_STATES.IDLE);
-            
-            // Return to idle after fade animation
-            setTimeout(() => {
-                setCurrentMessage('');
-            }, 300);
-        }, duration);
-    }, [companionMode]);
-
-    // 🎯 Dynamic response system based on user metrics
-    const generateContextualMessage = useCallback(() => {
-        const context = analyzeUserContext();
-        const { userActivity } = context;
-
-        // 🌙 Time-based messages
-        if (context.timeOfDay >= 22 || context.timeOfDay <= 6) {
-            return "The nocturne hours are upon us... Perfect time for lunar-powered trades 🌙";
-        }
-
-        // 🆕 New user guidance
-        if (userActivity.isNewUser) {
-            if (!isConnected) {
-                return "Welcome, new cultist! Connect your wallet to begin your nocturne journey...";
-            }
-            if (userMetrics.totalSwaps === 0) {
-                return "Ready for your first swap? The cult wisdom guides you to start small and learn...";
-            }
-        }
-
-        // 🏆 Achievement celebrations
-        if (userMetrics.level > 1 && userMetrics.xp % 100 === 0) {
-            return `Magnificent! Level ${userMetrics.level} achieved. The cult recognizes your dedication! 🎉`;
-        }
-
-        // 🗳️ DAO engagement
-        if (userActivity.isActiveTrader && !userActivity.isDAOParticipant) {
-            return "Your trading prowess is noticed... Perhaps it's time to join the DAO governance? 🏛️";
-        }
-
-        // 💸 Referral opportunities
-        if (userActivity.isActiveTrader && !userActivity.hasReferrals) {
-            return "Spread the cult wisdom! Share your referral link and earn XP for each new member...";
-        }
-
-        // 🔮 Idle messages
-        if (context.isIdle) {
-            const idleMessages = [
-                "I sense you're contemplating... What wisdom do you seek?",
-                "The market flows like moonlight... Are you ready to make a move?",
-                "Your XP grows stronger with each passing moment...",
-                "The cult awaits your next strategic decision..."
-            ];
-            return idleMessages[Math.floor(Math.random() * idleMessages.length)];
-        }
-
-        // 📈 Trading suggestions
-        if (userActivity.isActiveTrader) {
-            const tradingTips = [
-                "Consider diversifying your portfolio during this lunar cycle...",
-                "The DeFi winds suggest checking LP yields today...",
-                "Your swap pattern indicates optimal DCA timing approaches...",
-                "Market sentiment shifts... Perfect moment for strategic positioning..."
-            ];
-            return tradingTips[Math.floor(Math.random() * tradingTips.length)];
-        }
-
-        // 🌌 Default mystical responses
-        return STORY_LINES[Math.floor(Math.random() * STORY_LINES.length)];
-    }, [analyzeUserContext, isConnected, userMetrics]);
-
-    // 🎲 Hidden event system
-    const checkForHiddenEvents = useCallback(() => {
-        if (companionMode !== COMPANION_MODES.ACTIVE) return;
-
-        for (const event of HIDDEN_EVENTS) {
-            if (Math.random() < event.chance) {
-                say(event.message, 7000, COMPANION_STATES.MYSTERIOUS);
-                
-                // Log rare event for analytics
-                console.log(`🌙 Cult Companion: Rare event triggered - ${event.trigger}`);
-                break; // Only one hidden event per check
-            }
-        }
-    }, [companionMode, say]);
-
     // 🔄 Update user metrics
     const updateUserMetrics = useCallback(() => {
         const newMetrics = {
@@ -247,12 +382,15 @@ const CultCompanion = () => {
             referralCount: getReferralCount(),
             daoVotes: getProposalVotes(),
             totalSwaps: getTotalSwaps(),
-            lastActive: Date.now()
+            governanceRank: Math.floor(getProposalVotes() / 5) + 1,
+            lastActive: userMetrics.lastActive,
+            userHistory: userMetrics.userHistory || [],
+            votingHistory: userMetrics.votingHistory || []
         };
 
         // Check for level ups
         if (newMetrics.level > userMetrics.level) {
-            say(`🎉 LEVEL UP! Welcome to Level ${newMetrics.level}! Your cult power grows stronger...`, 6000, COMPANION_STATES.CELEBRATING);
+            say(`🎉 Level ${newMetrics.level} achieved! Your cult mastery grows stronger...`, 5000, COMPANION_STATES.CELEBRATING);
         }
 
         // Check for new referrals
@@ -264,10 +402,40 @@ const CultCompanion = () => {
         // Check for new DAO votes
         if (newMetrics.daoVotes > userMetrics.daoVotes) {
             say("🗳️ Your voice echoes through the DAO chambers! Governance participation strengthens the cult...", 5000, COMPANION_STATES.CELEBRATING);
+            
+            // 🏛️ Phase 10: Trigger proposal evaluation if in sentient mode
+            if (sentientModeEnabled && dominionProtocol) {
+                setTimeout(() => {
+                    dominionProtocol.predictVoteOutcome();
+                }, 3000);
+            }
         }
 
         setUserMetrics(newMetrics);
-    }, [getUserXP, getUserLevel, getReferralCount, getProposalVotes, getTotalSwaps, userMetrics, say]);
+    }, [getUserXP, getUserLevel, getReferralCount, getProposalVotes, getTotalSwaps, userMetrics, sentientModeEnabled, dominionProtocol, say]);
+
+    // 🎯 Hidden event system with governance integration
+    const checkForHiddenEvents = useCallback(() => {
+        if (companionMode !== COMPANION_MODES.ACTIVE) return;
+
+        for (const event of HIDDEN_EVENTS) {
+            if (Math.random() < event.chance) {
+                say(event.message, 7000, COMPANION_STATES.MYSTERIOUS);
+                // Log rare event for analytics
+                console.log(`🌙 Cult Companion: Rare event triggered - ${event.trigger}`);
+                break; // Only one hidden event per check
+            }
+        }
+        
+        // 🏛️ Phase 10: Governance-specific hidden events
+        if (userMetrics.daoVotes > 5 && Math.random() < 0.01) {
+            say("🏛️ The Council Elders whisper your name... Your governance wisdom has been noted by the ancient powers...", 8000, COMPANION_STATES.MYSTERIOUS);
+        }
+        
+        if (treasuryPulse.healthScore > 85 && treasuryPulse.treasuryData?.totalValue > 10000000 && Math.random() < 0.005) {
+            say("💰 The Treasury Guardians smile upon our prosperity... The vault spirits dance with abundance...", 7000, COMPANION_STATES.CELEBRATING);
+        }
+    }, [companionMode, userMetrics, treasuryPulse, say]);
 
     // 🎮 Companion mode toggle
     const toggleCompanionMode = useCallback(() => {
@@ -290,12 +458,12 @@ const CultCompanion = () => {
     // 🌙 Idle detection and automatic messages
     useEffect(() => {
         if (companionMode !== COMPANION_MODES.ACTIVE) return;
-
+        
         const resetIdleTimer = () => {
             if (idleTimeoutRef.current) {
                 clearTimeout(idleTimeoutRef.current);
             }
-
+            
             idleTimeoutRef.current = setTimeout(() => {
                 if (!isMessageVisible) {
                     const message = generateContextualMessage();
@@ -309,9 +477,9 @@ const CultCompanion = () => {
         activityEvents.forEach(event => {
             document.addEventListener(event, resetIdleTimer, { passive: true });
         });
-
+        
         resetIdleTimer();
-
+        
         return () => {
             if (idleTimeoutRef.current) {
                 clearTimeout(idleTimeoutRef.current);
@@ -325,7 +493,7 @@ const CultCompanion = () => {
     // 📊 Periodic metric updates and hidden events
     useEffect(() => {
         if (companionMode === COMPANION_MODES.OFF) return;
-
+        
         const interval = setInterval(() => {
             updateUserMetrics();
             checkForHiddenEvents();
@@ -352,7 +520,7 @@ const CultCompanion = () => {
         };
 
         animate();
-
+        
         return () => {
             if (animationFrameRef.current) {
                 cancelAnimationFrame(animationFrameRef.current);
@@ -446,46 +614,46 @@ const CultCompanion = () => {
                 </button>
             </div>
 
-            {/* Phase 9.5: Sentience Ember Components */}
-            {CompanionMoodState && (
-                <CompanionMoodState 
-                    userMetrics={userMetrics}
-                    onMoodChange={handleMoodChange}
-                />
+            {/* 🎛️ Phase 10: Governance Controls */}
+            {userMetrics.level >= 5 && (
+                <div className="governance-controls">
+                    <button
+                        className="governance-insight-btn"
+                        onClick={shareGovernanceInsight}
+                        title="Get AI governance insights"
+                        aria-label="Request governance insights from companion"
+                    >
+                        🏛️ Governance Insight
+                    </button>
+                    
+                    <button
+                        className={`sentient-mode-btn ${sentientModeEnabled ? 'active' : ''}`}
+                        onClick={toggleSentientMode}
+                        title={sentientModeEnabled ? 'Disable autonomous mode' : 'Enable autonomous governance'}
+                        aria-label={`Toggle sentient mode: ${sentientModeEnabled ? 'enabled' : 'disabled'}`}
+                    >
+                        🧠 {sentientModeEnabled ? 'Sentient' : 'Advisory'}
+                    </button>
+                </div>
             )}
-            
-            {MemoryReplay && (
-                <MemoryReplay 
-                    currentContext={{
-                        xp: userMetrics.xp,
-                        level: userMetrics.level,
-                        activityType: companionState,
-                        timestamp: Date.now()
-                    }}
-                    onInsightReplay={handleMemoryReplay}
-                />
-            )}
-            
-            {CompanionAIPredict && (
-                <CompanionAIPredict 
-                    userHistory={userMetrics.userHistory}
-                    currentContext={userMetrics}
-                    onPrediction={handleAIPrediction}
-                />
-            )}
-            
-            {LoreEventUnlock && (
-                <LoreEventUnlock 
-                    userMetrics={userMetrics}
-                    onLoreEvent={handleLoreEvent}
-                />
-            )}
-            
-            {RitualPulse && (
-                <RitualPulse 
-                    userMetrics={userMetrics}
-                    onRitualTrigger={handleRitualTrigger}
-                />
+
+            {/* 📊 Treasury Health Indicator */}
+            {treasuryPulse.alerts && treasuryPulse.alerts.length > 0 && (
+                <div className="treasury-alerts">
+                    {treasuryPulse.alerts.slice(-3).map((alert, index) => (
+                        <div 
+                            key={index}
+                            className={`treasury-alert severity-${alert.severity}`}
+                            onClick={() => handleTreasuryAlert(alert)}
+                        >
+                            {alert.type === 'STAKING_OPPORTUNITY' && '💎'}
+                            {alert.type === 'LIQUIDITY_RISK' && '⚠️'}
+                            {alert.type === 'CONCENTRATION_RISK' && '⚖️'}
+                            {alert.type === 'CRITICAL_HEALTH' && '🚨'}
+                            <span className="alert-text">{alert.message}</span>
+                        </div>
+                    ))}
+                </div>
             )}
 
             {/* Settings Modal */}
@@ -496,6 +664,8 @@ const CultCompanion = () => {
                     companionMode={companionMode}
                     onModeChange={setCompanionMode}
                     userMetrics={userMetrics}
+                    sentientModeEnabled={sentientModeEnabled}
+                    onSentientModeChange={toggleSentientMode}
                 />
             )}
 
@@ -553,87 +723,3 @@ window.seasonalEvent = (eventType) => {
     console.log(`Mock seasonal event triggered: ${eventType}`);
     return { type: eventType, active: true, duration: 3600000 };
 };
-
-// 🎭 Phase 9.5: Mood change handler
-    const handleMoodChange = useCallback((moodData) => {
-        setCurrentMood(moodData.mood);
-        setMoodIntensity(moodData.intensity);
-        
-        // Update companion state based on mood
-        if (moodData.mood === 'excited' && companionState === COMPANION_STATES.IDLE) {
-            setCompanionState(COMPANION_STATES.CELEBRATING);
-        } else if (moodData.mood === 'concerned' && companionState !== COMPANION_STATES.THINKING) {
-            setCompanionState(COMPANION_STATES.THINKING);
-        }
-        
-        console.log('🎭 Companion mood updated:', moodData.mood, `(${moodData.intensity.toFixed(2)})`);
-    }, [companionState]);
-
-    // 🧠 Phase 9.5: Memory replay handler
-    const handleMemoryReplay = useCallback((replayedInsight) => {
-        const message = `🧠 ${replayedInsight.loreCallback.message} "${replayedInsight.message}"`;
-        showMessage(message, 8000); // Show for 8 seconds
-        
-        setCompanionState(COMPANION_STATES.MYSTERIOUS);
-        setTimeout(() => setCompanionState(COMPANION_STATES.IDLE), 3000);
-        
-        console.log('🧠 Memory replayed:', replayedInsight.message);
-    }, []);
-
-    // 🔮 Phase 9.5: AI prediction handler
-    const handleAIPrediction = useCallback((prediction) => {
-        if (prediction.confidence > 0.7) {
-            const message = `🔮 ${prediction.message}`;
-            showMessage(message, 6000);
-            
-            setCompanionState(COMPANION_STATES.THINKING);
-            setTimeout(() => setCompanionState(COMPANION_STATES.IDLE), 4000);
-        }
-        
-        console.log('🔮 AI prediction:', prediction.message, `(${Math.round(prediction.confidence * 100)}%)`);
-    }, []);
-
-    // 🎭 Phase 9.5: Lore event handler
-    const handleLoreEvent = useCallback((loreEvent) => {
-        const message = `✨ ${loreEvent.message}`;
-        showMessage(message, 10000); // Show for 10 seconds
-        
-        setCompanionState(COMPANION_STATES.CELEBRATING);
-        setTimeout(() => setCompanionState(COMPANION_STATES.IDLE), 5000);
-        
-        // Store in user history for pattern analysis
-        setUserMetrics(prev => ({
-            ...prev,
-            userHistory: [...prev.userHistory.slice(-49), {
-                type: 'lore_event',
-                event: loreEvent.event.id,
-                timestamp: Date.now()
-            }]
-        }));
-        
-        console.log('🎭 Lore event unlocked:', loreEvent.event.name);
-    }, []);
-
-    // ⚡ Phase 9.5: Ritual pulse handler
-    const handleRitualTrigger = useCallback((ritualData) => {
-        if (ritualData.type === 'ritual_pulse_triggered') {
-            setIsRitualActive(true);
-            const message = `⚡ ${ritualData.ritual.message}`;
-            showMessage(message, 30000); // Show for 30 seconds
-            
-            setCompanionState(COMPANION_STATES.MYSTERIOUS);
-            
-            // Auto-complete ritual after 30 seconds if not manually completed
-            setTimeout(() => {
-                if (isRitualActive) {
-                    window.companionRitualAPI?.completeRitual(0.5); // Half rewards for auto-completion
-                }
-            }, 30000);
-        } else if (ritualData.type === 'ritual_completed') {
-            setIsRitualActive(false);
-            setCompanionState(COMPANION_STATES.CELEBRATING);
-            setTimeout(() => setCompanionState(COMPANION_STATES.IDLE), 3000);
-        }
-        
-        console.log('⚡ Ritual trigger:', ritualData.type);
-    }, [isRitualActive]);
