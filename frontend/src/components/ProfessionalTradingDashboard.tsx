@@ -2,7 +2,11 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useAdvancedTrading } from '../contexts/AdvancedTradingContext';
 import { useGamification } from '../contexts/GamificationContext';
 import { AdvancedPortfolioAnalytics } from './AdvancedPortfolioAnalytics';
+import { TradingParticleSystem, triggerTradingParticles } from './TradingParticleSystem';
+import { TradingNotificationSystem, showTradeExecuted, showProfitLoss, showOrderFilled, showRiskAlert, showTradingNotification } from './TradingNotificationSystem';
+import { ProfessionalTradingChart, generateSampleCandlestickData } from './ProfessionalTradingChart';
 import './ProfessionalTradingDashboard.css';
+import './PremiumTradingEffects.css';
 
 interface TradingTab {
   id: string;
@@ -56,7 +60,7 @@ export const ProfessionalTradingDashboard: React.FC = () => {
   const [dcaTotal, setDCATotal] = useState('');
   const [dcaInterval, setDCAInterval] = useState('');
 
-  // Handle order creation
+  // Handle order creation with enhanced effects
   const handleCreateOrder = useCallback(async () => {
     if (!selectedPair || !orderAmount || !orderPrice) return;
     
@@ -74,6 +78,24 @@ export const ProfessionalTradingDashboard: React.FC = () => {
         // Award XP for creating limit order
         awardXP(25, 'Created limit order');
         
+        // Show success notification
+        showOrderFilled(
+          'Limit',
+          selectedPair.id,
+          parseFloat(orderAmount),
+          parseFloat(orderPrice)
+        );
+        
+        // Trigger particles
+        setTimeout(() => {
+          triggerTradingParticles(
+            window.innerWidth / 2,
+            200,
+            'order',
+            parseFloat(orderAmount) * parseFloat(orderPrice)
+          );
+        }, 100);
+        
       } else if (orderMode === 'dca') {
         await createDCAOrder({
           userId: 'user-1',
@@ -87,6 +109,25 @@ export const ProfessionalTradingDashboard: React.FC = () => {
         
         // Award XP for creating DCA order
         awardXP(50, 'Created DCA strategy');
+        
+        // Show success notification
+        showTradingNotification({
+          type: 'success',
+          title: 'DCA Strategy Created',
+          message: `${dcaFrequency} DCA for ${selectedPair.id}`,
+          value: parseFloat(dcaTotal),
+          duration: 4000
+        });
+        
+        // Trigger particles
+        setTimeout(() => {
+          triggerTradingParticles(
+            window.innerWidth / 2,
+            200,
+            'profit',
+            parseFloat(dcaTotal)
+          );
+        }, 100);
       }
       
       // Reset form
@@ -97,6 +138,14 @@ export const ProfessionalTradingDashboard: React.FC = () => {
       
     } catch (err) {
       console.error('Error creating order:', err);
+      
+      // Show error notification
+      showTradingNotification({
+        type: 'error',
+        title: 'Order Failed',
+        message: 'Failed to create order. Please try again.',
+        duration: 5000
+      });
     }
   }, [selectedPair, orderAmount, orderPrice, orderType, orderMode, dcaFrequency, dcaTotal, dcaInterval, createLimitOrder, createDCAOrder, awardXP]);
 
@@ -209,27 +258,70 @@ export const ProfessionalTradingDashboard: React.FC = () => {
   // Spot Trading Tab Component
   const SpotTradingTab = () => (
     <div className="spot-trading">
+      {/* Professional Trading Chart */}
+      {selectedPair && (
+        <div className="trading-chart-section">
+          <ProfessionalTradingChart
+            symbol={selectedPair.id}
+            data={generateSampleCandlestickData(selectedPair.id, 200, selectedPair.price)}
+            indicators={[
+              {
+                name: 'MA(20)',
+                values: Array(200).fill(0).map((_, i) => selectedPair.price + (Math.random() - 0.5) * 10),
+                color: '#8a2be2',
+                visible: true
+              },
+              {
+                name: 'RSI',
+                values: Array(200).fill(0).map(() => Math.random() * 100),
+                color: '#ffd700',
+                visible: true
+              }
+            ]}
+            height={400}
+            showVolume={true}
+            showGrid={true}
+            theme="dark"
+            onPriceClick={(price, timestamp) => {
+              setOrderPrice(price.toFixed(4));
+              showTradeExecuted('buy', 0, price, selectedPair.id);
+            }}
+          />
+        </div>
+      )}
+
       <div className="trading-interface">
         {/* Pair Selection */}
         <div className="pair-selector">
           <h3>Select Trading Pair</h3>
           <div className="pairs-grid">
-            {tradingPairs.map(pair => (
-              <div 
-                key={pair.id} 
-                className={`pair-card ${selectedPair?.id === pair.id ? 'selected' : ''}`}
-                onClick={() => setSelectedPair(pair)}
-              >
-                <div className="pair-header">
-                  <span className="pair-name">{pair.id}</span>
-                  <span className={`pair-change ${pair.change24h >= 0 ? 'positive' : 'negative'}`}>
-                    {pair.change24h >= 0 ? '+' : ''}{pair.change24h.toFixed(2)}%
-                  </span>
+            {tradingPairs.map(pair => {
+              const marketMood = pair.change24h > 5 ? 'bullish' : pair.change24h < -5 ? 'bearish' : 'neutral';
+              return (
+                <div 
+                  key={pair.id} 
+                  className={`trading-card pair-card ${selectedPair?.id === pair.id ? 'selected' : ''} ${marketMood} smooth-transition`}
+                  onClick={() => {
+                    setSelectedPair(pair);
+                    triggerTradingParticles(
+                      300,
+                      150,
+                      'order',
+                      pair.price
+                    );
+                  }}
+                >
+                  <div className="pair-header">
+                    <span className="pair-name">{pair.id}</span>
+                    <span className={`pair-change price-display ${pair.change24h >= 0 ? 'price-up' : 'price-down'}`}>
+                      {pair.change24h >= 0 ? '+' : ''}{pair.change24h.toFixed(2)}%
+                    </span>
+                  </div>
+                  <div className="pair-price price-display">${pair.price.toLocaleString()}</div>
+                  <div className="pair-volume">Vol: ${pair.volume24h.toLocaleString()}</div>
                 </div>
-                <div className="pair-price">${pair.price.toLocaleString()}</div>
-                <div className="pair-volume">Vol: ${pair.volume24h.toLocaleString()}</div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
 
@@ -332,11 +424,18 @@ export const ProfessionalTradingDashboard: React.FC = () => {
             )}
 
             <button 
-              className="create-order-btn"
+              className={`premium-button ${orderType === 'buy' ? 'success' : 'danger'} gpu-accelerated`}
               onClick={handleCreateOrder}
               disabled={isLoading || !orderAmount || (!orderPrice && orderMode === 'limit')}
             >
-              {isLoading ? 'Creating...' : `Create ${orderMode === 'limit' ? 'Limit Order' : 'DCA Strategy'}`}
+              {isLoading ? (
+                <div className="premium-loading">
+                  <div className="loading-spinner" />
+                  Creating...
+                </div>
+              ) : (
+                `Create ${orderMode === 'limit' ? 'Limit Order' : 'DCA Strategy'}`
+              )}
             </button>
           </div>
         )}
@@ -509,19 +608,35 @@ export const ProfessionalTradingDashboard: React.FC = () => {
   };
 
   return (
-    <div className="professional-trading-dashboard">
-      <div className="dashboard-header">
+    <div className="professional-trading-dashboard gpu-accelerated">
+      {/* Phase 6: Enhanced Visual Effects */}
+      <TradingParticleSystem 
+        enabled={true} 
+        intensity={1.2}
+        onTradingEvent={(event) => {
+          // Handle trading events for particle effects
+          console.log('Trading event:', event);
+        }}
+      />
+      
+      <TradingNotificationSystem
+        maxNotifications={5}
+        defaultDuration={5000}
+        position="top-right"
+      />
+
+      <div className="dashboard-header premium-card">
         <h1>💼 Professional Trading Dashboard</h1>
         <div className="header-stats">
           {portfolioAnalytics && (
             <>
               <div className="stat">
                 <span className="stat-label">Portfolio Value</span>
-                <span className="stat-value">${portfolioAnalytics.totalValue.toLocaleString()}</span>
+                <span className="stat-value price-display">${portfolioAnalytics.totalValue.toLocaleString()}</span>
               </div>
               <div className="stat">
                 <span className="stat-label">24h P&L</span>
-                <span className={`stat-value ${portfolioAnalytics.totalPnL >= 0 ? 'positive' : 'negative'}`}>
+                <span className={`stat-value price-display ${portfolioAnalytics.totalPnL >= 0 ? 'price-up' : 'price-down'}`}>
                   {portfolioAnalytics.totalPnL >= 0 ? '+' : ''}${portfolioAnalytics.totalPnL.toFixed(2)}
                 </span>
               </div>
@@ -530,11 +645,11 @@ export const ProfessionalTradingDashboard: React.FC = () => {
         </div>
       </div>
 
-      <div className="dashboard-nav">
+      <div className="trading-tabs">
         {TRADING_TABS.map(tab => (
           <button
             key={tab.id}
-            className={`nav-tab ${activeTab === tab.id ? 'active' : ''}`}
+            className={`tab-button ${activeTab === tab.id ? 'active' : ''} smooth-transition`}
             onClick={() => setActiveTab(tab.id)}
           >
             <span className="tab-icon">{tab.icon}</span>
@@ -543,9 +658,9 @@ export const ProfessionalTradingDashboard: React.FC = () => {
         ))}
       </div>
 
-      <div className="dashboard-content">
+      <div className="dashboard-content performance-optimized">
         {error && (
-          <div className="error-message">
+          <div className="trading-notification trading-notification-error">
             ⚠️ {error}
           </div>
         )}

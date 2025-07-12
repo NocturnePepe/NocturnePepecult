@@ -1,0 +1,575 @@
+/* Phase 6: Premium Trading Effects & Gaming-Tier Visual Polish */
+
+/* GPU-Accelerated Base Performance */
+.professional-trading-dashboard {
+  will-change: transform, opacity;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* Enhanced Particle Integration for Trading */
+.trading-success-particles {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1000;
+}
+
+.profit-particle {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background: linear-gradient(45deg, #00ff88, #00cc6a);
+  border-radius: 50%;
+  animation: profitBurst 2s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+  box-shadow: 0 0 10px rgba(0, 255, 136, 0.6);
+}
+
+.loss-particle {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background: linear-gradient(45deg, #ff4444, #cc0000);
+  border-radius: 50%;
+  animation: lossBurst 2s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+  box-shadow: 0 0 10px rgba(255, 68, 68, 0.6);
+}
+
+@keyframes profitBurst {
+  0% {
+    transform: scale(0) rotate(0deg);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.2) rotate(180deg);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(0.3) rotate(360deg) translateY(-100px);
+    opacity: 0;
+  }
+}
+
+@keyframes lossBurst {
+  0% {
+    transform: scale(0) rotate(0deg);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.2) rotate(-180deg);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(0.3) rotate(-360deg) translateY(100px);
+    opacity: 0;
+  }
+}
+
+/* Enhanced Tab System with Gaming-Tier Effects */
+.trading-tabs {
+  position: relative;
+  overflow: hidden;
+}
+
+.trading-tabs::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, 
+    transparent 0%, 
+    rgba(138, 43, 226, 0.1) 25%, 
+    rgba(138, 43, 226, 0.2) 50%, 
+    rgba(138, 43, 226, 0.1) 75%, 
+    transparent 100%);
+  animation: tabGlow 3s ease-in-out infinite;
+  z-index: -1;
+}
+
+@keyframes tabGlow {
+  0%, 100% {
+    transform: translateX(-100%);
+  }
+  50% {
+    transform: translateX(100%);
+  }
+}
+
+.tab-button {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.tab-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, 
+    transparent, 
+    rgba(255, 255, 255, 0.2), 
+    transparent);
+  transition: left 0.6s;
+}
+
+.tab-button:hover::before {
+  left: 100%;
+}
+
+.tab-button.active {
+  background: linear-gradient(135deg, 
+    rgba(138, 43, 226, 0.3) 0%, 
+    rgba(75, 0, 130, 0.4) 50%, 
+    rgba(138, 43, 226, 0.3) 100%);
+  box-shadow: 
+    0 0 20px rgba(138, 43, 226, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+/* Enhanced Trading Cards with Market-Responsive Colors */
+.trading-card {
+  position: relative;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 1.5rem;
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  overflow: hidden;
+}
+
+.trading-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, 
+    var(--accent-primary), 
+    var(--accent-secondary), 
+    var(--accent-primary));
+  animation: cardPulse 2s ease-in-out infinite;
+}
+
+@keyframes cardPulse {
+  0%, 100% {
+    opacity: 0.5;
+    transform: scaleX(0.8);
+  }
+  50% {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+}
+
+.trading-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 
+    0 20px 60px rgba(0, 0, 0, 0.3),
+    0 0 30px rgba(138, 43, 226, 0.2);
+  border-color: rgba(138, 43, 226, 0.3);
+}
+
+/* Market-Responsive Colors for Trading States */
+.trading-card.bullish {
+  border-color: rgba(0, 255, 136, 0.3);
+  background: linear-gradient(135deg, 
+    rgba(0, 255, 136, 0.05) 0%, 
+    rgba(255, 255, 255, 0.02) 100%);
+}
+
+.trading-card.bullish::before {
+  background: linear-gradient(90deg, #00ff88, #00cc6a);
+}
+
+.trading-card.bearish {
+  border-color: rgba(255, 68, 68, 0.3);
+  background: linear-gradient(135deg, 
+    rgba(255, 68, 68, 0.05) 0%, 
+    rgba(255, 255, 255, 0.02) 100%);
+}
+
+.trading-card.bearish::before {
+  background: linear-gradient(90deg, #ff4444, #cc0000);
+}
+
+.trading-card.neutral {
+  border-color: rgba(255, 215, 0, 0.3);
+  background: linear-gradient(135deg, 
+    rgba(255, 215, 0, 0.05) 0%, 
+    rgba(255, 255, 255, 0.02) 100%);
+}
+
+.trading-card.neutral::before {
+  background: linear-gradient(90deg, #ffd700, #ffed4e);
+}
+
+/* Enhanced Order Book with Real-time Visual Feedback */
+.order-book {
+  position: relative;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.order-row {
+  position: relative;
+  padding: 0.75rem 1rem;
+  transition: all 0.3s ease;
+  border-left: 3px solid transparent;
+}
+
+.order-row.buy-order {
+  background: linear-gradient(90deg, 
+    rgba(0, 255, 136, 0.1) 0%, 
+    transparent 100%);
+  border-left-color: #00ff88;
+}
+
+.order-row.sell-order {
+  background: linear-gradient(90deg, 
+    rgba(255, 68, 68, 0.1) 0%, 
+    transparent 100%);
+  border-left-color: #ff4444;
+}
+
+.order-row:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateX(4px);
+}
+
+.order-row.filled {
+  animation: orderFilled 1s ease-out;
+}
+
+@keyframes orderFilled {
+  0% {
+    background: rgba(0, 255, 136, 0.3);
+    transform: scale(1.05);
+  }
+  100% {
+    background: transparent;
+    transform: scale(1);
+  }
+}
+
+/* Enhanced Price Display with Dynamic Updates */
+.price-display {
+  position: relative;
+  font-family: 'Monaco', 'Fira Code', monospace;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.price-display.price-up {
+  color: #00ff88;
+  text-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+  animation: priceFlash 0.6s ease-out;
+}
+
+.price-display.price-down {
+  color: #ff4444;
+  text-shadow: 0 0 10px rgba(255, 68, 68, 0.5);
+  animation: priceFlash 0.6s ease-out;
+}
+
+@keyframes priceFlash {
+  0% {
+    transform: scale(1.1);
+    filter: brightness(1.5);
+  }
+  100% {
+    transform: scale(1);
+    filter: brightness(1);
+  }
+}
+
+/* Enhanced Button System with Gaming-Tier Feedback */
+.premium-button {
+  position: relative;
+  background: linear-gradient(135deg, 
+    var(--accent-primary) 0%, 
+    var(--accent-secondary) 100%);
+  border: none;
+  border-radius: 12px;
+  padding: 1rem 2rem;
+  color: white;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(138, 43, 226, 0.3);
+}
+
+.premium-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, 
+    transparent, 
+    rgba(255, 255, 255, 0.4), 
+    transparent);
+  transition: left 0.5s;
+}
+
+.premium-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 30px rgba(138, 43, 226, 0.4);
+}
+
+.premium-button:hover::before {
+  left: 100%;
+}
+
+.premium-button:active {
+  transform: translateY(-1px);
+  transition: transform 0.1s;
+}
+
+.premium-button.success {
+  background: linear-gradient(135deg, #00ff88, #00cc6a);
+  box-shadow: 0 4px 20px rgba(0, 255, 136, 0.3);
+}
+
+.premium-button.danger {
+  background: linear-gradient(135deg, #ff4444, #cc0000);
+  box-shadow: 0 4px 20px rgba(255, 68, 68, 0.3);
+}
+
+.premium-button.warning {
+  background: linear-gradient(135deg, #ffd700, #ffed4e);
+  color: #000;
+  box-shadow: 0 4px 20px rgba(255, 215, 0, 0.3);
+}
+
+/* Enhanced Loading States with Professional Polish */
+.premium-loading {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--text-secondary);
+}
+
+.loading-spinner {
+  width: 20px;
+  height: 20px;
+  border: 2px solid rgba(138, 43, 226, 0.3);
+  border-top: 2px solid var(--accent-primary);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.skeleton-loader {
+  background: linear-gradient(90deg, 
+    rgba(255, 255, 255, 0.1) 0%, 
+    rgba(255, 255, 255, 0.2) 50%, 
+    rgba(255, 255, 255, 0.1) 100%);
+  background-size: 200% 100%;
+  animation: skeleton 1.5s ease-in-out infinite;
+  border-radius: 8px;
+}
+
+@keyframes skeleton {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* Enhanced Chart Integration with Real-time Polish */
+.trading-chart-container {
+  position: relative;
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 16px;
+  padding: 1rem;
+  overflow: hidden;
+}
+
+.chart-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, 
+    rgba(138, 43, 226, 0.05) 0%, 
+    transparent 50%, 
+    rgba(75, 0, 130, 0.05) 100%);
+  pointer-events: none;
+}
+
+.chart-legend {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  padding: 0.5rem 1rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  backdrop-filter: blur(10px);
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+}
+
+.legend-color {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--color);
+}
+
+/* Enhanced Notification System */
+.trading-notification {
+  position: fixed;
+  top: 2rem;
+  right: 2rem;
+  z-index: 10000;
+  background: rgba(0, 0, 0, 0.9);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 16px;
+  padding: 1rem 1.5rem;
+  color: white;
+  font-weight: 500;
+  max-width: 400px;
+  animation: notificationSlide 0.5s ease-out;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+}
+
+@keyframes notificationSlide {
+  0% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.trading-notification.success {
+  border-left: 4px solid #00ff88;
+  background: linear-gradient(135deg, 
+    rgba(0, 255, 136, 0.1) 0%, 
+    rgba(0, 0, 0, 0.9) 100%);
+}
+
+.trading-notification.error {
+  border-left: 4px solid #ff4444;
+  background: linear-gradient(135deg, 
+    rgba(255, 68, 68, 0.1) 0%, 
+    rgba(0, 0, 0, 0.9) 100%);
+}
+
+.trading-notification.warning {
+  border-left: 4px solid #ffd700;
+  background: linear-gradient(135deg, 
+    rgba(255, 215, 0, 0.1) 0%, 
+    rgba(0, 0, 0, 0.9) 100%);
+}
+
+/* Mobile Trading Excellence */
+@media (max-width: 768px) {
+  .professional-trading-dashboard {
+    padding: 1rem;
+  }
+  
+  .trading-tabs {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  
+  .tab-button {
+    flex: 1;
+    min-width: calc(33.333% - 0.5rem);
+    font-size: 0.85rem;
+    padding: 0.75rem 0.5rem;
+  }
+  
+  .trading-card {
+    margin-bottom: 1rem;
+    padding: 1rem;
+  }
+  
+  .premium-button {
+    width: 100%;
+    margin-bottom: 0.5rem;
+  }
+  
+  .trading-notification {
+    top: 1rem;
+    right: 1rem;
+    left: 1rem;
+    max-width: none;
+  }
+}
+
+/* 60fps Optimization Classes */
+.gpu-accelerated {
+  will-change: transform, opacity;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+.performance-optimized {
+  contain: layout style paint;
+}
+
+.smooth-transition {
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Advanced Theme Integration */
+.trading-dashboard.dark-theme {
+  --trading-bg: rgba(0, 0, 0, 0.8);
+  --trading-card-bg: rgba(255, 255, 255, 0.05);
+  --trading-border: rgba(255, 255, 255, 0.1);
+}
+
+.trading-dashboard.light-theme {
+  --trading-bg: rgba(255, 255, 255, 0.9);
+  --trading-card-bg: rgba(0, 0, 0, 0.05);
+  --trading-border: rgba(0, 0, 0, 0.1);
+}
+
+/* Market Mood Responsive Styling */
+.market-mood-bull {
+  --primary-glow: #00ff88;
+  --secondary-glow: #00cc6a;
+}
+
+.market-mood-bear {
+  --primary-glow: #ff4444;
+  --secondary-glow: #cc0000;
+}
+
+.market-mood-neutral {
+  --primary-glow: #ffd700;
+  --secondary-glow: #ffed4e;
+}
