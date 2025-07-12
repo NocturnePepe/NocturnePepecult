@@ -1,0 +1,377 @@
+/* Phase 7: Advanced Mobile Experience CSS */
+/* Mobile-First Responsive Design System */
+
+/* Mobile Device Detection */
+.mobile-device {
+  --mobile-header-height: 60px;
+  --mobile-nav-height: 70px;
+  --mobile-safe-area-top: env(safe-area-inset-top, 0px);
+  --mobile-safe-area-bottom: env(safe-area-inset-bottom, 0px);
+  --mobile-safe-area-left: env(safe-area-inset-left, 0px);
+  --mobile-safe-area-right: env(safe-area-inset-right, 0px);
+}
+
+/* App Container Responsive Layout */
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  width: 100vw;
+  overflow-x: hidden;
+}
+
+.app-container.mobile {
+  padding-top: var(--mobile-safe-area-top);
+  padding-bottom: var(--mobile-safe-area-bottom);
+  padding-left: var(--mobile-safe-area-left);
+  padding-right: var(--mobile-safe-area-right);
+}
+
+.app-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* Mobile Navigation Styles */
+.mobile-navigation {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(135deg, rgba(20, 20, 40, 0.95), rgba(40, 20, 60, 0.95));
+  backdrop-filter: blur(20px);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  z-index: 1000;
+  padding-bottom: var(--mobile-safe-area-bottom);
+  transform: translateY(0);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.mobile-navigation.hidden {
+  transform: translateY(100%);
+}
+
+/* Performance Mode Adaptations */
+.low-performance-mode {
+  --animation-duration: 0.1s;
+  --particle-count: 5;
+  --blur-amount: 5px;
+  --glow-intensity: 0.3;
+}
+
+.low-performance-mode .particle-system {
+  display: none;
+}
+
+.low-performance-mode .gpu-accelerated {
+  transform: none !important;
+  filter: none !important;
+}
+
+.low-performance-mode .background-animation {
+  animation: none !important;
+}
+
+/* Desktop-only elements on mobile */
+@media (max-width: 767px) {
+  .desktop-only {
+    display: none !important;
+  }
+
+  .main-navigation {
+    display: none;
+  }
+
+  .app-header {
+    display: none;
+  }
+
+  .floating-buttons {
+    display: none;
+  }
+}
+
+/* Tablet adaptations */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .app-container.tablet .main-navigation {
+    padding: 0 20px;
+  }
+
+  .app-container.tablet .nav-links {
+    gap: 15px;
+  }
+
+  .app-container.tablet .nav-label {
+    font-size: 0.9rem;
+  }
+}
+
+/* Mobile-specific content adjustments */
+@media (max-width: 767px) {
+  .main-content {
+    padding: 10px;
+    margin-bottom: var(--mobile-nav-height);
+  }
+
+  /* Mobile-optimized particle system */
+  .particle-system {
+    opacity: 0.3;
+    animation-duration: 8s;
+  }
+
+  /* Mobile-optimized cards */
+  .card, .panel, .modal {
+    border-radius: 16px;
+    padding: 16px;
+    margin: 8px 0;
+  }
+
+  /* Mobile button optimizations */
+  button, .btn {
+    min-height: 48px;
+    padding: 12px 20px;
+    border-radius: 12px;
+    font-size: 1rem;
+    touch-action: manipulation;
+  }
+
+  /* Mobile form optimizations */
+  input, select, textarea {
+    min-height: 48px;
+    padding: 12px 16px;
+    border-radius: 12px;
+    font-size: 1rem;
+    touch-action: manipulation;
+  }
+
+  /* Mobile typography */
+  h1 { font-size: 1.75rem; }
+  h2 { font-size: 1.5rem; }
+  h3 { font-size: 1.25rem; }
+  
+  /* Mobile spacing */
+  .container, .wrapper {
+    padding: 0 16px;
+  }
+}
+
+/* Touch interaction optimizations */
+@media (hover: none) and (pointer: coarse) {
+  /* Remove hover effects for touch devices */
+  .nav-link:hover,
+  .btn:hover,
+  .card:hover {
+    background: unset;
+    transform: unset;
+    box-shadow: unset;
+  }
+
+  /* Add touch feedback */
+  .nav-link:active,
+  .btn:active,
+  .card:active {
+    transform: scale(0.98);
+    opacity: 0.8;
+  }
+}
+
+/* iOS specific styles */
+@supports (-webkit-touch-callout: none) {
+  .mobile-device {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .app-container.mobile {
+    padding-top: max(var(--mobile-safe-area-top), 20px);
+    padding-bottom: max(var(--mobile-safe-area-bottom), 20px);
+  }
+}
+
+/* Android specific styles */
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+  .mobile-device {
+    overscroll-behavior: none;
+  }
+}
+
+/* Landscape orientation optimizations */
+@media (orientation: landscape) and (max-height: 500px) {
+  .mobile-navigation {
+    height: 50px;
+  }
+
+  .main-content {
+    margin-bottom: 50px;
+  }
+
+  .mobile-nav-item {
+    padding: 8px 12px;
+  }
+
+  .mobile-nav-label {
+    font-size: 0.8rem;
+  }
+}
+
+/* High DPI displays */
+@media (-webkit-min-device-pixel-ratio: 2) {
+  .mobile-device .icon,
+  .mobile-device .emoji {
+    image-rendering: -webkit-optimize-contrast;
+  }
+}
+
+/* Dark mode mobile adaptations */
+@media (prefers-color-scheme: dark) {
+  .mobile-device {
+    background: #1a1a2e;
+    color: #eee;
+  }
+
+  .mobile-navigation {
+    background: linear-gradient(135deg, rgba(26, 26, 46, 0.95), rgba(16, 16, 34, 0.95));
+  }
+}
+
+/* Reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .mobile-device * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .particle-system {
+    display: none;
+  }
+}
+
+/* Performance debug indicator */
+.performance-debug {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-family: monospace;
+  z-index: 10000;
+  pointer-events: none;
+}
+
+/* Mobile trading interface overlay */
+.mobile-trading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.9);
+  z-index: 2000;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* Haptic feedback animation */
+@keyframes haptic-feedback {
+  0% { transform: scale(1); }
+  50% { transform: scale(0.95); }
+  100% { transform: scale(1); }
+}
+
+.haptic-feedback {
+  animation: haptic-feedback 0.1s ease-in-out;
+}
+
+/* Mobile swipe indicators */
+.swipe-indicator {
+  position: absolute;
+  width: 4px;
+  height: 30px;
+  background: linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.5), transparent);
+  border-radius: 2px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.swipe-indicator.left {
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.swipe-indicator.right {
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.swipe-indicator.active {
+  opacity: 1;
+}
+
+/* Mobile keyboard detection */
+.keyboard-open .main-content {
+  margin-bottom: 0;
+}
+
+.keyboard-open .mobile-navigation {
+  transform: translateY(100%);
+}
+
+/* Network status indicator */
+.network-status {
+  position: fixed;
+  top: var(--mobile-safe-area-top, 20px);
+  right: 20px;
+  padding: 4px 8px;
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  z-index: 1001;
+}
+
+.network-status.offline {
+  background: #f44336;
+}
+
+.network-status.slow {
+  background: #ff9800;
+}
+
+.network-status.fast {
+  background: #4caf50;
+}
+
+/* Battery status indicator */
+.battery-status {
+  position: fixed;
+  top: var(--mobile-safe-area-top, 20px);
+  left: 20px;
+  padding: 4px 8px;
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  z-index: 1001;
+}
+
+.battery-status.low {
+  background: #f44336;
+}
+
+.battery-status.medium {
+  background: #ff9800;
+}
+
+.battery-status.high {
+  background: #4caf50;
+}
